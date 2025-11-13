@@ -4,16 +4,8 @@
 class BeritaController extends Controller {
     
     public function index() {
-        $beritaModel = $this->model('Berita');
-        
-        $data = [
-            'judul_halaman' => 'Berita - Lab NCS',
-            'berita_list' => $beritaModel->getAllBerita()
-        ];
 
-            $this->view('templates/public/header', $data);
-            $this->view('public/berita/index', $data);
-            $this->view('templates/public/footer');
+            $this->view('public/berita');
     }
 
     public function detail($id) {

@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-xl-4">
                     <div class="footer-widget footer-widget--info">
                         <a href="" class="footer-widget__logo">
-                            <img src="./assets/images/logoJTI_footer.png" width="100%" alt="Logo Lab NCS">
+                            <img src="public/assets/images/ClearLogoJTI.png" width="50%" alt="Logo Lab NCS">
                         </a>
                         <p class="footer-widget__text">Laboratorium Network and Cyber Crime (NCS) JTI Polinema, berfokus pada riset dan pengembangan keamanan jaringan serta forensik digital.</p>
                         
@@ -16,7 +16,7 @@
                         <ul class="list-unstyled footer-widget__links">
                             <li class="footer-widget__links__item"><a href="/tentang">Tentang Kami</a></li>
                             <li class="footer-widget__links__item"><a href="/akademik">Akademik & Riset</a></li>
-                            <li class="footer-widget__links__item"><a href="/layanan">Produk & Layanan</a></li>
+                            <li class="footer-widget__links__item"><a href="/layanan">Fasilitas & Layanan</a></li>
                             <li class="footer-widget__links__item"><a href="/berita">Berita</a></li>
                             
                             <li class="footer-widget__links__item"><a href="https://www.polinema.ac.id/" target="_blank">Website Polinema</a></li>
@@ -52,13 +52,13 @@
                     <p class="main-footer__copyright"> &copy; Copyright <span class="dynamic-year"><?php echo date('Y'); ?></span> Lab NCS JTI Polinema. All Rights Reserved.</p>
                 </div>
                 <div class="col-md-5 text-md-right">
-                    <p class="main-footer__copyright">Website by [Nama Kelompok PBL Anda]</p>
+                    <p class="main-footer__copyright">Website by El Loco</p>
                 </div>
             </div></div></div><div class="main-footer__shape">
-        <img src="/assets/images/shapes/footer-shape-1-1.png" alt="shape">
+        <img src="public/assets/images/shapes/footer-shape-1-1.png" alt="shape">
     </div>
     <div class="main-footer__shape main-footer__shape--two">
-        <img src="/assets/images/shapes/footer-shape-1-2.png" alt="shape">
+        <img src="public/assets/images/shapes/footer-shape-1-2.png" alt="shape">
     </div>
 
 </footer>

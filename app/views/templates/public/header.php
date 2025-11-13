@@ -10,14 +10,14 @@
     <meta name="description" content="Laboix is beautifully designed laboratory & research HTML template. Which fits for laboratory test, science research, biology, medical research, science technology, chemistry, pharmaceuticals, pharmacy and all other type of science & technology research websites and businesses.">
 
     <!-- ======== Page title ============ -->
-    <title>Home One || LABOIX || Laboratory & Research HTML5 Template</title>
+    <title>Lab. Network & Cyber Security JTI Polinema</title>
 
     <!-- ========== Favicon Icon ========== -->
-    <link rel="shortcut icon" href="assets/images/favicons/apple-touch-icon.png" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="public/assets/images/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="public/assets/images/ClearLogoJTI.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/ClearLogoJTI.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/ClearLogoJTI.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/ClearLogoJTI.png">
+    <link rel="manifest" href="public/assets/images/ClearLogoJTI.png">
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">

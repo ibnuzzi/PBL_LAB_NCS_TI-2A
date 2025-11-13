@@ -1,0 +1,176 @@
+<?php
+// Simple sidebar template for admin area
+// Determine current page for active menu highlighting
+$currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Check which menu should be active based on current path
+$isDashboard = stripos($currentPath, '/admin/dashboard') !== false;
+$isBerita = stripos($currentPath, '/admin/berita') !== false;
+$isAgenda = stripos($currentPath, '/admin/agenda') !== false;
+$isGaleri = stripos($currentPath, '/admin/galeri') !== false;
+$isStruktur = stripos($currentPath, '/admin/struktur') !== false;
+$isHalamanStatis = stripos($currentPath, '/admin/halaman-statis') !== false;
+$isJasaLayanan = stripos($currentPath, '/admin/jasa-layanan') !== false;
+$isSaranaPrasarana = stripos($currentPath, '/admin/sarana-prasarana') !== false;
+$isPenelitian = stripos($currentPath, '/admin/penelitian') !== false;
+$isPengabdian = stripos($currentPath, '/admin/pengabdian') !== false;
+$isDokumenUmum = stripos($currentPath, '/admin/dokumen-umum') !== false;
+$isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
+?>
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="<?php echo BASE_URL; ?>/admin/dashboard" class="app-brand-link">
+              <i class="bx bx-shield-quarter bx-md" style="color:#696cff;"></i>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">Lab NCS</span>
+            </a>
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+              <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item <?php echo $isDashboard ? 'active' : ''; ?>">
+              <a href="<?php echo BASE_URL; ?>/admin/dashboard" class="menu-link">
+                <i class="menu-icon bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+
+            <!-- Profil Lab -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Profil Lab</span>
+            </li>
+            <li class="menu-item <?php echo $isStruktur ? 'active' : ''; ?>">
+              <a href="struktur-pengelola.html" class="menu-link">
+                <i class="menu-icon bx bx-group"></i>
+                <div>Struktur Pengelola</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo $isHalamanStatis ? 'active' : ''; ?>">
+              <a href="halaman-statis.html" class="menu-link">
+                <i class="menu-icon bx bx-lock-open"></i>
+                <div>Halaman Statis</div>
+              </a>
+            </li>
+
+            <!-- Manajemen Konten -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Manajemen Konten</span>
+            </li>
+            <li class="menu-item <?php echo $isBerita ? 'active' : ''; ?>">
+              <a href="<?php echo BASE_URL; ?>/admin/berita" class="menu-link">
+                <i class="menu-icon bx bx-news"></i>
+                <div>Berita</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo $isAgenda ? 'active' : ''; ?>">
+              <a href="agenda.html" class="menu-link">
+                <i class="menu-icon bx bx-calendar"></i>
+                <div>Agenda</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo $isGaleri ? 'active' : ''; ?>">
+              <a href="galeri.html" class="menu-link">
+                <i class="menu-icon bx bx-images"></i>
+                <div>Galeri</div>
+              </a>
+            </li>
+
+            <!-- Manajemen Layanan -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Manajemen Layanan</span>
+            </li>
+            <li class="menu-item <?php echo $isJasaLayanan ? 'active' : ''; ?>">
+              <a href="jasa-layanan.html" class="menu-link">
+                <i class="menu-icon bx bx-briefcase-alt"></i>
+                <div>Jasa dan Layanan</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo $isSaranaPrasarana ? 'active' : ''; ?>">
+              <a href="sarana-prasarana.html" class="menu-link">
+                <i class="menu-icon bx bx-building-house"></i>
+                <div>Sarana dan Prasarana</div>
+              </a>
+            </li>
+
+            <!-- Manajemen Arsip -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Manajemen Arsip</span>
+            </li>
+            <li class="menu-item <?php echo $isPenelitian ? 'active' : ''; ?>">
+              <a href="arsip-penelitian.html" class="menu-link">
+                <i class="menu-icon bx bx-book-content"></i>
+                <div>Penelitian</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo $isPengabdian ? 'active' : ''; ?>">
+              <a href="arsip-pengabdian.html" class="menu-link">
+                <i class="menu-icon bx bx-file-blank"></i>
+                <div>Pengabdian</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo $isDokumenUmum ? 'active' : ''; ?>">
+              <a href="arsip-dokumen.html" class="menu-link">
+                <i class="menu-icon bx bx-folder"></i>
+                <div>Dokumen Umum</div>
+              </a>
+            </li>
+
+            <!-- Sistem -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Sistem</span>
+            </li>
+            <li class="menu-item <?php echo $isManajemenAdmin ? 'active' : ''; ?>">
+              <a href="manajemen-admin.html" class="menu-link">
+                <i class="menu-icon bx bx-user-circle"></i>
+                <div>Manajemen Admin</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="../index.html" target="_blank" class="menu-link">
+                <i class="menu-icon bx bx-globe"></i>
+                <div>Lihat Website</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="auth-login-basic.html" class="menu-link">
+                <i class="menu-icon bx bx-power-off"></i>
+                <div>Logout</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+<!-- PAGE -->
+<div class="layout-page">
+  <!-- NAVBAR -->
+  <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+      <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+        <i class="bx bx-menu bx-sm"></i>
+      </a>
+    </div>
+
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+      <ul class="navbar-nav flex-row align-items-center ms-auto">
+        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+            <div class="avatar avatar-online">
+              <img src="<?= BASE_URL ?>/public/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="<?= BASE_URL ?>/logout">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">Log Out</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /NAVBAR -->

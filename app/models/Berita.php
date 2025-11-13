@@ -70,12 +70,13 @@ class Berita {
      * Mengupdate data berita (untuk Admin)
      */
     public function updateBerita($data) {
-        $query = "UPDATE " . $this->table . " SET
-                    judul_berita = :judul,
-                    slug_berita = :slug,
-                    isi_berita = :isi,
-                    gambar_berita = :gambar
-                  WHERE id_berita = :id";
+                $query = "UPDATE " . $this->table . " SET
+                                        judul_berita = :judul,
+                                        slug_berita = :slug,
+                                        isi_berita = :isi,
+                                        gambar_berita = :gambar,
+                                        tanggal_publish = :tanggal
+                                    WHERE id_berita = :id";
         
         $this->db->query($query);
 
@@ -84,6 +85,7 @@ class Berita {
         $this->db->bind(':slug', $data['slug_berita']);
         $this->db->bind(':isi', $data['isi_berita']);
         $this->db->bind(':gambar', $data['gambar_berita']);
+        $this->db->bind(':tanggal', $data['tanggal_publish']);
         $this->db->bind(':id', $data['id_berita'], PDO::PARAM_INT);
 
         // Eksekusi

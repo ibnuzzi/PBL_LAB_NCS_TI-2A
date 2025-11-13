@@ -7,7 +7,7 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $isDashboard = stripos($currentPath, '/admin/dashboard') !== false;
 $isBerita = stripos($currentPath, '/admin/berita') !== false;
 $isAgenda = stripos($currentPath, '/admin/agenda') !== false;
-$isGaleri = stripos($currentPath, '/admin/galeri') !== false;
+$isGaleri = stripos($currentPath, '/admin/gallery') !== false;
 $isStruktur = stripos($currentPath, '/admin/struktur') !== false;
 $isHalamanStatis = stripos($currentPath, '/admin/halaman-statis') !== false;
 $isJasaLayanan = stripos($currentPath, '/admin/jasa-layanan') !== false;
@@ -67,13 +67,13 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
               </a>
             </li>
             <li class="menu-item <?php echo $isAgenda ? 'active' : ''; ?>">
-              <a href="agenda.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/agenda" class="menu-link">
                 <i class="menu-icon bx bx-calendar"></i>
                 <div>Agenda</div>
               </a>
             </li>
             <li class="menu-item <?php echo $isGaleri ? 'active' : ''; ?>">
-              <a href="galeri.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/gallery" class="menu-link">
                 <i class="menu-icon bx bx-images"></i>
                 <div>Galeri</div>
               </a>

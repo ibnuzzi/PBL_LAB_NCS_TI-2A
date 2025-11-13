@@ -6,12 +6,10 @@ class AdminBeritaController extends Controller {
     /**
      * Constructor "MIDDLEWARE"
      */
-    public function __construct() {
-        if (!isset($_SESSION['admin_logged_in'])) {
-            $_SESSION['error_message'] = 'Anda harus login!';
-            header('Location: ' . BASE_URL . '/login');
-            exit;
-        }
+    public function __construct()
+    {
+        include './app/middleware/AuthMiddleware.php';
+        AuthMiddleware::requireAdmin();
     }
 
     public function index() {
@@ -62,21 +60,17 @@ class AdminBeritaController extends Controller {
             $slug = trim($slug, '-');
         }
 
-        // Handle upload gambar jika ada
+        // Handle upload gambar jika ada (menggunakan ImageService)
         $gambarName = null;
+        include './app/services/ImageService.php';
         if (!empty($_FILES['gambar_berita']['name'])) {
-            $uploadDir = __DIR__ . '/../../public/uploads/berita/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-
-            $ext = pathinfo($_FILES['gambar_berita']['name'], PATHINFO_EXTENSION);
-            $gambarName = 'berita_' . time() . '.' . $ext;
-            $target = $uploadDir . $gambarName;
-
-            if (!move_uploaded_file($_FILES['gambar_berita']['tmp_name'], $target)) {
-                $_SESSION['error_message'] = 'Gagal mengunggah gambar.';
+            $uploaded = ImageService::uploadImage($_FILES['gambar_berita']);
+            if ($uploaded === false) {
+                $_SESSION['error_message'] = 'Gagal mengunggah gambar. Pastikan format JPG/PNG/GIF dan ukuran <= 5MB.';
                 header('Location: ' . BASE_URL . '/admin/berita/create');
                 exit;
             }
+            $gambarName = $uploaded;
         }
 
         // Persist via model
@@ -124,7 +118,7 @@ class AdminBeritaController extends Controller {
         ];
 
         $this->view('templates/admin/header_admin', $data);
-        $this->view('public/admin/berita/create', $data); // reuse create as edit form
+        $this->view('public/admin/berita/edit', $data); // reuse create as edit form
         $this->view('templates/admin/footer_admin');
     }
 
@@ -151,24 +145,32 @@ class AdminBeritaController extends Controller {
             $slug = trim($slug, '-');
         }
 
-        // Handle gambar (opsional)
-        $gambarName = null;
+        // Ambil tanggal publish dari form (jika ada)
+        $tanggal = $_POST['tanggal_publish'] ?? null;
+
+        // Use ImageService to handle image replacement; if no new image, keep existing
+        include './app/services/ImageService.php';
+        $beritaModel = $this->model('Berita');
+        $existing = $beritaModel->getBeritaById($id);
+
+        $gambarName = $existing['gambar_berita'] ?? null;
         if (!empty($_FILES['gambar_berita']['name'])) {
-            $uploadDir = __DIR__ . '/../../public/uploads/berita/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $ext = pathinfo($_FILES['gambar_berita']['name'], PATHINFO_EXTENSION);
-            $gambarName = 'berita_' . time() . '.' . $ext;
-            $target = $uploadDir . $gambarName;
-            move_uploaded_file($_FILES['gambar_berita']['tmp_name'], $target);
+            $replaced = ImageService::replaceImage($existing['gambar_berita'] ?? null, $_FILES['gambar_berita']);
+            if ($replaced === false) {
+                $_SESSION['error_message'] = 'Gagal mengunggah gambar baru. Periksa format/ukuran.';
+                header('Location: ' . BASE_URL . '/admin/berita/edit/' . $id);
+                exit;
+            }
+            $gambarName = $replaced;
         }
 
-        $beritaModel = $this->model('Berita');
         $payload = [
             'id_berita' => $id,
             'judul_berita' => $judul,
             'slug_berita' => $slug,
             'isi_berita' => $isi,
-            'gambar_berita' => $gambarName
+            'gambar_berita' => $gambarName,
+            'tanggal_publish' => $tanggal ?? ($existing['tanggal_publish'] ?? null)
         ];
 
         $ok = $beritaModel->updateBerita($payload);

@@ -73,6 +73,22 @@ Route::add('GET', '/admin/berita/edit/{id}', 'AdminBeritaController', 'show');
 Route::add('POST', '/admin/berita/update/{id}', 'AdminBeritaController', 'update');
 Route::add('GET', '/admin/berita/delete/{id}', 'AdminBeritaController', 'delete');
 
+// Admin agenda routes
+Route::add('GET', '/admin/agenda', 'AdminAgendaController', 'index');
+Route::add('GET', '/admin/agenda/create', 'AdminAgendaController', 'create');
+Route::add('POST', '/admin/agenda/store', 'AdminAgendaController', 'store');
+Route::add('GET', '/admin/agenda/edit/{id}', 'AdminAgendaController', 'show');
+Route::add('POST', '/admin/agenda/update/{id}', 'AdminAgendaController', 'update');
+Route::add('GET', '/admin/agenda/delete/{id}', 'AdminAgendaController', 'delete');
+
+// Admin gallery routes
+Route::add('GET', '/admin/gallery', 'AdminGalleryController', 'index');
+Route::add('GET', '/admin/gallery/create', 'AdminGalleryController', 'create');
+Route::add('POST', '/admin/gallery/store', 'AdminGalleryController', 'store');
+Route::add('GET', '/admin/gallery/edit/{id}', 'AdminGalleryController', 'show');
+Route::add('POST', '/admin/gallery/update/{id}', 'AdminGalleryController', 'update');
+Route::add('GET', '/admin/gallery/delete/{id}', 'AdminGalleryController', 'delete');
+
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);
 ?>

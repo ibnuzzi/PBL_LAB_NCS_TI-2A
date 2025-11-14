@@ -89,6 +89,27 @@ Route::add('GET', '/admin/gallery/edit/{id}', 'AdminGalleryController', 'show');
 Route::add('POST', '/admin/gallery/update/{id}', 'AdminGalleryController', 'update');
 Route::add('GET', '/admin/gallery/delete/{id}', 'AdminGalleryController', 'delete');
 
+
+// JASA & LAYANAN
+Route::add('GET',  '/admin/jasa-layanan',            'AdminJasaLayananController', 'index');
+Route::add('GET',  '/admin/jasa-layanan/create',     'AdminJasaLayananController', 'create');
+Route::add('POST', '/admin/jasa-layanan/store',      'AdminJasaLayananController', 'store');
+Route::add('GET',  '/admin/jasa-layanan/edit/{id}',  'AdminJasaLayananController', 'edit');
+Route::add('POST', '/admin/jasa-layanan/update/{id}','AdminJasaLayananController', 'update');
+Route::add('GET',  '/admin/jasa-layanan/delete/{id}','AdminJasaLayananController', 'delete');
+
+// ================= SARANA PRASARANA =====================
+
+Route::add('GET',  '/admin/sarana',               'AdminSaranaController', 'index');
+Route::add('GET',  '/admin/sarana/create',        'AdminSaranaController', 'create');
+Route::add('POST', '/admin/sarana/store',         'AdminSaranaController', 'store');
+
+Route::add('GET',  '/admin/sarana/edit/{id}',     'AdminSaranaController', 'edit');
+Route::add('POST', '/admin/sarana/update/{id}',   'AdminSaranaController', 'update');
+
+Route::add('GET',  '/admin/sarana/delete/{id}',   'AdminSaranaController', 'delete');
+
+
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);
 ?>

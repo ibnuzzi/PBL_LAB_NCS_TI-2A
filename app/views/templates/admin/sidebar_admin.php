@@ -84,13 +84,13 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
               <span class="menu-header-text">Manajemen Layanan</span>
             </li>
             <li class="menu-item <?php echo $isJasaLayanan ? 'active' : ''; ?>">
-              <a href="jasa-layanan.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/jasa-layanan" class="menu-link">
                 <i class="menu-icon bx bx-briefcase-alt"></i>
                 <div>Jasa dan Layanan</div>
               </a>
             </li>
             <li class="menu-item <?php echo $isSaranaPrasarana ? 'active' : ''; ?>">
-              <a href="sarana-prasarana.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/sarana" class="menu-link">
                 <i class="menu-icon bx bx-building-house"></i>
                 <div>Sarana dan Prasarana</div>
               </a>

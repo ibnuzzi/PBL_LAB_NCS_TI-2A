@@ -27,4 +27,4 @@ define('DB_NAME', 'lab_ncs_db'); // Ganti ini
 define('DB_USER', 'postgres'); // Ganti ini
 
 // Password database PostgreSQL Anda
-define('DB_PASS', 'password123'); // Ganti ini
+define('DB_PASS', 'rakagali'); // Ganti ini

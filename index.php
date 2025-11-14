@@ -109,6 +109,20 @@ Route::add('POST', '/admin/sarana/update/{id}',   'AdminSaranaController', 'upda
 
 Route::add('GET',  '/admin/sarana/delete/{id}',   'AdminSaranaController', 'delete');
 
+//Admin penelitian
+Route::add('GET', '/admin/penelitian', 'AdminPenelitianController', 'index');
+Route::add('GET', '/admin/penelitian/create', 'AdminPenelitianController', 'create');
+Route::add('GET', '/admin/penelitian/edit', 'AdminPenelitianController', 'show');
+
+//Admin pengabdian
+Route::add('GET', '/admin/pengabdian', 'AdminPengabdianController', 'index');
+Route::add('GET', '/admin/pengabdian/create', 'AdminPengabdianController', 'create');
+Route::add('GET', '/admin/pengabdian/edit', 'AdminPengabdianController', 'show');
+
+//Admin dokumen Umum
+Route::add('GET', '/admin/dokumen_umum', 'AdminDokumen_umumController', 'index');
+Route::add('GET', '/admin/dokumen_umum/create', 'AdminDokumen_umumController', 'create');
+Route::add('GET', '/admin/dokumen_umum/edit', 'AdminDokumen_umumController', 'show');
 
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);

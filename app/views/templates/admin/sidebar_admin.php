@@ -101,19 +101,19 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
               <span class="menu-header-text">Manajemen Arsip</span>
             </li>
             <li class="menu-item <?php echo $isPenelitian ? 'active' : ''; ?>">
-              <a href="arsip-penelitian.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/penelitian" class="menu-link">
                 <i class="menu-icon bx bx-book-content"></i>
                 <div>Penelitian</div>
               </a>
             </li>
             <li class="menu-item <?php echo $isPengabdian ? 'active' : ''; ?>">
-              <a href="arsip-pengabdian.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/pengabdian" class="menu-link">
                 <i class="menu-icon bx bx-file-blank"></i>
                 <div>Pengabdian</div>
               </a>
             </li>
             <li class="menu-item <?php echo $isDokumenUmum ? 'active' : ''; ?>">
-              <a href="arsip-dokumen.html" class="menu-link">
+              <a href="<?php echo BASE_URL; ?>/admin/dokumen_umum" class="menu-link">
                 <i class="menu-icon bx bx-folder"></i>
                 <div>Dokumen Umum</div>
               </a>

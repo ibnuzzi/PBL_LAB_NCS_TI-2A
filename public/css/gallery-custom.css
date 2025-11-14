@@ -1,0 +1,127 @@
+/* Gallery Filter Buttons - Override Bootstrap */
+.gallery-filter { 
+  background-color: #f0f0f0 !important;
+  border-color: #ddd !important;
+  color: #333 !important;
+  font-weight: 500;
+  transition: all .25s ease;
+  border-radius: 4px;
+}
+.gallery-filter:hover { 
+  background-color: #e0e0e0 !important;
+  border-color: #bbb !important;
+}
+.gallery-filter.active { 
+  background-color: #1ea37a !important;
+  border-color: #1ea37a !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 3px rgba(30, 163, 122, 0.2);
+}
+
+/* Gallery card: uniform image sizes and hover overlay with title only */
+.gallery-card { position: relative; overflow: hidden; border-radius: 6px; background: #f5f5f5; }
+.gallery-card__image { width: 100%; height: 260px; object-fit: cover; display: block; transition: transform .35s ease; }
+.gallery-card__hover { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 18px; background: linear-gradient(to top, rgba(8, 29, 47, 0.9), rgba(8, 29, 47, 0.5)); color: #fff; transform: translateY(100%); transition: transform .25s ease; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.gallery-card:hover .gallery-card__image { transform: scale(1.05); }
+.gallery-card:hover .gallery-card__hover { transform: translateY(0); }
+.gallery-card__hover .gallery-open-btn { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 56px; 
+  height: 56px; 
+  border-radius: 50%; 
+  background: linear-gradient(135deg, #1ea37a, #15834a); 
+  color: #fff; 
+  font-size: 20px; 
+  text-decoration: none; 
+  flex-shrink: 0; 
+  cursor: pointer; 
+  border: 2px solid rgba(255,255,255,0.2); 
+  transition: all .25s ease; 
+  pointer-events: auto !important;
+  z-index: 11; 
+  position: relative;
+}
+.gallery-card__hover .gallery-open-btn:hover { 
+  transform: scale(1.1); 
+  background: linear-gradient(135deg, #2db88a, #1ea37a); 
+  box-shadow: 0 4px 16px rgba(30, 163, 122, 0.4); 
+}
+.gallery-card__hover .gallery-open-btn:active { 
+  transform: scale(0.95); 
+}
+.gallery-card__title { margin: 0; color: #fff; font-size: 16px; font-weight: 600; flex-grow: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+.gallery-card__text { display: none; }
+.gallery-grid .grid-item { margin-bottom: 30px; }
+.gallery-filter { transition: all .2s ease; border-radius: 4px; }
+.gallery-filter.active { box-shadow: 0 2px 0 #1ea37a inset; background: rgba(30, 163, 122, 0.1); }
+
+/* Magnific Popup caption styles */
+.mfp-gallery-caption { color:#fff; padding: 10px 14px; }
+.mfp-gallery-caption h4.mfp-caption-title { margin:0 0 6px; font-size:18px; font-weight:600; }
+.mfp-gallery-caption .mfp-caption-desc { font-size:14px; color: rgba(255,255,255,0.95); }
+
+@media (max-width: 767px) {
+  .gallery-card__image { height: 200px; }
+}
+
+/* Small utility tweaks */
+.gallery-card__hover p { margin-bottom: 0; }
+
+/* Custom Gallery Modal/Lightbox */
+.gallery-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.92); z-index: 9999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+.gallery-modal.active { display: flex; opacity: 1; animation: modalFadeIn 0.3s ease; }
+
+@keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.gallery-modal__close { position: absolute; top: 24px; right: 32px; font-size: 40px; color: #fff; cursor: pointer; z-index: 10001; transition: all 0.25s ease; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; line-height: 1; }
+.gallery-modal__close:hover { color: #1ea37a; transform: rotate(90deg); }
+
+.gallery-modal__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(30, 163, 122, 0.8); color: #fff; border: none; font-size: 32px; padding: 12px 18px; cursor: pointer; z-index: 10001; transition: all 0.25s ease; border-radius: 4px; }
+.gallery-modal__nav:hover { background: #1ea37a; transform: translateY(-50%) scale(1.1); }
+.gallery-modal__prev { left: 24px; }
+.gallery-modal__next { right: 24px; }
+
+.gallery-modal__content { display: flex; gap: 40px; width: 95%; max-width: 1200px; animation: slideInUp 0.3s ease 0.1s both; }
+
+.gallery-modal__image-container { flex: 1; display: flex; align-items: center; justify-content: center; max-height: 70vh; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 20px; }
+.gallery-modal__image { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+
+.gallery-modal__detail-card { flex: 0 0 360px; background: #fff; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 32px rgba(0,0,0,0.4); animation: slideInUp 0.3s ease 0.15s both; }
+
+.detail-card__header { padding: 28px 24px; border-bottom: 2px solid #f0f0f0; background: linear-gradient(135deg, #f8fafb, #ffffff); }
+.detail-card__title { margin: 0; font-size: 22px; font-weight: 700; color: #081d2f; }
+
+.detail-card__body { padding: 24px; flex: 1; overflow-y: auto; max-height: 380px; }
+.detail-item { margin-bottom: 24px; }
+.detail-item:last-child { margin-bottom: 0; }
+.detail-label { display: block; font-size: 12px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+.detail-value { margin: 0; font-size: 15px; color: #333; line-height: 1.7; }
+
+.detail-card__footer { padding: 16px 24px; background: #f8fafb; border-top: 1px solid #e8eaed; text-align: center; }
+.gallery-counter { font-size: 13px; font-weight: 600; color: #1ea37a; }
+
+@media (max-width: 768px) {
+  .gallery-modal__content { flex-direction: column; gap: 20px; width: 98%; max-width: 100%; }
+  .gallery-modal__detail-card { flex: 0 0 auto; max-height: 50vh; }
+  .gallery-modal__nav { font-size: 28px; padding: 10px 14px; }
+  .gallery-modal__prev { left: 12px; }
+  .gallery-modal__next { right: 12px; }
+  .gallery-modal__close { top: 16px; right: 16px; font-size: 32px; }
+  .detail-card__body { max-height: 250px; }
+}
+
+@media (max-width: 767px) {
+  .gallery-card__image { height: 200px; }
+  .gallery-card__hover { padding: 12px 14px; }
+}
+
+@media (max-width: 768px) {
+  .gallery-modal__content { flex-direction: column; gap: 20px; width: 98%; }
+  .gallery-modal__detail-card { flex: 0 0 auto; }
+  .gallery-modal__nav { font-size: 24px; padding: 8px 12px; }
+  .gallery-modal__prev { left: 10px; }
+  .gallery-modal__next { right: 10px; }
+}

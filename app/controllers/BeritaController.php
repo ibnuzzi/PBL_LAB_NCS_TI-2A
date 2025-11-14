@@ -4,8 +4,28 @@
 class BeritaController extends Controller {
     
     public function index() {
+            $beritaModel = $this->model('Berita');
 
-            $this->view('public/berita');
+            // Pagination settings
+            $perPage = 6;
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            if ($page < 1) $page = 1;
+            $offset = ($page - 1) * $perPage;
+
+            $beritas = $beritaModel->getBeritaPaginated($perPage, $offset);
+            $total = $beritaModel->countBerita();
+            $totalPages = ($total > 0) ? (int)ceil($total / $perPage) : 1;
+
+            $data = [
+            'judul_halaman' => 'Berita - Lab NCS',
+            'beritas' => $beritas,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'perPage' => $perPage,
+            'totalBerita' => $total
+            ];
+
+            $this->view('public/berita', $data);
     }
 
     public function detail($id) {

@@ -9,6 +9,7 @@ include 'app/views/templates/public/navbar.php';
         <h2 class="page-header__title">Berita & Artikel</h2>
         <ul class="nionx-breadcrumb list-unstyled">
             <li><a href="index.php">Beranda</a></li>
+            <li><span>Aktivitas</span></li>
             <li><span>Berita</span></li>
         </ul>
     </div>
@@ -17,84 +18,74 @@ include 'app/views/templates/public/navbar.php';
 <section class="blog-one pt-120 pb-120">
     <div class="container">
         <div class="row gutter-y-30">
-            <div class="col-md-6 col-lg-4">
-                <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms'>
-                    <div class="blog-card__image">
-                        <div class="blog-card__image__item">
-                            <img src="public/assets/images/blog/blog-1-1.png" alt="Analisis Kerentanan Terbaru pada IoT Campus">
-                            <a href="blog-details-left.html" class="blog-card__image__link"></a>
-                        </div>
-                        <div class="blog-card__date">
-                            <span class="blog-card__date__day">02</span>NOV
+            <?php if (!empty($beritas) && is_array($beritas)): ?>
+                <?php foreach ($beritas as $index => $b): ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='<?= (400 + ($index * 200)) ?>ms'>
+                            <div class="blog-card__image">
+                                <div class="blog-card__image__item">
+                                    <?php
+                                        $img = 'public/uploads/berita/' . (!empty($b['gambar_berita']) ? $b['gambar_berita'] : 'default.png');
+                                    ?>
+                                    <img src="<?= $img ?>" alt="<?= htmlspecialchars($b['judul_berita']) ?>">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $b['id_berita'] ?>" class="blog-card__image__link"></a>
+                                </div>
+                                <div class="blog-card__date">
+                                    <span class="blog-card__date__day"><?= date('d', strtotime($b['tanggal_publish'])) ?></span><?= strtoupper(date('M', strtotime($b['tanggal_publish']))) ?>
+                                </div>
+                            </div>
+                            <div class="blog-card__content">
+                                <div class="blog-card__author">
+                                </div>
+                                <h3 class="blog-card__title">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $b['id_berita'] ?>"><?= htmlspecialchars($b['judul_berita']) ?></a>
+                                </h3>
+                                <div class="blog-card__content__btn">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $b['id_berita'] ?>" class="blog-card__content__btn__link">
+                                        Baca Selengkapnya<i class="icon-arrow"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="blog-card__content">
-                        <div class="blog-card__author">
-                        </div>
-                        <h3 class="blog-card__title">
-                            <a >Analisis Kerentanan Terbaru pada IoT Campus</a>
-                        </h3>
-                        <div class="blog-card__content__btn">
-                            <a href="blog-details-left.html" class="blog-card__content__btn__link">
-                                Baca Selengkapnya<i class="icon-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12">
+                    <p>Tidak ada berita untuk ditampilkan.</p>
                 </div>
-            </div>
-            
-            <div class="col-md-6 col-lg-4">
-                <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='600ms'>
-                    <div class="blog-card__image">
-                        <div class="blog-card__image__item">
-                            <img src="public/assets/images/blog/blog-1-2.png" alt="Tim Lab NCS Raih Juara 1 Kompetisi Capture The Flag">
-                            <a href="blog-details-center.html" class="blog-card__image__link"></a>
-                        </div>
-                        <div class="blog-card__date">
-                            <span class="blog-card__date__day">12</span>JUN
-                        </div>
-                    </div>
-                    <div class="blog-card__content">
-                        <div class="blog-card__author">
-                        </div>
-                        <h3 class="blog-card__title">
-                            <a >Tim Lab NCS Raih Juara 1 Kompetisi Capture The Flag</a>
-                        </h3>
-                        <div class="blog-card__content__btn">
-                            <a href="blog-details-center.html" class="blog-card__content__btn__link">
-                                Baca Selengkapnya<i class="icon-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 col-lg-4">
-                <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='800ms'>
-                    <div class="blog-card__image">
-                        <div class="blog-card__image__item">
-                            <img src="public/assets/images/blog/blog-1-3.png" alt="Publikasi Jurnal: Implementasi Zero Trust di Lingkungan Kampus">
-                            <a href="blog-details-right.html" class="blog-card__image__link"></a>
-                        </div>
-                        <div class="blog-card__date">
-                            <span class="blog-card__date__day">03</span>AUG
-                        </div>
-                    </div>
-                    <div class="blog-card__content">
-                        <div class="blog-card__author">
-                        </div>
-                        <h3 class="blog-card__title">
-                            <a >Publikasi Jurnal: Implementasi Zero Trust di Lingkungan Kampus</a>
-                        </h3>
-                        <div class="blog-card__content__btn">
-                            <a href="blog-details-right.html" class="blog-card__content__btn__link">
-                                Baca Selengkapnya<i class="icon-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
+
+        <!-- Pagination -->
+        <?php if (isset($totalPages) && $totalPages > 1): ?>
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <?php
+                                $current = isset($currentPage) ? (int)$currentPage : 1;
+                                $baseUrl = BASE_URL . '/berita';
+                                $prev = $current - 1;
+                                $next = $current + 1;
+                            ?>
+                            <li class="page-item <?= ($current <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= ($current > 1) ? $baseUrl . '?page=' . $prev : '#' ?>" aria-label="Previous">&laquo;</a>
+                            </li>
+
+                            <?php for ($p = 1; $p <= $totalPages; $p++): ?>
+                                <li class="page-item <?= ($p === $current) ? 'active' : '' ?>">
+                                    <a class="page-link" href="<?= $baseUrl . '?page=' . $p ?>"><?= $p ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <li class="page-item <?= ($current >= $totalPages) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= ($current < $totalPages) ? $baseUrl . '?page=' . $next : '#' ?>" aria-label="Next">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 

@@ -57,6 +57,7 @@ if (strpos($routePath, '/index.php') === 0) {
 Route::add('GET', '/', 'HomeController', 'index');
 Route::add('GET', '/berita', 'BeritaController', 'index');
 Route::add('GET', '/berita/detail/{id}', 'BeritaController', 'detail');
+Route::add('GET', '/galeri', 'GalleryController', 'index');
 
 // Rute Login (Ini sudah benar)
 Route::add('GET', '/login', 'AuthController', 'index');

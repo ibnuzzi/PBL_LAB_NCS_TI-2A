@@ -14,6 +14,26 @@ class Gallery {
         return $this->db->resultSet();
     }
 
+    /**
+     * Ambil data galeri dengan pagination
+     */
+    public function getGalleryPaginated($limit = 6, $offset = 0) {
+        $query = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+        $this->db->query($query);
+        $this->db->bind(':limit', (int)$limit, PDO::PARAM_INT);
+        $this->db->bind(':offset', (int)$offset, PDO::PARAM_INT);
+        return $this->db->resultSet();
+    }
+
+    /**
+     * Hitung total item galeri
+     */
+    public function countGallery() {
+        $this->db->query("SELECT COUNT(*) AS total FROM " . $this->table);
+        $row = $this->db->single();
+        return isset($row['total']) ? (int)$row['total'] : 0;
+    }
+
     public function getById($id) {
         $this->db->query("SELECT * FROM " . $this->table . " WHERE id_foto = :id");
         $this->db->bind(':id', $id, PDO::PARAM_INT);

@@ -37,9 +37,9 @@
                     <li class="dropdown">
                         <a href="#">Aktivitas</a>
                         <ul class="sub-menu">
-                            <li><a href="galeri.php">Galeri</a></li>
+                            <li><a href="<?= BASE_URL ?>/galeri">Galeri</a></li>
                             <li><a href="galeri.php">Agenda</a></li>
-                            <li><a href="<?php echo BASE_URL; ?>/berita">Berita</a></li>
+                            <li><a href="<?= BASE_URL ?>/berita">Berita</a></li>
                         </ul>
                     </li>
 

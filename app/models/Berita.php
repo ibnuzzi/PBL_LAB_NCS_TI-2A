@@ -20,6 +20,30 @@ class Berita {
     }
 
     /**
+     * Mengambil data berita dengan pagination
+     * @param int $limit jumlah data per halaman
+     * @param int $offset offset (untuk page)
+     * @return array
+     */
+    public function getBeritaPaginated($limit = 6, $offset = 0) {
+        $query = "SELECT * FROM " . $this->table . " ORDER BY tanggal_publish DESC LIMIT :limit OFFSET :offset";
+        $this->db->query($query);
+        $this->db->bind(':limit', (int)$limit, PDO::PARAM_INT);
+        $this->db->bind(':offset', (int)$offset, PDO::PARAM_INT);
+        return $this->db->resultSet();
+    }
+
+    /**
+     * Menghitung total berita untuk kebutuhan pagination
+     * @return int
+     */
+    public function countBerita() {
+        $this->db->query("SELECT COUNT(*) AS total FROM " . $this->table);
+        $row = $this->db->single();
+        return isset($row['total']) ? (int)$row['total'] : 0;
+    }
+
+    /**
      * Mengambil data berita terbaru (misal: 3 berita) untuk homepage
      */
     public function getBeritaTerbaru($limit = 3) {

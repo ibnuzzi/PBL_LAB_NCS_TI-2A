@@ -206,29 +206,98 @@
     });
   }
 
-  if ($(".img-popup").length) {
-    var groups = {};
-    $(".img-popup").each(function () {
-      var id = parseInt($(this).attr("data-group"), 10);
+  // Custom Gallery Modal Handler (replaces old img-popup handler)
+  var galleryItems = [];
+  var currentGalleryIndex = 0;
 
-      if (!groups[id]) {
-        groups[id] = [];
-      }
-
-      groups[id].push(this);
-    });
-
-    $.each(groups, function () {
-      $(this).magnificPopup({
-        type: "image",
-        closeOnContentClick: true,
-        closeBtnInside: false,
-        gallery: {
-          enabled: true
-        }
+  function collectGalleryItems() {
+    galleryItems = [];
+    $(".gallery-open-btn").each(function () {
+      galleryItems.push({
+        image: $(this).data("image"),
+        title: $(this).data("title"),
+        desc: $(this).data("desc"),
+        date: $(this).data("date"),
+        element: this
       });
     });
   }
+
+  function openGalleryModal(index) {
+    if (galleryItems.length === 0) return;
+    currentGalleryIndex = index;
+    updateGalleryModal();
+    $("#gallery-modal").addClass("active");
+    $("body").css("overflow", "hidden");
+  }
+
+  function closeGalleryModal() {
+    $("#gallery-modal").removeClass("active");
+    $("body").css("overflow", "auto");
+  }
+
+  function updateGalleryModal() {
+    if (galleryItems.length === 0) return;
+    var item = galleryItems[currentGalleryIndex];
+    $("#gallery-modal-image").attr("src", item.image).attr("alt", item.title);
+    $("#gallery-modal-title").text(item.title);
+    $("#gallery-modal-desc").text(item.desc);
+    $("#gallery-modal-date").text(item.date);
+    $("#gallery-modal-counter").text((currentGalleryIndex + 1) + " / " + galleryItems.length);
+  }
+
+  // Event handlers
+  $(document).on("click", ".gallery-open-btn", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var index = $.inArray(this, galleryItems.map(function (item) { return item.element; }));
+    if (index === -1) index = 0;
+    openGalleryModal(index);
+  });
+
+  $(document).on("click", ".gallery-modal__close", function (e) {
+    e.preventDefault();
+    closeGalleryModal();
+  });
+
+  $(document).on("click", ".gallery-modal__next", function (e) {
+    e.preventDefault();
+    currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+    updateGalleryModal();
+  });
+
+  $(document).on("click", ".gallery-modal__prev", function (e) {
+    e.preventDefault();
+    currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+    updateGalleryModal();
+  });
+
+  $(document).on("keydown", function (e) {
+    if (!$("#gallery-modal").hasClass("active")) return;
+    if (e.keyCode === 27) closeGalleryModal();
+    if (e.keyCode === 39) {
+      currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+      updateGalleryModal();
+    }
+    if (e.keyCode === 37) {
+      currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateGalleryModal();
+    }
+  });
+
+  $(document).on("click", "#gallery-modal", function (e) {
+    if (e.target.id === "gallery-modal") {
+      closeGalleryModal();
+    }
+  });
+
+  // Initialize on page load
+  $(window).on("load", function () {
+    if ($("#gallery-modal").length) {
+      collectGalleryItems();
+    }
+  });
+
 
   function dynamicCurrentMenuClass(selector) {
     let FileName = window.location.href.split("https://pixydrops.com/").reverse()[0];
@@ -710,6 +779,38 @@
         $(".fitRow-layout").isotope({
           layoutMode: "fitRows"
         });
+      });
+    }
+
+    // Gallery grid (custom) - initialize Isotope and wire filter buttons
+    if ($(".gallery-grid").length) {
+      $(".gallery-grid").imagesLoaded(function () {
+        $(".gallery-grid").isotope({
+          itemSelector: '.grid-item',
+          layoutMode: 'masonry'
+        });
+      });
+    }
+
+    if ($(".gallery-filter").length) {
+      var galleryFilterBtns = $(".gallery-filter");
+      galleryFilterBtns.on("click", function () {
+        var Self = $(this);
+        var selector = Self.attr("data-filter");
+        galleryFilterBtns.removeClass("active");
+        Self.addClass("active");
+
+        if ($(".gallery-grid").length) {
+          $(".gallery-grid").isotope({
+            filter: selector,
+            animationOptions: {
+              duration: 500,
+              easing: "linear",
+              queue: false
+            }
+          });
+        }
+        return false;
       });
     }
 

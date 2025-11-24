@@ -12,17 +12,11 @@ class HomeController extends Controller {
     }
 
     public function layanan() {
-        // 1. Panggil Model Konsultasi
+
         $konsultasiModel = $this->model('Konsultasi');
-
-        // 2. Ambil data HANYA yang statusnya 'dijawab'
-        // Kita butuh membuat method 'getAllDijawab' di Model (lihat langkah 2 di bawah)
         $data['daftar_konsultasi'] = $konsultasiModel->getAllDijawab();
-
-        // 3. Data tambahan untuk Header (Judul Tab)
         $data['judul_halaman'] = 'Layanan Konsultasi - Lab NCS';
 
-        // 4. Tampilkan View (Memuat Header & Footer juga agar rapi)
         $this->view('templates/public/header', $data);
         $this->view('public/layanan', $data);
         $this->view('templates/public/footer');
@@ -75,5 +69,9 @@ class HomeController extends Controller {
 
         header('Location: ' . BASE_URL . '/layanan');
         exit;
+    }
+
+    public function arsip() {
+        $this->view('public/arsip');
     }
 }

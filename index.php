@@ -60,6 +60,7 @@ Route::add('GET', '/berita/detail/{id}', 'BeritaController', 'detail');
 Route::add('GET', '/galeri', 'GalleryController', 'index');
 Route::add('GET', '/layanan', 'HomeController', 'layanan');
 Route::add('POST', '/layanan/store', 'HomeController', 'kirimLayanan');
+Route::add('GET', '/arsip', 'HomeController', 'arsip');
 
 // Rute Login (Ini sudah benar)
 Route::add('GET', '/login', 'AuthController', 'index');

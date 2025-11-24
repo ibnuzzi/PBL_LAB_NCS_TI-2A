@@ -130,13 +130,13 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
       </a>
     </li>
     <li class="menu-item">
-      <a href="../index.html" target="_blank" class="menu-link">
+      <a href="<?php echo BASE_URL; ?>/" target="_blank" class="menu-link">
         <i class="menu-icon bx bx-globe"></i>
         <div>Lihat Website</div>
       </a>
     </li>
     <li class="menu-item">
-      <a href="auth-login-basic.html" class="menu-link">
+      <a href="<?php echo BASE_URL; ?>/logout" class="menu-link">
         <i class="menu-icon bx bx-power-off"></i>
         <div>Logout</div>
       </a>

@@ -1,69 +1,65 @@
 <header class="main-header sticky-header sticky-header--normal">
     <div class="container-fluid">
-        <div class="main-header__inner">
-            <div class="main-header__logo logo-laboix">
-                <a href="index.php">
+        <div class="main-header__inner" style="display: flex; justify-content: space-between; align-items: center;">
+
+            <div class="main-header__logo logo-laboix" style="flex-shrink: 0;">
+                <a href="<?php echo BASE_URL; ?>/">
                     <img src="public/assets/images/ClearLogoJTI.png" alt="Lab NCS JTI Polinema" width="60">
                 </a>
             </div>
-            <nav class="main-header__nav main-menu">
+
+            <nav class="main-header__nav main-menu" style="margin: 0 auto;">
                 <ul class="main-menu__list">
 
                     <li>
-                        <a href="index.php">Beranda</a>
+                        <a href="<?php echo BASE_URL; ?>/">Beranda</a>
                     </li>
 
                     <li class="dropdown">
-                        <a href="about.php">Tentang Kami</a>
+                        <a href="#">Tentang Kami</a>
                         <ul class="sub-menu">
-                            <li><a href="about.php#sejarah">Sejarah Lab</a></li>
-                            <li><a href="about.php#visi-misi">Visi & Misi</a></li>
-                            <li><a href="about.php#struktur-organisasi">Struktur Pengelola</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/about#sejarah">Sejarah Lab</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/about#visi-misi">Visi & Misi</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/about#struktur">Struktur Pengelola</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/riset#roadmap">Roadmap Penelitian</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="riset.php">Akademik & Riset</a>
+                        <a href="#">Layanan</a>
                         <ul class="sub-menu">
-                            <li><a href="riset.php#roadmap">Roadmap Penelitian</a></li>
-                            <li><a href="riset.php#penelitian">Penelitian (Publikasi & Proyek)</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="layanan.php">Fasilitas & Layanan</a>
-                        <ul class="sub-menu">
-                            <li><a href="riset.php#roadmap">Fasilitas</a></li>
-                            <li><a href="<?= BASE_URL ?>/layanan">Layanan</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/fasilitas">Fasilitas Lab</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/layanan">Konsultasi Keamanan</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
                         <a href="#">Aktivitas</a>
                         <ul class="sub-menu">
-                            <li><a href="<?= BASE_URL ?>/galeri">Galeri</a></li>
-                            <li><a href="galeri.php">Agenda</a></li>
-                            <li><a href="<?= BASE_URL ?>/berita">Berita</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/berita">Berita & Artikel</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/galeri">Galeri Foto</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/agenda">Agenda Kegiatan</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="arsip.php">Arsip</a>
+                        <a href="<?php echo BASE_URL; ?>/arsip">Arsip Digital</a>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#">Link Terkait</a>
-                         <ul class="sub-menu">
+                        <a href="#">Tautan</a>
+                        <ul class="sub-menu">
                             <li><a href="https://www.polinema.ac.id/" target="_blank">Polinema</a></li>
                             <li><a href="https://jti.polinema.ac.id/" target="_blank">JTI Polinema</a></li>
                             <li><a href="https://sinta.kemdikbud.go.id/" target="_blank">SINTA</a></li>
                         </ul>
                     </li>
-                    
+
                 </ul>
             </nav>
-            <div class="main-header__right">
-                <div class="main-header__link">
+
+            <div>
+                <div>
                     <a href="<?php echo BASE_URL; ?>/login" class="laboix-btn main-header__btn">Login</a>
                 </div>
 
@@ -71,6 +67,7 @@
                     <span></span><span></span><span></span>
                 </div>
             </div>
+
         </div>
     </div>
 </header>

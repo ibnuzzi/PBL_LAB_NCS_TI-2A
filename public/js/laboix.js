@@ -782,35 +782,12 @@
       });
     }
 
-    // Gallery grid (custom) - initialize Isotope and wire filter buttons
+    // Gallery grid: simple layout (category filters removed)
+    // Note: Isotope filter initialization removed per design request
     if ($(".gallery-grid").length) {
+      // keep imagesLoaded to ensure images are loaded before layout
       $(".gallery-grid").imagesLoaded(function () {
-        $(".gallery-grid").isotope({
-          itemSelector: '.grid-item',
-          layoutMode: 'masonry'
-        });
-      });
-    }
-
-    if ($(".gallery-filter").length) {
-      var galleryFilterBtns = $(".gallery-filter");
-      galleryFilterBtns.on("click", function () {
-        var Self = $(this);
-        var selector = Self.attr("data-filter");
-        galleryFilterBtns.removeClass("active");
-        Self.addClass("active");
-
-        if ($(".gallery-grid").length) {
-          $(".gallery-grid").isotope({
-            filter: selector,
-            animationOptions: {
-              duration: 500,
-              easing: "linear",
-              queue: false
-            }
-          });
-        }
-        return false;
+        // do nothing special — layout handled by CSS grid/stacking
       });
     }
 

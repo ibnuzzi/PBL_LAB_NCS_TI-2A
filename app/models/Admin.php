@@ -32,6 +32,24 @@ class Admin {
     }
 
     /**
+     * Cari admin berdasarkan ID
+     * @param int $id
+     * @return array|false Data admin jika ditemukan, false jika tidak
+     */
+    public function getAdminById($id) {
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE id_admin = :id");
+        $this->db->bind(':id', $id, PDO::PARAM_INT);
+        
+        $row = $this->db->single();
+        
+        if ($this->db->rowCount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Fungsi ini akan Anda perlukan nanti untuk menambah admin baru
      * @param array $data (email, password_hash, nama_lengkap)
      */

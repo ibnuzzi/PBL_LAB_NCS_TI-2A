@@ -33,10 +33,16 @@ class BeritaController extends Controller
     public function detail($id)
     {
         $beritaModel = $this->model('Berita');
+        $adminModel = $this->model('Admin');
+
+        $berita = $beritaModel->getBeritaById($id);
+        $admin = $berita && $berita['id_admin_penulis'] ? $adminModel->getAdminById($berita['id_admin_penulis']) : null;
 
         $data = [
             'judul_halaman' => 'Detail Berita - Lab NCS',
-            'berita' => $beritaModel->getBeritaById($id)
+            'berita' => $berita,
+            'admin' => $admin,
+            'latestPosts' => $beritaModel->getBeritaTerbaru(5)
         ];
 
         if (!$data['berita']) {
@@ -48,8 +54,7 @@ class BeritaController extends Controller
             return;
         }
 
-        $this->view('templates/public/header', $data);
+        // Load detail view (which includes header and footer internally)
         $this->view('public/berita/detail', $data);
-        $this->view('templates/public/footer');
     }
 }

@@ -3,8 +3,9 @@ include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
 
-<!-- gallery custom styles -->
-<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/gallery-custom.css">
+<!-- gallery custom styles (cache-busted) -->
+<?php $gc_path = __DIR__ . '/../../..' . '/public/css/gallery-custom.css'; ?>
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/gallery-custom.css?v=<?= file_exists($gc_path) ? filemtime($gc_path) : time() ?>">
 
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
@@ -24,25 +25,10 @@ include 'app/views/templates/public/navbar.php';
             <h6 class="sec-title__tagline"><img src="<?= BASE_URL ?>/public/assets/images/shapes/science.png" alt="Galeri" class="sec-title__img">Galeri</h6>
             <h3 class="sec-title__title">Dokumentasi Kegiatan Lab NCS</h3>
         </div>
-
-        <!-- Filter Buttons -->
-        <div class="text-center mb-4">
-            <div class="btn-group" role="group" aria-label="gallery filters">
-                <?php if (!empty($categories) && is_array($categories)): ?>
-                    <?php foreach ($categories as $i => $cat): $slug = strtolower(preg_replace('/[^a-z0-9]+/i','-',trim($cat))); ?>
-                        <button class="btn btn-sm btn-outline-secondary gallery-filter <?= ($i===0)?'active':'' ?>" data-filter="<?= ($i===0)?'*':'.cat-'.$slug ?>"><?= htmlspecialchars($cat) ?></button>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <button class="btn btn-sm btn-outline-secondary active">All</button>
-                <?php endif; ?>
-            </div>
-        </div>
-
         <div class="row gallery-grid gutter-y-30">
             <?php if (!empty($galleries) && is_array($galleries)): ?>
                 <?php foreach ($galleries as $g): ?>
-                        <?php $catSlug = 'uncategorized'; if (isset($g['kategori']) && trim($g['kategori'])!=='') { $catSlug = strtolower(preg_replace('/[^a-z0-9]+/i','-',trim($g['kategori']))); } ?>
-                    <div class="col-md-6 col-lg-4 grid-item <?php echo 'cat-'.$catSlug; ?>">
+                    <div class="col-md-6 col-lg-4 grid-item">
                         <div class="gallery-card">
                             <?php $img = !empty($g['nama_file_foto']) ? BASE_URL . '/public/uploads/gallery/' . $g['nama_file_foto'] : BASE_URL . '/public/assets/images/empty/empty_data.jpg'; ?>
                             <img src="<?= $img ?>" alt="<?= htmlspecialchars($g['judul_foto'] ?? 'Galeri') ?>" class="gallery-card__image" loading="lazy" decoding="async">

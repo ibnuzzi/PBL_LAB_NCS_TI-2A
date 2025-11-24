@@ -5,8 +5,8 @@
 
                 <div class="col-md-6 col-xl-4">
                     <div class="footer-widget footer-widget--info">
-                        <a href="" class="footer-widget__logo">
-                            <img src="public/assets/images/ClearLogoJTI.png" width="50%" alt="Logo Lab NCS">
+                        <a href="<?= BASE_URL ?>" class="footer-widget__logo">
+                            <img src="<?= BASE_URL ?>/public/assets/images/ClearLogoJTI.png" width="50%" alt="Logo Lab NCS">
                         </a>
                         <p class="footer-widget__text">Laboratorium Network and Cyber Crime (NCS) JTI Polinema, berfokus pada riset dan pengembangan keamanan jaringan serta forensik digital.</p>
                         
@@ -55,10 +55,12 @@
                     <p class="main-footer__copyright">Website by El Loco</p>
                 </div>
             </div></div></div><div class="main-footer__shape">
-        <img src="public/assets/images/shapes/footer-shape-1-1.png" alt="shape">
+        <img src="<?= BASE_URL ?>/public/assets/images/shapes/footer-shape-1-1.png" alt="shape">
     </div>
     <div class="main-footer__shape main-footer__shape--two">
-        <img src="public/assets/images/shapes/footer-shape-1-2.png" alt="shape">
+        <img src="<?= BASE_URL ?>/public/assets/images/shapes/footer-shape-1-2.png" alt="shape">
     </div>
 
 </footer>
+<!-- Back to top button (site-wide) -->
+<a id="back-to-top" href="#" aria-label="Back to top"><span class="backtop-icon">&#8679;</span></a>

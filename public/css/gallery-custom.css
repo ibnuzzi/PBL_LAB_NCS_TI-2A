@@ -1,22 +1,4 @@
-/* Gallery Filter Buttons - Override Bootstrap */
-.gallery-filter { 
-  background-color: #f0f0f0 !important;
-  border-color: #ddd !important;
-  color: #333 !important;
-  font-weight: 500;
-  transition: all .25s ease;
-  border-radius: 4px;
-}
-.gallery-filter:hover { 
-  background-color: #e0e0e0 !important;
-  border-color: #bbb !important;
-}
-.gallery-filter.active { 
-  background-color: #1ea37a !important;
-  border-color: #1ea37a !important;
-  color: #fff !important;
-  box-shadow: 0 0 0 3px rgba(30, 163, 122, 0.2);
-}
+/* Note: category filter UI removed per design — no filter button styles required */
 
 /* Gallery card: uniform image sizes and hover overlay with title only */
 .gallery-card { position: relative; overflow: hidden; border-radius: 6px; background: #f5f5f5; }
@@ -54,8 +36,6 @@
 .gallery-card__title { margin: 0; color: #fff; font-size: 16px; font-weight: 600; flex-grow: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 .gallery-card__text { display: none; }
 .gallery-grid .grid-item { margin-bottom: 30px; }
-.gallery-filter { transition: all .2s ease; border-radius: 4px; }
-.gallery-filter.active { box-shadow: 0 2px 0 #1ea37a inset; background: rgba(30, 163, 122, 0.1); }
 
 /* Magnific Popup caption styles */
 .mfp-gallery-caption { color:#fff; padding: 10px 14px; }
@@ -84,28 +64,37 @@
 .gallery-modal__prev { left: 24px; }
 .gallery-modal__next { right: 24px; }
 
-.gallery-modal__content { display: flex; gap: 40px; width: 95%; max-width: 1200px; animation: slideInUp 0.3s ease 0.1s both; }
+.gallery-modal__content { display: flex; gap: 0; width: 95%; max-width: 1200px; animation: slideInUp 0.3s ease 0.1s both; position: relative; border-radius: 12px; overflow: hidden; background: #ffffff; box-shadow: 0 20px 60px rgba(0,0,0,0.55); }
 
-.gallery-modal__image-container { flex: 1; display: flex; align-items: center; justify-content: center; max-height: 70vh; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 20px; }
-.gallery-modal__image { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+/* Left: image - Right: detail card. Keep both as flex children so they form one unified white panel */
+.gallery-modal__image-container { flex: 0 0 45%; display: flex; align-items: center; justify-content: center; max-height: calc(80vh - 40px); overflow: hidden; min-width: 360px; background: #fafafa; padding: 12px; }
+.gallery-modal__image { max-width: 100%; max-height: 100%; object-fit: contain; width: auto; height: auto; display: block; border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
 
-.gallery-modal__detail-card { flex: 0 0 360px; background: #fff; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 32px rgba(0,0,0,0.4); animation: slideInUp 0.3s ease 0.15s both; }
+.gallery-modal__detail-card { position: relative; flex: 1 1 55%; min-width: 420px; max-width: 720px; height: auto; background: #ffffff; border-radius: 0 12px 12px 0; overflow: hidden; display: flex; flex-direction: column; box-shadow: none; padding-left: 24px; }
 
-.detail-card__header { padding: 28px 24px; border-bottom: 2px solid #f0f0f0; background: linear-gradient(135deg, #f8fafb, #ffffff); }
-.detail-card__title { margin: 0; font-size: 22px; font-weight: 700; color: #081d2f; }
+.detail-card__header { padding: 24px 24px 12px 24px; border-bottom: none; background: transparent; }
+.detail-card__title { margin: 0 0 6px 0; font-size: 26px; font-weight: 800; color: #081d2f; line-height: 1.05; }
 
-.detail-card__body { padding: 24px; flex: 1; overflow-y: auto; max-height: 380px; }
+.detail-card__body { padding: 20px 28px; flex: 1; overflow-y: auto; max-height: calc(80vh - 180px); word-wrap: break-word; }
+
+/* Make sure long descriptions scroll inside the card and look good */
+.detail-card__body::-webkit-scrollbar { width: 8px; }
+.detail-card__body::-webkit-scrollbar-thumb { background: rgba(30,163,122,0.15); border-radius: 6px; }
+
+.detail-value { white-space: pre-wrap; }
 .detail-item { margin-bottom: 24px; }
 .detail-item:last-child { margin-bottom: 0; }
-.detail-label { display: block; font-size: 12px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
-.detail-value { margin: 0; font-size: 15px; color: #333; line-height: 1.7; }
+.detail-label { display: block; font-size: 13px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 10px; }
+.detail-value { margin: 0; font-size: 16px; color: #333; line-height: 1.9; }
 
-.detail-card__footer { padding: 16px 24px; background: #f8fafb; border-top: 1px solid #e8eaed; text-align: center; }
+.detail-card__footer { padding: 12px 20px; background: transparent; border-top: none; text-align: center; }
 .gallery-counter { font-size: 13px; font-weight: 600; color: #1ea37a; }
 
 @media (max-width: 768px) {
-  .gallery-modal__content { flex-direction: column; gap: 20px; width: 98%; max-width: 100%; }
-  .gallery-modal__detail-card { flex: 0 0 auto; max-height: 50vh; }
+  .gallery-modal__content { flex-direction: column; gap: 20px; width: 98%; max-width: 100%; background: transparent; box-shadow: none; }
+  .gallery-modal__image-container { flex: 0 0 auto; width: 100%; max-height: 60vh; border-radius: 12px; overflow: hidden; }
+  .gallery-modal__image { border-radius: 12px; }
+  .gallery-modal__detail-card { position: relative; width: 100%; height: auto; max-height: 50vh; border-radius: 12px; }
   .gallery-modal__nav { font-size: 28px; padding: 10px 14px; }
   .gallery-modal__prev { left: 12px; }
   .gallery-modal__next { right: 12px; }

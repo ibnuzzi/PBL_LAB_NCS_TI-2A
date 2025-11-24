@@ -10,12 +10,12 @@ include 'app/views/templates/public/navbar.php';
 ?>
 
 <section class="page-header">
-    <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+    <div class="page-header__bg" style="background-image: url(<?= BASE_URL ?>/public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
         <h2 class="page-header__title"><?= htmlspecialchars($berita['judul_berita']) ?></h2>
         <ul class="nionx-breadcrumb list-unstyled">
-            <li><a href="/index.php">Beranda</a></li>
-            <li><a href="/index.php/berita">Berita</a></li>
+            <li><a href="<?= BASE_URL ?>">Beranda</a></li>
+            <li><a href="<?= BASE_URL ?>/berita">Berita</a></li>
             <li><span><?= htmlspecialchars($berita['judul_berita']) ?></span></li>
         </ul>
     </div>
@@ -24,24 +24,101 @@ include 'app/views/templates/public/navbar.php';
 <section class="blog-single pt-120 pb-120">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <!-- Main Content: Left Column (8 cols) -->
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <!-- Featured Image -->
                 <div class="blog-single__image mb-4">
-                    <?php $img = 'public/uploads/berita/' . (!empty($berita['gambar_berita']) ? $berita['gambar_berita'] : 'default.png'); ?>
-                    <img src="<?= $img ?>" alt="<?= htmlspecialchars($berita['judul_berita']) ?>" class="img-fluid">
+                    <?php
+                    $defaultImg = BASE_URL . '/public/assets/images/empty/empty_data.jpg';
+                    $imgUrl = $defaultImg;
+                    if (!empty($berita['gambar_berita'])) {
+                        // server-side path detection to avoid broken images
+                        $serverPath = realpath(__DIR__ . '/../../../../public/uploads/berita/') ?: (__DIR__ . '/../../../../public/uploads/berita/');
+                        $candidate = rtrim($serverPath, '/') . '/' . $berita['gambar_berita'];
+                        if (file_exists($candidate)) {
+                            $imgUrl = BASE_URL . '/public/uploads/berita/' . $berita['gambar_berita'];
+                        }
+                    }
+                    ?>
+                    <img src="<?= $imgUrl ?>" alt="<?= htmlspecialchars($berita['judul_berita']) ?>" class="img-fluid rounded" style="width: 100%; max-height: 520px; object-fit: cover;">
                 </div>
 
-                <div class="blog-single__content">
-                    <div class="blog-single__meta mb-2">
-                        <span class="mr-3">Dipublikasikan: <?= date('d M Y', strtotime($berita['tanggal_publish'])) ?></span>
-                    </div>
+                <!-- Article Meta (author only; comments removed) -->
+                <div class="blog-single__meta mb-3" style="display: flex; gap: 12px; align-items: center; color: #666; font-size: 14px;">
+                    <span>
+                        <i class="far fa-user-circle" style="margin-right: 6px;"></i>
+                        <strong>By admin</strong>
+                    </span>
+                </div>
 
-                    <div class="blog-single__body">
-                        <?= $berita['isi_berita'] ?>
-                    </div>
+                <!-- Article Title -->
+                <h1 class="blog-single__title" style="font-size: 32px; font-weight: 700; color: #081d2f; margin-bottom: 24px; line-height: 1.3;">
+                    <?= htmlspecialchars($berita['judul_berita']) ?>
+                </h1>
 
-                    <div class="mt-4">
-                        <a href="/index.php/berita" class="btn btn-secondary">Kembali ke Berita</a>
-                    </div>
+                <!-- Article Body Content -->
+                <div class="blog-single__body" style="font-size: 15px; line-height: 1.8; color: #555; margin-bottom: 40px;">
+                    <?= $berita['isi_berita'] ?>
+                </div>
+
+                <!-- Back Button -->
+                <div style="margin-top: 40px;">
+                    <a href="<?= BASE_URL ?>/berita" class="btn btn-outline-secondary btn-sm">
+                        ← Kembali ke Berita
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sidebar: Right Column (4 cols) -->
+            <div class="col-lg-4">
+                <!-- Latest Post Widget -->
+                <aside class="blog-sidebar" style="background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 1px 0 rgba(0,0,0,0.04);">
+                    <h3 style="font-size: 24px; font-weight: 700; color: #081d2f; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid #e6e6e6;">
+                        Latest post
+                    </h3>
+
+                    <?php
+                        // Limit latest posts to maximum 5 items
+                        $latestList = [];
+                        if (!empty($latestPosts) && is_array($latestPosts)) {
+                            $latestList = array_slice($latestPosts, 0, 5);
+                        }
+                    ?>
+                    <?php if (!empty($latestList)): ?>
+                        <div class="blog-widget__list">
+                            <?php foreach ($latestList as $post): ?>
+                                <article style="margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #f0f0f0; display: flex; gap: 12px; align-items: flex-start;">
+                                    <div style="flex: 0 0 36%;">
+                                        <?php
+                                            $postImgUrl = BASE_URL . '/public/assets/images/empty/empty_data.jpg';
+                                            if (!empty($post['gambar_berita'])) {
+                                                $candidate = realpath(__DIR__ . '/../../../../public/uploads/berita/') ?: (__DIR__ . '/../../../../public/uploads/berita/');
+                                                $candidate = rtrim($candidate, '/') . '/' . $post['gambar_berita'];
+                                                if (file_exists($candidate)) {
+                                                    $postImgUrl = BASE_URL . '/public/uploads/berita/' . $post['gambar_berita'];
+                                                }
+                                            }
+                                        ?>
+                                        <a href="<?= BASE_URL ?>/berita/detail/<?= htmlspecialchars($post['id_berita']) ?>">
+                                            <img src="<?= $postImgUrl ?>" alt="<?= htmlspecialchars($post['judul_berita']) ?>" style="width:100%; height:84px; object-fit:cover; border-radius:6px; display:block;" loading="lazy">
+                                        </a>
+                                    </div>
+                                    <div style="flex: 1 1 64%;">
+                                        <div style="font-size: 12px; color: #1ea37a; font-weight: 600; margin-bottom: 6px;">
+                                            <?= date('d M Y', strtotime($post['tanggal_publish'])) ?>
+                                        </div>
+                                        <h4 style="font-size: 14px; font-weight: 600; margin: 0; line-height:1.25;">
+                                            <a href="<?= BASE_URL ?>/berita/detail/<?= htmlspecialchars($post['id_berita']) ?>" style="text-decoration:none; color:#081d2f;">
+                                                <?= htmlspecialchars(strlen($post['judul_berita']) > 60 ? substr($post['judul_berita'], 0, 60) . '...' : $post['judul_berita']) ?>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p style="color: #999; font-size: 14px;">Belum ada berita terbaru.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

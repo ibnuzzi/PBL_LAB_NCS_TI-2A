@@ -116,7 +116,7 @@ Route::add('GET',  '/admin/sarana/delete/{id}',   'AdminSaranaController', 'dele
 Route::add('GET',  '/admin/penelitian',               'AdminPenelitianController', 'index');
 Route::add('GET',  '/admin/penelitian/create',        'AdminPenelitianController', 'create');
 Route::add('POST', '/admin/penelitian/store',         'AdminPenelitianController', 'store');
-Route::add('GET',  '/admin/penelitian/edit/{id}',     'AdminPenelitianController', 'show');
+Route::add('GET',  '/admin/penelitian/edit/{id}',     'AdminPenelitianController', 'edit');
 Route::add('POST', '/admin/penelitian/update/{id}',   'AdminPenelitianController', 'update');
 Route::add('GET',  '/admin/penelitian/delete/{id}',   'AdminPenelitianController', 'delete');
 
@@ -133,9 +133,9 @@ Route::add('GET',  '/admin/pengabdian/delete/{id}',   'AdminPengabdianController
 Route::add('GET',  '/admin/dokumen_umum',                 'AdminDokumenUmumController', 'index');
 Route::add('GET',  '/admin/dokumen_umum/create',          'AdminDokumenUmumController', 'create');
 Route::add('POST', '/admin/dokumen_umum/store',           'AdminDokumenUmumController', 'store');
-Route::add('GET',  '/admin/dokumen_umum/edit/([0-9]+)',   'AdminDokumenUmumController', 'edit');
-Route::add('POST', '/admin/dokumen_umum/update/([0-9]+)', 'AdminDokumenUmumController', 'update');
-Route::add('GET',  '/admin/dokumen_umum/delete/([0-9]+)', 'AdminDokumenUmumController', 'delete');
+Route::add('GET',  '/admin/dokumen_umum/edit/{id}',   'AdminDokumenUmumController', 'edit');
+Route::add('POST', '/admin/dokumen_umum/update/{id}', 'AdminDokumenUmumController', 'update');
+Route::add('GET',  '/admin/dokumen_umum/delete/{id}', 'AdminDokumenUmumController', 'delete');
 
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);

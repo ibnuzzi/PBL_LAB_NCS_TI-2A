@@ -30,6 +30,7 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <tbody class="table-border-bottom-0">
             <?php
+            // Normalisasi variabel (biar aman kayak galeri)
             $dokumen_list = $dokumen_list ?? [];
             if (empty($dokumen_list) && isset($dokumens)) $dokumen_list = $dokumens;
             if (empty($dokumen_list) && isset($dokumen)) $dokumen_list = is_array($dokumen) ? [$dokumen] : [];
@@ -37,46 +38,62 @@ include './app/views/templates/admin/sidebar_admin.php';
             if (!empty($dokumen_list)):
               $counter = 1;
               foreach ($dokumen_list as $d):
+
                 $created = $d['created_at'] ?? '';
-                $createdFormatted = '';
-                if (!empty($created)) {
-                  $dtc = date_create($created);
-                  if ($dtc) $createdFormatted = date_format($dtc, 'Y-m-d H:i');
-                }
+                $createdFormatted = $created ? date('Y-m-d H:i', strtotime($created)) : '-';
             ?>
               <tr>
                 <td><?= $counter++; ?></td>
-                <td style="max-width:380px;"><?= htmlspecialchars($d['nama_dokumen']); ?></td>
+
+                <td style="max-width:380px;">
+                  <?= htmlspecialchars($d['nama_dokumen'] ?? '-'); ?>
+                </td>
+
                 <td><?= htmlspecialchars($createdFormatted); ?></td>
+
                 <td>
+                  <!-- DETAIL -->
                   <button
                     type="button"
                     class="btn btn-sm btn-outline-info me-1 btn-view-dokumen"
-                    data-judul="<?= htmlspecialchars($d['nama_dokumen']); ?>"
-                    data-deskripsi="<?= htmlspecialchars($d['deskripsi_dokumen']); ?>"
-                    data-file="<?= BASE_URL . '/public/uploads/dokumen_umum/' . htmlspecialchars($d['nama_file_dokumen']); ?>"
+                    data-judul="<?= htmlspecialchars($d['nama_dokumen'] ?? ''); ?>"
+                    data-deskripsi="<?= htmlspecialchars($d['deskripsi_dokumen'] ?? '-'); ?>"
+                    data-file="<?= BASE_URL . '/public/uploads/dokumen_umum/' . htmlspecialchars($d['nama_file_dokumen'] ?? ''); ?>"
                     data-tanggal="<?= htmlspecialchars($createdFormatted); ?>">
                     <i class="bx bx-show-alt"></i>
                   </button>
 
-                  <a href="<?= BASE_URL ?>/admin/dokumen_umum/edit/<?= (int)$d['id_dokumen']; ?>"
+                  <!-- EDIT -->
+                  <a href="<?= BASE_URL ?>/admin/dokumen_umum/edit/<?= (int)($d['id_dokumen'] ?? 0); ?>"
                      class="btn btn-sm btn-outline-primary me-1">
                     <i class="bx bx-edit-alt"></i>
                   </a>
 
-                  <a href="<?= BASE_URL ?>/admin/dokumen_umum/delete/<?= (int)$d['id_dokumen']; ?>"
-                     class="btn btn-sm btn-outline-danger btn-delete">
+                  <!-- DELETE -->
+                  <a href="<?= BASE_URL ?>/admin/dokumen_umum/delete/<?= (int)($d['id_dokumen'] ?? 0); ?>"
+                     class="btn btn-sm btn-outline-danger btn-delete"
+                     onclick="return confirm('Hapus dokumen ini?');">
                     <i class="bx bx-trash"></i>
                   </a>
                 </td>
               </tr>
+
             <?php endforeach; else: ?>
+
+              <!-- ✅ TR dummy tersembunyi supaya DataTables gak error -->
+              <tr class="d-none">
+                <td></td><td></td><td></td><td></td>
+              </tr>
+
+              <!-- EMPTY STATE (tetap tampil) -->
               <tr>
                 <td colspan="4" class="text-center py-5">
-                  <img width="22%" src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.png" alt="empty" class="mb-3">
+                  <img width="22%" src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.png"
+                       alt="empty" class="mb-3">
                   <div class="text-muted mt-2">Belum ada dokumen.</div>
                 </td>
               </tr>
+
             <?php endif; ?>
           </tbody>
 

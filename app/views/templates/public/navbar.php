@@ -32,6 +32,10 @@
 
                     <li>
                         <a href="layanan.php">Fasilitas & Layanan</a>
+                        <ul class="sub-menu">
+                            <li><a href="riset.php#roadmap">Fasilitas</a></li>
+                            <li><a href="<?= BASE_URL ?>/layanan">Layanan</a></li>
+                        </ul>
                     </li>
 
                     <li class="dropdown">

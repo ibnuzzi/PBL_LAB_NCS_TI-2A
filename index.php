@@ -58,6 +58,8 @@ Route::add('GET', '/', 'HomeController', 'index');
 Route::add('GET', '/berita', 'BeritaController', 'index');
 Route::add('GET', '/berita/detail/{id}', 'BeritaController', 'detail');
 Route::add('GET', '/galeri', 'GalleryController', 'index');
+Route::add('GET', '/layanan', 'HomeController', 'layanan');
+Route::add('POST', '/layanan/store', 'HomeController', 'kirimLayanan');
 
 // Rute Login (Ini sudah benar)
 Route::add('GET', '/login', 'AuthController', 'index');
@@ -91,13 +93,12 @@ Route::add('POST', '/admin/gallery/update/{id}', 'AdminGalleryController', 'upda
 Route::add('GET', '/admin/gallery/delete/{id}', 'AdminGalleryController', 'delete');
 
 
-// JASA & LAYANAN
-Route::add('GET',  '/admin/jasa-layanan',            'AdminJasaLayananController', 'index');
-Route::add('GET',  '/admin/jasa-layanan/create',     'AdminJasaLayananController', 'create');
-Route::add('POST', '/admin/jasa-layanan/store',      'AdminJasaLayananController', 'store');
-Route::add('GET',  '/admin/jasa-layanan/edit/{id}',  'AdminJasaLayananController', 'edit');
-Route::add('POST', '/admin/jasa-layanan/update/{id}', 'AdminJasaLayananController', 'update');
-Route::add('GET',  '/admin/jasa-layanan/delete/{id}', 'AdminJasaLayananController', 'delete');
+// KONSULTASI ROUTES
+Route::add('GET',  '/admin/konsultasi',            'AdminKonsultasiController', 'index');
+Route::add('GET',  '/admin/konsultasi/create',     'AdminKonsultasiController', 'create');
+Route::add('POST', '/admin/konsultasi/store',      'AdminKonsultasiController', 'store');
+Route::add('POST', '/admin/konsultasi/update', 'AdminKonsultasiController', 'update');
+Route::add('GET',  '/admin/konsultasi/delete/{id}', 'AdminKonsultasiController', 'delete');
 
 // ================= SARANA PRASARANA =====================
 
@@ -124,14 +125,6 @@ Route::add('GET', '/admin/pengabdian/edit', 'AdminPengabdianController', 'show')
 Route::add('GET', '/admin/dokumen_umum', 'AdminDokumen_umumController', 'index');
 Route::add('GET', '/admin/dokumen_umum/create', 'AdminDokumen_umumController', 'create');
 Route::add('GET', '/admin/dokumen_umum/edit', 'AdminDokumen_umumController', 'show');
-
-// Admin kategori berita routes
-Route::add('GET', '/admin/kategori-berita', 'AdminKategoriBeritaController', 'index');
-Route::add('GET', '/admin/kategori-berita/create', 'AdminKategoriBeritaController', 'create');
-Route::add('POST', '/admin/kategori-berita/store', 'AdminKategoriBeritaController', 'store');
-Route::add('GET', '/admin/kategori-berita/edit/{id}', 'AdminKategoriBeritaController', 'show');
-Route::add('POST', '/admin/kategori-berita/update/{id}', 'AdminKategoriBeritaController', 'update');
-Route::add('GET', '/admin/kategori-berita/delete/{id}', 'AdminKategoriBeritaController', 'delete');
 
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);

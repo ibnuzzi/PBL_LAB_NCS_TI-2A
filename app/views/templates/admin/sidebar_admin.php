@@ -10,7 +10,7 @@ $isAgenda = stripos($currentPath, '/admin/agenda') !== false;
 $isGaleri = stripos($currentPath, '/admin/gallery') !== false;
 $isStruktur = stripos($currentPath, '/admin/struktur') !== false;
 $isHalamanStatis = stripos($currentPath, '/admin/halaman-statis') !== false;
-$isJasaLayanan = stripos($currentPath, '/admin/jasa-layanan') !== false;
+$isKonsultasi = stripos($currentPath, '/admin/konsultasi') !== false;
 $isSaranaPrasarana = stripos($currentPath, '/admin/sarana') !== false;
 $isPenelitian = stripos($currentPath, '/admin/penelitian') !== false;
 $isPengabdian = stripos($currentPath, '/admin/pengabdian') !== false;
@@ -83,10 +83,10 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
     <li class="menu-header small text-uppercase">
       <span class="menu-header-text">Manajemen Layanan</span>
     </li>
-    <li class="menu-item <?php echo $isJasaLayanan ? 'active' : ''; ?>">
-      <a href="<?php echo BASE_URL; ?>/admin/jasa-layanan" class="menu-link">
+    <li class="menu-item <?php echo $isKonsultasi ? 'active' : ''; ?>">
+      <a href="<?php echo BASE_URL; ?>/admin/konsultasi" class="menu-link">
         <i class="menu-icon bx bx-briefcase-alt"></i>
-        <div>Jasa dan Layanan</div>
+        <div>Konsultasi</div>
       </a>
     </li>
     <li class="menu-item <?php echo $isSaranaPrasarana ? 'active' : ''; ?>">

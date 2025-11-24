@@ -48,7 +48,7 @@ $entity_name = $table_name;
       },
       "columnDefs": [{
         "orderable": false,
-        "targets": [2, 4]
+        "targets": "_all"
       }]
     });
   });

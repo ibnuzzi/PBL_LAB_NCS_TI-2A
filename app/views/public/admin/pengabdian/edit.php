@@ -1,75 +1,121 @@
 <?php
-// Use admin templates (header, sidebar, footer) to render this dashboard page
-include  './app/views/templates/admin/header_admin.php';
+include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
 ?>
+
 <div class="content-wrapper">
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold mb-0"><span class="text-muted fw-light">Manajemen Arsip /</span> Edit Pengabdian</h4>
-              </div>
 
-              <form action="#" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                  <label for="judul_kegiatan" class="form-label">Judul Kegiatan</label>
-                  <input type="text" class="form-control" id="judul_kegiatan" name="judul_kegiatan" required="">
-                </div>
+  <div class="container-xxl flex-grow-1 container-p-y">
 
-                <div class="mb-3">
-                  <label for="tim_pengabdi" class="form-label">Tim Pengabdi</label>
-                  <input type="text" class="form-control" id="tim_pengabdi" name="tim_pengabdi" required="">
-                </div>
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="fw-bold m-0">
+        <span class="text-muted fw-light">Manajemen Arsip /</span> Edit Pengabdian
+      </h4>
 
-                <div class="mb-3">
-                  <label for="tahun_kegiatan" class="form-label">Tahun Kegiatan</label>
-                  <input type="number" class="form-control" id="tahun_kegiatan" name="tahun_kegiatan" required="">
-                </div>
-
-                <div class="mb-3">
-                  <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
-                  <textarea class="form-control" id="deskripsi_kegiatan" name="deskripsi_kegiatan" rows="3" required=""></textarea>
-                </div>
-
-                <div class="mb-3">
-                  <label for="file_dokumen_pdf" class="form-label">File Dokumen PDF</label>
-                  <input type="file" class="form-control" id="file_dokumen_pdf" name="file_dokumen_pdf" accept=".pdf" required="">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Update </button>
-              </form>
-            </div>
-
-           <!-- FOOTER -->
-            <footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                <div class="mb-2 mb-md-0">
-                  ©
-                  <script>
-                    document.write(new Date().getFullYear());
-                  </script>
-                  , dibuat dengan ❤️ oleh
-                  <a href="#" class="footer-link fw-bolder">Lab NCS</a>
-                </div>
-              </div>
-            </footer>
-            <!-- /FOOTER -->
-
-
-            <div class="content-backdrop fade"></div>
-          </div>
-          <!-- /CONTENT -->
-        </div>
-        <!-- /PAGE -->
-      </div>
-
-      <div class="layout-overlay layout-menu-toggle"></div>
+      <a href="<?= BASE_URL ?>/admin/pengabdian" class="btn btn-outline-secondary">
+        <i class="bx bx-arrow-back"></i> Kembali
+      </a>
     </div>
 
-           
-            <div class="content-backdrop fade"></div>
+    <!-- NOTIFIKASI -->
+    <?php if (!empty($_SESSION['error_message'])): ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['error_message']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      <?php unset($_SESSION['error_message']); ?>
+    <?php endif; ?>
+
+    <!-- FORM EDIT -->
+    <div class="card mb-4">
+      <h5 class="card-header">Form Edit Pengabdian</h5>
+
+      <div class="card-body">
+        <form action="<?= BASE_URL ?>/admin/pengabdian/update/<?= $pengabdian['id_pengabdian'] ?>"
+              method="POST"
+              enctype="multipart/form-data">
+
+          <!-- Judul -->
+          <div class="mb-3">
+            <label class="form-label">Judul Pengabdian</label>
+            <input type="text"
+                   class="form-control"
+                   name="judul_pengabdian"
+                   value="<?= htmlspecialchars($pengabdian['judul_kegiatan']); ?>"
+                   required>
           </div>
-          <!-- /CONTENT -->
-           <?php
-// Footer (includes scripts)
-include './app/views/templates/admin/footer_admin.php';
-?>
+
+          <!-- Tim Pengabdi -->
+          <div class="mb-3">
+            <label class="form-label">Tim Pengabdi</label>
+            <input type="text"
+                   class="form-control"
+                   name="tim_pengabdi"
+                   value="<?= htmlspecialchars($pengabdian['tim_pengabdi']); ?>"
+                   required>
+          </div>
+
+          <!-- Tahun -->
+          <div class="mb-3">
+            <label class="form-label">Tahun</label>
+            <input type="number"
+                   min="1900"
+                   max="2100"
+                   class="form-control"
+                   name="tahun_pengabdian"
+                   value="<?= htmlspecialchars($pengabdian['tahun_kegiatan']); ?>"
+                   required>
+          </div>
+
+          <!-- Deskripsi -->
+          <div class="mb-3">
+            <label class="form-label">Deskripsi Kegiatan</label>
+            <textarea class="form-control"
+                      name="deskripsi_kegiatan"
+                      rows="4"
+                      required><?= htmlspecialchars($pengabdian['deskripsi_kegiatan']); ?></textarea>
+          </div>
+
+          <!-- FILE PDF -->
+          <div class="mb-3">
+            <label class="form-label">File Dokumen (PDF)</label>
+            <input type="file"
+                   class="form-control"
+                   name="file_dokumen"
+                   accept="application/pdf">
+
+            <?php if (!empty($pengabdian['file_dokumen_pdf'])): ?>
+              <div class="mt-2">
+                <small class="text-muted d-block">File saat ini:</small>
+                <a href="<?= BASE_URL . '/public/uploads/pengabdian/' . $pengabdian['file_dokumen_pdf']; ?>"
+                   target="_blank"
+                   class="btn btn-sm btn-info mt-1">
+                  <i class="bx bx-file"></i> Lihat PDF
+                </a>
+              </div>
+            <?php endif; ?>
+
+            <small class="text-muted d-block mt-2">Kosongkan jika tidak ingin mengganti file.</small>
+          </div>
+
+          <!-- ACTION -->
+          <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary">
+              <i class="bx bx-save"></i> Simpan Perubahan
+            </button>
+
+            <a href="<?= BASE_URL ?>/admin/pengabdian" class="btn btn-light">
+              Batal
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<?php include './app/views/templates/admin/footer_admin.php'; ?>

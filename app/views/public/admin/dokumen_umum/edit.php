@@ -1,59 +1,68 @@
 <?php
-// Use admin templates (header, sidebar, footer) to render this dashboard page
-include  './app/views/templates/admin/header_admin.php';
+include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
 ?>
+
 <div class="content-wrapper">
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold mb-4">Edit Dokumen</h4>
-              <div class="card">
-                <h5 class="card-header">Form Edit Dokumen</h5>
-                <div class="card-body">
-                  <!-- Assuming you will fetch the document details and fill the form -->
-                  <form action="dokumen-update.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id_dokumen" value="1"> <!-- Example ID -->
-                    
-                    <div class="mb-3">
-                      <label for="nama_dokumen" class="form-label">Nama Dokumen</label>
-                      <input type="text" class="form-control" id="nama_dokumen" name="nama_dokumen" value="Penelitian Keamanan Jaringan" required="">
-                    </div>
-                    <div class="mb-3">
-                      <label for="deskripsi_dokumen" class="form-label">Deskripsi Dokumen</label>
-                      <textarea class="form-control" id="deskripsi_dokumen" name="deskripsi_dokumen" required="">Studi mengenai pengamanan jaringan kampus</textarea>
-                    </div>
-                    <div class="mb-3">
-                      <label for="file_dokumen" class="form-label">File Dokumen</label>
-                      <input type="file" class="form-control" id="file_dokumen" name="file_dokumen">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                  </form>
-                </div>
-              </div>
-            </div>
+  <div class="container-xxl flex-grow-1 container-p-y">
 
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="fw-bold m-0">
+        <span class="text-muted fw-light">Manajemen Arsip /</span> Edit Dokumen Umum
+      </h4>
 
-            <div class="content-backdrop fade"></div>
+      <a href="<?= BASE_URL ?>/admin/dokumen_umum" class="btn btn-outline-secondary">
+        <i class="bx bx-arrow-back"></i> Kembali
+      </a>
+    </div>
+
+    <?php if (!empty($_SESSION['error_message'])): ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['error_message']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      <?php unset($_SESSION['error_message']); ?>
+    <?php endif; ?>
+
+    <div class="card mb-4">
+      <h5 class="card-header">Form Edit Dokumen Umum</h5>
+      <div class="card-body">
+        <form action="<?= BASE_URL ?>/admin/dokumen_umum/update/<?= (int)$dokumen['id_dokumen']; ?>"
+              method="POST" enctype="multipart/form-data">
+
+          <div class="mb-3">
+            <label class="form-label">Judul Dokumen</label>
+            <input type="text" name="nama_dokumen" class="form-control"
+                   value="<?= htmlspecialchars($dokumen['nama_dokumen']); ?>" required>
           </div>
 
-            <!-- FOOTER -->
-            <footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                <div class="mb-2 mb-md-0">
-                  ©
-                  <script>
-                    document.write(new Date().getFullYear());
-                  </script>
-                  , dibuat dengan ❤️ oleh
-                  <a href="#" class="footer-link fw-bolder">Lab NCS</a>
-                </div>
-              </div>
-            </footer>
-            <!-- /FOOTER -->
-
-            <div class="content-backdrop fade"></div>
+          <div class="mb-3">
+            <label class="form-label">Deskripsi Dokumen</label>
+            <textarea name="deskripsi_dokumen" rows="4" class="form-control" required><?= htmlspecialchars($dokumen['deskripsi_dokumen']); ?></textarea>
           </div>
-          <!-- /CONTENT -->
-           <?php
-// Footer (includes scripts)
-include './app/views/templates/admin/footer_admin.php';
-?>
+
+          <div class="mb-3">
+            <label class="form-label">Ganti File (Opsional)</label>
+            <input type="file" name="nama_file_dokumen" class="form-control">
+            <small class="text-muted">
+              File saat ini: <?= htmlspecialchars($dokumen['nama_file_dokumen']); ?>
+            </small>
+          </div>
+
+          <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary">
+              <i class="bx bx-save"></i> Update
+            </button>
+            <a href="<?= BASE_URL ?>/admin/dokumen_umum" class="btn btn-light">
+              Batal
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<?php include './app/views/templates/admin/footer_admin.php'; ?>

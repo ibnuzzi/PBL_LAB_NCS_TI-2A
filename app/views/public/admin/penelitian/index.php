@@ -1,182 +1,159 @@
 <?php
-// File: /app/views/public/admin/penelitian/index.php
 include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
 ?>
 
 <div class="content-wrapper">
+
   <div class="container-xxl flex-grow-1 container-p-y">
+
+    <!-- HEADER + BUTTON -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="fw-bold m-0"><span class="text-muted fw-light">Manajemen Arsip /</span> Penelitian</h4>
-      <a href="<?php echo BASE_URL; ?>/admin/penelitian/create" class="btn btn-primary">
-        <i class="bx bx-plus"></i> Tambah Penelitian
+      <h4 class="fw-bold m-0">
+        <span class="text-muted fw-light">Manajemen Arsip /</span> Pengabdian
+      </h4>
+
+      <a href="<?= BASE_URL ?>/admin/pengabdian/create" class="btn btn-primary">
+        <i class="bx bx-plus me-1"></i> Tambah Pengabdian
       </a>
     </div>
 
     <div class="card">
-      <h5 class="card-header">Daftar Penelitian</h5>
-      <?php if (!empty($_SESSION['success_message']) || !empty($_SESSION['error_message'])): ?>
-        <div class="card-body">
-          <?php if (!empty($_SESSION['success_message'])): ?>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <?php echo htmlspecialchars($_SESSION['success_message']); ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <?php unset($_SESSION['success_message']); ?>
-          <?php endif; ?>
 
-          <?php if (!empty($_SESSION['error_message'])): ?>
-            <div class="alert alert-danger alert-dismissible" role="alert">
-              <?php echo htmlspecialchars($_SESSION['error_message']); ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <?php unset($_SESSION['error_message']); ?>
-          <?php endif; ?>
-        </div>
-      <?php endif; ?>
-      <div class="table-responsive text-nowrap">
-        <table class="table table-striped align-middle">
+      <div class="table-responsive text-nowrap p-3">
+
+        <table id="table-pengabdian" class="table table-striped align-middle">
           <thead>
             <tr>
               <th>No</th>
-              <th>Judul Penelitian</th>
-              <th>Tahun Penelitian</th>
-              <th>Link Publikasi</th>
+              <th>Judul Pengabdian</th>
+              <th>Tahun</th>
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody class="table-border-bottom-0">
-            <?php
-            // Check if penelitian data exists
-            if (empty($penelitian_list)):
-            ?>
-              <tr>
-                <td colspan="5" class="text-center">Belum ada data penelitian.</td>
-              </tr>
-            <?php else:
-              $counter = 1;
-              foreach ($penelitian_list as $penelitian): ?>
-                <tr>
-                  <td><?php echo $counter++; ?></td>
-                  <td style="max-width: 380px;">
-                    <?php echo htmlspecialchars($penelitian['judul_penelitian'] ?? ''); ?>
-                  </td>
-                  <td><?php echo htmlspecialchars($penelitian['tahun_penelitian'] ?? ''); ?></td>
-                  <td><a href="<?php echo htmlspecialchars($penelitian['link_publikasi'] ?? '#'); ?>" target="_blank">Link</a></td>
-                  <td>
-                    <button type="button" class="btn btn-sm btn-outline-info me-1 btn-view-penelitian"
-                            data-judul="<?php echo htmlspecialchars($penelitian['judul_penelitian'] ?? ''); ?>"
-                            data-peneliti="<?php echo htmlspecialchars($penelitian['peneliti'] ?? ''); ?>"
-                            data-tahun="<?php echo htmlspecialchars($penelitian['tahun_penelitian'] ?? ''); ?>"
-                            data-deskripsi="<?php echo htmlspecialchars($penelitian['deskripsi_singkat'] ?? ''); ?>"
-                            data-link="<?php echo htmlspecialchars($penelitian['link_publikasi'] ?? ''); ?>">
-                      <i class="bx bx-show-alt"></i>
-                    </button>
 
-                    <a href="<?php echo BASE_URL; ?>/admin/penelitian/edit/<?php echo htmlspecialchars($penelitian['id_penelitian'] ?? ''); ?>" class="btn btn-sm btn-outline-primary me-1">
-                      <i class="bx bx-edit-alt"></i>
-                    </a>
-                    <a href="<?php echo BASE_URL; ?>/admin/penelitian/delete/<?php echo htmlspecialchars($penelitian['id_penelitian'] ?? ''); ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus penelitian ini?');">
-                      <i class="bx bx-trash"></i>
-                    </a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            <?php endif; ?>
+          <tbody class="table-border-bottom-0">
+
+            <?php
+            // Normalisasi variabel
+            $pengabdian_list = $pengabdian_list ?? [];
+            if (empty($pengabdian_list) && isset($pengabdians)) $pengabdian_list = $pengabdians;
+            if (empty($pengabdian_list) && isset($pengabdian)) $pengabdian_list = is_array($pengabdian) ? [$pengabdian] : [];
+
+            if (!empty($pengabdian_list)):
+              $counter = 1;
+              foreach ($pengabdian_list as $p):
+            ?>
+
+              <tr>
+                <td><?= $counter++; ?></td>
+
+                <td style="max-width:380px;">
+                  <?= htmlspecialchars($p['judul_kegiatan']); ?>
+                </td>
+
+                <td><?= htmlspecialchars($p['tahun_kegiatan']); ?></td>
+
+                <td>
+
+                  <!-- DETAIL BUTTON -->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-info me-1 btn-view-pengabdian"
+                    data-judul="<?= htmlspecialchars($p['judul_kegiatan']); ?>"
+                    data-tim="<?= htmlspecialchars($p['tim_pengabdi']); ?>"
+                    data-tahun="<?= htmlspecialchars($p['tahun_kegiatan']); ?>"
+                    data-deskripsi="<?= htmlspecialchars($p['deskripsi_kegiatan']); ?>"
+                    data-file="<?= BASE_URL . '/public/uploads/pengabdian/' . htmlspecialchars($p['file_dokumen_pdf']); ?>">
+                    <i class="bx bx-show-alt"></i>
+                  </button>
+
+                  <!-- EDIT -->
+                  <a href="<?= BASE_URL ?>/admin/pengabdian/edit/<?= htmlspecialchars($p['id_pengabdian']); ?>"
+                     class="btn btn-sm btn-outline-primary me-1">
+                    <i class="bx bx-edit-alt"></i>
+                  </a>
+
+                  <!-- DELETE -->
+                  <a href="<?= BASE_URL ?>/admin/pengabdian/delete/<?= htmlspecialchars($p['id_pengabdian']); ?>"
+                     class="btn btn-sm btn-outline-danger btn-delete">
+                    <i class="bx bx-trash"></i>
+                  </a>
+
+                </td>
+              </tr>
+
+            <?php endforeach; endif; ?>
+
           </tbody>
         </table>
+
       </div>
+
     </div>
   </div>
 
-  <!-- Modal Popup for Viewing Penelitian -->
-  <div class="modal fade" id="modalDetailPenelitian" tabindex="-1" aria-hidden="true">
+  <!-- MODAL DETAIL -->
+  <div class="modal fade" id="modalDetailPengabdian" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
+
         <div class="modal-header">
-          <h5 class="modal-title" id="modalDetailJudul">Judul Penelitian</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="modalDetailJudul">Detail Pengabdian</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+
         <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <p class="mb-1 text-muted">
-                <strong>Peneliti: </strong><span id="modalDetailPeneliti"></span>
-              </p>
-              <p class="mb-1 text-muted">
-                <strong>Tahun Penelitian: </strong><span id="modalDetailTahun"></span>
-              </p>
-              <hr class="my-2" />
-              <p id="modalDetailDeskripsi" class="mb-0">
-                Deskripsi penelitian akan tampil di sini.
-              </p>
-            </div>
-            <div class="col-md-6">
-              <p class="mb-1 text-muted">
-                <strong>Link Publikasi: </strong><a id="modalDetailLink" href="#" target="_blank">Lihat Publikasi</a>
-              </p>
-            </div>
-          </div>
+
+          <p><strong>Tim Pengabdi:</strong> <span id="modalDetailTim"></span></p>
+          <p><strong>Tahun:</strong> <span id="modalDetailTahun"></span></p>
+
+          <p><strong>Deskripsi:</strong></p>
+          <p id="modalDetailDeskripsi"></p>
+
+          <hr>
+
+          <p><strong>File Dokumen PDF:</strong></p>
+          <a id="modalDetailFile" href="#" target="_blank" class="btn btn-info btn-sm">
+            <i class="bx bx-file"></i> Lihat Dokumen
+          </a>
+
         </div>
+
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Tutup
+          </button>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="content-footer footer bg-footer-theme">
-    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-      <div class="mb-2 mb-md-0">
-        © <script>document.write(new Date().getFullYear());</script>, Lab NCS
-      </div>
-    </div>
-  </footer>
-  <!-- /FOOTER -->
+  <?php include './app/views/components/modal.php'; ?>
+  <?php include './app/views/components/toaster.php'; ?>
 
-  <div class="content-backdrop fade"></div>
 </div>
 
 <?php
 include './app/views/templates/admin/footer_admin.php';
+$table_name = 'pengabdian';
+include './app/views/components/page_scripts.php';
 ?>
+
+<!-- JS DETAIL PENGABDIAN -->
 <script>
-  $(document).ready(function() {
-    $('.btn-view-penelitian').on('click', function() {
-      var judul = $(this).data('judul');
-      var peneliti = $(this).data('peneliti');
-      var tahun = $(this).data('tahun');
-      var deskripsi = $(this).data('deskripsi');
-      var link = $(this).data('link');
+document.addEventListener("DOMContentLoaded", function () {
 
-      $('#modalDetailJudul').text(judul);
-      $('#modalDetailPeneliti').text(peneliti);
-      $('#modalDetailTahun').text(tahun);
-      $('#modalDetailDeskripsi').text(deskripsi);
-      $('#modalDetailLink').attr('href', link);
+  $(".btn-view-pengabdian").on("click", function () {
+    $("#modalDetailJudul").text($(this).data("judul"));
+    $("#modalDetailTim").text($(this).data("tim"));
+    $("#modalDetailTahun").text($(this).data("tahun"));
+    $("#modalDetailDeskripsi").text($(this).data("deskripsi"));
+    $("#modalDetailFile").attr("href", $(this).data("file"));
 
-      var modal = new bootstrap.Modal(document.getElementById('modalDetailPenelitian'));
-      modal.show();
-    });
+    new bootstrap.Modal(document.getElementById("modalDetailPengabdian")).show();
   });
-</script>
 
-<script>
-    // Auto-dismiss bootstrap alerts after 4 seconds
-    document.addEventListener('DOMContentLoaded', function() {
-        var alerts = document.querySelectorAll('.alert');
-        if (alerts.length) {
-            setTimeout(function() {
-                alerts.forEach(function(el) {
-                    try {
-                        var bsAlert = bootstrap.Alert.getOrCreateInstance(el);
-                        bsAlert.close();
-                    } catch (e) {
-                        el.parentNode && el.parentNode.removeChild(el);
-                    }
-                });
-            }, 3000);
-        }
-    });
+});
 </script>

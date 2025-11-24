@@ -112,19 +112,29 @@ Route::add('POST', '/admin/sarana/update/{id}',   'AdminSaranaController', 'upda
 Route::add('GET',  '/admin/sarana/delete/{id}',   'AdminSaranaController', 'delete');
 
 //Admin penelitian
-Route::add('GET', '/admin/penelitian', 'AdminPenelitianController', 'index');
-Route::add('GET', '/admin/penelitian/create', 'AdminPenelitianController', 'create');
-Route::add('GET', '/admin/penelitian/edit', 'AdminPenelitianController', 'show');
+Route::add('GET',  '/admin/penelitian',               'AdminPenelitianController', 'index');
+Route::add('GET',  '/admin/penelitian/create',        'AdminPenelitianController', 'create');
+Route::add('POST', '/admin/penelitian/store',         'AdminPenelitianController', 'store');
+Route::add('GET',  '/admin/penelitian/edit/{id}',     'AdminPenelitianController', 'show');
+Route::add('POST', '/admin/penelitian/update/{id}',   'AdminPenelitianController', 'update');
+Route::add('GET',  '/admin/penelitian/delete/{id}',   'AdminPenelitianController', 'delete');
 
 //Admin pengabdian
-Route::add('GET', '/admin/pengabdian', 'AdminPengabdianController', 'index');
-Route::add('GET', '/admin/pengabdian/create', 'AdminPengabdianController', 'create');
-Route::add('GET', '/admin/pengabdian/edit', 'AdminPengabdianController', 'show');
+Route::add('GET',  '/admin/pengabdian',               'AdminPengabdianController', 'index');
+Route::add('GET',  '/admin/pengabdian/create',        'AdminPengabdianController', 'create');
+Route::add('POST', '/admin/pengabdian/store',         'AdminPengabdianController', 'store');
+Route::add('GET',  '/admin/pengabdian/edit/{id}',     'AdminPengabdianController', 'edit');
+Route::add('POST', '/admin/pengabdian/update/{id}',   'AdminPengabdianController', 'update');
+Route::add('GET',  '/admin/pengabdian/delete/{id}',   'AdminPengabdianController', 'delete');
 
 //Admin dokumen Umum
-Route::add('GET', '/admin/dokumen_umum', 'AdminDokumen_umumController', 'index');
-Route::add('GET', '/admin/dokumen_umum/create', 'AdminDokumen_umumController', 'create');
-Route::add('GET', '/admin/dokumen_umum/edit', 'AdminDokumen_umumController', 'show');
+// DOKUMEN UMUM
+Route::add('GET',  '/admin/dokumen_umum',                 'AdminDokumenUmumController', 'index');
+Route::add('GET',  '/admin/dokumen_umum/create',          'AdminDokumenUmumController', 'create');
+Route::add('POST', '/admin/dokumen_umum/store',           'AdminDokumenUmumController', 'store');
+Route::add('GET',  '/admin/dokumen_umum/edit/([0-9]+)',   'AdminDokumenUmumController', 'edit');
+Route::add('POST', '/admin/dokumen_umum/update/([0-9]+)', 'AdminDokumenUmumController', 'update');
+Route::add('GET',  '/admin/dokumen_umum/delete/([0-9]+)', 'AdminDokumenUmumController', 'delete');
 
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);

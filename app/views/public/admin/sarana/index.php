@@ -4,135 +4,132 @@ include './app/views/templates/admin/sidebar_admin.php';
 ?>
 
 <div class="content-wrapper">
-    <div class="container-xxl flex-grow-1 container-p-y">
 
-        <!-- TITLE + BUTTON -->
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="fw-bold mb-0">
-                <span class="text-muted fw-light">Manajemen Layanan /</span> Sarana dan Prasarana
-            </h4>
-            <a href="<?= BASE_URL ?>/admin/sarana/create" class="btn btn-primary">
-                <i class="bx bx-plus"></i> Tambah Sarana
-            </a>
-        </div>
+  <div class="container-xxl flex-grow-1 container-p-y">
 
-        <div class="card">
-            <h5 class="card-header">Daftar Sarana dan Prasarana</h5>
+    <!-- TITLE + BUTTON -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h4 class="fw-bold m-0">
+        <span class="text-muted fw-light">Manajemen Layanan /</span> Sarana & Prasarana
+      </h4>
 
-            <!-- NOTIFIKASI -->
-            <?php if (!empty($_SESSION['success_message']) || !empty($_SESSION['error_message'])): ?>
-                <div class="card-body pb-0">
-                    <?php if (!empty($_SESSION['success_message'])): ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= htmlspecialchars($_SESSION['success_message']); ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                        <?php unset($_SESSION['success_message']); ?>
-                    <?php endif; ?>
-
-                    <?php if (!empty($_SESSION['error_message'])): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= htmlspecialchars($_SESSION['error_message']); ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                        <?php unset($_SESSION['error_message']); ?>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-
-            <!-- TABLE -->
-            <div class="table-responsive text-nowrap">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="width: 60px;">ID</th>
-                            <th>Nama Sarana</th>
-                            <th>Jumlah</th>
-                            <th>Kondisi</th>
-                            <th>Foto</th>
-                            <th style="width: 140px;">Aksi</th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="table-border-bottom-0">
-                        <?php if (!empty($list) && is_array($list)): ?>
-                            <?php foreach ($list as $item): ?>
-                                <tr>
-                                    <td><strong><?= $item['id_sarana'] ?></strong></td>
-
-                                    <td><?= htmlspecialchars($item['nama_sarana']) ?></td>
-
-                                    <td><?= htmlspecialchars($item['jumlah']) ?></td>
-
-                                    <td>
-                                        <?php 
-                                            $k = strtolower($item['kondisi']); 
-                                            $badge = "bg-label-secondary";
-                                            if ($k == "baik") $badge = "bg-label-success";
-                                            elseif ($k == "perlu perawatan") $badge = "bg-label-warning";
-                                            elseif ($k == "rusak") $badge = "bg-label-danger";
-                                        ?>
-                                        <span class="badge <?= $badge ?>">
-                                            <?= htmlspecialchars($item['kondisi']) ?>
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <?php if (!empty($item['foto_sarana'])): ?>
-                                            <img src="<?= BASE_URL ?>/public/uploads/sarana/<?= htmlspecialchars($item['foto_sarana']) ?>"
-                                                 style="height:90px; border-radius:6px;" />
-                                        <?php else: ?>
-                                            <span class="text-muted small">-</span>
-                                        <?php endif; ?>
-                                    </td>
-
-                                    <td>
-                                        <a href="<?= BASE_URL ?>/admin/sarana/edit/<?= $item['id_sarana'] ?>"
-                                           class="btn btn-sm btn-outline-primary">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-
-                                        <a href="<?= BASE_URL ?>/admin/sarana/delete/<?= $item['id_sarana'] ?>"
-                                           class="btn btn-sm btn-outline-danger"
-                                           onclick="return confirm('Hapus data sarana ini?');">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-
-                        <?php else: ?>
-                            <!-- EMPTY DATA -->
-                            <tr>
-                                <td colspan="6" class="text-center py-5">
-                                    <img width="22%" src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.jpg"
-                                         alt="empty" class="mb-3">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6" class="text-center text-muted pb-4">
-                                    Belum ada data sarana.
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-
+      <a href="<?php echo BASE_URL; ?>/admin/sarana/create" class="btn btn-primary">
+        <i class="bx bx-plus me-1"></i> Tambah Sarana
+      </a>
     </div>
 
-    <?php include './app/views/templates/admin/footer_admin.php'; ?>
+    <div class="card">
+
+      <div class="table-responsive text-nowrap p-3">
+        <table id="table-sarana" class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama Sarana</th>
+              <th>Jumlah</th>
+              <th>Kondisi</th>
+              <th>Foto</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody class="table-border-bottom-0">
+
+            <?php
+            // fleksibilitas variabel
+            $list = $list ?? [];
+            if (empty($list) && isset($sarana_list)) $list = $sarana_list;
+            if (empty($list) && isset($sarana)) $list = is_array($sarana) ? [$sarana] : [];
+
+            if (!empty($list)):
+              foreach ($list as $s):
+
+                // Kondisi badge
+                $kondisi = strtolower($s['kondisi'] ?? '');
+                $badge = 'bg-label-secondary';
+                if ($kondisi == 'baik') $badge = 'bg-label-success';
+                elseif ($kondisi == 'perlu perawatan') $badge = 'bg-label-warning';
+                elseif ($kondisi == 'rusak') $badge = 'bg-label-danger';
+            ?>
+
+              <tr>
+                <td><?php echo htmlspecialchars($s['id_sarana']); ?></td>
+
+                <td><?php echo htmlspecialchars($s['nama_sarana']); ?></td>
+
+                <td><?php echo htmlspecialchars($s['jumlah']); ?></td>
+
+                <td>
+                  <span class="badge <?php echo $badge; ?>">
+                    <?php echo htmlspecialchars($s['kondisi']); ?>
+                  </span>
+                </td>
+
+                <td>
+                  <?php if (!empty($s['foto_sarana'])): ?>
+                    <img
+                      src="<?php echo BASE_URL; ?>/public/uploads/sarana/<?php echo htmlspecialchars($s['foto_sarana']); ?>"
+                      alt="foto"
+                      class="rounded-2"
+                      style="height:80px; border-radius:4px;">
+                  <?php else: ?>
+                    -
+                  <?php endif; ?>
+                </td>
+
+                <td>
+
+                  <!-- Modal Preview -->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-info me-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalDetail"
+
+                    data-judul="<?php echo htmlspecialchars($s['nama_sarana']); ?>"
+                    data-deskripsi="Jumlah: <?php echo htmlspecialchars($s['jumlah']); ?><br>Kondisi: <?php echo htmlspecialchars($s['kondisi']); ?>"
+                    data-gambar="<?php echo BASE_URL; ?>/public/uploads/sarana/<?php echo htmlspecialchars($s['foto_sarana']); ?>"
+                    data-tanggal=""
+                  >
+                    <i class="bx bx-show-alt"></i>
+                  </button>
+
+                  <a
+                    href="<?php echo BASE_URL; ?>/admin/sarana/edit/<?php echo htmlspecialchars($s['id_sarana']); ?>"
+                    class="btn btn-sm btn-outline-primary me-1">
+                    <i class="bx bx-edit-alt"></i>
+                  </a>
+
+                  <a
+                    href="<?php echo BASE_URL; ?>/admin/sarana/delete/<?php echo htmlspecialchars($s['id_sarana']); ?>"
+                    class="btn btn-sm btn-outline-danger btn-delete">
+                    <i class="bx bx-trash"></i>
+                  </a>
+
+                </td>
+              </tr>
+
+            <?php endforeach; endif; ?>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL DETAIL -->
+  <?php include './app/views/components/modal.php'; ?>
+
+  <!-- TOASTER -->
+  <?php include './app/views/components/toaster.php'; ?>
+
 </div>
 
-<script>
-    // Auto close alert
-    document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => {
-            document.querySelectorAll(".alert").forEach(a => {
-                a.classList.remove("show");
-            });
-        }, 3000);
-    });
-</script>
+<?php
+include './app/views/templates/admin/footer_admin.php';
+
+// Kirim table_name untuk script dinamis
+$table_name = 'sarana';
+include './app/views/components/page_scripts.php';
+?>

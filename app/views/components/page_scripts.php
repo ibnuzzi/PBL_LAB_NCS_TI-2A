@@ -14,9 +14,10 @@ if (!empty($_SESSION['success_message'])) {
 }
 
 // Variabel dinamis untuk nama tabel dan entitas
-$table_name = 'berita'; // Ganti nilai ini sesuai nama tabel yang digunakan
+$table_name = $table_name ?? 'default';
 $table_id = 'table-' . $table_name;
 $entity_name = $table_name;
+
 ?>
 
 <script>

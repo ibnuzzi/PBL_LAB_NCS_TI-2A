@@ -1,27 +1,41 @@
 <?php
 // File: /app/models/Agenda.php
 
-class Agenda {
+class Agenda
+{
     private $db;
     private $table = 'tbl_agenda';
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::getInstance();
     }
 
-    public function getAllAgenda() {
-        $this->db->query("SELECT * FROM " . $this->table . " ORDER BY tanggal_mulai DESC");
+    /**
+     * Ambil semua data agenda
+     */
+    public function getAllAgenda()
+    {
+        $this->db->query("SELECT * FROM {$this->table} ORDER BY tanggal_mulai DESC");
         return $this->db->resultSet();
     }
 
-    public function getAgendaById($id) {
-        $this->db->query("SELECT * FROM " . $this->table . " WHERE id_agenda = :id");
+    /**
+     * Ambil agenda berdasarkan ID
+     */
+    public function getAgendaById($id)
+    {
+        $this->db->query("SELECT * FROM {$this->table} WHERE id_agenda = :id");
         $this->db->bind(':id', $id, PDO::PARAM_INT);
         return $this->db->single();
     }
 
-    public function tambahAgenda($data) {
-        $query = "INSERT INTO " . $this->table . "
+    /**
+     * Tambah agenda baru
+     */
+    public function tambahAgenda($data)
+    {
+        $query = "INSERT INTO {$this->table}
                     (nama_agenda, lokasi, gambar_agenda, id_admin_penulis, tanggal_mulai, tanggal_selesai)
                   VALUES
                     (:nama, :lokasi, :gambar, :id_admin, :tanggal_mulai, :tanggal_selesai)";
@@ -37,8 +51,12 @@ class Agenda {
         return $this->db->execute();
     }
 
-    public function updateAgenda($data) {
-        $query = "UPDATE " . $this->table . " SET
+    /**
+     * Update agenda
+     */
+    public function updateAgenda($data)
+    {
+        $query = "UPDATE {$this->table} SET
                     nama_agenda = :nama,
                     lokasi = :lokasi,
                     gambar_agenda = :gambar,
@@ -57,12 +75,15 @@ class Agenda {
         return $this->db->execute();
     }
 
-    public function hapusAgenda($id) {
-        $query = "DELETE FROM " . $this->table . " WHERE id_agenda = :id";
+    /**
+     * Hapus agenda
+     */
+    public function hapusAgenda($id)
+    {
+        $query = "DELETE FROM {$this->table} WHERE id_agenda = :id";
         $this->db->query($query);
         $this->db->bind(':id', $id, PDO::PARAM_INT);
+
         return $this->db->execute();
     }
 }
-
-?>

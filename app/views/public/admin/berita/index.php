@@ -100,6 +100,6 @@ include './app/views/templates/admin/sidebar_admin.php';
 <?php
 // Footer (includes scripts)
 include './app/views/templates/admin/footer_admin.php';
-
+$table_name = 'berita';
 include './app/views/components/page_scripts.php';
 ?>

@@ -61,7 +61,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                             <small class="text-muted">Opsional, JPG/PNG maksimal 5MB.</small>
                         </div>
 
-                        <div class="col-12">
+                         <div class="col-12">
                             <label class="form-label">Deskripsi</label>
                             <textarea name="deskripsi" class="form-control" 
                                       rows="4"></textarea>

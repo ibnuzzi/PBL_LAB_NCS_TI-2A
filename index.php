@@ -25,7 +25,7 @@ if ($basePath === '') {
 // 4. DAPATKAN ROUTE YANG BERSIH
 // Hapus basePath dari requestUri (case-insensitive)
 $routePath = $requestUri;
-if ($basePath !== '/' ) {
+if ($basePath !== '/') {
     $pos = stripos($requestUri, $basePath);
     if ($pos === 0) {
         $routePath = substr($requestUri, strlen($basePath));
@@ -96,8 +96,8 @@ Route::add('GET',  '/admin/jasa-layanan',            'AdminJasaLayananController
 Route::add('GET',  '/admin/jasa-layanan/create',     'AdminJasaLayananController', 'create');
 Route::add('POST', '/admin/jasa-layanan/store',      'AdminJasaLayananController', 'store');
 Route::add('GET',  '/admin/jasa-layanan/edit/{id}',  'AdminJasaLayananController', 'edit');
-Route::add('POST', '/admin/jasa-layanan/update/{id}','AdminJasaLayananController', 'update');
-Route::add('GET',  '/admin/jasa-layanan/delete/{id}','AdminJasaLayananController', 'delete');
+Route::add('POST', '/admin/jasa-layanan/update/{id}', 'AdminJasaLayananController', 'update');
+Route::add('GET',  '/admin/jasa-layanan/delete/{id}', 'AdminJasaLayananController', 'delete');
 
 // ================= SARANA PRASARANA =====================
 
@@ -125,6 +125,13 @@ Route::add('GET', '/admin/dokumen_umum', 'AdminDokumen_umumController', 'index')
 Route::add('GET', '/admin/dokumen_umum/create', 'AdminDokumen_umumController', 'create');
 Route::add('GET', '/admin/dokumen_umum/edit', 'AdminDokumen_umumController', 'show');
 
+// Admin kategori berita routes
+Route::add('GET', '/admin/kategori-berita', 'AdminKategoriBeritaController', 'index');
+Route::add('GET', '/admin/kategori-berita/create', 'AdminKategoriBeritaController', 'create');
+Route::add('POST', '/admin/kategori-berita/store', 'AdminKategoriBeritaController', 'store');
+Route::add('GET', '/admin/kategori-berita/edit/{id}', 'AdminKategoriBeritaController', 'show');
+Route::add('POST', '/admin/kategori-berita/update/{id}', 'AdminKategoriBeritaController', 'update');
+Route::add('GET', '/admin/kategori-berita/delete/{id}', 'AdminKategoriBeritaController', 'delete');
+
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);
-?>

@@ -70,18 +70,17 @@ include './app/views/templates/admin/sidebar_admin.php';
                                     Rusak
                                 </option>
                             </select>
+                            <label class="form-label">Foto Sarana (Opsional)</label>
+                            <input type="file" name="foto_sarana" class="form-control">
                         </div>
 
                         <!-- Foto -->
                         <div class="col-md-6">
-                            <label class="form-label">Foto Sarana (Opsional)</label>
-                            <input type="file" name="foto_sarana" class="form-control">
-
                             <?php if (!empty($sarana['foto_sarana'])): ?>
                                 <div class="mt-2">
                                     <p class="small text-muted">Foto Saat Ini:</p>
                                     <img src="<?= BASE_URL ?>/public/uploads/sarana/<?= htmlspecialchars($sarana['foto_sarana']) ?>"
-                                         style="height:80px; border-radius:6px;">
+                                         style="height:100px; border-radius:6px;">
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -89,11 +88,9 @@ include './app/views/templates/admin/sidebar_admin.php';
                         <!-- Deskripsi -->
                         <div class="col-12">
                             <label class="form-label">Deskripsi</label>
-                            <textarea name="deskripsi_sarana"><?= htmlspecialchars($sarana['deskripsi_sarana']) ?></textarea>
+                            <textarea class="form-control" rows="4" name="deskripsi_sarana"><?= htmlspecialchars($sarana['deskripsi_sarana']) ?></textarea>
                         </div>
-
                     </div>
-
                     <div class="mt-4 d-flex gap-2">
                         <button class="btn btn-primary">
                             <i class="bx bx-save"></i> Update

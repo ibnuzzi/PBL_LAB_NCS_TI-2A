@@ -84,7 +84,7 @@ class AdminBeritaController extends Controller {
             'tanggal_publish' => $tanggal
         ];
 
-        $ok = $beritaModel->tambahBerita($payload);
+        $ok = $beritaModel->createBerita($payload);
         if ($ok) {
             $_SESSION['success_message'] = 'Berita berhasil disimpan.';
         } else {
@@ -190,7 +190,7 @@ class AdminBeritaController extends Controller {
         }
 
         $beritaModel = $this->model('Berita');
-        $ok = $beritaModel->hapusBerita($id);
+        $ok = $beritaModel->deleteBerita($id);
         if ($ok) $_SESSION['success_message'] = 'Berita dihapus.';
         else $_SESSION['error_message'] = 'Gagal menghapus berita.';
 

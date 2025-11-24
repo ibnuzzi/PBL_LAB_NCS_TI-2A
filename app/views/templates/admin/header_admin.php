@@ -25,11 +25,25 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/css/core.css" />
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/css/theme-default.css" />
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/css/demo.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/pickr/pickr-themes.css" />
+
+
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/chartjs/chartjs.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
+    <!-- DataTables CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" /> -->
+     <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+  <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+  <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/flatpickr/flatpickr.css" />
+  <!-- Row Group CSS -->
+  <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css" />
+  <!-- Form Validation -->
+  <link rel="stylesheet" href="<?= BASE_URL ?>/public/admin/vendor/libs/@form-validation/form-validation.css" />
     <!-- Helpers -->
     <script src="<?= BASE_URL ?>/public/admin/vendor/js/helpers.js"></script>
     <script src="<?= BASE_URL ?>/public/admin/js/config.js"></script>

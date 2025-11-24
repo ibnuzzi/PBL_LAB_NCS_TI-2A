@@ -55,9 +55,9 @@ include './app/views/templates/admin/sidebar_admin.php';
                             <tr>
                                 <td colspan="5" class="text-center py-5">
                                     <img width="20%"
-                                         src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.jpg"
-                                         alt="empty"
-                                         class="mb-3">
+                                        src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.jpg"
+                                        alt="empty"
+                                        class="mb-3">
                                 </td>
                             </tr>
                             <tr>
@@ -74,13 +74,13 @@ include './app/views/templates/admin/sidebar_admin.php';
                                     <td><?= htmlspecialchars($l['icon_layanan']) ?></td>
                                     <td>
                                         <a href="<?= BASE_URL ?>/admin/jasa-layanan/edit/<?= (int)$l['id_layanan'] ?>"
-                                           class="btn btn-sm btn-outline-primary">
+                                            class="btn btn-sm btn-outline-primary">
                                             <i class="bx bx-edit"></i>
                                         </a>
 
                                         <a href="<?= BASE_URL ?>/admin/jasa-layanan/delete/<?= (int)$l['id_layanan'] ?>"
-                                           class="btn btn-sm btn-outline-danger"
-                                           onclick="return confirm('Yakin ingin menghapus layanan ini?');">
+                                            class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Yakin ingin menghapus layanan ini?');">
                                             <i class="bx bx-trash"></i>
                                         </a>
                                     </td>
@@ -97,7 +97,9 @@ include './app/views/templates/admin/sidebar_admin.php';
     <footer class="content-footer footer bg-footer-theme">
         <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
             <div class="mb-2 mb-md-0">
-                © <script>document.write(new Date().getFullYear());</script>, Lab NCS
+                © <script>
+                    document.write(new Date().getFullYear());
+                </script>, Lab NCS
             </div>
         </div>
     </footer>

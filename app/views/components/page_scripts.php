@@ -1,7 +1,7 @@
 <?php
-// Logika PHP untuk data Toast
+// Toast
 $toast_message = '';
-$toast_type = ''; // 'success' or 'danger'
+$toast_type = '';
 
 if (!empty($_SESSION['success_message'])) {
   $toast_message = htmlspecialchars($_SESSION['success_message']);
@@ -13,101 +13,94 @@ if (!empty($_SESSION['success_message'])) {
   unset($_SESSION['error_message']);
 }
 
-// Variabel dinamis untuk nama tabel dan entitas
 $table_name = $table_name ?? 'default';
 $table_id = 'table-' . $table_name;
 $entity_name = $table_name;
-
 ?>
-
 <script>
-  $(document).ready(function() {
+$(document).ready(function () {
 
-    var imgPath = "<?php echo BASE_URL; ?>/public/assets/images/empty/empty_data.png";
+  var tableSelector = "#<?= $table_id ?>";
 
-    var noDataHtml = '<div class="text-center p-4">' +
-      '  <img src="' + imgPath + '" alt="Data Kosong" style="width: 130px; margin-bottom: 1rem;">' +
-      '  <h5 class="mb-0">Belum Ada Data</h5>' +
-      '  <p class="text-muted small">Data <?php echo $entity_name; ?> akan muncul di sini setelah Anda menambahkannya.</p>' +
-      '</div>';
+  // Hitung jumlah baris data asli (bukan empty row)
+  var hasData = $(tableSelector + " tbody tr:not(.dt-empty-row)").length > 0;
 
-    $('#<?php echo $table_id; ?>').DataTable({
-      "pagingType": "simple_numbers",
-      "language": {
-        "lengthMenu": "Tampilkan _MENU_ entri per halaman",
-        "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
-        "infoFiltered": "(difilter dari _MAX_ total entri)",
-        "search": "Cari:",
-        "infoEmpty": "",
-        "emptyTable": noDataHtml,
-        "zeroRecords": noDataHtml,
-        "paginate": {
-          "next": "<i class='bx bx-chevron-right'></i>",
-          "previous": "<i class='bx bx-chevron-left'></i>"
+  // DataTables hanya aktif jika ada data
+  if (hasData) {
+
+    $(tableSelector).DataTable({
+      pagingType: "simple_numbers",
+      language: {
+        lengthMenu: "Tampilkan _MENU_ entri",
+        info: "Halaman _PAGE_ dari _PAGES_",
+        infoFiltered: "(difilter dari _MAX_ total entri)",
+        search: "Cari:",
+        paginate: {
+          next: "<i class='bx bx-chevron-right'></i>",
+          previous: "<i class='bx bx-chevron-left'></i>"
         }
       },
-      "columnDefs": [{
-        "orderable": false,
-        "targets": "_all"
-      }]
+      columnDefs: [
+        { targets: "_all", defaultContent: "" }  // ← FIX ERROR UNKNOWN PARAMETER
+      ]
     });
-  });
+
+  }
+
+});
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const toastMessage = "<?php echo $toast_message; ?>";
-    const toastType = "<?php echo $toast_type; ?>";
+// Toast handler
+document.addEventListener("DOMContentLoaded", function () {
+  const msg = "<?= $toast_message ?>";
+  const type = "<?= $toast_type ?>";
 
-    if (toastMessage) {
-      const toastLiveExample = document.getElementById('liveToast');
-      const toastBody = document.getElementById('toastBody');
-      const toastHeader = toastLiveExample.querySelector('.toast-header');
+  if (!msg) return;
 
-      toastBody.innerHTML = toastMessage;
+  const toastBox = document.getElementById('liveToast');
+  const toastBody = document.getElementById('toastBody');
+  const toastHeader = toastBox.querySelector('.toast-header');
 
-      toastLiveExample.classList.remove('bg-success', 'bg-danger');
-      toastHeader.classList.remove('bg-success', 'bg-danger');
+  toastBody.innerHTML = msg;
 
-      if (toastType === 'success') {
-        toastLiveExample.classList.add('bg-success', 'text-white');
-        toastHeader.classList.add('bg-success', 'text-white');
-      } else if (toastType === 'danger') {
-        toastLiveExample.classList.add('bg-danger', 'text-white');
-        toastHeader.classList.add('bg-danger', 'text-white');
-      }
+  toastBox.classList.remove('bg-success', 'bg-danger');
+  toastHeader.classList.remove('bg-success', 'bg-danger');
 
-      const toast = new bootstrap.Toast(toastLiveExample);
-      toast.show();
+  if (type === 'success') {
+    toastBox.classList.add('bg-success', 'text-white');
+    toastHeader.classList.add('bg-success', 'text-white');
+  } else {
+    toastBox.classList.add('bg-danger', 'text-white');
+    toastHeader.classList.add('bg-danger', 'text-white');
+  }
+
+  new bootstrap.Toast(toastBox).show();
+});
+</script>
+
+<script>
+// Delete confirm
+$(document).on("click", ".btn-delete", function (e) {
+  e.preventDefault();
+  let url = $(this).attr("href");
+
+  Swal.fire({
+    title: 'Hapus data ini?',
+    text: "Data yang dihapus tidak dapat dikembalikan.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Hapus',
+    cancelButtonText: 'Batal',
+    customClass: {
+      confirmButton: 'btn btn-danger',
+      cancelButton: 'btn btn-outline-secondary ms-2'
+    },
+    buttonsStyling: false
+  }).then((x) => {
+    if (x.isConfirmed) {
+      window.location.href = url;
     }
   });
-</script>
-
-<script>
-  $(document).ready(function() {
-    // Gunakan event delegation untuk tombol .btn-delete di dalam DataTables
-    $('#<?php echo $table_id; ?>').on('click', '.btn-delete', function(e) {
-      e.preventDefault();
-      var deleteUrl = $(this).attr('href');
-
-      Swal.fire({
-        // ... (Logika lengkap untuk SweetAlert) ...
-        title: 'Yakin ingin menghapus <?php echo $entity_name; ?> ini?',
-        text: "Data yang sudah dihapus tidak dapat dikembalikan!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, hapus!',
-        cancelButtonText: 'Batal',
-        customClass: {
-          confirmButton: 'btn btn-danger',
-          cancelButton: 'btn btn-outline-secondary ms-2'
-        },
-        buttonsStyling: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = deleteUrl;
-        }
-      });
-    });
-  });
+});
 </script>

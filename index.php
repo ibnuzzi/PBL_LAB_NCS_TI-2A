@@ -137,5 +137,14 @@ Route::add('GET',  '/admin/dokumen_umum/edit/{id}',   'AdminDokumenUmumControlle
 Route::add('POST', '/admin/dokumen_umum/update/{id}', 'AdminDokumenUmumController', 'update');
 Route::add('GET',  '/admin/dokumen_umum/delete/{id}', 'AdminDokumenUmumController', 'delete');
 
+// PENGELOLA
+Route::add('GET',  '/admin/pengelola',                 'AdminPengelolaController', 'index');
+Route::add('GET',  '/admin/pengelola/create',          'AdminPengelolaController', 'create');
+Route::add('POST', '/admin/pengelola/store',           'AdminPengelolaController', 'store');
+Route::add('GET',  '/admin/pengelola/edit/{id}',   'AdminPengelolaController', 'edit');
+Route::add('POST', '/admin/pengelola/update/{id}', 'AdminPengelolaController', 'update');
+Route::add('GET',  '/admin/pengelola/delete/{id}', 'AdminPengelolaController', 'delete');
+
+
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);

@@ -44,11 +44,12 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
       <span class="menu-header-text">Profil Lab</span>
     </li>
     <li class="menu-item <?php echo $isStruktur ? 'active' : ''; ?>">
-      <a href="struktur-pengelola.html" class="menu-link">
+      <a href="<?php echo BASE_URL; ?>/admin/pengelola" class="menu-link">
         <i class="menu-icon bx bx-group"></i>
         <div>Struktur Pengelola</div>
       </a>
     </li>
+
     <li class="menu-item <?php echo $isHalamanStatis ? 'active' : ''; ?>">
       <a href="halaman-statis.html" class="menu-link">
         <i class="menu-icon bx bx-lock-open"></i>

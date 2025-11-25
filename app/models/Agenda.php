@@ -12,7 +12,7 @@ class Agenda
     }
 
     /**
-     * Ambil semua data agenda
+     * Ambil semua agenda
      */
     public function getAllAgenda()
     {
@@ -21,7 +21,7 @@ class Agenda
     }
 
     /**
-     * Ambil agenda berdasarkan ID
+     * Ambil agenda by ID
      */
     public function getAgendaById($id)
     {
@@ -36,13 +36,17 @@ class Agenda
     public function tambahAgenda($data)
     {
         $query = "INSERT INTO {$this->table}
-                    (nama_agenda, lokasi, gambar_agenda, id_admin_penulis, tanggal_mulai, tanggal_selesai)
+                    (nama_agenda, lokasi, deskripsi_agenda, gambar_agenda,
+                     id_admin_penulis, tanggal_mulai, tanggal_selesai)
                   VALUES
-                    (:nama, :lokasi, :gambar, :id_admin, :tanggal_mulai, :tanggal_selesai)";
+                    (:nama, :lokasi, :deskripsi, :gambar, :id_admin,
+                     :tanggal_mulai, :tanggal_selesai)";
 
         $this->db->query($query);
+
         $this->db->bind(':nama', $data['nama_agenda']);
         $this->db->bind(':lokasi', $data['lokasi']);
+        $this->db->bind(':deskripsi', $data['deskripsi_agenda'] ?? null);
         $this->db->bind(':gambar', $data['gambar_agenda']);
         $this->db->bind(':id_admin', $data['id_admin_penulis'], PDO::PARAM_INT);
         $this->db->bind(':tanggal_mulai', $data['tanggal_mulai']);
@@ -57,16 +61,19 @@ class Agenda
     public function updateAgenda($data)
     {
         $query = "UPDATE {$this->table} SET
-                    nama_agenda = :nama,
-                    lokasi = :lokasi,
-                    gambar_agenda = :gambar,
-                    tanggal_mulai = :tanggal_mulai,
-                    tanggal_selesai = :tanggal_selesai
-                  WHERE id_agenda = :id";
+                    nama_agenda      = :nama,
+                    lokasi           = :lokasi,
+                    deskripsi_agenda = :deskripsi,
+                    gambar_agenda    = :gambar,
+                    tanggal_mulai    = :tanggal_mulai,
+                    tanggal_selesai  = :tanggal_selesai
+                  WHERE id_agenda     = :id";
 
         $this->db->query($query);
+
         $this->db->bind(':nama', $data['nama_agenda']);
         $this->db->bind(':lokasi', $data['lokasi']);
+        $this->db->bind(':deskripsi', $data['deskripsi_agenda'] ?? null);
         $this->db->bind(':gambar', $data['gambar_agenda']);
         $this->db->bind(':tanggal_mulai', $data['tanggal_mulai']);
         $this->db->bind(':tanggal_selesai', $data['tanggal_selesai']);

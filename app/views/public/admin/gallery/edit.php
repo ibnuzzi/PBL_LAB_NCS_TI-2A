@@ -1,6 +1,10 @@
 <?php
 include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
+
+// Safety: pastikan variabel ada
+$gallery = $gallery ?? [];
+$id_foto = htmlspecialchars($gallery['id_foto'] ?? 0);
 ?>
 
 <div class="content-wrapper">
@@ -13,7 +17,7 @@ include './app/views/templates/admin/sidebar_admin.php';
         <span class="text-muted fw-light">Manajemen Konten /</span> Edit Foto
       </h4>
 
-      <a href="<?php echo BASE_URL; ?>/admin/gallery" class="btn btn-outline-secondary">
+      <a href="<?= BASE_URL ?>/admin/gallery" class="btn btn-outline-secondary">
         <i class="bx bx-left-arrow-alt"></i> Kembali
       </a>
     </div>
@@ -22,7 +26,15 @@ include './app/views/templates/admin/sidebar_admin.php';
     <div class="card mb-4">
       <div class="card-body">
 
-        <form action="<?php echo BASE_URL; ?>/admin/gallery/update/<?php echo htmlspecialchars($gallery['id_foto']); ?>" method="POST" enctype="multipart/form-data">
+        <?php if ($id_foto == 0): ?>
+          <div class="alert alert-danger">Data foto tidak ditemukan.</div>
+        <?php else: ?>
+
+        <form 
+          action="<?= BASE_URL ?>/admin/gallery/update/<?= $id_foto ?>" 
+          method="POST" 
+          enctype="multipart/form-data"
+        >
 
           <!-- JUDUL -->
           <div class="mb-3">
@@ -32,7 +44,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               id="judul_foto"
               name="judul_foto"
               class="form-control"
-              value="<?php echo htmlspecialchars($gallery['judul_foto'] ?? ''); ?>"
+              value="<?= htmlspecialchars($gallery['judul_foto'] ?? '') ?>"
               required
             />
           </div>
@@ -44,35 +56,38 @@ include './app/views/templates/admin/sidebar_admin.php';
               id="deskripsi_foto"
               name="deskripsi_foto"
               rows="3"
-              class="form-control"><?php echo htmlspecialchars($gallery['deskripsi_foto'] ?? ''); ?></textarea>
+              class="form-control"
+            ><?= htmlspecialchars($gallery['deskripsi_foto'] ?? '') ?></textarea>
           </div>
 
-          <!-- GAMBAR LAMA -->
+          <!-- GAMBAR SAAT INI -->
           <div class="mb-3">
             <label class="form-label d-block">Gambar Saat Ini</label>
 
             <?php if (!empty($gallery['nama_file_foto'])): ?>
               <img
-                src="<?php echo BASE_URL; ?>/public/uploads/gallery/<?php echo htmlspecialchars($gallery['nama_file_foto']); ?>"
-                alt="Foto"
+                src="<?= BASE_URL ?>/public/uploads/gallery/<?= htmlspecialchars($gallery['nama_file_foto']) ?>"
                 class="rounded mb-2"
-                style="height:120px; border-radius:6px;"
+                style="height:120px; object-fit:cover; border-radius:6px;"
               />
             <?php else: ?>
-              <p class="text-muted small">Belum ada foto.</p>
+              <p class="text-muted small">Belum ada gambar tersimpan.</p>
             <?php endif; ?>
           </div>
 
-          <!-- UPLOAD GAMBAR BARU -->
+          <!-- UPLOAD FOTO BARU -->
           <div class="mb-3">
-            <label for="file_foto" class="form-label">Ganti Foto (opsional)</label>
+            <label for="nama_file_foto" class="form-label">Ganti Foto (opsional)</label>
+
+            <!-- FIX: gunakan name="nama_file_foto" agar match dengan ImageService + Controller -->
             <input
               type="file"
-              id="file_foto"
-              name="file_foto"
+              id="nama_file_foto"
+              name="nama_file_foto"
               class="form-control"
             />
-            <small class="text-muted">Format JPG/PNG, maks 5MB.</small>
+
+            <small class="text-muted">Format JPG/PNG, maksimal 5MB.</small>
           </div>
 
           <!-- BUTTON -->
@@ -84,11 +99,11 @@ include './app/views/templates/admin/sidebar_admin.php';
 
         </form>
 
+        <?php endif; ?>
+
       </div>
     </div>
   </div>
-
-  
 
 </div>
 

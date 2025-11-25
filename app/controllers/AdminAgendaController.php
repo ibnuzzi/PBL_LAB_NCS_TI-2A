@@ -3,9 +3,6 @@
 
 class AdminAgendaController extends Controller
 {
-    /**
-     * Middleware admin
-     */
     public function __construct()
     {
         include './app/middleware/AuthMiddleware.php';
@@ -20,7 +17,7 @@ class AdminAgendaController extends Controller
         $agendaModel = $this->model('Agenda');
 
         $data = [
-            'judul_halaman' => 'Agenda - Lab NCS',
+            'judul_halaman' => 'Data Agenda',
             'agenda_list'   => $agendaModel->getAllAgenda()
         ];
 
@@ -42,46 +39,47 @@ class AdminAgendaController extends Controller
     }
 
     /**
-     * STORE
+     * STORE PROCESS
      */
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: " . BASE_URL . "/admin/agenda");
+            header("Location: ".BASE_URL."/admin/agenda");
             exit;
         }
 
-        $nama    = trim($_POST['nama_agenda'] ?? '');
-        $lokasi  = trim($_POST['lokasi'] ?? '');
-        $mulai   = $_POST['tanggal_mulai'] ?? null;
-        $selesai = $_POST['tanggal_selesai'] ?? null;
+        $nama       = trim($_POST['nama_agenda'] ?? '');
+        $lokasi     = trim($_POST['lokasi'] ?? '');
+        $deskripsi  = trim($_POST['deskripsi_agenda'] ?? '');
+        $mulai      = $_POST['tanggal_mulai'] ?? null;
+        $selesai    = $_POST['tanggal_selesai'] ?? null;
+        $id_admin   = $_SESSION['admin_id'] ?? 1;
 
-        $id_admin = $_POST['id_admin_penulis'] ?? ($_SESSION['admin_id'] ?? 1);
-
-        // IMAGE SERVICE
         include_once './app/services/ImageService.php';
 
+        // Upload gambar jika ada
         $gambar = null;
         if (!empty($_FILES['gambar_agenda']['name'])) {
-            $uploaded = ImageService::uploadImage($_FILES['gambar_agenda'], 'agenda', 'agenda_');
-            if (!$uploaded) {
-                $_SESSION['error_message'] =
-                    'Gagal mengunggah gambar. Pastikan format JPG/PNG/GIF dan ukuran <= 5MB.';
-                header("Location: " . BASE_URL . "/admin/agenda/create");
+            $upload = ImageService::uploadImage($_FILES['gambar_agenda'], 'agenda', 'agenda_');
+            if (!$upload) {
+                $_SESSION['error_message'] = "Gagal mengunggah gambar. Pastikan format JPG/PNG max 5MB.";
+                header("Location: ".BASE_URL."/admin/agenda/create");
                 exit;
             }
-            $gambar = $uploaded;
+            $gambar = $upload;
         }
 
-        // SIMPAN KE DATABASE
+        // Simpan
         $agendaModel = $this->model('Agenda');
+
         $payload = [
-            'nama_agenda'       => $nama,
-            'lokasi'            => $lokasi,
-            'gambar_agenda'     => $gambar,
-            'id_admin_penulis'  => (int)$id_admin,
-            'tanggal_mulai'     => $mulai,
-            'tanggal_selesai'   => $selesai
+            'nama_agenda'      => $nama,
+            'lokasi'           => $lokasi,
+            'deskripsi_agenda' => $deskripsi,
+            'tanggal_mulai'    => $mulai,
+            'tanggal_selesai'  => $selesai,
+            'gambar_agenda'    => $gambar,
+            'id_admin_penulis' => $id_admin
         ];
 
         $ok = $agendaModel->tambahAgenda($payload);
@@ -89,20 +87,19 @@ class AdminAgendaController extends Controller
         $_SESSION[$ok ? 'success_message' : 'error_message'] =
             $ok ? 'Agenda berhasil disimpan.' : 'Gagal menyimpan agenda.';
 
-        header("Location: " . BASE_URL . "/admin/agenda");
+        header("Location: ".BASE_URL."/admin/agenda");
         exit;
     }
 
     /**
-     * SHOW / EDIT
+     * EDIT FORM
      */
-    public function show()
+    public function edit($id = 0)
     {
-        $params = func_get_args();
-        $id = isset($params[0]) ? (int)$params[0] : 0;
+        $id = (int)$id;
 
         if ($id <= 0) {
-            header("Location: " . BASE_URL . "/admin/agenda");
+            header("Location: ".BASE_URL."/admin/agenda");
             exit;
         }
 
@@ -110,8 +107,8 @@ class AdminAgendaController extends Controller
         $row = $agendaModel->getAgendaById($id);
 
         if (!$row) {
-            $_SESSION['error_message'] = 'Agenda tidak ditemukan.';
-            header("Location: " . BASE_URL . "/admin/agenda");
+            $_SESSION['error_message'] = "Agenda tidak ditemukan.";
+            header("Location: ".BASE_URL."/admin/agenda");
             exit;
         }
 
@@ -126,52 +123,67 @@ class AdminAgendaController extends Controller
     }
 
     /**
-     * UPDATE
+     * UPDATE PROCESS
      */
-    public function update()
+    public function update($id = 0)
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: " . BASE_URL . "/admin/agenda");
+            header("Location: ".BASE_URL."/admin/agenda");
             exit;
         }
 
-        $params = func_get_args();
-        $id = isset($params[0]) ? (int)$params[0] : 0;
+        $id = (int)$id;
 
         if ($id <= 0) {
-            header("Location: " . BASE_URL . "/admin/agenda");
+            header("Location: ".BASE_URL."/admin/agenda");
             exit;
         }
 
-        $nama    = trim($_POST['nama_agenda'] ?? '');
-        $lokasi  = trim($_POST['lokasi'] ?? '');
-        $mulai   = $_POST['tanggal_mulai'] ?? null;
-        $selesai = $_POST['tanggal_selesai'] ?? null;
+        $agendaModel = $this->model('Agenda');
+        $existing    = $agendaModel->getAgendaById($id);
+
+        if (!$existing) {
+            $_SESSION['error_message'] = "Agenda tidak ditemukan.";
+            header("Location: ".BASE_URL."/admin/agenda");
+            exit;
+        }
+
+        $nama       = trim($_POST['nama_agenda'] ?? '');
+        $lokasi     = trim($_POST['lokasi'] ?? '');
+        $deskripsi  = trim($_POST['deskripsi_agenda'] ?? '');
+        $mulai      = $_POST['tanggal_mulai'] ?? null;
+        $selesai    = $_POST['tanggal_selesai'] ?? null;
 
         include_once './app/services/ImageService.php';
-        $agendaModel = $this->model('Agenda');
 
-        $existing = $agendaModel->getAgendaById($id);
-        $gambar   = $existing['gambar_agenda'] ?? null;
+        $gambar = $existing['gambar_agenda'];
 
-        // REPLACE GAMBAR
+        // Replace gambar jika upload baru
         if (!empty($_FILES['gambar_agenda']['name'])) {
-            $replaced = ImageService::replaceImage($existing['gambar_agenda'], $_FILES['gambar_agenda'], 'agenda', 'agenda_');
-            if (!$replaced) {
-                $_SESSION['error_message'] = 'Gagal mengunggah gambar baru. Periksa format/ukuran.';
-                header("Location: " . BASE_URL . "/admin/agenda/edit/$id");
+            $new = ImageService::replaceImage(
+                $existing['gambar_agenda'],
+                $_FILES['gambar_agenda'],
+                'agenda',
+                'agenda_'
+            );
+
+            if (!$new) {
+                $_SESSION['error_message'] = "Gambar baru gagal diupload. Periksa format/ukuran.";
+                header("Location: ".BASE_URL."/admin/agenda/edit/$id");
                 exit;
             }
-            $gambar = $replaced;
+
+            $gambar = $new;
         }
 
         $payload = [
-            'id_agenda'       => $id,
-            'nama_agenda'     => $nama,
-            'lokasi'          => $lokasi,
-            'gambar_agenda'   => $gambar,
-            'tanggal_mulai'   => $mulai,
-            'tanggal_selesai' => $selesai
+            'id_agenda'        => $id,
+            'nama_agenda'      => $nama,
+            'lokasi'           => $lokasi,
+            'deskripsi_agenda' => $deskripsi,
+            'tanggal_mulai'    => $mulai,
+            'tanggal_selesai'  => $selesai,
+            'gambar_agenda'    => $gambar
         ];
 
         $ok = $agendaModel->updateAgenda($payload);
@@ -179,20 +191,19 @@ class AdminAgendaController extends Controller
         $_SESSION[$ok ? 'success_message' : 'error_message'] =
             $ok ? 'Agenda berhasil diperbarui.' : 'Gagal memperbarui agenda.';
 
-        header("Location: " . BASE_URL . "/admin/agenda");
+        header("Location: ".BASE_URL."/admin/agenda");
         exit;
     }
 
     /**
      * DELETE
      */
-    public function delete()
+    public function delete($id = 0)
     {
-        $params = func_get_args();
-        $id = isset($params[0]) ? (int)$params[0] : 0;
+        $id = (int)$id;
 
         if ($id <= 0) {
-            header("Location: " . BASE_URL . "/admin/agenda");
+            header("Location: ".BASE_URL."/admin/agenda");
             exit;
         }
 
@@ -210,7 +221,7 @@ class AdminAgendaController extends Controller
         $_SESSION[$ok ? 'success_message' : 'error_message'] =
             $ok ? 'Agenda berhasil dihapus.' : 'Gagal menghapus agenda.';
 
-        header("Location: " . BASE_URL . "/admin/agenda");
+        header("Location: ".BASE_URL."/admin/agenda");
         exit;
     }
 }

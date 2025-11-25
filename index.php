@@ -81,7 +81,7 @@ Route::add('GET', '/admin/berita/delete/{id}', 'AdminBeritaController', 'delete'
 Route::add('GET', '/admin/agenda', 'AdminAgendaController', 'index');
 Route::add('GET', '/admin/agenda/create', 'AdminAgendaController', 'create');
 Route::add('POST', '/admin/agenda/store', 'AdminAgendaController', 'store');
-Route::add('GET', '/admin/agenda/edit/{id}', 'AdminAgendaController', 'show');
+Route::add('GET', '/admin/agenda/edit/{id}', 'AdminAgendaController', 'edit');
 Route::add('POST', '/admin/agenda/update/{id}', 'AdminAgendaController', 'update');
 Route::add('GET', '/admin/agenda/delete/{id}', 'AdminAgendaController', 'delete');
 

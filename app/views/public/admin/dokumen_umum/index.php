@@ -4,8 +4,10 @@ include './app/views/templates/admin/sidebar_admin.php';
 ?>
 
 <div class="content-wrapper">
+
   <div class="container-xxl flex-grow-1 container-p-y">
 
+    <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4 class="fw-bold m-0">
         <span class="text-muted fw-light">Manajemen Arsip /</span> Dokumen Umum
@@ -17,6 +19,7 @@ include './app/views/templates/admin/sidebar_admin.php';
     </div>
 
     <div class="card">
+
       <div class="table-responsive text-nowrap p-3">
         <table id="table-dokumen_umum" class="table table-striped align-middle">
           <thead>
@@ -29,21 +32,24 @@ include './app/views/templates/admin/sidebar_admin.php';
           </thead>
 
           <tbody class="table-border-bottom-0">
+
             <?php
-            // Normalisasi variabel (biar aman kayak galeri)
-            $dokumen_list = $dokumen_list ?? [];
-            if (empty($dokumen_list) && isset($dokumens)) $dokumen_list = $dokumens;
-            if (empty($dokumen_list) && isset($dokumen)) $dokumen_list = is_array($dokumen) ? [$dokumen] : [];
+              // Normalisasi variabel seperti galeri & berita
+              $dokumen_list = $dokumen_list ?? [];
+              if (empty($dokumen_list) && isset($dokumens)) $dokumen_list = $dokumens;
+              if (empty($dokumen_list) && isset($dokumen)) $dokumen_list = is_array($dokumen) ? [$dokumen] : [];
 
-            if (!empty($dokumen_list)):
-              $counter = 1;
-              foreach ($dokumen_list as $d):
+              if (!empty($dokumen_list)):
 
-                $created = $d['created_at'] ?? '';
-                $createdFormatted = $created ? date('Y-m-d H:i', strtotime($created)) : '-';
+                $no = 1;
+                foreach ($dokumen_list as $d):
+
+                  $created = $d['created_at'] ?? '';
+                  $createdFormatted = $created ? date('Y-m-d H:i', strtotime($created)) : '-';
             ?>
+
               <tr>
-                <td><?= $counter++; ?></td>
+                <td><?= $no++; ?></td>
 
                 <td style="max-width:380px;">
                   <?= htmlspecialchars($d['nama_dokumen'] ?? '-'); ?>
@@ -52,7 +58,8 @@ include './app/views/templates/admin/sidebar_admin.php';
                 <td><?= htmlspecialchars($createdFormatted); ?></td>
 
                 <td>
-                  <!-- DETAIL -->
+
+                  <!-- VIEW -->
                   <button
                     type="button"
                     class="btn btn-sm btn-outline-info me-1 btn-view-dokumen"
@@ -71,36 +78,20 @@ include './app/views/templates/admin/sidebar_admin.php';
 
                   <!-- DELETE -->
                   <a href="<?= BASE_URL ?>/admin/dokumen_umum/delete/<?= (int)($d['id_dokumen'] ?? 0); ?>"
-                     class="btn btn-sm btn-outline-danger btn-delete"
-                     onclick="return confirm('Hapus dokumen ini?');">
+                     class="btn btn-sm btn-outline-danger btn-delete">
                     <i class="bx bx-trash"></i>
                   </a>
+
                 </td>
               </tr>
 
-            <?php endforeach; else: ?>
+            <?php endforeach; endif; ?>
 
-              <!-- ✅ TR dummy tersembunyi supaya DataTables gak error -->
-              <tr class="d-none">
-                <td></td><td></td><td></td><td></td>
-              </tr>
-
-              <!-- EMPTY STATE (tetap tampil) -->
-              <tr>
-                <td colspan="4" class="text-center py-5">
-                  <img width="22%" src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.png"
-                       alt="empty" class="mb-3">
-                  <div class="text-muted mt-2">Belum ada dokumen.</div>
-                </td>
-              </tr>
-
-            <?php endif; ?>
           </tbody>
-
         </table>
       </div>
-    </div>
 
+    </div>
   </div>
 
   <!-- MODAL DETAIL -->
@@ -114,6 +105,7 @@ include './app/views/templates/admin/sidebar_admin.php';
         </div>
 
         <div class="modal-body">
+
           <p class="text-muted small mb-1">
             <i class="bx bx-calendar"></i>
             <span id="modalDetailTanggal"></span>
@@ -127,12 +119,11 @@ include './app/views/templates/admin/sidebar_admin.php';
           <a id="modalDetailFile" href="#" target="_blank" class="btn btn-info btn-sm">
             <i class="bx bx-file"></i> Lihat / Unduh Dokumen
           </a>
+
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            Tutup
-          </button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
         </div>
 
       </div>
@@ -153,6 +144,7 @@ include './app/views/components/page_scripts.php';
 document.addEventListener("DOMContentLoaded", function () {
 
   $(".btn-view-dokumen").on("click", function () {
+
     $("#modalDetailJudul").text($(this).data("judul"));
     $("#modalDetailDeskripsi").text($(this).data("deskripsi"));
     $("#modalDetailTanggal").text($(this).data("tanggal"));

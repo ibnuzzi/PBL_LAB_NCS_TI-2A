@@ -8,13 +8,13 @@ $isDashboard = stripos($currentPath, '/admin/dashboard') !== false;
 $isBerita = stripos($currentPath, '/admin/berita') !== false;
 $isAgenda = stripos($currentPath, '/admin/agenda') !== false;
 $isGaleri = stripos($currentPath, '/admin/gallery') !== false;
-$isStruktur = stripos($currentPath, '/admin/struktur') !== false;
+$isStruktur = stripos($currentPath, '/admin/pengelola') !== false;
 $isHalamanStatis = stripos($currentPath, '/admin/halaman-statis') !== false;
 $isKonsultasi = stripos($currentPath, '/admin/konsultasi') !== false;
 $isSaranaPrasarana = stripos($currentPath, '/admin/sarana') !== false;
 $isPenelitian = stripos($currentPath, '/admin/penelitian') !== false;
 $isPengabdian = stripos($currentPath, '/admin/pengabdian') !== false;
-$isDokumenUmum = stripos($currentPath, '/admin/dokumen-umum') !== false;
+$isDokumenUmum = stripos($currentPath, '/admin/dokumen_umum') !== false;
 $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
 ?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">

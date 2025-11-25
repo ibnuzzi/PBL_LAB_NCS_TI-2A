@@ -3,18 +3,10 @@ include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
 ?>
 
-<style>
-/* Fix agar tombol Edit/Delete tidak tertutup overlay datatable */
-table.dataTable tbody td {
-  position: relative;
-  z-index: 5;
-}
-</style>
-
 <div class="content-wrapper">
   <div class="container-xxl flex-grow-1 container-p-y">
 
-    <!-- Header -->
+    <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4 class="fw-bold m-0">
         <span class="text-muted fw-light">Manajemen Arsip /</span> Struktur Pengelola
@@ -25,12 +17,10 @@ table.dataTable tbody td {
       </a>
     </div>
 
-    <!-- Card -->
     <div class="card">
       <div class="table-responsive text-nowrap p-3">
 
-        <table id="table-pengelola"
-               class="table table-striped align-middle <?= empty($pengelola_list) ? 'no-dt' : '' ?>">
+        <table id="table-pengelola" class="table table-striped align-middle">
           <thead>
             <tr>
               <th>No</th>
@@ -44,69 +34,60 @@ table.dataTable tbody td {
           <tbody class="table-border-bottom-0">
 
             <?php
-            $pengelola_list = $pengelola_list ?? [];
+              $pengelola_list = $pengelola_list ?? [];
+              if (empty($pengelola_list) && isset($pengelolas)) $pengelola_list = $pengelolas;
+              if (empty($pengelola_list) && isset($pengelola))  $pengelola_list = is_array($pengelola) ? [$pengelola] : [];
 
-            if (empty($pengelola_list)): ?>
-              <tr>
-                <td colspan="5" class="text-center py-5">
-                  <img width="22%" src="<?= BASE_URL ?>/public/assets/images/empty/empty_data.png" class="mb-3">
-                  <div class="text-muted">Belum ada data pengelola.</div>
-                </td>
-              </tr>
+              if (!empty($pengelola_list)):
+                $no = 1;
+                foreach ($pengelola_list as $p):
 
-            <?php else:
-              $no = 1;
-              foreach ($pengelola_list as $p):
-                $foto = !empty($p['foto_pengelola'])
+                  // Foto Default
+                  $foto = !empty($p['foto_pengelola'])
                           ? BASE_URL . "/public/uploads/pengelola/" . $p['foto_pengelola']
                           : BASE_URL . "/public/assets/images/default/user_default.png";
             ?>
-
               <tr>
                 <td><?= $no++; ?></td>
 
-                <!-- Foto -->
                 <td>
-                  <img src="<?= $foto ?>" alt="foto"
-                       style="height:80px; width:80px; object-fit:cover; border-radius:6px;">
+                  <img src="<?= $foto ?>" style="height:80px; width:80px; object-fit:cover; border-radius:6px;">
                 </td>
 
-                <!-- Nama -->
                 <td><?= htmlspecialchars($p['nama_pengelola']); ?></td>
 
-                <!-- Jabatan -->
                 <td><?= htmlspecialchars($p['jabatan']); ?></td>
 
-                <!-- Aksi -->
                 <td>
-                  <!-- Detail -->
+                  <!-- DETAIL -->
                   <button
                     type="button"
                     class="btn btn-sm btn-outline-info me-1 btn-view"
                     data-nama="<?= htmlspecialchars($p['nama_pengelola']); ?>"
                     data-jabatan="<?= htmlspecialchars($p['jabatan']); ?>"
-                    data-foto="<?= $foto ?>"
-                  >
+                    data-foto="<?= $foto ?>">
                     <i class="bx bx-show-alt"></i>
                   </button>
 
-                  <!-- Edit -->
+                  <!-- EDIT -->
                   <a href="<?= BASE_URL ?>/admin/pengelola/edit/<?= (int)$p['id_pengelola']; ?>"
-                     class="btn btn-sm btn-outline-primary me-1 dt-edit">
+                     class="btn btn-sm btn-outline-primary me-1">
                     <i class="bx bx-edit-alt"></i>
                   </a>
 
-                  <!-- Delete -->
+                  <!-- DELETE -->
                   <a href="<?= BASE_URL ?>/admin/pengelola/delete/<?= (int)$p['id_pengelola']; ?>"
-                     class="btn btn-sm btn-outline-danger btn-delete dt-delete">
+                     class="btn btn-sm btn-outline-danger btn-delete">
                     <i class="bx bx-trash"></i>
                   </a>
                 </td>
+
               </tr>
 
             <?php endforeach; endif; ?>
 
           </tbody>
+
         </table>
 
       </div>
@@ -127,9 +108,9 @@ table.dataTable tbody td {
         <div class="modal-body text-center">
 
           <img id="detailFoto" src="" class="rounded mb-3"
-               style="width:160px; height:160px; object-fit:cover; border-radius:8px;">
+               style="width:150px; height:150px; object-fit:cover; border-radius:8px;">
 
-          <h5 id="detailNama" class="mb-1 fw-bold"></h5>
+          <h5 id="detailNama" class="fw-bold"></h5>
           <p id="detailJabatan" class="text-muted"></p>
 
         </div>
@@ -146,19 +127,17 @@ table.dataTable tbody td {
 
   <?php include './app/views/components/modal.php'; ?>
   <?php include './app/views/components/toaster.php'; ?>
-
 </div>
 
 <?php
 include './app/views/templates/admin/footer_admin.php';
-$table_name = "pengelola";
+$table_name = 'pengelola';
 include './app/views/components/page_scripts.php';
 ?>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Modal detail
   $(".btn-view").on("click", function () {
     $("#detailNama").text($(this).data("nama"));
     $("#detailJabatan").text($(this).data("jabatan"));
@@ -166,13 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     new bootstrap.Modal(document.getElementById("modalDetailPengelola")).show();
   });
-
-  // NONAKTIFKAN DATATABLES SAAT DATA KOSONG
-  if ($("#table-pengelola").hasClass("no-dt")) {
-    if ($.fn.DataTable.isDataTable("#table-pengelola")) {
-      $("#table-pengelola").DataTable().destroy();
-    }
-  }
 
 });
 </script>

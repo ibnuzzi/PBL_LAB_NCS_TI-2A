@@ -26,6 +26,7 @@ include './app/views/templates/admin/sidebar_admin.php';
             <tr>
               <th>No</th>
               <th>Judul Dokumen</th>
+              <th>Kategori</th>
               <th>Tanggal Upload</th>
               <th>Aksi</th>
             </tr>
@@ -53,6 +54,10 @@ include './app/views/templates/admin/sidebar_admin.php';
 
                 <td style="max-width:380px;">
                   <?= htmlspecialchars($d['nama_dokumen'] ?? '-'); ?>
+                </td>
+
+                <td style="max-width:380px;">
+                  <?= htmlspecialchars($d['nama_kategori'] ?? '-'); ?>
                 </td>
 
                 <td><?= htmlspecialchars($createdFormatted); ?></td>

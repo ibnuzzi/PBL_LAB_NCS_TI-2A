@@ -27,13 +27,33 @@ include './app/views/templates/admin/sidebar_admin.php';
     <div class="card mb-4">
       <h5 class="card-header">Form Edit Dokumen Umum</h5>
       <div class="card-body">
+        
         <form action="<?= BASE_URL ?>/admin/dokumen_umum/update/<?= (int)$dokumen['id_dokumen']; ?>"
               method="POST" enctype="multipart/form-data">
 
           <div class="mb-3">
-            <label class="form-label">Judul Dokumen</label>
+            <label class="form-label">Judul Dokumen <span class="text-danger">*</span></label>
             <input type="text" name="nama_dokumen" class="form-control"
                    value="<?= htmlspecialchars($dokumen['nama_dokumen']); ?>" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Kategori <span class="text-danger">*</span></label>
+            <select name="id_kategori_arsip" class="form-select" required>
+                <option value="">-- Pilih Kategori --</option>
+                
+                <?php if (!empty($kategori_list)): ?>
+                    <?php foreach ($kategori_list as $kat): ?>
+                        <?php $selected = ($kat['id_kategori_arsip'] == $dokumen['id_kategori_arsip']) ? 'selected' : ''; ?>
+                        
+                        <option value="<?= $kat['id_kategori_arsip'] ?>" <?= $selected ?>>
+                            <?= htmlspecialchars($kat['nama_kategori']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <option value="" disabled>Belum ada kategori tersedia</option>
+                <?php endif; ?>
+            </select>
           </div>
 
           <div class="mb-3">
@@ -44,14 +64,16 @@ include './app/views/templates/admin/sidebar_admin.php';
           <div class="mb-3">
             <label class="form-label">Ganti File (Opsional)</label>
             <input type="file" name="nama_file_dokumen" class="form-control">
-            <small class="text-muted">
-              File saat ini: <?= htmlspecialchars($dokumen['nama_file_dokumen']); ?>
-            </small>
+            <div class="form-text text-muted">
+              <i class="bx bx-file"></i> File saat ini: <strong><?= htmlspecialchars($dokumen['nama_file_dokumen']); ?></strong>
+              <br>
+              <small>Biarkan kosong jika tidak ingin mengganti file.</small>
+            </div>
           </div>
 
           <div class="mt-4 d-flex gap-2">
-            <button class="btn btn-primary">
-              <i class="bx bx-save"></i> Update
+            <button type="submit" class="btn btn-primary">
+              <i class="bx bx-save"></i> Simpan Perubahan
             </button>
             <a href="<?= BASE_URL ?>/admin/dokumen_umum" class="btn btn-light">
               Batal

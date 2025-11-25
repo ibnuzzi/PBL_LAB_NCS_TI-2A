@@ -3,6 +3,9 @@
 
 class AdminDokumenUmumController extends Controller
 {
+    /**
+     * Constructor "MIDDLEWARE"
+     */
     public function __construct()
     {
         include './app/middleware/AuthMiddleware.php';
@@ -19,13 +22,16 @@ class AdminDokumenUmumController extends Controller
         ];
 
         $this->view('templates/admin/header_admin', $data);
-        $this->view('public/admin/dokumen_umum/index', $data);
+        $this->view('public/admin/dokumen_umum/index', $data); // Sesuaikan path view Anda
         $this->view('templates/admin/footer_admin');
     }
 
     public function create()
     {
-        $data = ['judul_halaman' => 'Tambah Dokumen Umum'];
+        $kategoriModel = $this->model('KategoriArsip');
+        $data['kategori_list'] = $kategoriModel->getAllKategori();
+        $data['judul_halaman'] = 'Tambah Dokumen';
+
         $this->view('templates/admin/header_admin', $data);
         $this->view('public/admin/dokumen_umum/create', $data);
         $this->view('templates/admin/footer_admin');
@@ -40,9 +46,10 @@ class AdminDokumenUmumController extends Controller
 
         $nama       = trim($_POST['nama_dokumen'] ?? '');
         $deskripsi  = trim($_POST['deskripsi_dokumen'] ?? '');
+        $id_kategori = (int)($_POST['id_kategori_arsip'] ?? 0); // AMBIL KATEGORI
         $id_admin   = $_SESSION['admin_id'] ?? 1;
 
-        if (empty($nama) || empty($deskripsi)) {
+        if (empty($nama) || empty($deskripsi) || empty($id_kategori)) {
             $_SESSION['error_message'] = "Semua field wajib diisi.";
             header("Location: " . BASE_URL . "/admin/dokumen_umum/create");
             exit;
@@ -71,7 +78,8 @@ class AdminDokumenUmumController extends Controller
             'nama_dokumen'        => $nama,
             'nama_file_dokumen'   => $file_name,
             'deskripsi_dokumen'   => $deskripsi,
-            'id_admin_uploader'   => (int)$id_admin
+            'id_admin_uploader'   => (int)$id_admin,
+            'id_kategori_arsip'   => (int)$id_kategori // SIMPAN KATEGORI
         ];
 
         $ok = $model->insert($payload);
@@ -99,13 +107,17 @@ class AdminDokumenUmumController extends Controller
             exit;
         }
 
+        // AMBIL DATA KATEGORI UNTUK FORM EDIT
+        $kategoriModel = $this->model('KategoriArsip');
+
         $data = [
             'judul_halaman' => 'Edit Dokumen Umum',
-            'dokumen' => $row
+            'dokumen' => $row,
+            'kategori_list' => $kategoriModel->getAllKategori() // KIRIM KE VIEW
         ];
 
         $this->view('templates/admin/header_admin', $data);
-        $this->view('public/admin/dokumen_umum/edit', $data);
+        $this->view('public/admin/dokumen_umum/edit', $data); 
         $this->view('templates/admin/footer_admin');
     }
 
@@ -127,6 +139,7 @@ class AdminDokumenUmumController extends Controller
 
         $nama       = trim($_POST['nama_dokumen'] ?? '');
         $deskripsi  = trim($_POST['deskripsi_dokumen'] ?? '');
+        $id_kategori = (int)($_POST['id_kategori_arsip'] ?? 0); // AMBIL KATEGORI
 
         include_once __DIR__ . '/../services/FileService.php';
         $file_name = $existing['nama_file_dokumen'];
@@ -148,7 +161,8 @@ class AdminDokumenUmumController extends Controller
             'id_dokumen'         => $id,
             'nama_dokumen'       => $nama,
             'nama_file_dokumen'  => $file_name,
-            'deskripsi_dokumen'  => $deskripsi
+            'deskripsi_dokumen'  => $deskripsi,
+            'id_kategori_arsip'  => (int)$id_kategori // UPDATE KATEGORI
         ];
 
         $ok = $model->update($payload);

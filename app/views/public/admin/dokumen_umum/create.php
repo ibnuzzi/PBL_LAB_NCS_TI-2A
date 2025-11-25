@@ -30,23 +30,43 @@ include './app/views/templates/admin/sidebar_admin.php';
         <form action="<?= BASE_URL ?>/admin/dokumen_umum/store" method="POST" enctype="multipart/form-data">
 
           <div class="mb-3">
-            <label class="form-label">Judul Dokumen</label>
-            <input type="text" name="nama_dokumen" class="form-control" required>
+            <label class="form-label">Judul Dokumen <span class="text-danger">*</span></label>
+            <input type="text" name="nama_dokumen" class="form-control" placeholder="Contoh: Modul Praktikum Jaringan Dasar" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Kategori <span class="text-danger">*</span></label>
+            <select name="id_kategori_arsip" class="form-select" required>
+              <option value="">-- Pilih Kategori --</option>
+              <?php if (!empty($kategori_list)): ?>
+                <?php foreach ($kategori_list as $kat): ?>
+                  <option value="<?= $kat['id_kategori_arsip'] ?>">
+                    <?= htmlspecialchars($kat['nama_kategori']) ?>
+                  </option>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <option value="" disabled>Belum ada kategori tersedia</option>
+              <?php endif; ?>
+
+            </select>
+            <div class="form-text">
+              Jika kategori belum ada, silakan buat di menu <a href="<?= BASE_URL ?>/admin/kategori_arsip">Kategori Dokumen</a>.
+            </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Deskripsi Dokumen</label>
-            <textarea name="deskripsi_dokumen" rows="4" class="form-control" required></textarea>
+            <textarea name="deskripsi_dokumen" rows="4" class="form-control" placeholder="Penjelasan singkat tentang isi dokumen..." required></textarea>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Upload File Dokumen</label>
+            <label class="form-label">Upload File Dokumen <span class="text-danger">*</span></label>
             <input type="file" name="nama_file_dokumen" class="form-control" required>
             <small class="text-muted">Format: pdf/doc/docx/zip (max 5MB)</small>
           </div>
 
           <div class="mt-4 d-flex gap-2">
-            <button class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
               <i class="bx bx-save"></i> Simpan
             </button>
             <a href="<?= BASE_URL ?>/admin/dokumen_umum" class="btn btn-light">

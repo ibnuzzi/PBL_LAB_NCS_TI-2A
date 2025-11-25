@@ -10,7 +10,13 @@ class DokumenUmum {
     }
 
     public function getAll() {
-        $this->db->query("SELECT * FROM {$this->table} ORDER BY created_at DESC");
+        // JOIN dengan tabel kategori untuk menampilkan nama kategori
+        $sql = "SELECT a.*, k.nama_kategori 
+                FROM {$this->table} a
+                LEFT JOIN tbl_kategori_arsip k ON a.id_kategori_arsip = k.id_kategori_arsip
+                ORDER BY a.created_at DESC";
+                
+        $this->db->query($sql);
         return $this->db->resultSet();
     }
 
@@ -21,32 +27,37 @@ class DokumenUmum {
     }
 
     public function insert($data) {
+        // TAMBAHKAN id_kategori_arsip
         $query = "INSERT INTO {$this->table}
-                    (nama_dokumen, nama_file_dokumen, deskripsi_dokumen, id_admin_uploader)
+                    (nama_dokumen, nama_file_dokumen, deskripsi_dokumen, id_admin_uploader, id_kategori_arsip)
                   VALUES
-                    (:nama_dokumen, :nama_file_dokumen, :deskripsi_dokumen, :id_admin_uploader)";
+                    (:nama_dokumen, :nama_file_dokumen, :deskripsi_dokumen, :id_admin_uploader, :id_kategori_arsip)";
 
         $this->db->query($query);
         $this->db->bind(':nama_dokumen', $data['nama_dokumen']);
         $this->db->bind(':nama_file_dokumen', $data['nama_file_dokumen']);
         $this->db->bind(':deskripsi_dokumen', $data['deskripsi_dokumen']);
         $this->db->bind(':id_admin_uploader', $data['id_admin_uploader'], PDO::PARAM_INT);
+        $this->db->bind(':id_kategori_arsip', $data['id_kategori_arsip'], PDO::PARAM_INT);
 
         return $this->db->execute();
     }
 
     public function update($data) {
+        // TAMBAHKAN id_kategori_arsip
         $query = "UPDATE {$this->table} SET
                     nama_dokumen = :nama_dokumen,
                     nama_file_dokumen = :nama_file_dokumen,
                     deskripsi_dokumen = :deskripsi_dokumen,
-                    updated_at = NOW()
+                    id_kategori_arsip = :id_kategori_arsip,
+                    updated_at = CURRENT_TIMESTAMP
                   WHERE id_dokumen = :id_dokumen";
 
         $this->db->query($query);
         $this->db->bind(':nama_dokumen', $data['nama_dokumen']);
         $this->db->bind(':nama_file_dokumen', $data['nama_file_dokumen']);
         $this->db->bind(':deskripsi_dokumen', $data['deskripsi_dokumen']);
+        $this->db->bind(':id_kategori_arsip', $data['id_kategori_arsip'], PDO::PARAM_INT);
         $this->db->bind(':id_dokumen', $data['id_dokumen'], PDO::PARAM_INT);
 
         return $this->db->execute();

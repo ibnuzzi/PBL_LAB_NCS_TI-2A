@@ -137,6 +137,11 @@ Route::add('GET',  '/admin/dokumen_umum/edit/{id}',   'AdminDokumenUmumControlle
 Route::add('POST', '/admin/dokumen_umum/update/{id}', 'AdminDokumenUmumController', 'update');
 Route::add('GET',  '/admin/dokumen_umum/delete/{id}', 'AdminDokumenUmumController', 'delete');
 
+Route::add('GET',  '/admin/dokumen_kategori', 'AdminDokumenKategoriController', 'index');
+Route::add('POST', '/admin/dokumen_kategori/store', 'AdminDokumenKategoriController', 'store');
+Route::add('POST', '/admin/dokumen_kategori/update', 'AdminDokumenKategoriController', 'update');
+Route::add('GET',  '/admin/dokumen_kategori/delete/{id}', 'AdminDokumenKategoriController', 'delete');
+
 // PENGELOLA
 Route::add('GET',  '/admin/pengelola',                 'AdminPengelolaController', 'index');
 Route::add('GET',  '/admin/pengelola/create',          'AdminPengelolaController', 'create');

@@ -34,53 +34,53 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <tbody>
 
-<?php
-// Normalisasi variabel
-$pengabdian_list = $pengabdian_list ?? [];
-if (empty($pengabdian_list) && isset($pengabdians)) $pengabdian_list = $pengabdians;
-if (empty($pengabdian_list) && isset($pengabdian)) $pengabdian_list = is_array($pengabdian) ? [$pengabdian] : [];
+            <?php
+            // Normalisasi variabel
+            $pengabdian_list = $pengabdian_list ?? [];
+            if (empty($pengabdian_list) && isset($pengabdians)) $pengabdian_list = $pengabdians;
+            if (empty($pengabdian_list) && isset($pengabdian)) $pengabdian_list = is_array($pengabdian) ? [$pengabdian] : [];
 
-if (!empty($pengabdian_list)):
-    $counter = 1;
-    foreach ($pengabdian_list as $p):
-?>
-    <tr>
-        <td><?= $counter++; ?></td>
+            if (!empty($pengabdian_list)):
+              $counter = 1;
+              foreach ($pengabdian_list as $p):
+            ?>
+                <tr>
+                  <td><?= $counter++; ?></td>
 
-        <td style="max-width:380px;">
-          <?= htmlspecialchars($p['judul_kegiatan']); ?>
-        </td>
+                  <td style="max-width:380px;">
+                    <?= htmlspecialchars($p['judul_kegiatan']); ?>
+                  </td>
 
-        <td><?= htmlspecialchars($p['tahun_kegiatan']); ?></td>
+                  <td><?= htmlspecialchars($p['tahun_kegiatan']); ?></td>
 
-        <td>
-          <!-- DETAIL -->
-          <button
-            type="button"
-            class="btn btn-sm btn-outline-info me-1 btn-view-pengabdian"
-            data-judul="<?= htmlspecialchars($p['judul_kegiatan']); ?>"
-            data-tim="<?= htmlspecialchars($p['tim_pengabdi']); ?>"
-            data-tahun="<?= htmlspecialchars($p['tahun_kegiatan']); ?>"
-            data-deskripsi="<?= htmlspecialchars($p['deskripsi_kegiatan']); ?>"
-            data-file="<?= BASE_URL . '/public/uploads/pengabdian/' . htmlspecialchars($p['file_dokumen_pdf']); ?>"
-          >
-            <i class="bx bx-show-alt"></i>
-          </button>
+                  <td>
+                    <!-- DETAIL -->
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-info me-1 btn-view-pengabdian"
+                      data-judul="<?= htmlspecialchars($p['judul_kegiatan']); ?>"
+                      data-tim="<?= htmlspecialchars($p['tim_pengabdi']); ?>"
+                      data-tahun="<?= htmlspecialchars($p['tahun_kegiatan']); ?>"
+                      data-deskripsi="<?= htmlspecialchars($p['deskripsi_kegiatan']); ?>"
+                      data-file="<?= BASE_URL . '/public/uploads/pengabdian/' . htmlspecialchars($p['file_dokumen_pdf']); ?>">
+                      <i class="bx bx-show-alt"></i>
+                    </button>
 
-          <!-- EDIT -->
-          <a href="<?= BASE_URL ?>/admin/pengabdian/edit/<?= htmlspecialchars($p['id_pengabdian']); ?>"
-             class="btn btn-sm btn-outline-primary me-1">
-            <i class="bx bx-edit-alt"></i>
-          </a>
+                    <!-- EDIT -->
+                    <a href="<?= BASE_URL ?>/admin/pengabdian/edit/<?= htmlspecialchars($p['id_pengabdian']); ?>"
+                      class="btn btn-sm btn-outline-primary me-1">
+                      <i class="bx bx-edit-alt"></i>
+                    </a>
 
-          <!-- DELETE -->
-          <a href="<?= BASE_URL ?>/admin/pengabdian/delete/<?= htmlspecialchars($p['id_pengabdian']); ?>"
-             class="btn btn-sm btn-outline-danger btn-delete">
-            <i class="bx bx-trash"></i>
-          </a>
-        </td>
-    </tr>
-<?php endforeach; endif; ?>
+                    <!-- DELETE -->
+                    <a href="<?= BASE_URL ?>/admin/pengabdian/delete/<?= htmlspecialchars($p['id_pengabdian']); ?>"
+                      class="btn btn-sm btn-outline-danger btn-delete">
+                      <i class="bx bx-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+            <?php endforeach;
+            endif; ?>
 
           </tbody>
 
@@ -89,7 +89,7 @@ if (!empty($pengabdian_list)):
       </div>
     </div>
 
-    
+
 
   </div>
 
@@ -143,18 +143,18 @@ include './app/views/components/page_scripts.php';
 
 <!-- JS DETAIL -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function() {
 
-  $(".btn-view-pengabdian").on("click", function () {
+    $(".btn-view-pengabdian").on("click", function() {
 
-    $("#modalDetailJudul").text($(this).data("judul"));
-    $("#modalDetailTim").text($(this).data("tim"));
-    $("#modalDetailTahun").text($(this).data("tahun"));
-    $("#modalDetailDeskripsi").text($(this).data("deskripsi"));
-    $("#modalDetailFile").attr("href", $(this).data("file"));
+      $("#modalDetailJudul").text($(this).data("judul"));
+      $("#modalDetailTim").text($(this).data("tim"));
+      $("#modalDetailTahun").text($(this).data("tahun"));
+      $("#modalDetailDeskripsi").text($(this).data("deskripsi"));
+      $("#modalDetailFile").attr("href", $(this).data("file"));
 
-    new bootstrap.Modal(document.getElementById("modalDetailPengabdian")).show();
+      new bootstrap.Modal(document.getElementById("modalDetailPengabdian")).show();
+    });
+
   });
-
-});
 </script>

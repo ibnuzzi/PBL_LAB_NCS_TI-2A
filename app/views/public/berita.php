@@ -1,4 +1,5 @@
 <?php
+// berita.php - Full Implementation with Search
 include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
@@ -8,35 +9,64 @@ include 'app/views/templates/public/navbar.php';
     <div class="container">
         <h2 class="page-header__title">Berita & Artikel</h2>
         <ul class="nionx-breadcrumb list-unstyled">
-            <li><a href="index.php">Beranda</a></li>
+            <li><a href="<?= BASE_URL ?>">Beranda</a></li>
             <li><span>Aktivitas</span></li>
             <li><span>Berita</span></li>
         </ul>
     </div>
 </section>
 
-<section class="blog-one pt-120 pb-120">
+<section class="pt-80 pb-40 text-center">
     <div class="container">
-        <div class="row gutter-y-30">
+        <h2 class="section-title__title agenda-main-title">Berita & Artikel Terbaru</h2>
+        <p class="agenda-intro-text">Dapatkan informasi terkini seputar teknologi, kegiatan laboratorium, dan artikel menarik lainnya.</p>
+
+        <div style="max-width:100%; margin:18px 0 22px;">
+            <div class="agenda-search">
+                <input id="berita-search-input" class="search-input" placeholder="Cari berita berdasarkan judul atau tanggal..." aria-label="Cari berita">
+                <button id="agenda-search-btn" aria-label="Cari">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="blog-one pt-10 pb-120">
+    <div class="container">
+
+        <div class="row gutter-y-30" id="berita-items">
             <?php if (!empty($beritas) && is_array($beritas)): ?>
                 <?php foreach ($beritas as $index => $b): ?>
-                    <div class="col-md-6 col-lg-4">
+                    <?php 
+                        // MENYIAPKAN DATA PENCARIAN
+                        // Menggabungkan Judul dan Tanggal (Format: 25 Aug 2025) agar user bisa cari berdasarkan bulan/tahun
+                        $dateFormatted = date('d M Y', strtotime($b['tanggal_publish']));
+                        $searchableContent = strtolower($b['judul_berita'] . ' ' . $dateFormatted); 
+                    ?>
+                    <div class="col-md-6 col-lg-4 berita-item" data-search="<?= htmlspecialchars($searchableContent) ?>">
                         <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='<?= (400 + ($index * 200)) ?>ms'>
                             <div class="blog-card__image">
                                 <div class="blog-card__image__item">
                                     <?php
-                                        $img = 'public/uploads/berita/' . (!empty($b['gambar_berita']) ? $b['gambar_berita'] : 'default.png');
+                                        // Handle gambar default jika kosong
+                                        $imgName = !empty($b['gambar_berita']) ? $b['gambar_berita'] : 'default.png';
+                                        $img = BASE_URL . '/public/uploads/berita/' . $imgName;
                                     ?>
-                                    <img src="<?= $img ?>" alt="<?= htmlspecialchars($b['judul_berita']) ?>">
+                                    <img src="<?= $img ?>" alt="<?= htmlspecialchars($b['judul_berita']) ?>" loading="lazy">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $b['id_berita'] ?>" class="blog-card__image__link"></a>
                                 </div>
                                 <div class="blog-card__date">
-                                    <span class="blog-card__date__day"><?= date('d', strtotime($b['tanggal_publish'])) ?></span><?= strtoupper(date('M', strtotime($b['tanggal_publish']))) ?>
+                                    <span class="blog-card__date__day"><?= date('d', strtotime($b['tanggal_publish'])) ?></span>
+                                    <?= strtoupper(date('M', strtotime($b['tanggal_publish']))) ?>
                                 </div>
                             </div>
                             <div class="blog-card__content">
                                 <div class="blog-card__author">
-                                </div>
+                                    </div>
                                 <h3 class="blog-card__title">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $b['id_berita'] ?>"><?= htmlspecialchars($b['judul_berita']) ?></a>
                                 </h3>
@@ -50,44 +80,26 @@ include 'app/views/templates/public/navbar.php';
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="col-12">
-                    <p>Tidak ada berita untuk ditampilkan.</p>
+                <div class="col-12 text-center">
+                    <p>Belum ada berita yang dipublikasikan.</p>
                 </div>
             <?php endif; ?>
         </div>
 
-        <!-- Pagination -->
-        <?php if (isset($totalPages) && $totalPages > 1): ?>
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-12">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <?php
-                                $current = isset($currentPage) ? (int)$currentPage : 1;
-                                $baseUrl = BASE_URL . '/berita';
-                                $prev = $current - 1;
-                                $next = $current + 1;
-                            ?>
-                            <li class="page-item <?= ($current <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= ($current > 1) ? $baseUrl . '?page=' . $prev : '#' ?>" aria-label="Previous">&laquo;</a>
-                            </li>
+        <div class="search-no-results" style="display:none; text-align:center; padding:40px 20px;">
+            <div class="search-no-results__icon">
+                 </div>
+            <h3 class="search-no-results__title">Hasil Tidak Ditemukan</h3>
+            <p class="search-no-results__message">Maaf, tidak ada berita yang cocok dengan kata kunci pencarian Anda. Silakan coba kata kunci lain.</p>
+        </div>
 
-                            <?php for ($p = 1; $p <= $totalPages; $p++): ?>
-                                <li class="page-item <?= ($p === $current) ? 'active' : '' ?>">
-                                    <a class="page-link" href="<?= $baseUrl . '?page=' . $p ?>"><?= $p ?></a>
-                                </li>
-                            <?php endfor; ?>
-
-                            <li class="page-item <?= ($current >= $totalPages) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= ($current < $totalPages) ? $baseUrl . '?page=' . $next : '#' ?>" aria-label="Next">&raquo;</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        <?php endif; ?>
+        <div class="berita-pagination-wrapper text-center" style="margin-top:80px;display:flex; justify-content:center;">
+            <ul id="berita-pagination-container" class="pagination"></ul>
+        </div>
     </div>
 </section>
+
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/agenda-custom.css?v=<?= filemtime(__DIR__ . '/../../../public/css/agenda-custom.css') ?>">
 
 <?php
 include 'app/views/templates/public/footer.php';

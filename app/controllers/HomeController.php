@@ -74,4 +74,74 @@ class HomeController extends Controller {
     public function arsip() {
         $this->view('public/arsip');
     }
+
+        public function indexAgenda()
+    {
+        $agendaModel = $this->model('Agenda');
+        $list = $agendaModel->getAllAgenda();
+
+        $data = [
+            'judul_halaman' => 'Agenda - Lab NCS',
+            'agendaList'    => $list
+        ];
+
+        // The `public/agenda` view includes header, navbar, footer and scripts itself
+        $this->view('public/agenda', $data);
+    }
+
+    public function indexBerita()
+    {
+
+        $beritaModel = $this->model('Berita');
+
+        $list = $beritaModel->getAllBerita(); 
+
+        $data = [
+            'judul_halaman' => 'Berita - Lab NCS',
+            'beritas'       => $list
+        ];
+
+        $this->view('public/berita', $data);
+    }
+
+    public function detailBerita($id)
+    {
+        $beritaModel = $this->model('Berita');
+        $adminModel = $this->model('Admin');
+
+        $berita = $beritaModel->getBeritaById($id);
+        $admin = $berita && $berita['id_admin_penulis'] ? $adminModel->getAdminById($berita['id_admin_penulis']) : null;
+
+        $data = [
+            'judul_halaman' => 'Detail Berita - Lab NCS',
+            'berita' => $berita,
+            'admin' => $admin,
+            'latestPosts' => $beritaModel->getBeritaTerbaru(5)
+        ];
+
+        if (!$data['berita']) {
+
+            header("HTTP/1.0 404 Not Found");
+            $this->view('templates/public/header', ['judul_halaman' => '404 Not Found']);
+            $this->view('errors/404');
+            $this->view('templates/public/footer');
+            return;
+        }
+
+        $this->view('public/berita/detail', $data);
+    }
+
+    public function indexGaleri() {
+
+        $galleryModel = $this->model('Gallery');
+
+        $list = $galleryModel->getAll();
+
+        $data = [
+            'judul_halaman' => 'Galeri - Lab NCS',
+            'galleries'     => $list
+        ];
+
+        $this->view('public/galeri', $data);
+    }
 }

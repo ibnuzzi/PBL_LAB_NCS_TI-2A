@@ -10,11 +10,6 @@ class Database {
     private $db_user = DB_USER;
     private $db_pass = DB_PASS;
 
-    // Database Handler (dbh) dan Statement (stmt)
-    private $dbh;
-    private $stmt;
-    private $error;
-
     // Instance (untuk pola Singleton)
     private static $instance = null;
 

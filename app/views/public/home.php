@@ -911,7 +911,7 @@ if (!isset($pengelolaList)) {
     .video-cta__divider {
         position: absolute;
         top: 0;
-        left: 0;
+        left: 0;    
         width: 100%;
         height: 60px;
         z-index: 3;
@@ -999,9 +999,17 @@ if (!isset($pengelolaList)) {
             <?php if (!empty($latestNews)): ?>
                 <?php foreach ($latestNews as $news): ?>
                     <div class="col-md-6 col-lg-4">
-                        <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms'>
+                        <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms' style="
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                        ">
                             <div class="blog-card__image">
-                                <div class="blog-card__image__item">
+                                <div class="blog-card__image__item" style="
+                                    height: 250px;
+                                    overflow: hidden;
+                                    position: relative;
+                                ">
                                     <?php
                                     $imgSrc = BASE_URL . '/public/assets/images/blog/blog-1-1.png'; // Default
                                     if (!empty($news['gambar_berita'])) {
@@ -1012,21 +1020,39 @@ if (!isset($pengelolaList)) {
                                         }
                                     }
                                     ?>
-                                    <img src="<?= $imgSrc ?>" alt="<?= htmlspecialchars($news['judul_berita']) ?>" style="height: 250px; object-fit: cover;">
-                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['id_berita'] ?>" class="blog-card__image__link"></a>
+                                    <img src="<?= $imgSrc ?>" alt="<?= htmlspecialchars($news['judul_berita']) ?>" style="
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                        object-position: center;
+                                    ">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>" class="blog-card__image__link"></a>
                                 </div>
                                 <div class="blog-card__date">
-                                    <span class="blog-card__date__day"><?= date('d', strtotime($news['tanggal_publish'])) ?></span><?= date('M', strtotime($news['tanggal_publish'])) ?>
+                                    <span class="blog-card__date__day"><?= date('d', strtotime($news['tanggal_publish'])) ?></span><?= strtoupper(date('M', strtotime($news['tanggal_publish']))) ?>
                                 </div>
                             </div>
-                            <div class="blog-card__content">
+                            <div class="blog-card__content" style="
+                                flex: 1;
+                                display: flex;
+                                flex-direction: column;
+                            ">
                                 <div class="blog-card__author">
                                 </div>
-                                <h3 class="blog-card__title">
-                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['id_berita'] ?>"><?= htmlspecialchars($news['judul_berita']) ?></a>
+                                <h3 class="blog-card__title" style="
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    min-height: 60px;
+                                    line-height: 1.4;
+                                    margin-bottom: 20px;
+                                ">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>"><?= htmlspecialchars($news['judul_berita']) ?></a>
                                 </h3>
-                                <div class="blog-card__content__btn">
-                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['id_berita'] ?>" class="blog-card__content__btn__link">
+                                <div class="blog-card__content__btn" style="margin-top: auto;">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>" class="blog-card__content__btn__link">
                                         Baca Selengkapnya<i class="icon-arrow"></i>
                                     </a>
                                 </div>

@@ -60,16 +60,6 @@ include './app/views/templates/admin/sidebar_admin.php';
                 required />
             </div>
 
-            <!-- KONDISI -->
-            <div class="col-md-6">
-              <label class="form-label">Kondisi</label>
-              <select name="kondisi" class="form-select" required>
-                <option value="Baik" <?php echo ($sarana['kondisi'] == 'Baik') ? 'selected' : ''; ?>>Baik</option>
-                <option value="Perlu Perawatan" <?php echo ($sarana['kondisi'] == 'Perlu Perawatan') ? 'selected' : ''; ?>>Perlu Perawatan</option>
-                <option value="Rusak" <?php echo ($sarana['kondisi'] == 'Rusak') ? 'selected' : ''; ?>>Rusak</option>
-              </select>
-            </div>
-
             <!-- FOTO LAMA -->
             <div class="col-md-6">
               <label class="form-label d-block">Foto Saat Ini</label>

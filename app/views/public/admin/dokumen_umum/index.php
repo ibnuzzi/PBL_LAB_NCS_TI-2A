@@ -69,6 +69,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                     type="button"
                     class="btn btn-sm btn-outline-info me-1 btn-view-dokumen"
                     data-judul="<?= htmlspecialchars($d['nama_dokumen'] ?? ''); ?>"
+                    data-kategori="<?= htmlspecialchars($d['nama_kategori'] ?? '-'); ?>"
                     data-deskripsi="<?= htmlspecialchars($d['deskripsi_dokumen'] ?? '-'); ?>"
                     data-file="<?= BASE_URL . '/public/uploads/dokumen_umum/' . htmlspecialchars($d['nama_file_dokumen'] ?? ''); ?>"
                     data-tanggal="<?= htmlspecialchars($createdFormatted); ?>">
@@ -101,34 +102,67 @@ include './app/views/templates/admin/sidebar_admin.php';
 
   <!-- MODAL DETAIL -->
   <div class="modal fade" id="modalDetailDokumen" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalDetailJudul">Detail Dokumen</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-header bg-danger text-white">
+          <div>
+            <h5 class="modal-title mb-0" id="modalDetailJudul">Detail Dokumen</h5>
+            <small class="opacity-75">Informasi Dokumen Arsip</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
 
-          <p class="text-muted small mb-1">
-            <i class="bx bx-calendar"></i>
-            <span id="modalDetailTanggal"></span>
-          </p>
+          <!-- Tanggal Upload -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-calendar"></i> TANGGAL UPLOAD
+            </label>
+            <p class="fs-6 mb-0" id="modalDetailTanggal"></p>
+          </div>
 
-          <p><strong>Deskripsi:</strong></p>
-          <p id="modalDetailDeskripsi"></p>
+          <hr class="my-3">
 
-          <hr>
+          <!-- Kategori -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-category"></i> KATEGORI
+            </label>
+            <div class="alert alert-danger mb-0">
+              <i class="bx bx-folder"></i> <strong id="modalDetailKategori"></strong>
+            </div>
+          </div>
 
-          <a id="modalDetailFile" href="#" target="_blank" class="btn btn-info btn-sm">
-            <i class="bx bx-file"></i> Lihat / Unduh Dokumen
-          </a>
+          <hr class="my-3">
+
+          <!-- Deskripsi -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-file-blank"></i> DESKRIPSI
+            </label>
+            <div class="bg-light p-3 rounded" id="modalDetailDeskripsi"></div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- File Download -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-2">
+              <i class="bx bx-download"></i> UNDUH DOKUMEN
+            </label>
+            <a id="modalDetailFile" href="#" target="_blank" class="btn btn-danger btn-sm w-100">
+              <i class="bx bx-download"></i> Unduh / Lihat Dokumen
+            </a>
+          </div>
 
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bx bx-x"></i> Tutup
+          </button>
         </div>
 
       </div>
@@ -150,10 +184,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $(".btn-view-dokumen").on("click", function () {
 
-    $("#modalDetailJudul").text($(this).data("judul"));
-    $("#modalDetailDeskripsi").text($(this).data("deskripsi"));
-    $("#modalDetailTanggal").text($(this).data("tanggal"));
-    $("#modalDetailFile").attr("href", $(this).data("file"));
+    let judul = $(this).data("judul");
+    let kategori = $(this).data("kategori");
+    let deskripsi = $(this).data("deskripsi");
+    let tanggal = $(this).data("tanggal");
+    let file = $(this).data("file");
+
+    // Set judul
+    $("#modalDetailJudul").text(judul);
+
+    // Set tanggal
+    $("#modalDetailTanggal").html(`<strong>${tanggal}</strong>`);
+
+    // Set kategori
+    $("#modalDetailKategori").text(kategori);
+
+    // Set deskripsi
+    if (deskripsi && deskripsi.trim() !== "" && deskripsi !== "-") {
+        $("#modalDetailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
+    } else {
+        $("#modalDetailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
+    }
+
+    // Set file link
+    $("#modalDetailFile").attr("href", file);
 
     new bootstrap.Modal(document.getElementById("modalDetailDokumen")).show();
   });

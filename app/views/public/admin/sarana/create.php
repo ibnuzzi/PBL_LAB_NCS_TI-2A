@@ -58,19 +58,6 @@ include './app/views/templates/admin/sidebar_admin.php';
                 required>
             </div>
 
-            <!-- KONDISI -->
-            <div class="col-md-6">
-              <label class="form-label">Kondisi</label>
-              <select 
-                name="kondisi" 
-                class="form-select" 
-                required>
-                <option value="Baik">Baik</option>
-                <option value="Perlu Perawatan">Perlu Perawatan</option>
-                <option value="Rusak">Rusak</option>
-              </select>
-            </div>
-
             <!-- FOTO -->
             <div class="col-md-6">
               <label class="form-label">Foto Sarana</label>

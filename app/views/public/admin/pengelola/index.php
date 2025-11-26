@@ -97,27 +97,39 @@ include './app/views/templates/admin/sidebar_admin.php';
 
   <!-- MODAL DETAIL -->
   <div class="modal fade" id="modalDetailPengelola" tabindex="-1">
-    <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title">Detail Pengelola</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-header bg-info text-white">
+          <div>
+            <h5 class="modal-title mb-0">Profil Pengelola</h5>
+            <small class="opacity-75">Informasi Detail</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body text-center">
 
-          <img id="detailFoto" src="" class="rounded mb-3"
-               style="width:150px; height:150px; object-fit:cover; border-radius:8px;">
+          <!-- Foto Profile -->
+          <div class="mb-4">
+            <div class="border rounded-circle d-inline-block p-2 bg-light" style="width: 180px; height: 180px;">
+              <img id="detailFoto" src="" class="rounded-circle" style="width:160px; height:160px; object-fit:cover;">
+            </div>
+          </div>
 
-          <h5 id="detailNama" class="fw-bold"></h5>
-          <p id="detailJabatan" class="text-muted"></p>
+          <!-- Nama -->
+          <h4 id="detailNama" class="fw-bold mb-2"></h4>
+
+          <!-- Jabatan -->
+          <div class="alert alert-info mb-0">
+            <i class="bx bx-briefcase-alt-2"></i> <strong id="detailJabatan"></strong>
+          </div>
 
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            Tutup
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bx bx-x"></i> Tutup
           </button>
         </div>
 
@@ -139,9 +151,13 @@ include './app/views/components/page_scripts.php';
 document.addEventListener("DOMContentLoaded", function () {
 
   $(".btn-view").on("click", function () {
-    $("#detailNama").text($(this).data("nama"));
-    $("#detailJabatan").text($(this).data("jabatan"));
-    $("#detailFoto").attr("src", $(this).data("foto"));
+    let nama = $(this).data("nama");
+    let jabatan = $(this).data("jabatan");
+    let foto = $(this).data("foto");
+
+    $("#detailNama").text(nama);
+    $("#detailJabatan").text(jabatan);
+    $("#detailFoto").attr("src", foto);
 
     new bootstrap.Modal(document.getElementById("modalDetailPengelola")).show();
   });

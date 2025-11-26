@@ -27,7 +27,6 @@ include './app/views/templates/admin/sidebar_admin.php';
               <th>ID</th>
               <th>Nama Sarana</th>
               <th>Jumlah</th>
-              <th>Kondisi</th>
               <th>Foto</th>
               <th>Aksi</th>
             </tr>
@@ -43,13 +42,6 @@ include './app/views/templates/admin/sidebar_admin.php';
 
             if (!empty($list)):
               foreach ($list as $s):
-
-                // Kondisi badge
-                $kondisi = strtolower($s['kondisi'] ?? '');
-                $badge = 'bg-label-secondary';
-                if ($kondisi == 'baik') $badge = 'bg-label-success';
-                elseif ($kondisi == 'perlu perawatan') $badge = 'bg-label-warning';
-                elseif ($kondisi == 'rusak') $badge = 'bg-label-danger';
             ?>
 
               <tr>
@@ -58,12 +50,6 @@ include './app/views/templates/admin/sidebar_admin.php';
                 <td><?php echo htmlspecialchars($s['nama_sarana']); ?></td>
 
                 <td><?php echo htmlspecialchars($s['jumlah']); ?></td>
-
-                <td>
-                  <span class="badge <?php echo $badge; ?>">
-                    <?php echo htmlspecialchars($s['kondisi']); ?>
-                  </span>
-                </td>
 
                 <td>
                   <?php if (!empty($s['foto_sarana'])): ?>
@@ -87,7 +73,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                     data-bs-target="#modalDetail"
 
                     data-judul="<?php echo htmlspecialchars($s['nama_sarana']); ?>"
-                    data-deskripsi="Jumlah: <?php echo htmlspecialchars($s['jumlah']); ?><br>Kondisi: <?php echo htmlspecialchars($s['kondisi']); ?>"
+                    data-deskripsi="Jumlah: <?php echo htmlspecialchars($s['jumlah']); ?>"
                     data-gambar="<?php echo BASE_URL; ?>/public/uploads/sarana/<?php echo htmlspecialchars($s['foto_sarana']); ?>"
                     data-tanggal=""
                   >

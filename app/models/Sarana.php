@@ -15,6 +15,21 @@ class Sarana
         return $this->db->resultSet();
     }
 
+    public function getPaginated($limit, $offset)
+    {
+        $this->db->query("SELECT * FROM tbl_sarana_prasarana ORDER BY id_sarana DESC LIMIT :limit OFFSET :offset");
+        $this->db->bind(':limit', $limit, PDO::PARAM_INT);
+        $this->db->bind(':offset', $offset, PDO::PARAM_INT);
+        return $this->db->resultSet();
+    }
+
+    public function getTotalCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM tbl_sarana_prasarana");
+        $result = $this->db->single();
+        return $result['total'] ?? 0;
+    }
+
     public function getById($id)
     {
         $this->db->query("SELECT * FROM tbl_sarana_prasarana WHERE id_sarana = :id");

@@ -122,12 +122,12 @@ class HomeController extends Controller {
         $this->view('public/berita', $data);
     }
 
-    public function detailBerita($id)
+    public function detailBerita($slug)
     {
         $beritaModel = $this->model('Berita');
         $adminModel = $this->model('Admin');
 
-        $berita = $beritaModel->getBeritaById($id);
+        $berita = $beritaModel->getBeritaBySlug($slug);
         $admin = $berita && $berita['id_admin_penulis'] ? $adminModel->getAdminById($berita['id_admin_penulis']) : null;
 
         $data = [
@@ -161,5 +161,33 @@ class HomeController extends Controller {
         ];
 
         $this->view('public/galeri', $data);
+    }
+
+    public function indexFasilitas()
+    {
+        $fasilitasModel = $this->model('Sarana');
+        
+        // Pagination settings
+        $itemsPerPage = 9; // 3 rows x 3 columns
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = max(1, $currentPage); // Ensure page is at least 1
+        
+        // Calculate offset
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        
+        // Get paginated data
+        $list = $fasilitasModel->getPaginated($itemsPerPage, $offset);
+        $totalItems = $fasilitasModel->getTotalCount();
+        $totalPages = ceil($totalItems / $itemsPerPage);
+
+        $data = [
+            'judul_halaman' => 'Fasilitas - Lab NCS',
+            'fasilitasList' => $list,
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'totalItems' => $totalItems
+        ];
+
+        $this->view('public/fasilitas', $data);
     }
 }

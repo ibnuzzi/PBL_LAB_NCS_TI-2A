@@ -56,12 +56,13 @@ if (strpos($routePath, '/index.php') === 0) {
 // 5. DEFINISIKAN RUTE ANDA
 Route::add('GET', '/', 'HomeController', 'index');
 Route::add('GET', '/berita', 'HomeController', 'indexBerita');
-Route::add('GET', '/berita/detail/{id}', 'HomeController', 'detailBerita');
+Route::add('GET', '/berita/detail/{slug}', 'HomeController', 'detailBerita');
 Route::add('GET', '/galeri', 'HomeController', 'indexGaleri');
 Route::add('GET', '/layanan', 'HomeController', 'layanan');
 Route::add('POST', '/layanan/store', 'HomeController', 'kirimLayanan');
 Route::add('GET', '/arsip', 'HomeController', 'arsip');
 Route::add('GET', '/agenda', 'HomeController', 'indexAgenda');
+Route::add('GET', '/fasilitas', 'HomeController', 'indexFasilitas');
 
 // Rute Login (Ini sudah benar)
 Route::add('GET', '/login', 'AuthController', 'index');

@@ -99,7 +99,7 @@ include 'app/views/templates/public/navbar.php';
                                                 }
                                             }
                                         ?>
-                                        <a href="<?= BASE_URL ?>/berita/detail/<?= htmlspecialchars($post['id_berita']) ?>">
+                                        <a href="<?= BASE_URL ?>/berita/detail/<?= $post['slug_berita'] ?>">
                                             <img src="<?= $postImgUrl ?>" alt="<?= htmlspecialchars($post['judul_berita']) ?>" style="width:100%; height:84px; object-fit:cover; border-radius:6px; display:block;" loading="lazy">
                                         </a>
                                     </div>
@@ -108,7 +108,7 @@ include 'app/views/templates/public/navbar.php';
                                             <?= date('d M Y', strtotime($post['tanggal_publish'])) ?>
                                         </div>
                                         <h4 style="font-size: 14px; font-weight: 600; margin: 0; line-height:1.25;">
-                                            <a href="<?= BASE_URL ?>/berita/detail/<?= htmlspecialchars($post['id_berita']) ?>" style="text-decoration:none; color:#081d2f;">
+                                            <a href="<?= BASE_URL ?>/berita/detail/<?= $post['slug_berita'] ?>" style="text-decoration:none; color:#081d2f;">
                                                 <?= htmlspecialchars(strlen($post['judul_berita']) > 60 ? substr($post['judul_berita'], 0, 60) . '...' : $post['judul_berita']) ?>
                                             </a>
                                         </h4>

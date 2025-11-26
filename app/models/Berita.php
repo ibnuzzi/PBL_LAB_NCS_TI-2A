@@ -80,6 +80,16 @@ class Berita
     }
 
     /**
+     * Mengambil berita berdasarkan SLUG
+     */
+    public function getBeritaBySlug($slug)
+    {
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE slug_berita = :slug");
+        $this->db->bind(':slug', $slug);
+        return $this->db->single();
+    }
+
+    /**
      * Membuat berita baru dengan validasi
      */
     public function createBerita($data)

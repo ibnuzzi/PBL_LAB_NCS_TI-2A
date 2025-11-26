@@ -42,11 +42,30 @@ include './app/views/templates/admin/sidebar_admin.php';
                 <tr>
                   <td><?php echo $counter++; ?></td>
                   <td style="max-width:380px;">
-                    <?php echo htmlspecialchars($b['judul_berita'] ?? $b['judul'] ?? ''); ?>
-                    <?php if (!empty($b['slug_berita'] ?? $b['slug'])): ?>
-                      <div class="text-muted small">/<span><?php echo htmlspecialchars($b['slug_berita'] ?? $b['slug']); ?></span></div>
-                    <?php endif; ?>
-                  </td>
+    <?php 
+        // 1. Logika Potong Judul (Max 40 karakter)
+        $judul_asli = $b['judul_berita'] ?? $b['judul'] ?? '';
+        $judul_tampil = (strlen($judul_asli) > 40) ? substr($judul_asli, 0, 40) . '...' : $judul_asli;
+        
+        // Tampilkan Judul (Style Asli)
+        echo htmlspecialchars($judul_tampil); 
+    ?>
+
+    <?php 
+        // 2. Logika Potong Slug
+        $slug_asli = $b['slug_berita'] ?? $b['slug'] ?? '';
+    ?>
+
+    <?php if (!empty($slug_asli)): ?>
+        <?php 
+            // Potong Slug (Max 40 karakter)
+            $slug_tampil = (strlen($slug_asli) > 40) ? substr($slug_asli, 0, 40) . '...' : $slug_asli;
+        ?>
+        <div class="text-muted small" title="<?php echo htmlspecialchars($slug_asli); ?>">
+            /<span><?php echo htmlspecialchars($slug_tampil); ?></span>
+        </div>
+    <?php endif; ?>
+</td>
                   <td>
                     <?php if (!empty($b['gambar_berita'])): ?>
                       <img src="<?php echo BASE_URL; ?>/public/uploads/berita/<?php echo htmlspecialchars($b['gambar_berita']); ?>" alt="gambar" class="rounded-2" style="height:80px; border-radius:4px;" />

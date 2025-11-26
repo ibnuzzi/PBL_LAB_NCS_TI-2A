@@ -96,7 +96,7 @@ include 'app/views/templates/public/navbar.php';
                                 'Modul Praktikum' => 'fa-book',
                                 'SOP Laboratorium' => 'fa-file-contract'
                             ];
-                            
+
                             // Loop melalui kategori yang diambil dari database
                             if (!empty($data['kategori_list'])):
                                 foreach ($data['kategori_list'] as $kategori):
@@ -105,10 +105,10 @@ include 'app/views/templates/public/navbar.php';
                                     $icon = isset($iconMapping[$namaKategori]) ? $iconMapping[$namaKategori] : 'fa-file';
                                     $isActive = $kategoriAktif === $namaKategori ? 'active' : '';
                             ?>
-                            <li class="<?= $isActive ?>">
-                                <a href="?kategori=<?= urlencode($namaKategori) ?>"> <i class="fa <?= $icon ?>"></i><?= htmlspecialchars($namaKategori) ?></a>
-                            </li>
-                            <?php 
+                                    <li class="<?= $isActive ?>">
+                                        <a href="?kategori=<?= urlencode($namaKategori) ?>"> <i class="fa <?= $icon ?>"></i><?= htmlspecialchars($namaKategori) ?></a>
+                                    </li>
+                            <?php
                                 endforeach;
                             endif;
                             ?>
@@ -135,7 +135,7 @@ include 'app/views/templates/public/navbar.php';
                             'SOP Laboratorium' => ['icon' => 'fa-file-contract', 'bg' => '#f3e5f5', 'color' => '#7b1fa2'],
                             'default' => ['icon' => 'fa-file', 'bg' => '#f5f5f5', 'color' => '#757575']
                         ];
-                        
+
                         // Loop melalui data arsip dari PostgreSQL view
                         if (!empty($data['arsip_list'])):
                             foreach ($data['arsip_list'] as $arsip):
@@ -143,81 +143,81 @@ include 'app/views/templates/public/navbar.php';
                                 $kategoriArsip = $arsip['kategori'] ?? 'default';
                                 $iconData = isset($categoryIconMapping[$kategoriArsip]) ? $categoryIconMapping[$kategoriArsip] : $categoryIconMapping['default'];
                         ?>
-                        <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm"
-                            style="border: none; border-radius: 10px; background: #fff; transition: transform 0.2s;">
+                                <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm"
+                                    style="border: none; border-radius: 10px; background: #fff; transition: transform 0.2s;">
 
-                            <div class="flex-shrink-0 me-4" style="margin-right: 20px;">
-                                <div style="width: 60px; height: 60px; background: <?= $iconData['bg'] ?>; color: <?= $iconData['color'] ?>; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
-                                    <i class="fa <?= $iconData['icon'] ?>"></i>
+                                    <div class="flex-shrink-0 me-4" style="margin-right: 20px;">
+                                        <div style="width: 60px; height: 60px; background: <?= $iconData['bg'] ?>; color: <?= $iconData['color'] ?>; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                                            <i class="fa <?= $iconData['icon'] ?>"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-1" style="font-weight: bold; color: #333;">
+                                            <?= htmlspecialchars($arsip['judul'] ?? 'Tanpa Judul') ?>
+                                        </h5>
+                                        <p class="mb-1 text-muted" style="font-size: 14px;">
+                                            <?= htmlspecialchars(substr($arsip['deskripsi'] ?? '', 0, 100)) ?><?= strlen($arsip['deskripsi'] ?? '') > 100 ? '...' : '' ?>
+                                        </p>
+                                        <small class="text-muted">
+                                            <i class="fa fa-calendar-alt"></i> <?= date('d M Y', strtotime($arsip['created_at'] ?? date('Y-m-d'))) ?> &nbsp;|&nbsp;
+                                            <i class="fa fa-tag"></i> <?= htmlspecialchars($kategoriArsip) ?>
+                                            <?php
+                                            // Hanya tampilkan penulis_atau_tim jika BUKAN dari arsip_umum
+                                            if (!empty($arsip['penulis_atau_tim']) && ($arsip['sumber_tabel'] ?? '') !== 'arsip_umum'):
+                                                // Logika untuk menangani nama tim yang panjang
+                                                $penulisTim = $arsip['penulis_atau_tim'];
+                                                $maxLength = 50; // Batas karakter
+
+                                                // Cek apakah ada koma (menandakan multiple authors)
+                                                if (strpos($penulisTim, ',') !== false) {
+                                                    $authors = explode(',', $penulisTim);
+                                                    $firstAuthor = trim($authors[0]);
+                                                    $otherCount = count($authors) - 1;
+                                                    $displayText = $firstAuthor . ' dan ' . $otherCount . ' lainnya';
+                                                    $fullText = $penulisTim;
+                                                } elseif (strlen($penulisTim) > $maxLength) {
+                                                    // Jika panjang tapi tidak ada koma, potong
+                                                    $displayText = substr($penulisTim, 0, $maxLength) . '...';
+                                                    $fullText = $penulisTim;
+                                                } else {
+                                                    $displayText = $penulisTim;
+                                                    $fullText = $penulisTim;
+                                                }
+                                            ?>
+                                                &nbsp;|&nbsp;
+                                                <i class="fa fa-user"></i>
+                                                <span title="<?= htmlspecialchars($fullText) ?>" style="cursor: help;">
+                                                    <?= htmlspecialchars($displayText) ?>
+                                                </span>
+                                            <?php endif; ?>
+                                            <?php if (!empty($arsip['tahun'])): ?>
+                                                &nbsp;(<?= htmlspecialchars($arsip['tahun']) ?>)
+                                            <?php endif; ?>
+                                        </small>
+                                    </div>
+
+                                    <div class="ms-3" style="margin-left: 15px; display: flex; flex-direction: column; gap: 5px;">
+                                        <?php if (!empty($arsip['nama_file'])): ?>
+                                            <a href="<?= htmlspecialchars($arsip['nama_file']) ?>" class="btn btn-outline-primary btn-sm" download>
+                                                <i class="fa fa-download"></i> Unduh
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <?php if (!empty($arsip['link_eksternal'])): ?>
+                                            <a href="<?= htmlspecialchars($arsip['link_eksternal']) ?>" target="_blank" class="btn btn-outline-success btn-sm">
+                                                <i class="fa fa-external-link-alt"></i> Artikel
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1" style="font-weight: bold; color: #333;">
-                                    <?= htmlspecialchars($arsip['judul'] ?? 'Tanpa Judul') ?>
-                                </h5>
-                                <p class="mb-1 text-muted" style="font-size: 14px;">
-                                    <?= htmlspecialchars(substr($arsip['deskripsi'] ?? '', 0, 100)) ?><?= strlen($arsip['deskripsi'] ?? '') > 100 ? '...' : '' ?>
-                                </p>
-                                <small class="text-muted">
-                                    <i class="fa fa-calendar-alt"></i> <?= date('d M Y', strtotime($arsip['created_at'] ?? date('Y-m-d'))) ?> &nbsp;|&nbsp;
-                                    <i class="fa fa-tag"></i> <?= htmlspecialchars($kategoriArsip) ?>
-                                    <?php 
-                                    // Hanya tampilkan penulis_atau_tim jika BUKAN dari arsip_umum
-                                    if (!empty($arsip['penulis_atau_tim']) && ($arsip['sumber_tabel'] ?? '') !== 'arsip_umum'): 
-                                        // Logika untuk menangani nama tim yang panjang
-                                        $penulisTim = $arsip['penulis_atau_tim'];
-                                        $maxLength = 50; // Batas karakter
-                                        
-                                        // Cek apakah ada koma (menandakan multiple authors)
-                                        if (strpos($penulisTim, ',') !== false) {
-                                            $authors = explode(',', $penulisTim);
-                                            $firstAuthor = trim($authors[0]);
-                                            $otherCount = count($authors) - 1;
-                                            $displayText = $firstAuthor . ' dan ' . $otherCount . ' lainnya';
-                                            $fullText = $penulisTim;
-                                        } elseif (strlen($penulisTim) > $maxLength) {
-                                            // Jika panjang tapi tidak ada koma, potong
-                                            $displayText = substr($penulisTim, 0, $maxLength) . '...';
-                                            $fullText = $penulisTim;
-                                        } else {
-                                            $displayText = $penulisTim;
-                                            $fullText = $penulisTim;
-                                        }
-                                    ?>
-                                    &nbsp;|&nbsp;
-                                    <i class="fa fa-user"></i> 
-                                    <span title="<?= htmlspecialchars($fullText) ?>" style="cursor: help;">
-                                        <?= htmlspecialchars($displayText) ?>
-                                    </span>
-                                    <?php endif; ?>
-                                    <?php if (!empty($arsip['tahun'])): ?>
-                                    &nbsp;(<?= htmlspecialchars($arsip['tahun']) ?>)
-                                    <?php endif; ?>
-                                </small>
-                            </div>
-
-                            <div class="ms-3" style="margin-left: 15px; display: flex; flex-direction: column; gap: 5px;">
-                                <?php if (!empty($arsip['nama_file'])): ?>
-                                <a href="<?= htmlspecialchars($arsip['nama_file']) ?>" class="btn btn-outline-primary btn-sm" download>
-                                    <i class="fa fa-download"></i> Unduh
-                                </a>
-                                <?php endif; ?>
-                                
-                                <?php if (!empty($arsip['link_eksternal'])): ?>
-                                <a href="<?= htmlspecialchars($arsip['link_eksternal']) ?>" target="_blank" class="btn btn-outline-success btn-sm">
-                                    <i class="fa fa-external-link-alt"></i> Artikel
-                                </a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <?php 
+                            <?php
                             endforeach;
                         else:
-                        ?>
-                        <div class="alert alert-info">
-                            <i class="fa fa-info-circle"></i> Tidak ada dokumen yang tersedia saat ini.
-                        </div>
+                            ?>
+                            <div class="alert alert-info">
+                                <i class="fa fa-info-circle"></i> Tidak ada dokumen yang tersedia saat ini.
+                            </div>
                         <?php endif; ?>
 
                     </div>

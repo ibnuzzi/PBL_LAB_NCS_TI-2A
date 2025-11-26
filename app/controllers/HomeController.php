@@ -15,9 +15,9 @@ class HomeController extends Controller
         $beritaModel = $this->model('Berita');
         $latestNews = $beritaModel->getBeritaTerbaru(3);
 
-        // Load latest penelitian (from DokumenUmum category Penelitian)
-        $dokumenModel = $this->model('DokumenUmum');
-        $latestPenelitian = $dokumenModel->getLatestByCategory('Penelitian', 3);
+        // Load latest penelitian (from Penelitian model)
+        $penelitianModel = $this->model('Penelitian');
+        $latestPenelitian = $penelitianModel->getLatest(3);
 
         $data = [
             'judul_halaman' => 'Beranda - Lab NCS',
@@ -95,25 +95,26 @@ class HomeController extends Controller
         exit;
     }
 
-    public function arsip() {
+    public function arsip()
+    {
         $kategoriArsipModel = $this->model('KategoriArsip');
         $data['kategori_list'] = $kategoriArsipModel->getAllKategori();
-        
+
         $arsipModel = $this->model('DokumenUmum');
-        
+
         // Cek apakah ada parameter kategori di URL
         $kategoriFilter = $_GET['kategori'] ?? 'semua';
-        
+
         // Filter berdasarkan kategori
         if ($kategoriFilter !== 'semua') {
             $data['arsip_list'] = $arsipModel->getAllArsipLengkapByKategori($kategoriFilter);
         } else {
             $data['arsip_list'] = $arsipModel->getAllArsipLengkap();
         }
-        
+
         // Simpan kategori yang sedang aktif untuk highlight di view
         $data['kategori_aktif'] = $kategoriFilter;
-        
+
         $this->view('public/arsip', $data);
     }
 

@@ -27,7 +27,7 @@ include 'app/views/templates/public/navbar.php';
                                 <h2 class="main-slider-one__title">Pusat Riset<br>Keamanan Jaringan & Siber</h2>
                                 <p class="main-slider-one__text">Mengembangkan inovasi dan talenta di bidang Network & Cyber Security untuk menghadapi tantangan digital masa depan.</p>
                                 <div class="main-slider-one__link">
-                                    <a href="about.php" class="laboix-btn">Pelajari Lebih Lanjut</a>
+                                    <a href="<?= BASE_URL ?>/tentang" class="laboix-btn">Pelajari Lebih Lanjut</a>
                                 </div>
                             </div>
                         </div>
@@ -620,7 +620,7 @@ if (!isset($pengelolaList)) {
 
         <div class="row">
             <div class="col-12 text-center mt-5">
-                <a href="<?= BASE_URL; ?>/arsip" class="btn-publikasi">Baca Selengkapnya <i class="icon-arrow"></i></a>
+                <a href="<?= BASE_URL; ?>/arsip?kategori=Penelitian" class="btn-publikasi">Baca Selengkapnya <i class="icon-arrow"></i></a>
             </div>
         </div>
     </div>

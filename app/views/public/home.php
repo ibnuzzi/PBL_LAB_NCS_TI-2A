@@ -590,7 +590,7 @@ if (!isset($pengelolaList)) {
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='700ms'>
                     <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/science.png" alt="Penelitian" class="sec-title__img">Penelitian</h6>
-                    <h3 class="sec-title__title">Sorotan Penelitian</h3>
+                    <h3 class="sec-title__title">Sorotan Penelitian Terbaru</h3>
                 </div>
             </div>
         </div>
@@ -933,17 +933,13 @@ if (!isset($pengelolaList)) {
         justify-content: center;
         width: 100px;
         height: 110px;
-        background-color: #00c853;
+        background-color: #27613fff;
         color: #fff;
         font-size: 36px;
-        margin-bottom: 30px;
         clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         transition: transform 0.3s ease, background-color 0.3s ease;
         text-decoration: none;
         box-shadow: 0 10px 30px rgba(0, 200, 83, 0.3);
-
-        /* Position adjustment to overlap the divider */
-        margin-top: -80px;
     }
 
     .video-popup:hover {

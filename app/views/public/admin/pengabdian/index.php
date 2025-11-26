@@ -59,7 +59,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                       type="button"
                       class="btn btn-sm btn-outline-info me-1 btn-view-pengabdian"
                       data-judul="<?= htmlspecialchars($p['judul_kegiatan']); ?>"
-                      data-tim="<?= htmlspecialchars($p['tim_pengabdi']); ?>"
+                      data-tim="<?= htmlspecialchars($p['tim_pengabdi'] ?? '-'); ?>"
                       data-tahun="<?= htmlspecialchars($p['tahun_kegiatan']); ?>"
                       data-deskripsi="<?= htmlspecialchars($p['deskripsi_kegiatan']); ?>"
                       data-file="<?= BASE_URL . '/public/uploads/pengabdian/' . htmlspecialchars($p['file_dokumen_pdf']); ?>">

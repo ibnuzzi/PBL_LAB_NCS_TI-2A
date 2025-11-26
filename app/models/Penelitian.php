@@ -4,16 +4,17 @@
 class Penelitian
 {
     private $db;
+    private $table = "tbl_penelitian";
+    private $table_anggota = "tbl_penelitian_anggota";
 
     public function __construct()
     {
         $this->db = Database::getInstance();
     }
 
-    // Get all penelitian records
     public function getAll()
     {
-        $this->db->query("SELECT * FROM tbl_penelitian ORDER BY id_penelitian DESC");
+        $this->db->query("SELECT * FROM {$this->table} ORDER BY tahun_penelitian DESC");
         return $this->db->resultSet();
     }
 
@@ -25,22 +26,39 @@ class Penelitian
         return $this->db->single();
     }
 
-    // Insert a new penelitian record
     public function insert($data)
     {
-        $this->db->query("
-            INSERT INTO tbl_penelitian 
-            (judul_penelitian, tahun_penelitian, deskripsi_singkat, peneliti, link_publikasi, created_at, updated_at)
-            VALUES
-            (:judul_penelitian, :tahun_penelitian, :deskripsi_singkat, :peneliti, :link_publikasi, NOW(), NOW())
-        ");
-        $this->db->bind(':judul_penelitian', $data['judul_penelitian']);
-        $this->db->bind(':tahun_penelitian', $data['tahun_penelitian']);
-        $this->db->bind(':deskripsi_singkat', $data['deskripsi_singkat']);
-        $this->db->bind(':peneliti', $data['peneliti']);
-        $this->db->bind(':link_publikasi', $data['link_publikasi']);
+        // 1. INSERT UTAMA
+        $query = "INSERT INTO {$this->table} 
+                    (judul_penelitian, tahun_penelitian, deskripsi_singkat, link_publikasi, file_dokumen_pdf, created_at) 
+                  VALUES 
+                    (:judul, :tahun, :deskripsi, :link, :file_pdf, NOW())";
 
-        return $this->db->execute();
+        $this->db->query($query);
+        $this->db->bind(':judul', $data['judul_penelitian']);
+        $this->db->bind(':tahun', $data['tahun_penelitian']);
+        $this->db->bind(':deskripsi', $data['deskripsi_singkat']);
+        $this->db->bind(':link', $data['link_publikasi']); // Link Jurnal
+        $this->db->bind(':file_pdf', $data['file_dokumen_pdf']); // File PDF (Baru ditambahkan)
+
+        if ($this->db->execute()) {
+
+            // 2. AMBIL ID BARU
+            $id_penelitian = $this->db->lastInsertId();
+
+            // 3. INSERT KE TABEL ANGGOTA
+            if (!empty($data['anggota_ids']) && is_array($data['anggota_ids'])) {
+                foreach ($data['anggota_ids'] as $id_pengelola) {
+                    $q_anggota = "INSERT INTO {$this->table_anggota} (id_penelitian, id_pengelola) VALUES (:id_pen, :id_org)";
+                    $this->db->query($q_anggota);
+                    $this->db->bind(':id_pen', $id_penelitian);
+                    $this->db->bind(':id_org', $id_pengelola);
+                    $this->db->execute();
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     // Update an existing penelitian record

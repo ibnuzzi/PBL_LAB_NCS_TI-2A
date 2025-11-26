@@ -33,64 +33,86 @@ include './app/views/templates/admin/sidebar_admin.php';
 
       <div class="card-body">
         <form action="<?= BASE_URL ?>/admin/pengabdian/update/<?= $pengabdian['id_pengabdian'] ?>"
-              method="POST"
-              enctype="multipart/form-data">
+          method="POST"
+          enctype="multipart/form-data">
 
           <!-- Judul -->
           <div class="mb-3">
             <label class="form-label">Judul Pengabdian</label>
             <input type="text"
-                   class="form-control"
-                   name="judul_pengabdian"
-                   value="<?= htmlspecialchars($pengabdian['judul_kegiatan']); ?>"
-                   required>
+              class="form-control"
+              name="judul_pengabdian"
+              value="<?= htmlspecialchars($pengabdian['judul_kegiatan']); ?>"
+              required>
           </div>
 
-          <!-- Tim Pengabdi -->
           <div class="mb-3">
-            <label class="form-label">Tim Pengabdi</label>
-            <input type="text"
-                   class="form-control"
-                   name="tim_pengabdi"
-                   value="<?= htmlspecialchars($pengabdian['tim_pengabdi']); ?>"
-                   required>
+            <label class="form-label">Tim Pengabdi <span class="text-danger">*</span></label>
+
+            <select class="form-select"
+              name="anggota[]"
+              multiple
+              required
+              style="height: 150px;">
+
+              <?php if (!empty($list_pengelola)): ?>
+                <?php foreach ($list_pengelola as $p): ?>
+
+                  <?php
+                  // LOGIKA PRE-SELECTED
+                  // Cek apakah ID pengelola ini ada di array $selected_anggota
+                  $isSelected = in_array($p['id_pengelola'], $selected_anggota) ? 'selected' : '';
+                  ?>
+
+                  <option value="<?= $p['id_pengelola'] ?>" <?= $isSelected ?>>
+                    <?= htmlspecialchars($p['nama_pengelola']) ?>
+                    (<?= htmlspecialchars($p['jabatan']) ?>)
+                  </option>
+
+                <?php endforeach; ?>
+              <?php endif; ?>
+
+            </select>
+            <div class="form-text text-muted">
+              Tahan tombol <strong>CTRL</strong> / <strong>CMD</strong> untuk mengubah pilihan tim.
+            </div>
           </div>
 
           <!-- Tahun -->
           <div class="mb-3">
             <label class="form-label">Tahun</label>
             <input type="number"
-                   min="1900"
-                   max="2100"
-                   class="form-control"
-                   name="tahun_pengabdian"
-                   value="<?= htmlspecialchars($pengabdian['tahun_kegiatan']); ?>"
-                   required>
+              min="1900"
+              max="2100"
+              class="form-control"
+              name="tahun_pengabdian"
+              value="<?= htmlspecialchars($pengabdian['tahun_kegiatan']); ?>"
+              required>
           </div>
 
           <!-- Deskripsi -->
           <div class="mb-3">
             <label class="form-label">Deskripsi Kegiatan</label>
             <textarea class="form-control"
-                      name="deskripsi_kegiatan"
-                      rows="4"
-                      required><?= htmlspecialchars($pengabdian['deskripsi_kegiatan']); ?></textarea>
+              name="deskripsi_kegiatan"
+              rows="4"
+              required><?= htmlspecialchars($pengabdian['deskripsi_kegiatan']); ?></textarea>
           </div>
 
           <!-- FILE PDF -->
           <div class="mb-3">
             <label class="form-label">File Dokumen (PDF)</label>
             <input type="file"
-                   class="form-control"
-                   name="file_dokumen"
-                   accept="application/pdf">
+              class="form-control"
+              name="file_dokumen"
+              accept="application/pdf">
 
             <?php if (!empty($pengabdian['file_dokumen_pdf'])): ?>
               <div class="mt-2">
                 <small class="text-muted d-block">File saat ini:</small>
                 <a href="<?= BASE_URL . '/public/uploads/pengabdian/' . $pengabdian['file_dokumen_pdf']; ?>"
-                   target="_blank"
-                   class="btn btn-sm btn-info mt-1">
+                  target="_blank"
+                  class="btn btn-sm btn-info mt-1">
                   <i class="bx bx-file"></i> Lihat PDF
                 </a>
               </div>

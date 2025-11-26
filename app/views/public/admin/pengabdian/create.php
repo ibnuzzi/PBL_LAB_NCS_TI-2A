@@ -33,73 +33,86 @@ include './app/views/templates/admin/sidebar_admin.php';
       <div class="card-body">
 
         <form action="<?= BASE_URL ?>/admin/pengabdian/store"
-              method="POST"
-              enctype="multipart/form-data">
+          method="POST"
+          enctype="multipart/form-data">
 
           <!-- Judul -->
           <div class="mb-3">
             <label for="judul_pengabdian" class="form-label">Judul Pengabdian</label>
             <input type="text"
-                   class="form-control"
-                   id="judul_pengabdian"
-                   name="judul_pengabdian"
-                   required>
+              class="form-control"
+              id="judul_pengabdian"
+              name="judul_pengabdian"
+              required>
           </div>
+          
+            <!-- Input Tim Pengabdi (Ganti input text lama dengan ini) -->
+            <div class="mb-3">
+              <label class="form-label">Tim Pengabdi (Pilih Anggota) <span class="text-danger">*</span></label>
 
-          <!-- Tim Pengabdi -->
-          <div class="mb-3">
-            <label for="tim_pengabdi" class="form-label">Tim Pengabdi</label>
-            <input type="text"
-                   class="form-control"
-                   id="tim_pengabdi"
-                   name="tim_pengabdi"
-                   required>
-          </div>
+              <!-- name="anggota[]" PENTING agar dikirim sebagai array -->
+              <select name="anggota[]" class="form-select" multiple required style="height: 150px;">
 
-          <!-- Tahun -->
-          <div class="mb-3">
-            <label for="tahun_pengabdian" class="form-label">Tahun</label>
-            <input type="number"
-                   class="form-control"
-                   id="tahun_pengabdian"
-                   name="tahun_pengabdian"
-                   min="1900"
-                   max="2100"
-                   required>
-          </div>
+                <?php if (!empty($list_pengelola)): ?>
+                  <?php foreach ($list_pengelola as $p): ?>
+                    <option value="<?= $p['id_pengelola'] ?>">
+                      <?= htmlspecialchars($p['nama_pengelola']) ?> - <?= htmlspecialchars($p['jabatan']) ?>
+                    </option>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <option disabled>Belum ada data pengelola. Tambahkan di menu Profil.</option>
+                <?php endif; ?>
 
-          <!-- Deskripsi -->
-          <div class="mb-3">
-            <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
-            <textarea class="form-control"
-                      id="deskripsi_kegiatan"
-                      name="deskripsi_kegiatan"
-                      rows="4"
-                      required></textarea>
-          </div>
+              </select>
+              <div class="form-text">
+                Tahan tombol <strong>CTRL</strong> (Windows) atau <strong>Command</strong> (Mac) untuk memilih lebih dari satu orang.
+              </div>
+            </div>
 
-          <!-- PDF Upload -->
-          <div class="mb-3">
-            <label for="file_dokumen" class="form-label">File Dokumen (PDF)</label>
-            <input type="file"
-                   class="form-control"
-                   id="file_dokumen"
-                   name="file_dokumen"
-                   accept="application/pdf"
-                   required>
-            <small class="text-muted">Hanya file PDF. Maksimal 10MB.</small>
-          </div>
+            <!-- Tahun -->
+            <div class="mb-3">
+              <label for="tahun_pengabdian" class="form-label">Tahun</label>
+              <input type="number"
+                class="form-control"
+                id="tahun_pengabdian"
+                name="tahun_pengabdian"
+                min="1900"
+                max="2100"
+                required>
+            </div>
 
-          <!-- ACTION BUTTONS -->
-          <div class="mt-4 d-flex gap-2">
-            <button class="btn btn-primary">
-              <i class="bx bx-save"></i> Simpan
-            </button>
+            <!-- Deskripsi -->
+            <div class="mb-3">
+              <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
+              <textarea class="form-control"
+                id="deskripsi_kegiatan"
+                name="deskripsi_kegiatan"
+                rows="4"
+                required></textarea>
+            </div>
 
-            <a href="<?= BASE_URL ?>/admin/pengabdian" class="btn btn-light">
-              Batal
-            </a>
-          </div>
+            <!-- PDF Upload -->
+            <div class="mb-3">
+              <label for="file_dokumen" class="form-label">File Dokumen (PDF)</label>
+              <input type="file"
+                class="form-control"
+                id="file_dokumen"
+                name="file_dokumen"
+                accept="application/pdf"
+                required>
+              <small class="text-muted">Hanya file PDF. Maksimal 10MB.</small>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="mt-4 d-flex gap-2">
+              <button class="btn btn-primary">
+                <i class="bx bx-save"></i> Simpan
+              </button>
+
+              <a href="<?= BASE_URL ?>/admin/pengabdian" class="btn btn-light">
+                Batal
+              </a>
+            </div>
 
         </form>
 

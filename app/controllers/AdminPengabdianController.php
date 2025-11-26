@@ -30,7 +30,9 @@ class AdminPengabdianController extends Controller
      */
     public function create()
     {
-        $data = ['judul_halaman' => 'Tambah Pengabdian'];
+        $pengelolaModel = $this->model('Pengelola');
+        $data['list_pengelola'] = $pengelolaModel->getAll();
+        $data['judul_halaman'] = 'Tambah Pengabdian';
 
         $this->view('templates/admin/header_admin', $data);
         $this->view('public/admin/pengabdian/create', $data);
@@ -40,59 +42,74 @@ class AdminPengabdianController extends Controller
     /**
      * STORE
      */
-     public function store()
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    public function store()
+    {
+        // 1. Cek Method Request
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . BASE_URL . "/admin/pengabdian");
+            exit;
+        }
+
+        // 2. Ambil & Bersihkan Data Input
+        $judul     = trim($_POST['judul_pengabdian'] ?? '');
+        $tahun     = trim($_POST['tahun_pengabdian'] ?? '');
+        $deskripsi = trim($_POST['deskripsi_kegiatan'] ?? '');
+
+        // PENTING: Ambil array ID Anggota dari select multiple
+        // Pastikan di view name-nya adalah "anggota[]"
+        $anggota_ids = $_POST['anggota'] ?? [];
+
+        // 3. Validasi Input Data
+        if (empty($judul) || empty($tahun) || empty($deskripsi)) {
+            $_SESSION['error_message'] = "Judul, Tahun, dan Deskripsi wajib diisi.";
+            header("Location: " . BASE_URL . "/admin/pengabdian/create");
+            exit;
+        }
+
+        // Validasi Anggota Tim (Harus pilih minimal 1)
+        if (empty($anggota_ids) || !is_array($anggota_ids)) {
+            $_SESSION['error_message'] = "Tim Pengabdi wajib dipilih minimal satu orang.";
+            header("Location: " . BASE_URL . "/admin/pengabdian/create");
+            exit;
+        }
+
+        // 4. Proses Upload File (Menggunakan FileService Anda)
+        include_once __DIR__ . '/../services/FileService.php';
+
+        // Cek apakah file ada
+        if (empty($_FILES['file_dokumen']['name'])) {
+            $_SESSION['error_message'] = "File dokumen laporan wajib diupload.";
+            header("Location: " . BASE_URL . "/admin/pengabdian/create");
+            exit;
+        }
+
+        $file_pdf = FileService::uploadFile($_FILES['file_dokumen'], 'pengabdian', 'pengabdian_');
+
+        if ($file_pdf === false) {
+            $_SESSION['error_message'] = "Gagal upload file. Pastikan format PDF/DOC/ZIP dan ukuran <= 5MB.";
+            header("Location: " . BASE_URL . "/admin/pengabdian/create");
+            exit;
+        }
+
+        $payload = [
+            'judul_kegiatan'     => $judul,
+            'tahun_kegiatan'     => $tahun,
+            'deskripsi_kegiatan' => $deskripsi,
+            'file_dokumen_pdf'   => $file_pdf,
+            'id_admin_pencatat'  => $_SESSION['admin_id'] ?? 1,
+            'anggota_ids'        => $anggota_ids
+        ];
+
+        $model = $this->model('Pengabdian');
+        $ok = $model->insert($payload);
+
+        $_SESSION[$ok ? 'success_message' : 'error_message'] =
+            $ok ? "Data Pengabdian berhasil ditambahkan." : "Gagal menyimpan data ke database.";
+
         header("Location: " . BASE_URL . "/admin/pengabdian");
         exit;
     }
 
-    $judul      = trim($_POST['judul_pengabdian']);
-    $tim        = trim($_POST['tim_pengabdi']);
-    $tahun      = trim($_POST['tahun_pengabdian']);
-    $deskripsi  = trim($_POST['deskripsi_kegiatan']);
-
-    if ($judul == "" || $tim == "" || $tahun == "" || $deskripsi == "") {
-        $_SESSION['error_message'] = "Semua field wajib diisi.";
-        header("Location: " . BASE_URL . "/admin/pengabdian/create");
-        exit;
-    }
-
-    include_once __DIR__ . '/../services/FileService.php';
-
-    // Upload file
-    $file_pdf = FileService::uploadFile($_FILES['file_dokumen'], 'pengabdian', 'pengabdian_');
-
-    if ($file_pdf === false) {
-        $_SESSION['error_message'] = "Gagal upload file. File harus PDF/DOC/DOCX/ZIP dan <= 5MB.";
-        header("Location: " . BASE_URL . "/admin/pengabdian/create");
-        exit;
-    }
-
-    $model = $this->model('Pengabdian');
-
-    $payload = [
-        'judul_kegiatan'     => $judul,
-        'tim_pengabdi'       => $tim,
-        'tahun_kegiatan'     => $tahun,
-        'deskripsi_kegiatan' => $deskripsi,
-        'file_dokumen_pdf'   => $file_pdf
-    ];
-
-    $ok = $model->insert($payload);
-
-    $_SESSION[$ok ? 'success_message' : 'error_message'] =
-        $ok ? "Pengabdian berhasil ditambahkan." : "Gagal menyimpan data.";
-
-    header("Location: " . BASE_URL . "/admin/pengabdian");
-    exit;
-}
-
-
-
-    /**
-     * EDIT
-     */
     public function edit($id = null)
     {
         if (!$id) {
@@ -101,6 +118,8 @@ class AdminPengabdianController extends Controller
         }
 
         $pengabdianModel = $this->model('Pengabdian');
+        $pengelolaModel = $this->model('Pengelola');
+
         $row = $pengabdianModel->getById($id);
 
         if (!$row) {
@@ -109,9 +128,15 @@ class AdminPengabdianController extends Controller
             exit;
         }
 
+        $all_pengelola = $pengelolaModel->getAll();
+
+        $selected_anggota = $pengabdianModel->getAnggotaIds($id);
+
         $data = [
-            'judul_halaman' => 'Edit Pengabdian',
-            'pengabdian'    => $row
+            'judul_halaman'    => 'Edit Pengabdian',
+            'pengabdian'       => $row,
+            'list_pengelola'   => $all_pengelola,
+            'selected_anggota' => $selected_anggota
         ];
 
         $this->view('templates/admin/header_admin', $data);
@@ -122,66 +147,92 @@ class AdminPengabdianController extends Controller
     /**
      * UPDATE
      */
+    /**
+     * UPDATE DATA
+     */
     public function update($id)
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header("Location: " . BASE_URL . "/admin/pengabdian");
-        exit;
-    }
-
-    $model = $this->model('Pengabdian');
-    $existing = $model->getById($id);
-
-    if (!$existing) {
-        $_SESSION['error_message'] = "Data tidak ditemukan.";
-        header("Location: " . BASE_URL . "/admin/pengabdian");
-        exit;
-    }
-
-    $judul      = trim($_POST['judul_pengabdian']);
-    $tim        = trim($_POST['tim_pengabdi']);
-    $tahun      = trim($_POST['tahun_pengabdian']);
-    $deskripsi  = trim($_POST['deskripsi_kegiatan']);
-
-    include_once __DIR__ . '/../services/FileService.php';
-
-    $file_pdf = $existing['file_dokumen_pdf'];
-
-    // Jika ada file baru
-    if (!empty($_FILES['file_dokumen']['name'])) {
-        $newFile = FileService::replaceFile(
-            $existing['file_dokumen_pdf'],
-            $_FILES['file_dokumen'],
-            'pengabdian',
-            'pengabdian_'
-        );
-
-        if ($newFile !== false) {
-            $file_pdf = $newFile;
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . BASE_URL . "/admin/pengabdian");
+            exit;
         }
+
+        $model = $this->model('Pengabdian');
+        $existing = $model->getById($id);
+
+        if (!$existing) {
+            $_SESSION['error_message'] = "Data tidak ditemukan.";
+            header("Location: " . BASE_URL . "/admin/pengabdian");
+            exit;
+        }
+
+        // 1. AMBIL DATA INPUT
+        $judul     = trim($_POST['judul_pengabdian']);
+        $tahun     = trim($_POST['tahun_pengabdian']);
+        $deskripsi = trim($_POST['deskripsi_kegiatan']);
+
+        // 2. AMBIL ARRAY ANGGOTA (MULTIPLE SELECT)
+        $anggota_ids = $_POST['anggota'] ?? [];
+
+        // 3. VALIDASI
+        if (empty($judul) || empty($tahun) || empty($deskripsi)) {
+            $_SESSION['error_message'] = "Judul, Tahun, dan Deskripsi wajib diisi.";
+            header("Location: " . BASE_URL . "/admin/pengabdian/edit/" . $id);
+            exit;
+        }
+
+        if (empty($anggota_ids) || !is_array($anggota_ids)) {
+            $_SESSION['error_message'] = "Tim Pengabdi wajib dipilih minimal satu orang.";
+            header("Location: " . BASE_URL . "/admin/pengabdian/edit/" . $id);
+            exit;
+        }
+
+        // 4. HANDLE FILE UPLOAD (Ganti file jika ada upload baru)
+        include_once __DIR__ . '/../services/FileService.php';
+
+        $file_pdf = $existing['file_dokumen_pdf'];
+
+        if (!empty($_FILES['file_dokumen']['name'])) {
+            // replaceFile akan otomatis menghapus file lama jika upload baru sukses
+            $newFile = FileService::replaceFile(
+                $existing['file_dokumen_pdf'],
+                $_FILES['file_dokumen'],
+                'pengabdian',
+                'pengabdian_'
+            );
+
+            if ($newFile !== false) {
+                $file_pdf = $newFile;
+            } else {
+                $_SESSION['error_message'] = "Gagal upload file baru. Cek format & ukuran.";
+                header("Location: " . BASE_URL . "/admin/pengabdian/edit/" . $id);
+                exit;
+            }
+        }
+
+        // 5. SIAPKAN PAYLOAD
+        $payload = [
+            'id_pengabdian'      => $id,
+            'judul_kegiatan'     => $judul,
+            'tahun_kegiatan'     => $tahun,
+            'deskripsi_kegiatan' => $deskripsi,
+            'file_dokumen_pdf'   => $file_pdf,
+            'anggota_ids'        => $anggota_ids // Array ID anggota baru
+        ];
+
+        // 6. UPDATE VIA MODEL
+        $ok = $model->update($payload);
+
+        $_SESSION[$ok ? 'success_message' : 'error_message'] =
+            $ok ? "Pengabdian berhasil diperbarui." : "Gagal memperbarui data.";
+
+        header("Location: " . BASE_URL . "/admin/pengabdian");
+        exit;
     }
-
-    $payload = [
-        'id_pengabdian'      => $id,
-        'judul_kegiatan'     => $judul,
-        'tim_pengabdi'       => $tim,
-        'tahun_kegiatan'     => $tahun,
-        'deskripsi_kegiatan' => $deskripsi,
-        'file_dokumen_pdf'   => $file_pdf
-    ];
-
-    $ok = $model->update($payload);
-
-    $_SESSION[$ok ? 'success_message' : 'error_message'] =
-        $ok ? "Pengabdian berhasil diperbarui." : "Gagal memperbarui data.";
-
-    header("Location: " . BASE_URL . "/admin/pengabdian");
-    exit;
-}
 
 
     /**
-     * DELETE
+     * DELETE DATA
      */
     public function delete($id = null)
     {
@@ -199,8 +250,8 @@ class AdminPengabdianController extends Controller
             exit;
         }
 
+        // 1. HAPUS FILE FISIK
         include_once __DIR__ . '/../services/FileService.php';
-
         if (!empty($existing['file_dokumen_pdf'])) {
             FileService::deleteFile($existing['file_dokumen_pdf'], 'pengabdian');
         }

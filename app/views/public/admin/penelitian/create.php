@@ -31,7 +31,7 @@ include './app/views/templates/admin/sidebar_admin.php';
       <h5 class="card-header">Form Tambah Penelitian</h5>
       <div class="card-body">
 
-        <form action="<?= BASE_URL ?>/admin/penelitian/store" method="POST">
+        <form action="<?= BASE_URL ?>/admin/penelitian/store" method="POST" enctype="multipart/form-data">
 
           <!-- Judul -->
           <div class="mb-3">
@@ -39,10 +39,39 @@ include './app/views/templates/admin/sidebar_admin.php';
             <input type="text" class="form-control" name="judul_penelitian" required>
           </div>
 
-          <!-- Peneliti -->
+          <!-- Tim Peneliti (Checkbox List) -->
           <div class="mb-3">
-            <label class="form-label">Peneliti</label>
-            <input type="text" class="form-control" name="peneliti" required>
+            <label class="form-label">Tim Peneliti (Pilih Anggota) <span class="text-danger">*</span></label>
+
+            <?php if (!empty($list_pengelola)): ?>
+              <div class="border rounded p-3" style="max-height: 160px; overflow-y: auto; background-color: #f8f9fa;">
+                <div class="row g-2">
+                  <?php foreach ($list_pengelola as $p): ?>
+                    <div class="col-md-6">
+                      <div class="form-check p-3 border rounded bg-white">
+                        <input 
+                          class="form-check-input" 
+                          type="checkbox" 
+                          name="peneliti[]" 
+                          value="<?= $p['id_pengelola'] ?>" 
+                          id="peneliti_<?= $p['id_pengelola'] ?>">
+                        <label class="form-check-label w-100" for="peneliti_<?= $p['id_pengelola'] ?>">
+                          <strong><?= htmlspecialchars($p['nama_pengelola']) ?></strong><br>
+                          <small class="text-muted"><?= htmlspecialchars($p['jabatan']) ?></small>
+                        </label>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+              <div class="form-text">
+                <i class="bx bx-info-circle"></i> Centang satu atau lebih peneliti untuk dipilih.
+              </div>
+            <?php else: ?>
+              <div class="alert alert-warning">
+                <i class="bx bx-error-circle"></i> Belum ada data pengelola. Silakan tambahkan di menu Profil terlebih dahulu.
+              </div>
+            <?php endif; ?>
           </div>
 
           <!-- Tahun -->
@@ -61,6 +90,18 @@ include './app/views/templates/admin/sidebar_admin.php';
           <div class="mb-3">
             <label class="form-label">Link Publikasi</label>
             <input type="url" class="form-control" name="link_publikasi" placeholder="https://">
+            <div class="form-text">
+              <i class="bx bx-info-circle"></i> Opsional. Link ke jurnal atau publikasi online.
+            </div>
+          </div>
+
+          <!-- Upload File PDF -->
+          <div class="mb-3">
+            <label class="form-label">Upload Dokumen Penelitian <span class="text-muted">(Opsional)</span></label>
+            <input type="file" class="form-control" name="file_dokumen" accept=".pdf">
+            <div class="form-text">
+              <i class="bx bx-info-circle"></i> Format: PDF. Maksimal 10MB.
+            </div>
           </div>
 
           <!-- BUTTONS -->
@@ -76,5 +117,16 @@ include './app/views/templates/admin/sidebar_admin.php';
 
   </div>
 </div>
+
+<script>
+  // Validasi minimal 1 checkbox harus dipilih
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const checkboxes = document.querySelectorAll('input[name="peneliti[]"]:checked');
+    if (checkboxes.length === 0) {
+      e.preventDefault();
+      alert('Silakan pilih minimal 1 anggota tim peneliti!');
+    }
+  });
+</script>
 
 <?php include './app/views/templates/admin/footer_admin.php'; ?>

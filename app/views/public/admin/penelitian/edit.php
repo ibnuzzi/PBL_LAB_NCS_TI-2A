@@ -31,7 +31,7 @@ include './app/views/templates/admin/sidebar_admin.php';
       <h5 class="card-header">Form Edit Penelitian</h5>
       <div class="card-body">
 
-        <form action="<?= BASE_URL ?>/admin/penelitian/update/<?= $penelitian['id_penelitian']; ?>" method="POST">
+        <form action="<?= BASE_URL ?>/admin/penelitian/update/<?= $penelitian['id_penelitian']; ?>" method="POST" enctype="multipart/form-data">
 
           <!-- Judul -->
           <div class="mb-3">
@@ -42,13 +42,46 @@ include './app/views/templates/admin/sidebar_admin.php';
                    required>
           </div>
 
-          <!-- Peneliti -->
+          <!-- Tim Peneliti (Checkbox List) -->
           <div class="mb-3">
-            <label class="form-label">Peneliti</label>
-            <input type="text" class="form-control"
-                   name="peneliti"
-                   value="<?= htmlspecialchars($penelitian['peneliti']); ?>"
-                   required>
+            <label class="form-label">Tim Peneliti <span class="text-danger">*</span></label>
+
+            <?php if (!empty($list_pengelola)): ?>
+              <div class="border rounded p-3" style="max-height: 160px; overflow-y: auto; background-color: #f8f9fa;">
+                <div class="row g-2">
+                  <?php foreach ($list_pengelola as $p): ?>
+                    <?php
+                    // LOGIKA PRE-SELECTED
+                    // Cek apakah ID pengelola ini ada di array $selected_peneliti
+                    $isChecked = in_array($p['id_pengelola'], $selected_peneliti) ? 'checked' : '';
+                    ?>
+                    
+                    <div class="col-md-6">
+                      <div class="form-check p-3 border rounded bg-white">
+                        <input 
+                          class="form-check-input" 
+                          type="checkbox" 
+                          name="peneliti[]" 
+                          value="<?= $p['id_pengelola'] ?>" 
+                          id="peneliti_<?= $p['id_pengelola'] ?>"
+                          <?= $isChecked ?>>
+                        <label class="form-check-label w-100" for="peneliti_<?= $p['id_pengelola'] ?>">
+                          <strong><?= htmlspecialchars($p['nama_pengelola']) ?></strong><br>
+                          <small class="text-muted"><?= htmlspecialchars($p['jabatan']) ?></small>
+                        </label>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+              <div class="form-text">
+                <i class="bx bx-info-circle"></i> Centang satu atau lebih peneliti untuk dipilih.
+              </div>
+            <?php else: ?>
+              <div class="alert alert-warning">
+                <i class="bx bx-error-circle"></i> Belum ada data pengelola. Silakan tambahkan di menu Profil terlebih dahulu.
+              </div>
+            <?php endif; ?>
           </div>
 
           <!-- Tahun -->
@@ -73,6 +106,23 @@ include './app/views/templates/admin/sidebar_admin.php';
                    name="link_publikasi"
                    value="<?= htmlspecialchars($penelitian['link_publikasi']); ?>"
                    placeholder="https://">
+            <div class="form-text">
+              <i class="bx bx-info-circle"></i> Opsional. Link ke jurnal atau publikasi online.
+            </div>
+          </div>
+
+          <!-- Upload File PDF -->
+          <div class="mb-3">
+            <label class="form-label">Upload Dokumen Penelitian <span class="text-muted">(Opsional)</span></label>
+            <?php if (!empty($penelitian['file_dokumen_pdf'])): ?>
+              <div class="alert alert-info mb-2">
+                <i class="bx bx-file"></i> File saat ini: <strong><?= htmlspecialchars($penelitian['file_dokumen_pdf']) ?></strong>
+              </div>
+            <?php endif; ?>
+            <input type="file" class="form-control" name="file_dokumen" accept=".pdf">
+            <div class="form-text">
+              <i class="bx bx-info-circle"></i> Format: PDF. Maksimal 10MB. Biarkan kosong jika tidak ingin mengganti.
+            </div>
           </div>
 
           <!-- BUTTONS -->
@@ -88,5 +138,16 @@ include './app/views/templates/admin/sidebar_admin.php';
 
   </div>
 </div>
+
+<script>
+  // Validasi minimal 1 checkbox harus dipilih
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const checkboxes = document.querySelectorAll('input[name="peneliti[]"]:checked');
+    if (checkboxes.length === 0) {
+      e.preventDefault();
+      alert('Silakan pilih minimal 1 anggota tim peneliti!');
+    }
+  });
+</script>
 
 <?php include './app/views/templates/admin/footer_admin.php'; ?>

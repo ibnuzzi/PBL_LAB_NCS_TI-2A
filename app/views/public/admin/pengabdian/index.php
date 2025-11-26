@@ -89,40 +89,68 @@ include './app/views/templates/admin/sidebar_admin.php';
       </div>
     </div>
 
-
-
   </div>
 
   <!-- MODAL DETAIL -->
   <div class="modal fade" id="modalDetailPengabdian" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalDetailJudul">Detail Pengabdian</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-header bg-success text-white">
+          <div>
+            <h5 class="modal-title mb-0" id="modalDetailJudul">Detail Pengabdian</h5>
+            <small class="opacity-75">Informasi Lengkap Pengabdian Masyarakat</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
 
-          <p><strong>Tim Pengabdi:</strong> <span id="modalDetailTim"></span></p>
-          <p><strong>Tahun:</strong> <span id="modalDetailTahun"></span></p>
+          <!-- Tahun -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-calendar"></i> TAHUN KEGIATAN
+            </label>
+            <p class="fs-5 mb-0" id="modalDetailTahun"></p>
+          </div>
 
-          <p><strong>Deskripsi:</strong></p>
-          <p id="modalDetailDeskripsi"></p>
+          <hr class="my-3">
 
-          <hr>
+          <!-- Tim Pengabdi -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-group"></i> TIM PENGABDI
+            </label>
+            <div class="alert alert-success mb-0" id="modalPengabdiInfo">
+              <i class="bx bx-user-circle"></i> <span id="modalDetailTim"></span>
+            </div>
+          </div>
 
-          <p><strong>Dokumen PDF:</strong></p>
-          <a id="modalDetailFile" href="#" target="_blank" class="btn btn-info btn-sm">
-            <i class="bx bx-file"></i> Lihat Dokumen
-          </a>
+          <hr class="my-3">
+
+          <!-- Deskripsi -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-file-blank"></i> DESKRIPSI KEGIATAN
+            </label>
+            <div class="bg-light p-3 rounded" id="modalDetailDeskripsi"></div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- Dokumen -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-2">
+              <i class="bx bx-file-pdf"></i> DOKUMEN PDF
+            </label>
+            <div id="modalDetailFileContainer"></div>
+          </div>
 
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            Tutup
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bx bx-x"></i> Tutup
           </button>
         </div>
 
@@ -147,11 +175,46 @@ include './app/views/components/page_scripts.php';
 
     $(".btn-view-pengabdian").on("click", function() {
 
-      $("#modalDetailJudul").text($(this).data("judul"));
-      $("#modalDetailTim").text($(this).data("tim"));
-      $("#modalDetailTahun").text($(this).data("tahun"));
-      $("#modalDetailDeskripsi").text($(this).data("deskripsi"));
-      $("#modalDetailFile").attr("href", $(this).data("file"));
+      let judul = $(this).data("judul");
+      let tahun = $(this).data("tahun");
+      let tim = $(this).data("tim");
+      let deskripsi = $(this).data("deskripsi");
+      let file = $(this).data("file");
+
+      // Set judul
+      $("#modalDetailJudul").text(judul);
+      
+      // Set tahun
+      $("#modalDetailTahun").html(`<strong>${tahun}</strong>`);
+
+      // Set tim pengabdi
+      if (tim && tim.trim() !== "" && tim !== "-") {
+          $("#modalDetailTim").text(tim);
+          $("#modalPengabdiInfo").removeClass("alert-warning").addClass("alert-success");
+      } else {
+          $("#modalPengabdiInfo").removeClass("alert-success").addClass("alert-warning");
+          $("#modalDetailTim").text("Belum ada data tim pengabdi");
+      }
+
+      // Set deskripsi
+      if (deskripsi && deskripsi.trim() !== "") {
+          $("#modalDetailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
+      } else {
+          $("#modalDetailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
+      }
+
+      // Set file
+      if (file && file.trim() !== "") {
+          $("#modalDetailFileContainer").html(`
+            <a href="${file}" target="_blank" class="btn btn-success btn-sm w-100">
+              <i class="bx bx-download"></i> Unduh Dokumen PDF
+            </a>
+          `);
+      } else {
+          $("#modalDetailFileContainer").html(`
+            <div class="text-muted small">Tidak tersedia</div>
+          `);
+      }
 
       new bootstrap.Modal(document.getElementById("modalDetailPengabdian")).show();
     });

@@ -46,27 +46,39 @@ include './app/views/templates/admin/sidebar_admin.php';
               required>
           </div>
           
-            <!-- Input Tim Pengabdi (Ganti input text lama dengan ini) -->
+            <!-- Input Tim Pengabdi (Checkbox List) -->
             <div class="mb-3">
               <label class="form-label">Tim Pengabdi (Pilih Anggota) <span class="text-danger">*</span></label>
 
-              <!-- name="anggota[]" PENTING agar dikirim sebagai array -->
-              <select name="anggota[]" class="form-select" multiple required style="height: 150px;">
-
-                <?php if (!empty($list_pengelola)): ?>
-                  <?php foreach ($list_pengelola as $p): ?>
-                    <option value="<?= $p['id_pengelola'] ?>">
-                      <?= htmlspecialchars($p['nama_pengelola']) ?> - <?= htmlspecialchars($p['jabatan']) ?>
-                    </option>
-                  <?php endforeach; ?>
-                <?php else: ?>
-                  <option disabled>Belum ada data pengelola. Tambahkan di menu Profil.</option>
-                <?php endif; ?>
-
-              </select>
-              <div class="form-text">
-                Tahan tombol <strong>CTRL</strong> (Windows) atau <strong>Command</strong> (Mac) untuk memilih lebih dari satu orang.
-              </div>
+              <?php if (!empty($list_pengelola)): ?>
+                <div class="border rounded p-3" style="max-height: 160px; overflow-y: auto; background-color: #f8f9fa;">
+                  <div class="row g-2">
+                    <?php foreach ($list_pengelola as $p): ?>
+                      <div class="col-md-6">
+                        <div class="form-check p-3 border rounded bg-white">
+                          <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            name="anggota[]" 
+                            value="<?= $p['id_pengelola'] ?>" 
+                            id="anggota_<?= $p['id_pengelola'] ?>">
+                          <label class="form-check-label w-100" for="anggota_<?= $p['id_pengelola'] ?>">
+                            <strong><?= htmlspecialchars($p['nama_pengelola']) ?></strong><br>
+                            <small class="text-muted"><?= htmlspecialchars($p['jabatan']) ?></small>
+                          </label>
+                        </div>
+                      </div>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+                <div class="form-text">
+                  <i class="bx bx-info-circle"></i> Centang satu atau lebih anggota tim untuk dipilih.
+                </div>
+              <?php else: ?>
+                <div class="alert alert-warning">
+                  <i class="bx bx-error-circle"></i> Belum ada data pengelola. Silakan tambahkan di menu Profil terlebih dahulu.
+                </div>
+              <?php endif; ?>
             </div>
 
             <!-- Tahun -->
@@ -122,5 +134,16 @@ include './app/views/templates/admin/sidebar_admin.php';
   </div>
 
 </div>
+
+<script>
+  // Validasi minimal 1 checkbox harus dipilih
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const checkboxes = document.querySelectorAll('input[name="anggota[]"]:checked');
+    if (checkboxes.length === 0) {
+      e.preventDefault();
+      alert('Silakan pilih minimal 1 anggota tim pengabdi!');
+    }
+  });
+</script>
 
 <?php include './app/views/templates/admin/footer_admin.php'; ?>

@@ -18,10 +18,51 @@ class DashboardController extends Controller {
     }
 
     /**
-     * Menampilkan halaman dashboard
+     * Menampilkan halaman dashboard dengan data statistik
      */
     public function index() {
-        $this->view('public/admin/dashboard'); 
+        // Load models
+        $beritaModel = $this->model('Berita');
+        $agendaModel = $this->model('Agenda');
+        $pengabdianModel = $this->model('Pengabdian');
+        $penelitianModel = $this->model('Penelitian');
+        $konsultasiModel = $this->model('Konsultasi');
+        
+        // Get statistics
+        // Berita: countBerita()
+        // Agenda: getAllAgenda()
+        // Pengabdian: getAll()
+        // Penelitian: getAll()
+        $totalBerita = $beritaModel->countBerita();
+        $totalAgenda = count($agendaModel->getAllAgenda());
+        $totalPengabdian = count($pengabdianModel->getAll());
+        $totalPenelitian = count($penelitianModel->getAll());
+        $totalPertanyaan = count($konsultasiModel->getAll());
+        
+        // Get recent data
+        // Berita: getBeritaTerbaru(3)
+        $recentBerita = $beritaModel->getBeritaTerbaru(3);
+        
+        // Agenda: getAllAgenda() then slice
+        $allAgenda = $agendaModel->getAllAgenda();
+        $recentAgenda = array_slice($allAgenda, 0, 5);
+        
+        // Konsultasi: getAll() then slice
+        $allKonsultasi = $konsultasiModel->getAll();
+        $recentPertanyaan = array_slice($allKonsultasi, 0, 5);
+        
+        $data = [
+            'totalBerita' => $totalBerita,
+            'totalAgenda' => $totalAgenda,
+            'totalPengabdian' => $totalPengabdian,
+            'totalPenelitian' => $totalPenelitian,
+            'totalPertanyaan' => $totalPertanyaan,
+            'recentBerita' => $recentBerita,
+            'recentAgenda' => $recentAgenda,
+            'recentPertanyaan' => $recentPertanyaan
+        ];
+        
+        $this->view('public/admin/dashboard', $data); 
     }
 
 }

@@ -61,7 +61,10 @@ include './app/views/templates/admin/sidebar_admin.php';
                     class="btn btn-sm btn-outline-info me-1 btn-view-penelitian"
                     data-judul="<?= htmlspecialchars($p['judul_penelitian']); ?>"
                     data-tahun="<?= htmlspecialchars($p['tahun_penelitian']); ?>"
+                    data-deskripsi="<?= htmlspecialchars($p['deskripsi_singkat'] ?? ''); ?>"
+                    data-peneliti="<?= htmlspecialchars($p['peneliti'] ?? 'Belum ada data'); ?>"
                     data-link="<?= htmlspecialchars($p['link_publikasi'] ?? ''); ?>"
+                    data-file="<?= htmlspecialchars($p['file_dokumen_pdf'] ?? ''); ?>"
                   >
                     <i class="bx bx-show-alt"></i>
                   </button>
@@ -103,27 +106,77 @@ include './app/views/components/page_scripts.php';
 
 <!-- MODAL DETAIL PENELITIAN -->
 <div class="modal fade" id="modalDetailPenelitian" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-md modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalJudulPenelitian">Detail Penelitian</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-header bg-primary text-white">
+        <div>
+          <h5 class="modal-title mb-0" id="modalJudulPenelitian">Detail Penelitian</h5>
+          <small class="opacity-75">Informasi Lengkap Penelitian</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
 
-        <p><strong>Tahun:</strong> <span id="modalTahunPenelitian"></span></p>
+        <!-- Tahun -->
+        <div class="mb-3">
+          <label class="form-label fw-bold text-muted small mb-1">
+            <i class="bx bx-calendar"></i> TAHUN PENELITIAN
+          </label>
+          <p class="fs-5 mb-0" id="modalTahunPenelitian"></p>
+        </div>
 
-        <hr>
+        <hr class="my-3">
 
-        <div id="modalLinkPenelitian"></div>
+        <!-- Tim Peneliti -->
+        <div class="mb-3">
+          <label class="form-label fw-bold text-muted small mb-1">
+            <i class="bx bx-group"></i> TIM PENELITI
+          </label>
+          <div class="alert alert-info mb-0" id="modalPenelitiInfo">
+            <i class="bx bx-user-circle"></i> <span id="modalTimPeneliti"></span>
+          </div>
+        </div>
+
+        <hr class="my-3">
+
+        <!-- Deskripsi -->
+        <div class="mb-3">
+          <label class="form-label fw-bold text-muted small mb-1">
+            <i class="bx bx-file-blank"></i> DESKRIPSI SINGKAT
+          </label>
+          <div class="bg-light p-3 rounded" id="modalDeskripsiPenelitian">
+            
+          </div>
+        </div>
+
+        <hr class="my-3">
+
+        <!-- Link & File -->
+        <div class="row">
+          <!-- Link Publikasi -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-bold text-muted small mb-2">
+              <i class="bx bx-link-alt"></i> LINK PUBLIKASI
+            </label>
+            <div id="modalLinkPenelitian"></div>
+          </div>
+
+          <!-- Dokumen -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-bold text-muted small mb-2">
+              <i class="bx bx-file-pdf"></i> DOKUMEN PDF
+            </label>
+            <div id="modalFilePenelitian"></div>
+          </div>
+        </div>
 
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-          Tutup
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bx bx-x"></i> Tutup
         </button>
       </div>
 
@@ -136,20 +189,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $(".btn-view-penelitian").on("click", function () {
 
+    let judul = $(this).data("judul");
+    let tahun = $(this).data("tahun");
+    let deskripsi = $(this).data("deskripsi");
+    let peneliti = $(this).data("peneliti");
     let link = $(this).data("link");
+    let file = $(this).data("file");
 
-    $("#modalJudulPenelitian").text($(this).data("judul"));
-    $("#modalTahunPenelitian").text($(this).data("tahun"));
+    // Set judul di header
+    $("#modalJudulPenelitian").text(judul);
+    
+    // Set tahun
+    $("#modalTahunPenelitian").html(`<strong>${tahun}</strong>`);
 
+    // Set tim peneliti
+    if (peneliti && peneliti.trim() !== "" && peneliti !== "Belum ada data") {
+        $("#modalTimPeneliti").text(peneliti);
+    } else {
+        $("#modalPenelitiInfo").removeClass("alert-info").addClass("alert-warning");
+        $("#modalTimPeneliti").text("Belum ada data tim peneliti");
+    }
+
+    // Set deskripsi
+    if (deskripsi && deskripsi.trim() !== "") {
+        $("#modalDeskripsiPenelitian").html(`<p class="mb-0">${deskripsi}</p>`);
+    } else {
+        $("#modalDeskripsiPenelitian").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
+    }
+
+    // Link Publikasi
     if (link && link.trim() !== "") {
         $("#modalLinkPenelitian").html(`
-          <a href="${link}" target="_blank" class="btn btn-info btn-sm">
-            <i class="bx bx-link-external"></i> Kunjungi Link Penelitian
+          <a href="${link}" target="_blank" class="btn btn-info btn-sm w-100">
+            <i class="bx bx-link-external"></i> Buka Link
           </a>
         `);
     } else {
         $("#modalLinkPenelitian").html(`
-          <p class="text-danger mb-0">Tidak ada link penelitian.</p>
+          <div class="text-muted small">Tidak tersedia</div>
+        `);
+    }
+
+    // File Dokumen PDF
+    if (file && file.trim() !== "") {
+        $("#modalFilePenelitian").html(`
+          <a href="<?= BASE_URL ?>/public/uploads/penelitian/${file}" target="_blank" class="btn btn-success btn-sm w-100">
+            <i class="bx bx-download"></i> Unduh PDF
+          </a>
+        `);
+    } else {
+        $("#modalFilePenelitian").html(`
+          <div class="text-muted small">Tidak tersedia</div>
         `);
     }
 

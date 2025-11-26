@@ -52,7 +52,6 @@ class AdminSaranaController extends Controller
             'deskripsi' => $_POST['deskripsi_sarana'],
             'foto'      => $foto,
             'jumlah'    => $_POST['jumlah'],
-            'kondisi'   => $_POST['kondisi'],
             'admin'     => $_SESSION['admin_id'] ?? 1
         ]);
 
@@ -101,8 +100,7 @@ class AdminSaranaController extends Controller
             'nama'      => $_POST['nama_sarana'],
             'deskripsi' => $_POST['deskripsi_sarana'],
             'foto'      => $foto,
-            'jumlah'    => $_POST['jumlah'],
-            'kondisi'   => $_POST['kondisi']
+            'jumlah'    => $_POST['jumlah']
         ]);
 
         $_SESSION[$ok ? 'success_message' : 'error_message'] =

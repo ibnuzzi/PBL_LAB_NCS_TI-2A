@@ -71,13 +71,11 @@ include './app/views/templates/admin/sidebar_admin.php';
                   type="button"
                   class="btn btn-sm btn-outline-info me-1 btn-view"
                   data-nama="<?= htmlspecialchars($a['nama_agenda']); ?>"
-                  data-deskripsi="<?= htmlspecialchars($a['deskripsi_agenda']); ?>"
-                  data-lokasi="<?= htmlspecialchars($a['lokasi']); ?>"
+                  data-deskripsi="<?= htmlspecialchars($a['deskripsi_agenda'] ?? ''); ?>"
+                  data-lokasi="<?= htmlspecialchars($a['lokasi'] ?? ''); ?>"
                   data-mulai="<?= $mulaiTxt; ?>"
                   data-selesai="<?= $selesaiTxt; ?>"
                   data-gambar="<?= $gambarUrl; ?>"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalDetailAgenda"
                 >
                   <i class="bx bx-show-alt"></i>
                 </button>
@@ -108,35 +106,74 @@ include './app/views/templates/admin/sidebar_admin.php';
 
   <!-- MODAL DETAIL -->
   <div class="modal fade" id="modalDetailAgenda" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="detailNamaAgenda">Detail Agenda</h5>
+        <div class="modal-header bg-warning text-dark">
+          <div>
+            <h5 class="modal-title mb-0 fw-bold" id="detailNamaAgenda">Detail Agenda</h5>
+            <small class="opacity-75">Informasi Lengkap Kegiatan</small>
+          </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
 
-          <div class="text-center mb-3">
-            <img id="detailGambar" src="" class="rounded"
-                 style="width:240px; height:160px; object-fit:cover;">
+          <!-- Gambar Preview -->
+          <div class="mb-4 text-center">
+            <label class="form-label fw-bold text-muted small mb-2">
+              <i class="bx bx-image"></i> GAMBAR AGENDA
+            </label>
+            <div class="border rounded p-2 bg-light">
+              <img id="detailGambar" src="" class="img-fluid rounded" style="max-height: 300px; object-fit: contain;">
+            </div>
           </div>
 
-          <p><strong>Nama Agenda:</strong> <span id="detailNama"></span></p>
-          <p><strong>Deskripsi:</strong></p>
-          <p id="detailDeskripsi"></p>
+          <hr class="my-3">
 
-          <p><strong>Lokasi:</strong> <span id="detailLokasi"></span></p>
+          <!-- Tanggal -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold text-muted small mb-1">
+                <i class="bx bx-calendar-event"></i> TANGGAL MULAI
+              </label>
+              <p class="fs-6 mb-0" id="detailMulai"></p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold text-muted small mb-1">
+                <i class="bx bx-calendar-check"></i> TANGGAL SELESAI
+              </label>
+              <p class="fs-6 mb-0" id="detailSelesai"></p>
+            </div>
+          </div>
 
-          <p><strong>Tanggal Mulai:</strong> <span id="detailMulai"></span></p>
-          <p><strong>Tanggal Selesai:</strong> <span id="detailSelesai"></span></p>
+          <hr class="my-3">
+
+          <!-- Lokasi -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-map"></i> LOKASI
+            </label>
+            <div class="alert alert-warning mb-0">
+              <i class="bx bx-map-pin"></i> <span id="detailLokasi"></span>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- Deskripsi -->
+          <div class="mb-3">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-file-blank"></i> DESKRIPSI KEGIATAN
+            </label>
+            <div class="bg-light p-3 rounded" id="detailDeskripsi"></div>
+          </div>
 
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            Tutup
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bx bx-x"></i> Tutup
           </button>
         </div>
 
@@ -160,12 +197,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $(".btn-view").click(function () {
 
-    $("#detailNama").text($(this).data("nama"));
-    $("#detailDeskripsi").text($(this).data("deskripsi"));
-    $("#detailLokasi").text($(this).data("lokasi"));
-    $("#detailMulai").text($(this).data("mulai"));
-    $("#detailSelesai").text($(this).data("selesai"));
-    $("#detailGambar").attr("src", $(this).data("gambar"));
+    let nama = $(this).data("nama");
+    let deskripsi = $(this).data("deskripsi");
+    let lokasi = $(this).data("lokasi");
+    let mulai = $(this).data("mulai");
+    let selesai = $(this).data("selesai");
+    let gambar = $(this).data("gambar");
+
+    // Set judul
+    $("#detailNamaAgenda").text(nama);
+
+    // Set gambar
+    $("#detailGambar").attr("src", gambar);
+
+    // Set tanggal
+    $("#detailMulai").html(`<strong>${mulai}</strong>`);
+    $("#detailSelesai").html(`<strong>${selesai}</strong>`);
+
+    // Set lokasi
+    if (lokasi && lokasi.trim() !== "") {
+        $("#detailLokasi").text(lokasi);
+    } else {
+        $("#detailLokasi").html(`<em>Belum ditentukan</em>`);
+    }
+
+    // Set deskripsi
+    if (deskripsi && deskripsi.trim() !== "") {
+        $("#detailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
+    } else {
+        $("#detailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
+    }
+
+    // Show modal
+    new bootstrap.Modal(document.getElementById("modalDetailAgenda")).show();
   });
 
 });

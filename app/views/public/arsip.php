@@ -42,6 +42,15 @@ include 'app/views/templates/public/navbar.php';
         text-decoration: none;
         /* Menghilangkan garis bawah jika ada */
     }
+
+    /* 4. Style untuk kategori aktif */
+    .service-sidebar__category__list li.active a {
+        color: #198754 !important;
+        background-color: #f0fdf4;
+        padding-left: 15px;
+        border-radius: 5px;
+        font-weight: 700 !important;
+    }
 </style>
 
 <section class="page-header">
@@ -75,11 +84,34 @@ include 'app/views/templates/public/navbar.php';
                     <div class="product__categories  wow fadeInUp animated" data-wow-delay="900ms" style="visibility: visible; animation-delay: 900ms; animation-name: fadeInUp;">
                         <h3 class="product__categories__title">Categories</h3>
                         <ul class="list-unstyled service-sidebar__category__list">
-                            <li><a href="products.html"> <i class="fa fa-folder-open"></i>Semua Dokumen</a></li>
-                            <li><a href="products.html"> <i class="fa fa-microscope"></i>Penelitian</a></li>
-                            <li><a href="products.html"> <i class="fa fa-hands-helping"></i>Pengabdian</a></li>
-                            <li><a href="products.html"> <i class="fa fa-book"></i>Modul Pratikum</a></li>
-                            <li><a href="products.html"> <i class="fa fa-file-contract"></i>SOP Laboratorium</a></li>
+                            <?php $kategoriAktif = $data['kategori_aktif'] ?? 'semua'; ?>
+                            <li class="<?= $kategoriAktif === 'semua' ? 'active' : '' ?>">
+                                <a href="?kategori=semua"> <i class="fa fa-folder-open"></i>Semua Dokumen</a>
+                            </li>
+                            <?php
+                            // Mapping icon untuk setiap kategori
+                            $iconMapping = [
+                                'Penelitian' => 'fa-microscope',
+                                'Pengabdian' => 'fa-hands-helping',
+                                'Modul Praktikum' => 'fa-book',
+                                'SOP Laboratorium' => 'fa-file-contract'
+                            ];
+                            
+                            // Loop melalui kategori yang diambil dari database
+                            if (!empty($data['kategori_list'])):
+                                foreach ($data['kategori_list'] as $kategori):
+                                    $namaKategori = $kategori['nama_kategori'];
+                                    // Tentukan icon berdasarkan nama kategori, default fa-file jika tidak ada mapping
+                                    $icon = isset($iconMapping[$namaKategori]) ? $iconMapping[$namaKategori] : 'fa-file';
+                                    $isActive = $kategoriAktif === $namaKategori ? 'active' : '';
+                            ?>
+                            <li class="<?= $isActive ?>">
+                                <a href="?kategori=<?= urlencode($namaKategori) ?>"> <i class="fa <?= $icon ?>"></i><?= htmlspecialchars($namaKategori) ?></a>
+                            </li>
+                            <?php 
+                                endforeach;
+                            endif;
+                            ?>
                         </ul>
                     </div><!-- /.category-widget -->
 
@@ -94,92 +126,99 @@ include 'app/views/templates/public/navbar.php';
 
                     <div class="list-group" style="border: none;">
 
+                        <?php
+                        // Mapping icon dan warna untuk setiap kategori
+                        $categoryIconMapping = [
+                            'Penelitian' => ['icon' => 'fa-microscope', 'bg' => '#ffebee', 'color' => '#d32f2f'],
+                            'Pengabdian' => ['icon' => 'fa-hands-helping', 'bg' => '#e8f5e9', 'color' => '#388e3c'],
+                            'Modul Praktikum' => ['icon' => 'fa-book', 'bg' => '#e3f2fd', 'color' => '#1976d2'],
+                            'SOP Laboratorium' => ['icon' => 'fa-file-contract', 'bg' => '#f3e5f5', 'color' => '#7b1fa2'],
+                            'default' => ['icon' => 'fa-file', 'bg' => '#f5f5f5', 'color' => '#757575']
+                        ];
+                        
+                        // Loop melalui data arsip dari PostgreSQL view
+                        if (!empty($data['arsip_list'])):
+                            foreach ($data['arsip_list'] as $arsip):
+                                // Dapatkan kategori
+                                $kategoriArsip = $arsip['kategori'] ?? 'default';
+                                $iconData = isset($categoryIconMapping[$kategoriArsip]) ? $categoryIconMapping[$kategoriArsip] : $categoryIconMapping['default'];
+                        ?>
                         <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm"
                             style="border: none; border-radius: 10px; background: #fff; transition: transform 0.2s;">
 
                             <div class="flex-shrink-0 me-4" style="margin-right: 20px;">
-                                <div style="width: 60px; height: 60px; background: #ffebee; color: #d32f2f; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
-                                    <i class="fa fa-file-pdf"></i>
+                                <div style="width: 60px; height: 60px; background: <?= $iconData['bg'] ?>; color: <?= $iconData['color'] ?>; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                                    <i class="fa <?= $iconData['icon'] ?>"></i>
                                 </div>
                             </div>
 
                             <div class="flex-grow-1">
                                 <h5 class="mb-1" style="font-weight: bold; color: #333;">
-                                    Analisis Malware Ransomware Varian Baru
+                                    <?= htmlspecialchars($arsip['judul'] ?? 'Tanpa Judul') ?>
                                 </h5>
                                 <p class="mb-1 text-muted" style="font-size: 14px;">
-                                    Studi kasus serangan ransomware pada jaringan lokal dan metode mitigasinya.
+                                    <?= htmlspecialchars(substr($arsip['deskripsi'] ?? '', 0, 100)) ?><?= strlen($arsip['deskripsi'] ?? '') > 100 ? '...' : '' ?>
                                 </p>
                                 <small class="text-muted">
-                                    <i class="fa fa-calendar-alt"></i> 24 Nov 2025 &nbsp;|&nbsp;
-                                    <i class="fa fa-tag"></i> Penelitian
+                                    <i class="fa fa-calendar-alt"></i> <?= date('d M Y', strtotime($arsip['created_at'] ?? date('Y-m-d'))) ?> &nbsp;|&nbsp;
+                                    <i class="fa fa-tag"></i> <?= htmlspecialchars($kategoriArsip) ?>
+                                    <?php 
+                                    // Hanya tampilkan penulis_atau_tim jika BUKAN dari arsip_umum
+                                    if (!empty($arsip['penulis_atau_tim']) && ($arsip['sumber_tabel'] ?? '') !== 'arsip_umum'): 
+                                        // Logika untuk menangani nama tim yang panjang
+                                        $penulisTim = $arsip['penulis_atau_tim'];
+                                        $maxLength = 50; // Batas karakter
+                                        
+                                        // Cek apakah ada koma (menandakan multiple authors)
+                                        if (strpos($penulisTim, ',') !== false) {
+                                            $authors = explode(',', $penulisTim);
+                                            $firstAuthor = trim($authors[0]);
+                                            $otherCount = count($authors) - 1;
+                                            $displayText = $firstAuthor . ' dan ' . $otherCount . ' lainnya';
+                                            $fullText = $penulisTim;
+                                        } elseif (strlen($penulisTim) > $maxLength) {
+                                            // Jika panjang tapi tidak ada koma, potong
+                                            $displayText = substr($penulisTim, 0, $maxLength) . '...';
+                                            $fullText = $penulisTim;
+                                        } else {
+                                            $displayText = $penulisTim;
+                                            $fullText = $penulisTim;
+                                        }
+                                    ?>
+                                    &nbsp;|&nbsp;
+                                    <i class="fa fa-user"></i> 
+                                    <span title="<?= htmlspecialchars($fullText) ?>" style="cursor: help;">
+                                        <?= htmlspecialchars($displayText) ?>
+                                    </span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($arsip['tahun'])): ?>
+                                    &nbsp;(<?= htmlspecialchars($arsip['tahun']) ?>)
+                                    <?php endif; ?>
                                 </small>
                             </div>
 
-                            <div class="ms-3" style="margin-left: 15px;">
-                                <a href="#" class="btn btn-outline-primary btn-sm">
+                            <div class="ms-3" style="margin-left: 15px; display: flex; flex-direction: column; gap: 5px;">
+                                <?php if (!empty($arsip['nama_file'])): ?>
+                                <a href="<?= htmlspecialchars($arsip['nama_file']) ?>" class="btn btn-outline-primary btn-sm" download>
                                     <i class="fa fa-download"></i> Unduh
                                 </a>
-                            </div>
-                        </div>
-
-                        <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm"
-                            style="border: none; border-radius: 10px; background: #fff; transition: transform 0.2s;">
-
-                            <div class="flex-shrink-0 me-4" style="margin-right: 20px;">
-                                <div style="width: 60px; height: 60px; background: #e3f2fd; color: #1976d2; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
-                                    <i class="fa fa-book"></i>
-                                </div>
-                            </div>
-
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1" style="font-weight: bold; color: #333;">
-                                    Modul Praktikum Keamanan Jaringan (Semester 3)
-                                </h5>
-                                <p class="mb-1 text-muted" style="font-size: 14px;">
-                                    Panduan lengkap konfigurasi Firewall dan VPN untuk mahasiswa TI.
-                                </p>
-                                <small class="text-muted">
-                                    <i class="fa fa-calendar-alt"></i> 10 Sep 2025 &nbsp;|&nbsp;
-                                    <i class="fa fa-tag"></i> Modul Praktikum
-                                </small>
-                            </div>
-
-                            <div class="ms-3" style="margin-left: 15px;">
-                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                    <i class="fa fa-download"></i> Unduh
+                                <?php endif; ?>
+                                
+                                <?php if (!empty($arsip['link_eksternal'])): ?>
+                                <a href="<?= htmlspecialchars($arsip['link_eksternal']) ?>" target="_blank" class="btn btn-outline-success btn-sm">
+                                    <i class="fa fa-external-link-alt"></i> Artikel
                                 </a>
+                                <?php endif; ?>
                             </div>
                         </div>
-
-                        <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm"
-                            style="border: none; border-radius: 10px; background: #fff; transition: transform 0.2s;">
-
-                            <div class="flex-shrink-0 me-4" style="margin-right: 20px;">
-                                <div style="width: 60px; height: 60px; background: #f3e5f5; color: #7b1fa2; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
-                                    <i class="fa fa-file-contract"></i>
-                                </div>
-                            </div>
-
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1" style="font-weight: bold; color: #333;">
-                                    SOP Peminjaman Alat Laboratorium NCS
-                                </h5>
-                                <p class="mb-1 text-muted" style="font-size: 14px;">
-                                    Prosedur standar operasional untuk peminjaman router dan server lab.
-                                </p>
-                                <small class="text-muted">
-                                    <i class="fa fa-calendar-alt"></i> 01 Jan 2025 &nbsp;|&nbsp;
-                                    <i class="fa fa-tag"></i> SOP Lab
-                                </small>
-                            </div>
-
-                            <div class="ms-3" style="margin-left: 15px;">
-                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                    <i class="fa fa-download"></i> Unduh
-                                </a>
-                            </div>
+                        <?php 
+                            endforeach;
+                        else:
+                        ?>
+                        <div class="alert alert-info">
+                            <i class="fa fa-info-circle"></i> Tidak ada dokumen yang tersedia saat ini.
                         </div>
+                        <?php endif; ?>
 
                     </div>
                 </div>

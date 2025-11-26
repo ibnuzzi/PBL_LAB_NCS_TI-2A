@@ -33,8 +33,13 @@ class AdminPenelitianController extends Controller
     // Show the form to add a new penelitian
     public function create()
     {
+        // Load daftar pengelola untuk dropdown/checkbox
+        $pengelolaModel = $this->model('Pengelola');
+        $list_pengelola = $pengelolaModel->getAll();
+
         $data = [
-            'judul_halaman' => 'Tambah Penelitian'
+            'judul_halaman' => 'Tambah Penelitian',
+            'list_pengelola' => $list_pengelola
         ];
 
         // Render the views
@@ -55,7 +60,7 @@ class AdminPenelitianController extends Controller
         $judul_penelitian = $_POST['judul_penelitian'] ?? null;
         $tahun_penelitian = $_POST['tahun_penelitian'] ?? null;
         $deskripsi_singkat = $_POST['deskripsi_singkat'] ?? null;
-        $peneliti = $_POST['peneliti'] ?? null;
+        $peneliti_array = $_POST['peneliti'] ?? [];  // Array dari checkbox
         $link_publikasi = $_POST['link_publikasi'] ?? null;
 
         // Validate required fields
@@ -65,13 +70,57 @@ class AdminPenelitianController extends Controller
             exit;
         }
 
+        // Validasi tim peneliti minimal 1
+        if (empty($peneliti_array)) {
+            $_SESSION['error_message'] = "Tim Peneliti wajib dipilih minimal satu orang.";
+            header('Location: ' . BASE_URL . '/admin/penelitian/create');
+            exit;
+        }
+
+        // Handle file upload
+        $file_name = null;
+        if (isset($_FILES['file_dokumen']) && $_FILES['file_dokumen']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = './public/uploads/penelitian/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+
+            $file_tmp = $_FILES['file_dokumen']['tmp_name'];
+            $file_original = $_FILES['file_dokumen']['name'];
+            $file_ext = strtolower(pathinfo($file_original, PATHINFO_EXTENSION));
+            
+            // Validasi PDF
+            if ($file_ext !== 'pdf') {
+                $_SESSION['error_message'] = "Hanya file PDF yang diperbolehkan.";
+                header('Location: ' . BASE_URL . '/admin/penelitian/create');
+                exit;
+            }
+
+            // Validasi ukuran (10MB)
+            if ($_FILES['file_dokumen']['size'] > 10 * 1024 * 1024) {
+                $_SESSION['error_message'] = "Ukuran file maksimal 10MB.";
+                header('Location: ' . BASE_URL . '/admin/penelitian/create');
+                exit;
+            }
+
+            $file_name = 'penelitian_' . time() . '_' . rand(1000, 9999) . '.pdf';
+            $file_destination = $upload_dir . $file_name;
+
+            if (!move_uploaded_file($file_tmp, $file_destination)) {
+                $_SESSION['error_message'] = "Gagal mengupload file.";
+                header('Location: ' . BASE_URL . '/admin/penelitian/create');
+                exit;
+            }
+        }
+
         // Prepare data
         $data = [
             'judul_penelitian' => $judul_penelitian,
             'tahun_penelitian' => $tahun_penelitian,
             'deskripsi_singkat' => $deskripsi_singkat,
-            'peneliti' => $peneliti,
-            'link_publikasi' => $link_publikasi
+            'link_publikasi' => $link_publikasi,
+            'file_dokumen_pdf' => $file_name,
+            'peneliti' => $peneliti_array  // Array ID
         ];
 
         // Pass data to the model
@@ -101,9 +150,18 @@ class AdminPenelitianController extends Controller
             exit;
         }
 
+        // Load daftar pengelola
+        $pengelolaModel = $this->model('Pengelola');
+        $list_pengelola = $pengelolaModel->getAll();
+
+        // Load tim peneliti yang sudah terpilih
+        $selected_peneliti = $penelitianModel->getTimPenelitiIds($id);
+
         $data = [
             'judul_halaman' => 'Edit Penelitian',
-            'penelitian' => $penelitian
+            'penelitian' => $penelitian,
+            'list_pengelola' => $list_pengelola,
+            'selected_peneliti' => $selected_peneliti
         ];
 
         // Render the views
@@ -124,20 +182,72 @@ class AdminPenelitianController extends Controller
         $judul_penelitian = $_POST['judul_penelitian'] ?? null;
         $tahun_penelitian = $_POST['tahun_penelitian'] ?? null;
         $deskripsi_singkat = $_POST['deskripsi_singkat'] ?? null;
-        $peneliti = $_POST['peneliti'] ?? null;
+        $peneliti_array = $_POST['peneliti'] ?? [];  // Array dari checkbox
         $link_publikasi = $_POST['link_publikasi'] ?? null;
+
+        // Validasi tim peneliti minimal 1
+        if (empty($peneliti_array)) {
+            $_SESSION['error_message'] = "Tim Peneliti wajib dipilih minimal satu orang.";
+            header('Location: ' . BASE_URL . '/admin/penelitian/edit/' . $id);
+            exit;
+        }
+
+        // Get existing data for file handling
+        $penelitianModel = $this->model('Penelitian');
+        $existing = $penelitianModel->getById($id);
+        $file_name = $existing['file_dokumen_pdf'] ?? null;
+
+        // Handle file upload
+        if (isset($_FILES['file_dokumen']) && $_FILES['file_dokumen']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = './public/uploads/penelitian/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+
+            $file_tmp = $_FILES['file_dokumen']['tmp_name'];
+            $file_original = $_FILES['file_dokumen']['name'];
+            $file_ext = strtolower(pathinfo($file_original, PATHINFO_EXTENSION));
+            
+            // Validasi PDF
+            if ($file_ext !== 'pdf') {
+                $_SESSION['error_message'] = "Hanya file PDF yang diperbolehkan.";
+                header('Location: ' . BASE_URL . '/admin/penelitian/edit/' . $id);
+                exit;
+            }
+
+            // Validasi ukuran (10MB)
+            if ($_FILES['file_dokumen']['size'] > 10 * 1024 * 1024) {
+                $_SESSION['error_message'] = "Ukuran file maksimal 10MB.";
+                header('Location: ' . BASE_URL . '/admin/penelitian/edit/' . $id);
+                exit;
+            }
+
+            // Hapus file lama jika ada
+            if ($file_name && file_exists($upload_dir . $file_name)) {
+                unlink($upload_dir . $file_name);
+            }
+
+            $file_name = 'penelitian_' . time() . '_' . rand(1000, 9999) . '.pdf';
+            $file_destination = $upload_dir . $file_name;
+
+            if (!move_uploaded_file($file_tmp, $file_destination)) {
+                $_SESSION['error_message'] = "Gagal mengupload file.";
+                header('Location: ' . BASE_URL . '/admin/penelitian/edit/' . $id);
+                exit;
+            }
+        }
 
         // Prepare data
         $data = [
             'judul_penelitian' => $judul_penelitian,
             'tahun_penelitian' => $tahun_penelitian,
             'deskripsi_singkat' => $deskripsi_singkat,
-            'peneliti' => $peneliti,
-            'link_publikasi' => $link_publikasi
+            'link_publikasi' => $link_publikasi,
+            'file_dokumen_pdf' => $file_name,
+            'peneliti' => $peneliti_array  // Array ID
         ];
 
         // Pass data to the model
-        $penelitianModel = $this->model('Penelitian');
         $updated = $penelitianModel->update($id, $data);
 
         if ($updated) {

@@ -95,9 +95,26 @@ class HomeController extends Controller
         exit;
     }
 
-    public function arsip()
-    {
-        $this->view('public/arsip');
+    public function arsip() {
+        $kategoriArsipModel = $this->model('KategoriArsip');
+        $data['kategori_list'] = $kategoriArsipModel->getAllKategori();
+        
+        $arsipModel = $this->model('DokumenUmum');
+        
+        // Cek apakah ada parameter kategori di URL
+        $kategoriFilter = $_GET['kategori'] ?? 'semua';
+        
+        // Filter berdasarkan kategori
+        if ($kategoriFilter !== 'semua') {
+            $data['arsip_list'] = $arsipModel->getAllArsipLengkapByKategori($kategoriFilter);
+        } else {
+            $data['arsip_list'] = $arsipModel->getAllArsipLengkap();
+        }
+        
+        // Simpan kategori yang sedang aktif untuk highlight di view
+        $data['kategori_aktif'] = $kategoriFilter;
+        
+        $this->view('public/arsip', $data);
     }
 
     public function tentang()

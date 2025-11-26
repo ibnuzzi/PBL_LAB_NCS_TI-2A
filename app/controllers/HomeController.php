@@ -1,17 +1,41 @@
 <?php
 // File: /app/controllers/HomeController.php
 
-class HomeController extends Controller {
-    
-    public function index() {
-        $this->view('public/home');
+class HomeController extends Controller
+{
+
+
+    public function index()
+    {
+        // Load pengelola (team members) data for homepage
+        $pengelolaModel = $this->model('Pengelola');
+        $pengelolaList = $pengelolaModel->getAll();
+
+        // Load latest news
+        $beritaModel = $this->model('Berita');
+        $latestNews = $beritaModel->getBeritaTerbaru(3);
+
+        // Load latest penelitian (from DokumenUmum category Penelitian)
+        $dokumenModel = $this->model('DokumenUmum');
+        $latestPenelitian = $dokumenModel->getLatestByCategory('Penelitian', 3);
+
+        $data = [
+            'judul_halaman' => 'Beranda - Lab NCS',
+            'pengelolaList' => $pengelolaList,
+            'latestNews' => $latestNews,
+            'latestPenelitian' => $latestPenelitian
+        ];
+
+        $this->view('public/home', $data);
     }
 
-    public function news() {
+    public function news()
+    {
         $this->view('public/berita');
     }
 
-    public function layanan() {
+    public function layanan()
+    {
 
         $konsultasiModel = $this->model('Konsultasi');
         $data['daftar_konsultasi'] = $konsultasiModel->getAllDijawab();
@@ -28,7 +52,7 @@ class HomeController extends Controller {
             header('Location: ' . BASE_URL . '/layanan');
             exit;
         }
-        
+
         // Trim inputs
         $nama_penanya = trim($_POST['nama_penanya'] ?? '');
         $email_penanya = trim($_POST['email_penanya'] ?? '');
@@ -71,11 +95,26 @@ class HomeController extends Controller {
         exit;
     }
 
-    public function arsip() {
+    public function arsip()
+    {
         $this->view('public/arsip');
     }
 
-        public function indexAgenda()
+    public function tentang()
+    {
+        // Load pengelola (team members) data
+        $pengelolaModel = $this->model('Pengelola');
+        $pengelolaList = $pengelolaModel->getAll();
+
+        $data = [
+            'judul_halaman' => 'Tentang Kami - Lab NCS',
+            'pengelolaList' => $pengelolaList
+        ];
+
+        $this->view('public/tentang', $data);
+    }
+
+    public function indexAgenda()
     {
         $agendaModel = $this->model('Agenda');
         $list = $agendaModel->getAllAgenda();
@@ -94,7 +133,7 @@ class HomeController extends Controller {
 
         $beritaModel = $this->model('Berita');
 
-        $list = $beritaModel->getAllBerita(); 
+        $list = $beritaModel->getAllBerita();
 
         $data = [
             'judul_halaman' => 'Berita - Lab NCS',
@@ -131,7 +170,8 @@ class HomeController extends Controller {
         $this->view('public/berita/detail', $data);
     }
 
-    public function indexGaleri() {
+    public function indexGaleri()
+    {
 
         $galleryModel = $this->model('Gallery');
 

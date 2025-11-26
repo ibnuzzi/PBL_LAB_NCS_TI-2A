@@ -16,12 +16,11 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#">Tentang Kami</a>
+                        <a href="<?php echo BASE_URL; ?>/tentang">Tentang Kami</a>
                         <ul class="sub-menu">
-                            <li><a href="<?php echo BASE_URL; ?>/about#sejarah">Sejarah Lab</a></li>
-                            <li><a href="<?php echo BASE_URL; ?>/about#visi-misi">Visi & Misi</a></li>
-                            <li><a href="<?php echo BASE_URL; ?>/about#struktur">Struktur Pengelola</a></li>
-                            <li><a href="<?php echo BASE_URL; ?>/riset#roadmap">Roadmap Penelitian</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/tentang" data-scroll="sejarah">Sejarah Lab</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/tentang" data-scroll="visi-misi">Visi & Misi</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/tentang" data-scroll="struktur">Struktur Pengelola</a></li>
                         </ul>
                     </li>
 

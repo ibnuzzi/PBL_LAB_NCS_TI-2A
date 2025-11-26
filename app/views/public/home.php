@@ -15,7 +15,7 @@ include 'app/views/templates/public/navbar.php';
 		"autoplay": true,
         "autoplayTimeout": 5000
 		}'>
-        
+
         <div class="item">
             <div class="main-slider-one__item">
                 <div class="main-slider-one__bg" style="background-image: url(public/assets/images/backgrounds/slider-1-1.jpg);"></div>
@@ -35,7 +35,7 @@ include 'app/views/templates/public/navbar.php';
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 </section>
 <!-- main-slider-end -->
 
@@ -48,7 +48,7 @@ include 'app/views/templates/public/navbar.php';
                     <div class="about-two__thumb">
                         <div class="about-two__thumb__item">
                             <img src="public/assets/images/about/about-2-1.png" alt="laboix">
-                            </div>
+                        </div>
                         <div class="about-two__thumb__item about-two__thumb__item--two">
                             <img src="public/assets/images/about/about-s-2-1.png" alt="laboix">
                             <div class="about-two__items">
@@ -70,8 +70,11 @@ include 'app/views/templates/public/navbar.php';
                 <div class="about-two__right">
                     <div class="about-two__top">
                         <div class="sec-title text-start wow fadeInUp" data-wow-duration='1500ms'>
-                            <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/science.png" alt="Tentang Kami" class="sec-title__img">Tentang Kami</h6><h3 class="sec-title__title">PROFIL LABORATORIUM</h3></div><p class="about-two__top__text">Unit penunjang akademik di Jurusan Teknologi Informasi yang difokuskan pada pengembangan kompetensi di bidang jaringan komputer dan keamanan siber. Laboratorium ini mendukung kegiatan praktikum, penelitian, dan pengembangan yang berkaitan dengan administrasi jaringan, pengamanan infrastruktur, pemantauan lalu lintas data, hingga penerapan teknologi keamanan informasi dalam melindungi aset digital organisasi.</p>
-                            Selain menjadi sarana pembelajaran mahasiswa, Laboratorium Jaringan & Keamanan Siber juga berperan sebagai wadah penelitian dan inovasi bagi dosen maupun mahasiswa dalam mengkaji solusi di bidang keamanan jaringan, pengujian sistem, serta perlindungan data dan infrastruktur digital. Peran laboratorium ini diharapkan mampu memperkuat kualitas pembelajaran, memperdalam riset di bidang jaringan komputer dan keamanan informasi, serta mendukung terciptanya lulusan yang kompeten di bidang administrasi jaringan dan keamanan siber.</p>
+                            <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/science.png" alt="Tentang Kami" class="sec-title__img">Tentang Kami</h6>
+                            <h3 class="sec-title__title">PROFIL LABORATORIUM</h3>
+                        </div>
+                        <p class="about-two__top__text">Unit penunjang akademik di Jurusan Teknologi Informasi yang difokuskan pada pengembangan kompetensi di bidang jaringan komputer dan keamanan siber. Laboratorium ini mendukung kegiatan praktikum, penelitian, dan pengembangan yang berkaitan dengan administrasi jaringan, pengamanan infrastruktur, pemantauan lalu lintas data, hingga penerapan teknologi keamanan informasi dalam melindungi aset digital organisasi.</p>
+                        Selain menjadi sarana pembelajaran mahasiswa, Laboratorium Jaringan & Keamanan Siber juga berperan sebagai wadah penelitian dan inovasi bagi dosen maupun mahasiswa dalam mengkaji solusi di bidang keamanan jaringan, pengujian sistem, serta perlindungan data dan infrastruktur digital. Peran laboratorium ini diharapkan mampu memperkuat kualitas pembelajaran, memperdalam riset di bidang jaringan komputer dan keamanan informasi, serta mendukung terciptanya lulusan yang kompeten di bidang administrasi jaringan dan keamanan siber.</p>
                     </div>
 
                     <div class="about-two__feature wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
@@ -79,7 +82,7 @@ include 'app/views/templates/public/navbar.php';
                             <div class="about-two__feature__icon">
                                 <i class="icon-accuracy-1"></i>
                             </div>
-                            <h4 class="about-two__feature__title"><a >Fokus Riset Laboratorium</a></h4>
+                            <h4 class="about-two__feature__title"><a>Fokus Riset Laboratorium</a></h4>
                             <ul class="about-two__list list-unstyled wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
                                 <li class="about-two__list__item"><i class="fas fa-check-circle"></i> Network Administration & Engineering </li>
                                 <li class="about-two__list__item"><i class="fas fa-check-circle"></i> Cyber Defense </li>
@@ -97,6 +100,13 @@ include 'app/views/templates/public/navbar.php';
 </section>
 <!-- Tentang Kami section End -->
 
+<?php
+// Ensure pengelola data is available
+if (!isset($pengelolaList)) {
+    $pengelolaList = [];
+}
+?>
+
 <!-- Tim Kami section start -->
 <section class="team-one team-one--home" style="margin-bottom: 10%;">
     <div class="container">
@@ -111,472 +121,401 @@ include 'app/views/templates/public/navbar.php';
             </div>
         </div>
 
-        <!-- Team Carousel -->
-        <div class="team-carousel-wrapper">
-            <div class="team-carousel">
-                <!-- Team Member 1 -->
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/Erfan-Rohadi.jpg" alt="Erfan Rohadi">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/erfan-rohadi-st-m-eng-ph-d/" target="_blank">Erfan Rohadi, ST., M.Eng., Ph.D.</a></h3>
-                                        <h6 class="team-card__content__designation">Kepala Lab</h6>
+        <?php if (!empty($pengelolaList)): ?>
+            <!-- Team Carousel -->
+            <div class="team-carousel-wrapper">
+                <div class="team-carousel" id="teamCarousel">
+                    <?php foreach ($pengelolaList as $member): ?>
+                        <?php
+                        // Handle photo path
+                        $photoPath = BASE_URL . '/public/assets/images/team/default-avatar.jpg';
+                        if (!empty($member['foto_pengelola'])) {
+                            $imageName = ltrim(trim($member['foto_pengelola']), '/');
+                            $photoPath = BASE_URL . '/public/uploads/pengelola/' . $imageName;
+                            $serverPath = __DIR__ . '/../../../public/uploads/pengelola/' . $imageName;
+                            if (!@file_exists($serverPath)) {
+                                $photoPath = BASE_URL . '/public/assets/images/team/default-avatar.jpg';
+                            }
+                        }
+                        ?>
+                        <!-- Team Member -->
+                        <div class="team-slide">
+                            <div class="team-card">
+                                <div class="team-card__inner">
+                                    <div class="team-card__image">
+                                        <img src="<?= $photoPath ?>" alt="<?= htmlspecialchars($member['nama_pengelola'] ?? 'Team Member') ?>" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/public/assets/images/team/default-avatar.jpg';">
+                                    </div>
+                                    <div class="team-card__content">
+                                        <div class="team-card__content__inner">
+                                            <div class="team-card__content__item">
+                                                <h3 class="team-card__content__title">
+                                                    <?php if (!empty($member['link_profil'])): ?>
+                                                        <a href="<?= htmlspecialchars($member['link_profil']) ?>" target="_blank"><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
+                                                    <?php else: ?>
+                                                        <a><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
+                                                    <?php endif; ?>
+                                                </h3>
+                                                <h6 class="team-card__content__designation"><?= htmlspecialchars($member['jabatan'] ?? 'Staff') ?></h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
-                <!-- Team Member 2 -->
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/adeismail.jpg" alt="Ade Ismail">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/ade-ismail-s-kom-m-ti/" target="_blank">Ade Ismail, S.Kom., M.TI</a></h3>
-                                        <h6 class="team-card__content__designation">Peneliti</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Navigation Arrows -->
+                <button class="team-carousel__nav team-carousel__nav--prev" onclick="moveCarouselHome(-1)" aria-label="Previous">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="team-carousel__nav team-carousel__nav--next" onclick="moveCarouselHome(1)" aria-label="Next">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
 
-                <!-- Team Member 3 -->
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/Sofyan-Noor-Arief.jpg" alt="Sofyan Noor Arief">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/sofyan-noor-arief-s-st-m-kom/" target="_blank">Sofyan Noor Arief, S.ST., M.Kom.</a></h3>
-                                        <h6 class="team-card__content__designation">Peneliti</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Member 4 -->
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/Vipkas-Al-Hadid-Firdaus.jpg" alt="Vipkas Al Hadid Firdaus">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/vipkas-al-hadid-firdaus-st-mt/" target="_blank">Vipkas Al Hadid Firdaus, ST,. MT</a></h3>
-                                        <h6 class="team-card__content__designation">Peneliti</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Member 5 -->
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/MeytiEka.jpg" alt="Meyti Eka Apriyani">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/meyti-eka-apriyani-st-mt/" target="_blank">Meyti Eka Apriyani ST., MT.</a></h3>
-                                        <h6 class="team-card__content__designation">Peneliti</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Duplicate slides for infinite loop -->
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/Erfan-Rohadi.jpg" alt="Erfan Rohadi">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/erfan-rohadi-st-m-eng-ph-d/" target="_blank">Erfan Rohadi, ST., M.Eng., Ph.D.</a></h3>
-                                        <h6 class="team-card__content__designation">Kepala Lab</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/adeismail.jpg" alt="Ade Ismail">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/ade-ismail-s-kom-m-ti/" target="_blank">Ade Ismail, S.Kom., M.TI</a></h3>
-                                        <h6 class="team-card__content__designation">Peneliti</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="team-slide">
-                    <div class="team-card">
-                        <div class="team-card__inner">
-                            <div class="team-card__image">
-                                <img src="public/assets/images/team/Sofyan-Noor-Arief.jpg" alt="Sofyan Noor Arief">
-                            </div>
-                            <div class="team-card__content">
-                                <div class="team-card__content__inner">
-                                    <div class="team-card__content__item">
-                                        <h3 class="team-card__content__title"><a href="https://jti.polinema.ac.id/sofyan-noor-arief-s-st-m-kom/" target="_blank">Sofyan Noor Arief, S.ST., M.Kom.</a></h3>
-                                        <h6 class="team-card__content__designation">Peneliti</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Dots Indicator -->
+                <div class="team-carousel__dots">
+                    <?php for ($i = 0; $i < count($pengelolaList); $i++): ?>
+                        <span class="dot <?= $i === 0 ? 'active' : '' ?>" onclick="currentSlideHome(<?= $i ?>)" aria-label="Slide <?= $i + 1 ?>"></span>
+                    <?php endfor; ?>
                 </div>
             </div>
-
-            <!-- Navigation Arrows -->
-            <button class="team-carousel__nav team-carousel__nav--prev" onclick="moveCarousel(-1)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <button class="team-carousel__nav team-carousel__nav--next" onclick="moveCarousel(1)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-
-            <!-- Dots Indicator -->
-            <div class="team-carousel__dots">
-                <span class="dot active" onclick="currentSlide(0)"></span>
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
-                <span class="dot" onclick="currentSlide(4)"></span>
+        <?php else: ?>
+            <!-- Fallback message -->
+            <div class="text-center" style="padding: 60px 0;">
+                <p style="color: #666; font-size: 16px;">Data tim pengelola belum tersedia.</p>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </section>
 <!-- Tim Kami section End -->
 
 <style>
-/* Team Carousel Styles */
-.team-carousel-wrapper {
-    position: relative;
-    overflow: hidden;
-    padding: 30px 70px 50px;
-    margin-top: 20px;
-}
-
-.team-carousel {
-    display: flex;
-    transition: transform 0.8s ease-in-out;
-    gap: 25px;
-}
-
-.team-slide {
-    min-width: calc(25% - 19px);
-    flex-shrink: 0;
-}
-
-/* Perkecil ukuran card */
-.team-slide .team-card__image {
-    height: 280px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-}
-
-.team-slide .team-card__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
-
-.team-slide .team-card__content__title {
-    font-size: 15px !important;
-    line-height: 1.3 !important;
-}
-
-.team-slide .team-card__content__title a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.team-slide .team-card__content__title a:hover {
-    color: #1a3a6b;
-}
-
-.team-slide .team-card__content__designation {
-    font-size: 13px !important;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    .team-slide {
-        min-width: calc(33.333% - 17px);
-    }
-}
-
-@media (max-width: 992px) {
-    .team-slide {
-        min-width: calc(50% - 13px);
-    }
-}
-
-@media (max-width: 768px) {
-    .team-slide {
-        min-width: 100%;
-    }
+    /* Team Carousel Styles - Improved & Professional */
     .team-carousel-wrapper {
-        padding: 30px 50px 50px;
+        position: relative;
+        overflow: hidden;
+        padding: 40px 70px 60px;
+        margin-top: 30px;
     }
-}
 
-/* Navigation Arrows - Modern & Elegant */
-.team-carousel__nav {
-    position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
-    background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9e 100%);
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 10;
-    box-shadow: 0 4px 15px rgba(26, 58, 107, 0.3);
-    opacity: 0.9;
-}
-
-.team-carousel__nav:hover {
-    background: linear-gradient(135deg, #2d5a9e 0%, #1a3a6b 100%);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 25px rgba(26, 58, 107, 0.5);
-    opacity: 1;
-}
-
-.team-carousel__nav:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
-.team-carousel__nav--prev {
-    left: 15px;
-}
-
-.team-carousel__nav--next {
-    right: 15px;
-}
-
-.team-carousel__nav svg {
-    transition: transform 0.3s ease;
-}
-
-.team-carousel__nav:hover svg {
-    transform: translateX(3px);
-}
-
-.team-carousel__nav--prev:hover svg {
-    transform: translateX(-3px);
-}
-
-/* Dots Indicator - Modern Style */
-.team-carousel__dots {
-    text-align: center;
-    margin-top: 35px;
-}
-
-.dot {
-    height: 10px;
-    width: 10px;
-    margin: 0 6px;
-    background-color: #d1d5db;
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-}
-
-.dot::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: transparent;
-    transition: all 0.3s ease;
-}
-
-.dot:hover::before {
-    background: rgba(26, 58, 107, 0.1);
-}
-
-.dot:hover {
-    background-color: #6b7280;
-    transform: scale(1.15);
-}
-
-.dot.active {
-    background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9e 100%);
-    width: 28px;
-    border-radius: 5px;
-    transform: scale(1);
-}
-
-.dot.active::before {
-    display: none;
-}
-
-/* Pause on hover */
-.team-carousel-wrapper:hover .team-carousel {
-    animation-play-state: paused;
-}
-
-/* Smooth fade effect on edges */
-.team-carousel-wrapper::before,
-.team-carousel-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 50px;
-    width: 60px;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.team-carousel-wrapper::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-}
-
-.team-carousel-wrapper::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-}
-
-/* Animation improvement */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+    .team-carousel {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 25px;
     }
-    to {
+
+    .team-slide {
+        min-width: calc(25% - 19px);
+        flex-shrink: 0;
+    }
+
+    /* Enhanced Card Styling */
+    .team-slide .team-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+    }
+
+    .team-slide .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 32px rgba(26, 58, 107, 0.18);
+    }
+
+    .team-slide .team-card__image {
+        height: 320px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e8eef4 100%);
+        position: relative;
+    }
+
+    .team-slide .team-card__image::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #1a3a6b 0%, #2d5a9e 50%, #1a3a6b 100%);
+    }
+
+    .team-slide .team-card__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s ease;
+    }
+
+    .team-slide .team-card:hover .team-card__image img {
+        transform: scale(1.08);
+    }
+
+    .team-slide .team-card__content {
+        padding: 20px 18px;
+    }
+
+    .team-slide .team-card__content__title {
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 6px !important;
+        font-weight: 600 !important;
+    }
+
+    .team-slide .team-card__content__title a {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .team-slide .team-card__content__title a:hover {
+        color: #1a3a6b;
+    }
+
+    .team-slide .team-card__content__designation {
+        font-size: 14px !important;
+        color: #7f8c8d;
+        font-weight: 500;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+        .team-slide {
+            min-width: calc(33.333% - 17px);
+        }
+    }
+
+    @media (max-width: 992px) {
+        .team-slide {
+            min-width: calc(50% - 13px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .team-slide {
+            min-width: 100%;
+        }
+
+        .team-carousel-wrapper {
+            padding: 30px 50px 50px;
+        }
+    }
+
+    /* Navigation Arrows - Modern & Professional */
+    .team-carousel__nav {
+        position: absolute;
+        top: 45%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9e 100%);
+        color: white;
+        border: none;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 10;
+        box-shadow: 0 4px 16px rgba(26, 58, 107, 0.3);
+        opacity: 0.95;
+    }
+
+    .team-carousel__nav:hover {
+        background: linear-gradient(135deg, #2d5a9e 0%, #1a3a6b 100%);
+        transform: translateY(-50%) scale(1.12);
+        box-shadow: 0 6px 28px rgba(26, 58, 107, 0.5);
         opacity: 1;
-        transform: translateY(0);
     }
-}
 
-.team-slide {
-    animation: slideIn 0.6s ease-out;
-}
+    .team-carousel__nav:active {
+        transform: translateY(-50%) scale(0.98);
+    }
+
+    .team-carousel__nav--prev {
+        left: 12px;
+    }
+
+    .team-carousel__nav--next {
+        right: 12px;
+    }
+
+    .team-carousel__nav svg {
+        transition: transform 0.3s ease;
+    }
+
+    .team-carousel__nav--next:hover svg {
+        transform: translateX(4px);
+    }
+
+    .team-carousel__nav--prev:hover svg {
+        transform: translateX(-4px);
+    }
+
+    /* Dots Indicator - Elegant & Modern */
+    .team-carousel__dots {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .dot {
+        height: 10px;
+        width: 10px;
+        margin: 0 7px;
+        background-color: #cbd5e0;
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .dot::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .dot:hover::after {
+        background: rgba(26, 58, 107, 0.12);
+    }
+
+    .dot:hover {
+        background-color: #94a3b8;
+        transform: scale(1.2);
+    }
+
+    .dot.active {
+        background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9e 100%);
+        width: 32px;
+        border-radius: 6px;
+    }
+
+    .dot.active::after {
+        display: none;
+    }
+
+    /* Smooth fade effect on edges */
+    .team-carousel-wrapper::before,
+    .team-carousel-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 60px;
+        width: 65px;
+        z-index: 5;
+        pointer-events: none;
+    }
+
+    .team-carousel-wrapper::before {
+        left: 0;
+        background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    .team-carousel-wrapper::after {
+        right: 0;
+        background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    }
 </style>
 
 <script>
-let currentIndex = 0;
-let autoSlideInterval;
-const totalSlides = 5;
-const carousel = document.querySelector('.team-carousel');
-const dots = document.querySelectorAll('.dot');
+    // Improved Carousel Logic - No Duplicates, Smooth Experience
+    let homeCurrentIndex = 0;
+    let homeAutoSlideInterval;
+    const homeTotalSlides = <?= !empty($pengelolaList) ? count($pengelolaList) : 0 ?>;
+    const homeCarousel = document.getElementById('teamCarousel');
+    const homeDots = document.querySelectorAll('.team-carousel__dots .dot');
 
-function updateCarousel() {
-    const slideWidth = document.querySelector('.team-slide').offsetWidth + 25;
-    carousel.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-    
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentIndex % totalSlides);
+    function updateCarouselHome() {
+        if (!homeCarousel || homeTotalSlides === 0) return;
+
+        const slideWidth = document.querySelector('.team-slide').offsetWidth + 25;
+        homeCarousel.style.transform = `translateX(-${homeCurrentIndex * slideWidth}px)`;
+
+        // Update dots
+        homeDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === homeCurrentIndex);
+        });
+    }
+
+    function moveCarouselHome(direction) {
+        if (homeTotalSlides === 0) return;
+
+        homeCurrentIndex += direction;
+
+        // Wrap around logic - smooth circular navigation
+        if (homeCurrentIndex >= homeTotalSlides) {
+            homeCurrentIndex = 0;
+        } else if (homeCurrentIndex < 0) {
+            homeCurrentIndex = homeTotalSlides - 1;
+        }
+
+        updateCarouselHome();
+        resetAutoSlideHome();
+    }
+
+    function currentSlideHome(index) {
+        if (homeTotalSlides === 0) return;
+
+        homeCurrentIndex = index;
+        updateCarouselHome();
+        resetAutoSlideHome();
+    }
+
+    function autoSlideHome() {
+        if (homeTotalSlides === 0) return;
+
+        homeCurrentIndex++;
+        if (homeCurrentIndex >= homeTotalSlides) {
+            homeCurrentIndex = 0;
+        }
+        updateCarouselHome();
+    }
+
+    function startAutoSlideHome() {
+        if (homeTotalSlides > 1) {
+            homeAutoSlideInterval = setInterval(autoSlideHome, 5000);
+        }
+    }
+
+    function resetAutoSlideHome() {
+        clearInterval(homeAutoSlideInterval);
+        startAutoSlideHome();
+    }
+
+    // Initialize carousel on DOM load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (homeTotalSlides > 0) {
+            updateCarouselHome();
+            startAutoSlideHome();
+
+            const wrapper = document.querySelector('.team-carousel-wrapper');
+            if (wrapper) {
+                wrapper.addEventListener('mouseenter', () => clearInterval(homeAutoSlideInterval));
+                wrapper.addEventListener('mouseleave', startAutoSlideHome);
+            }
+        }
     });
-}
 
-function moveCarousel(direction) {
-    currentIndex += direction;
-    
-    if (currentIndex >= totalSlides) {
-        currentIndex = 0;
-    } else if (currentIndex < 0) {
-        currentIndex = totalSlides - 1;
-    }
-    
-    updateCarousel();
-    resetAutoSlide();
-}
-
-function currentSlide(index) {
-    currentIndex = index;
-    updateCarousel();
-    resetAutoSlide();
-}
-
-function autoSlide() {
-    currentIndex++;
-    if (currentIndex >= totalSlides) {
-        currentIndex = 0;
-    }
-    updateCarousel();
-}
-
-function startAutoSlide() {
-    autoSlideInterval = setInterval(autoSlide, 5000);
-}
-
-function resetAutoSlide() {
-    clearInterval(autoSlideInterval);
-    startAutoSlide();
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    updateCarousel();
-    startAutoSlide();
-    
-    const wrapper = document.querySelector('.team-carousel-wrapper');
-    wrapper.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-    wrapper.addEventListener('mouseleave', startAutoSlide);
-});
-
-window.addEventListener('resize', updateCarousel);
+    window.addEventListener('resize', updateCarouselHome);
 </script>
 
 <!-- Roadmap section start -->
@@ -585,14 +524,16 @@ window.addEventListener('resize', updateCarousel);
         <div class="row">
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='700ms'>
-                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/determined.png" alt="Roadmap Penelitian" class="sec-title__img">Roadmap Penelitian</h6><h3 class="sec-title__title">Alur Riset Mahasiswa di Lab NCS: <br> Empat Tahap Utama</h3></div></div>
+                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/determined.png" alt="Roadmap Penelitian" class="sec-title__img">Roadmap Penelitian</h6>
+                    <h3 class="sec-title__title">Alur Riset Mahasiswa di Lab NCS: <br> Empat Tahap Utama</h3>
                 </div>
+            </div>
             <div class="row gutter-y-30">
                 <div class="col-lg-3 col-md-6">
                     <div class="our-work__item">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a >Pengajuan Ide <br> dan Proposal Riset</a></h4>
+                            <h4 class="our-work__item__title"><a>Pengajuan Ide <br> dan Proposal Riset</a></h4>
                             <p class="our-work__item__text">Mahasiswa mengidentifikasi masalah, menyusun latar belakang, dan mengajukan proposal penelitian, termasuk usulan implementasi Riset Keamanan Jaringan.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
@@ -604,7 +545,7 @@ window.addEventListener('resize', updateCarousel);
                     <div class="our-work__item">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a >Validasi Dosen dan <br>Pembentukan Tim Bimbingan</a></h4>
+                            <h4 class="our-work__item__title"><a>Validasi Dosen dan <br>Pembentukan Tim Bimbingan</a></h4>
                             <p class="our-work__item__text">Dosen profesional di bidang terkait (Jaringan dan Keamanan) mereview proposal. Setelah disetujui, dosen pembimbing ditetapkan untuk mendukung riset mahasiswa.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
@@ -616,7 +557,7 @@ window.addEventListener('resize', updateCarousel);
                     <div class="our-work__item">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a >Pelaksanaan Eksperimen <br> dan Pengujian Lapangan</a></h4>
+                            <h4 class="our-work__item__title"><a>Pelaksanaan Eksperimen <br> dan Pengujian Lapangan</a></h4>
                             <p class="our-work__item__text">Mahasiswa menggunakan fasilitas lab untuk menjalankan metodologi riset, melakukan eksperimen, dan mengumpulkan data (misalnya, pengujian skenario Keamanan Jaringan).</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
@@ -628,7 +569,7 @@ window.addEventListener('resize', updateCarousel);
                     <div class="our-work__item our-work__item--two">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a >Penyusunan Laporan <br>dan Diseminasi Hasil</a></h4>
+                            <h4 class="our-work__item__title"><a>Penyusunan Laporan <br>dan Diseminasi Hasil</a></h4>
                             <p class="our-work__item__text">Mahasiswa menyelesaikan laporan akhir (Tugas Akhir/Skripsi), mempresentasikan hasil, dan didorong untuk mempublikasikan temuan riset mereka sebagai bentuk kontribusi akademik.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
@@ -649,125 +590,172 @@ window.addEventListener('resize', updateCarousel);
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='700ms'>
                     <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/science.png" alt="Penelitian" class="sec-title__img">Penelitian</h6>
-                    <h3 class="sec-title__title">Sorotan Publikasi</h3>
+                    <h3 class="sec-title__title">Sorotan Penelitian</h3>
                 </div>
             </div>
         </div>
         <ul class="case-studies__list list-unstyled">
-            <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
-                <div class="case-studies__list__item__content">
-                    <div class="case-studies__list__item__thumb">
-                        <img src="public/assets/images/resources/case-stady-1-1.png" alt="laboix">
-                    </div>
-                    <div class="case-studies__list__item__hover">
-                        <h4 class="case-studies__list__item__title"><a>Variations in chlorophyll-a concentration and the impact on Sardinella lemuru catches in Bali Strait, Indonesia</a></h4>
-                        <p class="case-studies__list__item__text">2010</p>
-                    </div>
-                </div>
-            </li>
-            <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="600ms">
-                <div class="case-studies__list__item__content">
-                    <div class="case-studies__list__item__thumb">
-                        <img src="public/assets/images/resources/case-stady-1-2.png" alt="laboix">
-                    </div>
-                    <div class="case-studies__list__item__hover">
-                        <h4 class="case-studies__list__item__title"><a>Implementation IoT in system monitoring hydroponic plant water circulation and control</a></h4>
-                        <p class="case-studies__list__item__text">2018</p>
-                    </div>
-                </div>
-            </li>
-            <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="700ms">
-                <div class="case-studies__list__item__content">
-                    <div class="case-studies__list__item__thumb">
-                        <img src="public/assets/images/resources/case-stady-1-3.png" alt="laboix">
-                    </div>
-                    <div class="case-studies__list__item__hover">
-                        <h4 class="case-studies__list__item__title"><a>Sistem Monitoring Budidaya Ikan Lele Berbasis Internet Of Things Menggunakan Raspberry Pi</a></h4>
-                        <p class="case-studies__list__item__text">2018</p>
-                    </div>
-                </div>
-            </li>
-            <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="800ms">
-                <div class="case-studies__list__item__content">
-                    <div class="case-studies__list__item__thumb">
-                        <img src="public/assets/images/resources/case-stady-1-4.png" alt="laboix">
-                    </div>
-                    <div class="case-studies__list__item__hover">
-                        <h4 class="case-studies__list__item__title"><a>Internet of Things integration in smart grid</a></h4>
-                        <p class="case-studies__list__item__text">2018</p>
-                    </div>
-                </div>
-            </li>
+            <?php if (!empty($latestPenelitian)): ?>
+                <?php foreach ($latestPenelitian as $penelitian): ?>
+                    <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
+                        <div class="case-studies__list__item__content">
+                            <div class="case-studies__list__item__thumb">
+                                <img src="public/assets/images/resources/case-stady-1-1.png" alt="laboix">
+                            </div>
+                            <div class="case-studies__list__item__hover">
+                                <h4 class="case-studies__list__item__title">
+                                    <a href="<?= BASE_URL; ?>/arsip"><?= htmlspecialchars($penelitian['nama_dokumen']) ?></a>
+                                </h4>
+                                <p class="case-studies__list__item__text"><?= htmlspecialchars(date('Y', strtotime($penelitian['created_at']))) ?></p>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <li class="col-12 text-center">
+                    <p>Belum ada data penelitian.</p>
+                </li>
+            <?php endif; ?>
         </ul>
-        <div class="text-center wow fadeInUp" data-wow-duration="1700ms" data-wow-delay="700ms" style="margin-top: 50px; margin-bottom: 30px;">
-            <a href="blog-details.php" class="btn-publikasi">
-                Baca Selengkapnya <i class="icon-arrow"></i>
-            </a>
+
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <a href="<?= BASE_URL; ?>/arsip" class="btn-publikasi">Baca Selengkapnya <i class="icon-arrow"></i></a>
+            </div>
         </div>
     </div>
 </section>
 
 <style>
-/* Styling untuk tombol */
-.btn-publikasi {
-    display: inline-block;
-    padding: 12px 30px;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    color: #333;
-    background-color: #e0e0e0;
-    border: 2px solid #e0e0e0;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+    /* Penelitian Section Styling */
+    .case-studies {
+        padding: 120px 0 90px;
+        position: relative;
+    }
 
-.btn-publikasi:hover {
-    background-color: #1a3a6b;
-    border-color: #1a3a6b;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(26, 58, 107, 0.3);
-}
+    .case-studies__list {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+        justify-content: center;
+    }
 
-.btn-publikasi i {
-    margin-left: 8px;
-    transition: transform 0.3s ease;
-}
+    .case-studies__list__item {
+        width: 25%;
+        padding: 0 15px;
+        margin-bottom: 30px;
+    }
 
-.btn-publikasi:hover i {
-    transform: translateX(5px);
-}
+    .case-studies__list__item__content {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+    }
 
-/* Styling untuk memperbaiki ukuran teks pada kotak publikasi */
-.case-studies__list__item__hover .case-studies__list__item__title {
-    font-size: 16px !important;
-    line-height: 1.4 !important;
-    margin-bottom: 8px !important;
-    font-weight: 600 !important;
-}
+    .case-studies__list__item__thumb {
+        position: relative;
+        overflow: hidden;
+    }
 
-.case-studies__list__item__hover .case-studies__list__item__title a {
-    font-size: 16px !important;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-}
+    .case-studies__list__item__thumb img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        display: block;
+    }
 
-.case-studies__list__item__hover .case-studies__list__item__text {
-    font-size: 13px !important;
-    color: #666 !important;
-    margin-top: 5px !important;
-}
+    .case-studies__list__item:hover .case-studies__list__item__thumb img {
+        transform: scale(1.1);
+    }
 
-/* Perbaikan padding pada hover area */
-.case-studies__list__item__hover {
-    padding: 15px !important;
-}
+    .case-studies__list__item__hover {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px 20px;
+        background: linear-gradient(to top, rgba(26, 58, 107, 0.95), rgba(26, 58, 107, 0.8), transparent);
+        transform: translateY(100%);
+        transition: transform 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+        opacity: 0;
+    }
+
+    .case-studies__list__item:hover .case-studies__list__item__hover {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .case-studies__list__item__title {
+        margin-bottom: 10px;
+    }
+
+    .case-studies__list__item__title a {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .case-studies__list__item__text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    /* Button Styling */
+    .btn-publikasi {
+        display: inline-flex;
+        align-items: center;
+        padding: 14px 35px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        color: #fff;
+        background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9e 100%);
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(26, 58, 107, 0.3);
+    }
+
+    .btn-publikasi:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(26, 58, 107, 0.4);
+        color: #fff;
+    }
+
+    .btn-publikasi i {
+        margin-left: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .btn-publikasi:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+        .case-studies__list__item {
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .case-studies__list__item {
+            width: 100%;
+        }
+    }
 </style>
 <!-- Penelitian section End -->
 
@@ -779,7 +767,7 @@ window.addEventListener('resize', updateCarousel);
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
                     <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/customer-review.png" alt="Fasilitas & Peralatan" class="sec-title__img">FASILITAS & PERALATAN</h6>
-                    <h3 class="sec-title__title">Mendukung Inovasi Mahasiswa <br> di Bidang Network & Cyber Security</h3>
+                    <h3 class="sec-title__title">Mendukung Inovasi Mahasiswa <br>di Bidang Network & Cyber Security</h3>
                 </div>
             </div>
         </div>
@@ -809,56 +797,64 @@ window.addEventListener('resize', updateCarousel);
                                 <img src="public/assets/images/service/service-1-2.png" alt="Perangkat Lunak">
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <style>
-/* Memastikan kedua card memiliki tinggi yang sama */
-.service-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    /* Memastikan kedua card memiliki tinggi yang sama */
+    .service-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-.service-card__inner {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    .service-card__inner {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-/* Membuat judul memiliki tinggi yang sama */
-.service-card__top {
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    /* Membuat judul memiliki tinggi yang sama */
+    .service-card__top {
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-.service-card__title {
-    text-align: center;
-}
+    .service-card__title {
+        text-align: center;
+    }
 
-/* Memastikan gambar memiliki ukuran yang konsisten */
-.service-card__thumb__item img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
+    /* Memastikan gambar memiliki ukuran yang konsisten */
+    .service-card__thumb__item img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 
-/* Membuat tinggi card seragam */
-.gutter-y-30 > [class*="col-"] {
-    display: flex;
-}
+    /* Membuat tinggi card seragam */
+    .gutter-y-30>[class*="col-"] {
+        display: flex;
+    }
 </style>
 <!-- Fasilitas section End -->
 
 <!-- Video section start -->
 <section class="video-cta">
-    <div class="video-cta__bg" style="background-image: url(public/assets/images/backgrounds/video-bg.png);"></div>
+    <div class="video-cta__bg"></div>
+
+    <!-- Shape Divider -->
+    <div class="video-cta__divider">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,0 L1200,0 L1200,10 L600,60 L0,10 Z" fill="#ffffff"></path>
+        </svg>
+    </div>
+
     <div class="container">
         <div class="video-cta__inner">
             <div class="video-cta__video">
@@ -870,7 +866,7 @@ window.addEventListener('resize', updateCarousel);
                 <h3 class="video-cta__title">Lab NCS Tour</h3>
                 <p class="video-cta__text">Mencetak Inovator Keamanan Jaringan dan Talenta Cybersecurity Masa Depan.</p>
                 <div class="video-cta__link">
-                    <a href="about.php" class="video-cta__link__btn laboix-btn">Gabunglah Menjadi Sang Juara</a>
+                    <a href="<?= BASE_URL ?>/tentang" class="btn-publikasi btn-publikasi--green">Gabunglah Menjadi Sang Juara <i class="icon-arrow"></i></a>
                 </div>
             </div>
         </div>
@@ -878,100 +874,180 @@ window.addEventListener('resize', updateCarousel);
 </section>
 <!-- Video section End -->
 
-<!-- Berita section start -->
-<section class="blog-one">
+<style>
+    /* Video Section Enhancements */
+    .video-cta {
+        position: relative;
+        padding: 120px 0;
+        background-color: #0b1c33;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .video-cta__bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(public/assets/images/backgrounds/video-bg.png);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.3;
+        z-index: 1;
+    }
+
+    .video-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(11, 28, 51, 0.8) 0%, #0b1c33 100%);
+        z-index: 2;
+    }
+
+    .video-cta__divider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        z-index: 3;
+    }
+
+    .video-cta__divider svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-cta__inner {
+        position: relative;
+        z-index: 4;
+    }
+
+    .video-popup {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 110px;
+        background-color: #00c853;
+        color: #fff;
+        font-size: 36px;
+        margin-bottom: 30px;
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(0, 200, 83, 0.3);
+
+        /* Position adjustment to overlap the divider */
+        margin-top: -80px;
+    }
+
+    .video-popup:hover {
+        transform: scale(1.1);
+        background-color: #00e676;
+        color: #fff;
+    }
+
+    .video-popup i {
+        margin-left: 5px;
+    }
+
+    .video-cta__title {
+        color: #fff;
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        letter-spacing: -0.5px;
+    }
+
+    .video-cta__text {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 40px;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 500;
+    }
+
+    .video-cta__video {
+        margin-bottom: 0;
+    }
+
+    .btn-publikasi--green {
+        background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+        box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+    }
+
+    .btn-publikasi--green:hover {
+        box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4);
+    }
+</style>
+
+<!-- Berita section Start -->
+<section class="blog-one blog-one--home" style="padding: 120px 0 90px;">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
-                    <h6 class="sec-title__tagline">
-                        <img src="public/assets/images/shapes/science.png" alt="Berita" class="sec-title__img">Berita
-                    </h6>
-                    <h3 class="sec-title__title">Sorotan Penelitian Terpopuler</h3>
-                </div>
-            </div>
+        <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
+            <h6 class="sec-title__tagline">
+                <img src="public/assets/images/shapes/science.png" alt="Berita" class="sec-title__img">Berita
+            </h6>
+            <h3 class="sec-title__title">Sorotan Berita Terbaru</h3>
         </div>
-        
+
         <div class="row gutter-y-30">
-            <!-- Blog Card 1 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms'>
-                    <div class="blog-card__image">
-                        <div class="blog-card__image__item">
-                            <img src="public/assets/images/blog/blog-1-1.png" alt="Analisis Kerentanan Terbaru pada IoT Campus">
-                            <a href="blog-details-left.html" class="blog-card__image__link"></a>
-                        </div>
-                        <div class="blog-card__date">
-                            <span class="blog-card__date__day">02</span>NOV
+            <?php if (!empty($latestNews)): ?>
+                <?php foreach ($latestNews as $news): ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms'>
+                            <div class="blog-card__image">
+                                <div class="blog-card__image__item">
+                                    <?php
+                                    $imgSrc = BASE_URL . '/public/assets/images/blog/blog-1-1.png'; // Default
+                                    if (!empty($news['gambar_berita'])) {
+                                        // Check if image exists
+                                        $serverPath = __DIR__ . '/../../../public/uploads/berita/' . $news['gambar_berita'];
+                                        if (file_exists($serverPath)) {
+                                            $imgSrc = BASE_URL . '/public/uploads/berita/' . $news['gambar_berita'];
+                                        }
+                                    }
+                                    ?>
+                                    <img src="<?= $imgSrc ?>" alt="<?= htmlspecialchars($news['judul_berita']) ?>" style="height: 250px; object-fit: cover;">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['id_berita'] ?>" class="blog-card__image__link"></a>
+                                </div>
+                                <div class="blog-card__date">
+                                    <span class="blog-card__date__day"><?= date('d', strtotime($news['tanggal_publish'])) ?></span><?= date('M', strtotime($news['tanggal_publish'])) ?>
+                                </div>
+                            </div>
+                            <div class="blog-card__content">
+                                <div class="blog-card__author">
+                                </div>
+                                <h3 class="blog-card__title">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['id_berita'] ?>"><?= htmlspecialchars($news['judul_berita']) ?></a>
+                                </h3>
+                                <div class="blog-card__content__btn">
+                                    <a href="<?= BASE_URL ?>/berita/detail/<?= $news['id_berita'] ?>" class="blog-card__content__btn__link">
+                                        Baca Selengkapnya<i class="icon-arrow"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="blog-card__content">
-                        <div class="blog-card__author">
-                        </div>
-                        <h3 class="blog-card__title">
-                            <a >Analisis Kerentanan Terbaru pada IoT Campus</a>
-                        </h3>
-                        <div class="blog-card__content__btn">
-                            <a href="blog-details-left.html" class="blog-card__content__btn__link">
-                                Baca Selengkapnya<i class="icon-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12 text-center">
+                    <p>Belum ada berita terbaru saat ini.</p>
                 </div>
-            </div>
+            <?php endif; ?>
+        </div>
 
-            <!-- Blog Card 2 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='600ms'>
-                    <div class="blog-card__image">
-                        <div class="blog-card__image__item">
-                            <img src="public/assets/images/blog/blog-1-2.png" alt="Tim Lab NCS Raih Juara 1 Kompetisi Capture The Flag">
-                            <a href="blog-details-center.html" class="blog-card__image__link"></a>
-                        </div>
-                        <div class="blog-card__date">
-                            <span class="blog-card__date__day">12</span>JUN
-                        </div>
-                    </div>
-                    <div class="blog-card__content">
-                        <div class="blog-card__author">
-                        </div>
-                        <h3 class="blog-card__title">
-                            <a >Tim Lab NCS Raih Juara 1 Kompetisi Capture The Flag</a>
-                        </h3>
-                        <div class="blog-card__content__btn">
-                            <a href="blog-details-center.html" class="blog-card__content__btn__link">
-                                Baca Selengkapnya<i class="icon-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog Card 3 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='800ms'>
-                    <div class="blog-card__image">
-                        <div class="blog-card__image__item">
-                            <img src="public/assets/images/blog/blog-1-3.png" alt="Publikasi Jurnal: Implementasi Zero Trust di Lingkungan Kampus">
-                            <a href="blog-details-right.html" class="blog-card__image__link"></a>
-                        </div>
-                        <div class="blog-card__date">
-                            <span class="blog-card__date__day">03</span>AUG
-                        </div>
-                    </div>
-                    <div class="blog-card__content">
-                        <div class="blog-card__author">
-                        </div>
-                        <h3 class="blog-card__title">
-                            <a >Publikasi Jurnal: Implementasi Zero Trust di Lingkungan Kampus</a>
-                        </h3>
-                        <div class="blog-card__content__btn">
-                            <a href="blog-details-right.html" class="blog-card__content__btn__link">
-                                Baca Selengkapnya<i class="icon-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="<?= BASE_URL ?>/berita" class="btn-publikasi">Lihat Semua Berita <i class="icon-arrow"></i></a>
             </div>
         </div>
     </div>

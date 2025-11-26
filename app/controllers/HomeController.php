@@ -1,17 +1,41 @@
 <?php
 // File: /app/controllers/HomeController.php
 
-class HomeController extends Controller {
-    
-    public function index() {
-        $this->view('public/home');
+class HomeController extends Controller
+{
+
+
+    public function index()
+    {
+        // Load pengelola (team members) data for homepage
+        $pengelolaModel = $this->model('Pengelola');
+        $pengelolaList = $pengelolaModel->getAll();
+
+        // Load latest news
+        $beritaModel = $this->model('Berita');
+        $latestNews = $beritaModel->getBeritaTerbaru(3);
+
+        // Load latest penelitian (from Penelitian model)
+        $penelitianModel = $this->model('Penelitian');
+        $latestPenelitian = $penelitianModel->getLatest(3);
+
+        $data = [
+            'judul_halaman' => 'Beranda - Lab NCS',
+            'pengelolaList' => $pengelolaList,
+            'latestNews' => $latestNews,
+            'latestPenelitian' => $latestPenelitian
+        ];
+
+        $this->view('public/home', $data);
     }
 
-    public function news() {
+    public function news()
+    {
         $this->view('public/berita');
     }
 
-    public function layanan() {
+    public function layanan()
+    {
 
         $konsultasiModel = $this->model('Konsultasi');
         $data['daftar_konsultasi'] = $konsultasiModel->getAllDijawab();
@@ -28,7 +52,7 @@ class HomeController extends Controller {
             header('Location: ' . BASE_URL . '/layanan');
             exit;
         }
-        
+
         // Trim inputs
         $nama_penanya = trim($_POST['nama_penanya'] ?? '');
         $email_penanya = trim($_POST['email_penanya'] ?? '');
@@ -71,29 +95,44 @@ class HomeController extends Controller {
         exit;
     }
 
-    public function arsip() {
+    public function arsip()
+    {
         $kategoriArsipModel = $this->model('KategoriArsip');
         $data['kategori_list'] = $kategoriArsipModel->getAllKategori();
-        
+
         $arsipModel = $this->model('DokumenUmum');
-        
+
         // Cek apakah ada parameter kategori di URL
         $kategoriFilter = $_GET['kategori'] ?? 'semua';
-        
+
         // Filter berdasarkan kategori
         if ($kategoriFilter !== 'semua') {
             $data['arsip_list'] = $arsipModel->getAllArsipLengkapByKategori($kategoriFilter);
         } else {
             $data['arsip_list'] = $arsipModel->getAllArsipLengkap();
         }
-        
+
         // Simpan kategori yang sedang aktif untuk highlight di view
         $data['kategori_aktif'] = $kategoriFilter;
-        
+
         $this->view('public/arsip', $data);
     }
 
-        public function indexAgenda()
+    public function tentang()
+    {
+        // Load pengelola (team members) data
+        $pengelolaModel = $this->model('Pengelola');
+        $pengelolaList = $pengelolaModel->getAll();
+
+        $data = [
+            'judul_halaman' => 'Tentang Kami - Lab NCS',
+            'pengelolaList' => $pengelolaList
+        ];
+
+        $this->view('public/tentang', $data);
+    }
+
+    public function indexAgenda()
     {
         $agendaModel = $this->model('Agenda');
         $list = $agendaModel->getAllAgenda();
@@ -112,7 +151,7 @@ class HomeController extends Controller {
 
         $beritaModel = $this->model('Berita');
 
-        $list = $beritaModel->getAllBerita(); 
+        $list = $beritaModel->getAllBerita();
 
         $data = [
             'judul_halaman' => 'Berita - Lab NCS',
@@ -149,7 +188,8 @@ class HomeController extends Controller {
         $this->view('public/berita/detail', $data);
     }
 
-    public function indexGaleri() {
+    public function indexGaleri()
+    {
 
         $galleryModel = $this->model('Gallery');
 

@@ -29,6 +29,13 @@ class Penelitian
         return $this->db->resultSet();
     }
 
+    public function getLatest($limit)
+    {
+        $this->db->query("SELECT * FROM {$this->table} ORDER BY tahun_penelitian DESC LIMIT :limit");
+        $this->db->bind(':limit', $limit);
+        return $this->db->resultSet();
+    }
+
     // Get a single penelitian record by its ID
     public function getById($id)
     {

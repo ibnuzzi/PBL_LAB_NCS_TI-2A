@@ -61,6 +61,7 @@ Route::add('GET', '/galeri', 'HomeController', 'indexGaleri');
 Route::add('GET', '/layanan', 'HomeController', 'layanan');
 Route::add('POST', '/layanan/store', 'HomeController', 'kirimLayanan');
 Route::add('GET', '/arsip', 'HomeController', 'arsip');
+Route::add('GET', '/tentang', 'HomeController', 'tentang');
 Route::add('GET', '/agenda', 'HomeController', 'indexAgenda');
 Route::add('GET', '/fasilitas', 'HomeController', 'indexFasilitas');
 

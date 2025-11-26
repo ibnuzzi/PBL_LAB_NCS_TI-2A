@@ -20,6 +20,19 @@ class DokumenUmum {
         return $this->db->resultSet();
     }
 
+    public function getAllArsipLengkap() {
+        // Pastikan Anda sudah menjalankan SQL CREATE VIEW v_arsip_gabungan di PgAdmin
+        $this->db->query("SELECT * FROM v_arsip_gabungan ORDER BY created_at DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllArsipLengkapByKategori($namaKategori) {
+        // Filter berdasarkan kategori dari view v_arsip_gabungan
+        $this->db->query("SELECT * FROM v_arsip_gabungan WHERE kategori = :kategori ORDER BY created_at DESC");
+        $this->db->bind(':kategori', $namaKategori);
+        return $this->db->resultSet();
+    }
+
     public function getById($id) {
         $this->db->query("SELECT * FROM {$this->table} WHERE id_dokumen = :id");
         $this->db->bind(':id', $id, PDO::PARAM_INT);

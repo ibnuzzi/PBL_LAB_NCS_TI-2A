@@ -3,12 +3,25 @@
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white">
                 <div>
-                    <h5 class="modal-title mb-0" data-fill-text="judul">Detail</h5>
+                    <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
                     <small class="opacity-75">Informasi Lengkap</small>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+                <!-- Judul/Nama -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-muted small mb-1">
+                        <i class="bx bx-bookmark"></i> JUDUL
+                    </label>
+                    <div class="alert alert-secondary mb-0">
+                        <h5 class="mb-0 fw-bold" data-fill-text="judul">-</h5>
+                    </div>
+                </div>
+
+                <hr class="my-3">
+
                 <!-- Preview Gambar -->
                 <div class="mb-4 text-center">
                     <label class="form-label fw-bold text-muted small mb-2">

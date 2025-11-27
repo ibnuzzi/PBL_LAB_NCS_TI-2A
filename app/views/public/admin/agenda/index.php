@@ -111,13 +111,25 @@ include './app/views/templates/admin/sidebar_admin.php';
 
         <div class="modal-header bg-warning text-dark">
           <div>
-            <h5 class="modal-title mb-0 fw-bold" id="detailNamaAgenda">Detail Agenda</h5>
+            <h5 class="modal-title mb-0 fw-bold" style="color: white;">Informasi Detail</h5>
             <small class="opacity-75">Informasi Lengkap Kegiatan</small>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
+
+          <!-- Nama Agenda -->
+          <div class="mb-4">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-bookmarks"></i> NAMA AGENDA
+            </label>
+            <div class="alert alert-warning mb-0">
+              <h5 class="mb-0 fw-bold" id="detailNamaAgenda"></h5>
+            </div>
+          </div>
+
+          <hr class="my-3">
 
           <!-- Gambar Preview -->
           <div class="mb-4 text-center">

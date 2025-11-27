@@ -33,12 +33,12 @@ $recentPertanyaan = $recentPertanyaan ?? [];
       <div class="row g-3 mb-4">
         <!-- Total Berita -->
         <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <div class="card border-0 shadow-sm h-100" style="background: #667eea;">
             <div class="card-body text-white">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <p class="mb-1 opacity-75">Total Berita</p>
-                  <h2 class="fw-bold mb-0"><?= $totalBerita ?></h2>
+                  <h2 class="fw-bold mb-0" style="color: white;"><?= $totalBerita ?></h2>
                 </div>
                 <i class="bx bx-news" style="font-size: 48px; opacity: 0.9;"></i>
               </div>
@@ -52,12 +52,12 @@ $recentPertanyaan = $recentPertanyaan ?? [];
 
         <!-- Total Agenda -->
         <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <div class="card border-0 shadow-sm h-100" style="background: #f5576c;">
             <div class="card-body text-white">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <p class="mb-1 opacity-75">Total Agenda</p>
-                  <h2 class="fw-bold mb-0"><?= $totalAgenda ?></h2>
+                  <h2 class="fw-bold mb-0" style="color: white;"><?= $totalAgenda ?></h2>
                 </div>
                 <i class="bx bx-calendar-event" style="font-size: 48px; opacity: 0.9;"></i>
               </div>
@@ -71,12 +71,12 @@ $recentPertanyaan = $recentPertanyaan ?? [];
 
         <!-- Total Pengabdian -->
         <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <div class="card border-0 shadow-sm h-100" style="background: #4facfe;">
             <div class="card-body text-white">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <p class="mb-1 opacity-75">Total Pengabdian</p>
-                  <h2 class="fw-bold mb-0"><?= $totalPengabdian ?></h2>
+                  <h2 class="fw-bold mb-0" style="color: white;"><?= $totalPengabdian ?></h2>
                 </div>
                 <i class="bx bx-donate-heart" style="font-size: 48px; opacity: 0.9;"></i>
               </div>
@@ -90,12 +90,12 @@ $recentPertanyaan = $recentPertanyaan ?? [];
 
         <!-- Total Penelitian -->
         <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+          <div class="card border-0 shadow-sm h-100" style="background: #fa709a;">
             <div class="card-body text-white">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <p class="mb-1 opacity-75">Total Penelitian</p>
-                  <h2 class="fw-bold mb-0"><?= $totalPenelitian ?></h2>
+                  <h2 class="fw-bold mb-0" style="color: white;"><?= $totalPenelitian ?></h2>
                 </div>
                 <i class="bx bx-book-open" style="font-size: 48px; opacity: 0.9;"></i>
               </div>
@@ -116,7 +116,7 @@ $recentPertanyaan = $recentPertanyaan ?? [];
           
           <!-- PERTANYAAN TERBARU -->
           <div class="card shadow-sm mb-3">
-            <div class="card-header d-flex justify-content-between align-items-center pb-0">
+            <div class="card-header d-flex justify-content-between align-items-center pb-3">
               <h5 class="card-title mb-0">
                 <i class="bx bx-help-circle text-primary"></i> Pertanyaan Terbaru
               </h5>
@@ -180,9 +180,9 @@ $recentPertanyaan = $recentPertanyaan ?? [];
           
           <!-- AGENDA MENDATANG -->
           <div class="card shadow-sm mb-3">
-            <div class="card-header pb-0">
+            <div class="card-header pb-3">
               <h5 class="card-title mb-0">
-                <i class="bx bx-calendar text-warning"></i> Agenda Mendatang
+                <i class="bx bx-calendar text-primary"></i> Agenda Mendatang
               </h5>
             </div>
             <div class="card-body">
@@ -203,7 +203,7 @@ $recentPertanyaan = $recentPertanyaan ?? [];
                   <?php endforeach; ?>
                 </div>
                 <div class="text-center mt-3">
-                  <a href="<?= BASE_URL ?>/admin/agenda" class="btn btn-sm btn-outline-warning">
+                  <a href="<?= BASE_URL ?>/admin/agenda" class="btn btn-sm btn-outline-primary">
                     Lihat Semua <i class="bx bx-right-arrow-alt"></i>
                   </a>
                 </div>
@@ -218,9 +218,9 @@ $recentPertanyaan = $recentPertanyaan ?? [];
 
           <!-- BERITA TERBARU -->
           <div class="card shadow-sm">
-            <div class="card-header pb-0">
+            <div class="card-header pb-3">
               <h5 class="card-title mb-0">
-                <i class="bx bx-news text-danger"></i> Berita Terbaru
+                <i class="bx bx-news text-primary"></i> Berita Terbaru
               </h5>
             </div>
             <div class="card-body">
@@ -247,7 +247,7 @@ $recentPertanyaan = $recentPertanyaan ?? [];
                   </div>
                 <?php endforeach; ?>
                 <div class="text-center mt-3">
-                  <a href="<?= BASE_URL ?>/admin/berita" class="btn btn-sm btn-outline-danger">
+                  <a href="<?= BASE_URL ?>/admin/berita" class="btn btn-sm btn-outline-primary">
                     Lihat Semua <i class="bx bx-right-arrow-alt"></i>
                   </a>
                 </div>

@@ -841,13 +841,63 @@ if (!isset($pengelolaList)) {
                             history.pushState('', document.title, window.location.pathname);
                         }, 100);
                     }, 100);
-                }
-            }
-        }
-
         handleHashOnLoad();
     });
 </script>
+
+<!-- Jam Operasional Lab Section -->
+<section class="jam-operasional-section" style="padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e8eef4 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
+                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/clock.png" alt="Jam Operasional" class="sec-title__img">Jam Operasional</h6>
+                    <h3 class="sec-title__title">Waktu Operasional Laboratorium</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center" style="margin-top: 40px;">
+            <div class="col-lg-8">
+                <div class="jam-operasional-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms" style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="display: flex; flex-direction: column; gap: 25px;">
+                        <!-- Hari Kerja -->
+                        <div style="display: flex; align-items: center; gap: 25px; padding: 20px; background: linear-gradient(135deg, rgba(26, 58, 107, 0.05) 0%, rgba(45, 90, 158, 0.05) 100%); border-radius: 10px; border-left: 4px solid #1a3a6b;">
+                            <div style="flex-shrink: 0; width: 60px; height: 60px; background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9e 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(26, 58, 107, 0.2);">
+                                <i class="icon-clock1" style="font-size: 28px; color: white;"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <h5 style="color: #1a3a6b; font-size: 18px; font-weight: 700; margin: 0 0 8px 0;">Senin - Jumat</h5>
+                                <p style="color: #444; font-size: 16px; margin: 0; font-weight: 500;">08.00 - 16.00 WIB</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Akhir Pekan -->
+                        <div style="display: flex; align-items: center; gap: 25px; padding: 20px; background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(220, 53, 69, 0.05) 100%); border-radius: 10px; border-left: 4px solid #dc3545;">
+                            <div style="flex-shrink: 0; width: 60px; height: 60px; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);">
+                                <i class="icon-clock1" style="font-size: 28px; color: white;"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <h5 style="color: #dc3545; font-size: 18px; font-weight: 700; margin: 0 0 8px 0;">Sabtu - Minggu</h5>
+                                <p style="color: #444; font-size: 16px; margin: 0; font-weight: 500;">Tutup</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Info Tambahan -->
+                    <div style="margin-top: 30px; padding-top: 25px; border-top: 2px dashed #e0e0e0;">
+                        <div style="display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="fas fa-info-circle" style="color: #1a3a6b; font-size: 20px; margin-top: 3px;"></i>
+                            <p style="color: #666; font-size: 14px; line-height: 1.8; margin: 0;">
+                                Untuk keperluan khusus di luar jam operasional, silakan hubungi kami terlebih dahulu melalui email atau telepon yang tertera pada halaman kontak.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <?php
 include 'app/views/templates/public/footer.php';

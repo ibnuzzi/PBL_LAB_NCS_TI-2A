@@ -107,13 +107,25 @@ include './app/views/templates/admin/sidebar_admin.php';
 
         <div class="modal-header bg-danger text-white">
           <div>
-            <h5 class="modal-title mb-0" id="modalDetailJudul">Detail Dokumen</h5>
+            <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
             <small class="opacity-75">Informasi Dokumen Arsip</small>
           </div>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
+
+          <!-- Judul Dokumen -->
+          <div class="mb-4">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-file-text"></i> JUDUL DOKUMEN
+            </label>
+            <div class="alert alert-danger mb-0">
+              <h5 class="mb-0 fw-bold" id="modalDetailJudul"></h5>
+            </div>
+          </div>
+
+          <hr class="my-3">
 
           <!-- Tanggal Upload -->
           <div class="mb-3">

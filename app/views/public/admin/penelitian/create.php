@@ -82,7 +82,7 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <!-- Deskripsi -->
           <div class="mb-3">
-            <label class="form-label">Deskripsi Singkat</label>
+            <label class="form-label">Abstrak</label>
             <textarea name="deskripsi_singkat" class="form-control" rows="4" required></textarea>
           </div>
 

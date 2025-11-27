@@ -111,13 +111,25 @@ include './app/views/components/page_scripts.php';
 
       <div class="modal-header bg-primary text-white">
         <div>
-          <h5 class="modal-title mb-0" id="modalJudulPenelitian">Detail Penelitian</h5>
+          <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
           <small class="opacity-75">Informasi Lengkap Penelitian</small>
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
+
+        <!-- Judul Penelitian -->
+        <div class="mb-4">
+          <label class="form-label fw-bold text-muted small mb-1">
+            <i class="bx bx-book-bookmark"></i> JUDUL PENELITIAN
+          </label>
+          <div class="alert alert-primary mb-0">
+            <h5 class="mb-0 fw-bold" id="modalJudulPenelitian"></h5>
+          </div>
+        </div>
+
+        <hr class="my-3">
 
         <!-- Tahun -->
         <div class="mb-3">

@@ -95,7 +95,7 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <!-- Deskripsi -->
           <div class="mb-3">
-            <label class="form-label">Deskripsi Singkat</label>
+            <label class="form-label">Abstrak</label>
             <textarea class="form-control" name="deskripsi_singkat" rows="4" required><?= htmlspecialchars($penelitian['deskripsi_singkat']); ?></textarea>
           </div>
 

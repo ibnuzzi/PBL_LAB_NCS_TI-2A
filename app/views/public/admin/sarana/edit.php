@@ -34,7 +34,7 @@ include './app/views/templates/admin/sidebar_admin.php';
       <div class="card-body">
 
         <form action="<?php echo BASE_URL; ?>/admin/sarana/update/<?php echo htmlspecialchars($sarana['id_sarana']); ?>"
-              method="POST" enctype="multipart/form-data">
+          method="POST" enctype="multipart/form-data">
 
           <div class="row g-3">
 
@@ -82,9 +82,9 @@ include './app/views/templates/admin/sidebar_admin.php';
             <div class="col-12">
               <label class="form-label">Deskripsi</label>
               <textarea
-                name="deskripsi"
+                name="deskripsi_sarana"
                 class="form-control"
-                rows="4"><?php echo htmlspecialchars($sarana['deskripsi'] ?? ''); ?></textarea>
+                rows="4"><?php echo htmlspecialchars($sarana['deskripsi_sarana'] ?? ''); ?></textarea>
             </div>
 
           </div>

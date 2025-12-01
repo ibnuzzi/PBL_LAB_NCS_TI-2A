@@ -31,7 +31,7 @@ class Penelitian
 
     public function getLatest($limit)
     {
-        $this->db->query("SELECT * FROM {$this->table} ORDER BY tahun_penelitian DESC LIMIT :limit");
+        $this->db->query("SELECT * FROM {$this->table} ORDER BY created_at DESC, id_penelitian DESC LIMIT :limit");
         $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
     }

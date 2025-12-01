@@ -2,18 +2,15 @@
 include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
-<?php
-// File: /app/views/public/layanan.php
-?>
 
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
         <h2 class="page-header__title">Layanan</h2>
         <ul class="nionx-breadcrumb list-unstyled">
-            <li><a href="index.php">Beranda</a></li>
-            <li><span>Fasilitas & Layanan</span></li>
+            <li><a href="<?= BASE_URL ?>">Beranda</a></li>
             <li><span>Layanan</span></li>
+            <li><span>Konsultasi Keamanan</span></li>
         </ul>
     </div>
 </section>
@@ -24,37 +21,36 @@ include 'app/views/templates/public/navbar.php';
             <div class="col-lg-5">
                 <div class="contact-one__content">
                     <ul class="list-unstyled contact-one__info">
-                        <li class="contact-one__info__item">
-                            <div class="contact-one__info__icon">
+                        <li class="contact-one__info__item" style="display: flex; align-items: center;">
+                            <div class="contact-one__info__icon" style="display: flex; align-items: center; justify-content: center;">
                                 <i class="icon-telephone-call-1"></i>
                             </div>
-                            <div class="contact-one__info__content">
+                            <div class="contact-one__info__content" style="display: flex; flex-direction: column; justify-content: center;">
                                 <p class="contact-one__info__text">Butuh bantuan cepat?</p>
                                 <h4 class="contact-one__info__title"><a href="tel:+62341404424">(0341) 404-424</a></h4>
                             </div>
                         </li>
-                        <li class="contact-one__info__item">
-                            <div class="contact-one__info__icon">
+                        <li class="contact-one__info__item" style="display: flex; align-items: center;">
+                            <div class="contact-one__info__icon" style="display: flex; align-items: center; justify-content: center;">
                                 <i class="icon-email"></i>
                             </div>
-                            <div class="contact-one__info__content">
+                            <div class="contact-one__info__content" style="display: flex; flex-direction: column; justify-content: center;">
                                 <p class="contact-one__info__text">Kirim email ke lab</p>
                                 <h4 class="contact-one__info__title"><a href="mailto:ncs@polinema.ac.id">ncs@polinema.ac.id</a></h4>
                             </div>
                         </li>
-                        <li class="contact-one__info__item">
-                            <div class="contact-one__info__icon">
+                        <li class="contact-one__info__item" style="display: flex; align-items: center;">
+                            <div class="contact-one__info__icon" style="display: flex; align-items: center; justify-content: center;">
                                 <i class="icon-pin"></i>
                             </div>
-                            <div class="contact-one__info__content">
+                            <div class="contact-one__info__content" style="display: flex; flex-direction: column; justify-content: center;">
                                 <p class="contact-one__info__text">Lokasi Lab</p>
-                                <h4 class="contact-one__info__title"><a href="#">Gedung JTI, Polinema</a></h4>
+                                <h4 class="contact-one__info__title"><a href="https://maps.app.goo.gl/5FQfTFnQqJ4Va5mKA" target="_blank">Gedung JTI, Polinema</a></h4>
                             </div>
                         </li>
                     </ul>
 
                     <div class="contact-one__content__thumb">
-                        <img src="<?php echo BASE_URL; ?>/assets/images/resources/man-contact.png" alt="laboix">
                     </div>
                 </div>
             </div>
@@ -64,7 +60,7 @@ include 'app/views/templates/public/navbar.php';
                     <div class="contact-one__top">
                         <div class="sec-title wow fadeInUp animated" data-wow-duration="700ms">
                             <h6 class="sec-title__tagline">
-                                <img src="<?php echo BASE_URL; ?>/assets/images/shapes/sec-title-s-1.png" alt="Contact" class="sec-title__img">
+                                <i class="icon-chat" style="margin-right: 8px; font-size: 18px; color: #0EBD66;"></i>
                                 Konsultasi Online
                             </h6>
                             <h3 class="sec-title__title">Ajukan Pertanyaan Keamanan</h3>

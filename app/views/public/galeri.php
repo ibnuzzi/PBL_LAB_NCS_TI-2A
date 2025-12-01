@@ -14,7 +14,7 @@ include 'app/views/templates/public/navbar.php';
         <ul class="nionx-breadcrumb list-unstyled">
             <li><a href="<?= BASE_URL ?>">Beranda</a></li>
             <li><span>Aktivitas</span></li>
-            <li><span>Galeri</span></li>
+            <li><span>Galeri Foto</span></li>
         </ul>
     </div>
 </section>
@@ -45,29 +45,29 @@ include 'app/views/templates/public/navbar.php';
 
 <section class="gallery-page pt-50 pb-90" id="galeri">
     <div class="container">
-        
+
         <div class="row gallery-grid gutter-y-30" id="gallery-items">
             <?php if (!empty($galleries) && is_array($galleries)): ?>
                 <?php foreach ($galleries as $g): ?>
-                    <?php 
-                        // Persiapan Data Pencarian (Title + Desc + Lowercase)
-                        $searchableTitle = strtolower(trim($g['judul_foto'] ?? ''));
-                        $searchableDesc = strtolower(trim($g['deskripsi_foto'] ?? ''));
-                        $searchableContent = $searchableTitle . ' ' . $searchableDesc;
+                    <?php
+                    // Persiapan Data Pencarian (Title + Desc + Lowercase)
+                    $searchableTitle = strtolower(trim($g['judul_foto'] ?? ''));
+                    $searchableDesc = strtolower(trim($g['deskripsi_foto'] ?? ''));
+                    $searchableContent = $searchableTitle . ' ' . $searchableDesc;
                     ?>
                     <div class="col-md-6 col-lg-4 grid-item gallery-item" data-search="<?= htmlspecialchars($searchableContent) ?>">
                         <div class="gallery-card">
                             <?php $img = !empty($g['nama_file_foto']) ? BASE_URL . '/public/uploads/gallery/' . $g['nama_file_foto'] : BASE_URL . '/public/assets/images/empty/empty_data.jpg'; ?>
-                            
+
                             <img src="<?= $img ?>" alt="<?= htmlspecialchars($g['judul_foto'] ?? 'Galeri') ?>" class="gallery-card__image" loading="lazy" decoding="async">
-                            
+
                             <div class="gallery-card__hover">
-                                <button class="gallery-open-btn" 
-                                        data-image="<?= htmlspecialchars($img) ?>" 
-                                        data-title="<?= htmlspecialchars($g['judul_foto'] ?? '') ?>" 
-                                        data-desc="<?= htmlspecialchars($g['deskripsi_foto'] ?? '') ?>" 
-                                        data-date="<?= htmlspecialchars($g['tanggal_upload'] ?? date('Y-m-d')) ?>" 
-                                        title="Lihat Detail">
+                                <button class="gallery-open-btn"
+                                    data-image="<?= htmlspecialchars($img) ?>"
+                                    data-title="<?= htmlspecialchars($g['judul_foto'] ?? '') ?>"
+                                    data-desc="<?= htmlspecialchars($g['deskripsi_foto'] ?? '') ?>"
+                                    data-date="<?= htmlspecialchars($g['tanggal_upload'] ?? date('Y-m-d')) ?>"
+                                    title="Lihat Detail">
                                     <i class="icon-search"></i> </button>
                                 <h4 class="gallery-card__title"><?= htmlspecialchars($g['judul_foto'] ?? '') ?></h4>
                             </div>
@@ -80,10 +80,10 @@ include 'app/views/templates/public/navbar.php';
                 </div>
             <?php endif; ?>
         </div>
-        
+
         <div class="search-no-results text-center" style="display: none; margin-top:40px;">
             <div class="search-no-results__icon">
-                </div>
+            </div>
             <h3 class="search-no-results__title">Hasil Tidak Ditemukan</h3>
             <p class="search-no-results__message">Maaf, tidak ada galeri yang cocok dengan kata kunci pencarian Anda.</p>
         </div>
@@ -127,71 +127,73 @@ include 'app/views/templates/public/scripts.php';
 ?>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    
+    document.addEventListener('DOMContentLoaded', function() {
 
 
-    /**
-     * -----------------------------------------------------
-     * 2. LOGIKA MODAL (LIGHTBOX)
-     * -----------------------------------------------------
-     */
-    const modal = document.getElementById('gallery-modal');
-    const modalClose = document.querySelector('.gallery-modal__close');
-    const modalImg = document.getElementById('gallery-modal-image');
-    const modalTitle = document.getElementById('gallery-modal-title');
-    const modalDesc = document.getElementById('gallery-modal-desc');
-    const modalDate = document.getElementById('gallery-modal-date');
-    
-    // Buka Modal saat tombol 'Lihat Detail' diklik
-    document.querySelectorAll('.gallery-open-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Ambil data dari atribut tombol
-            const src = this.getAttribute('data-image');
-            const title = this.getAttribute('data-title');
-            const desc = this.getAttribute('data-desc');
-            const date = this.getAttribute('data-date');
 
-            // Isi konten modal
-            modalImg.src = src;
-            modalTitle.textContent = title;
-            modalDesc.textContent = desc || '-';
-            modalDate.textContent = date;
+        /**
+         * -----------------------------------------------------
+         * 2. LOGIKA MODAL (LIGHTBOX)
+         * -----------------------------------------------------
+         */
+        const modal = document.getElementById('gallery-modal');
+        const modalClose = document.querySelector('.gallery-modal__close');
+        const modalImg = document.getElementById('gallery-modal-image');
+        const modalTitle = document.getElementById('gallery-modal-title');
+        const modalDesc = document.getElementById('gallery-modal-desc');
+        const modalDate = document.getElementById('gallery-modal-date');
 
-            // Tampilkan modal
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden'; // Matikan scroll body
+        // Buka Modal saat tombol 'Lihat Detail' diklik
+        document.querySelectorAll('.gallery-open-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Ambil data dari atribut tombol
+                const src = this.getAttribute('data-image');
+                const title = this.getAttribute('data-title');
+                const desc = this.getAttribute('data-desc');
+                const date = this.getAttribute('data-date');
+
+                // Isi konten modal
+                modalImg.src = src;
+                modalTitle.textContent = title;
+                modalDesc.textContent = desc || '-';
+                modalDate.textContent = date;
+
+                // Tampilkan modal
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Matikan scroll body
+            });
         });
-    });
 
-    // Fungsi Tutup Modal
-    function closeModal() {
-        modal.classList.remove('show');
-        document.body.style.overflow = ''; // Hidupkan scroll body
-        setTimeout(() => { modalImg.src = ''; }, 300); // Reset gambar setelah animasi
-    }
+        // Fungsi Tutup Modal
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Hidupkan scroll body
+            setTimeout(() => {
+                modalImg.src = '';
+            }, 300); // Reset gambar setelah animasi
+        }
 
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
+        if (modalClose) {
+            modalClose.addEventListener('click', closeModal);
+        }
 
-    // Tutup jika klik di luar area konten (overlay)
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
+        // Tutup jika klik di luar area konten (overlay)
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Tutup dengan tombol ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
                 closeModal();
             }
         });
-    }
 
-    // Tutup dengan tombol ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
-            closeModal();
-        }
     });
-
-});
 </script>

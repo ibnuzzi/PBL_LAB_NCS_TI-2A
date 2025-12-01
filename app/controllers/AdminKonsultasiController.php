@@ -71,46 +71,150 @@ class AdminKonsultasiController extends Controller
 
     public function update()
     {
-        // 1. Cek Method harus POST
+        // Legacy method - redirects to index
+        // Use approve() or reject() instead
+        header('Location: ' . BASE_URL . '/admin/konsultasi');
+        exit;
+    }
+
+    /**
+     * Approve (accept) a consultation and send email notification
+     */
+    public function approve()
+    {
+        // Check POST method
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: ' . BASE_URL . '/admin/konsultasi');
             exit;
         }
 
-        // 2. PERBAIKAN: Ambil ID dari Hidden Input Form, bukan dari URL
+        // Get consultation ID from POST
         $id = isset($_POST['id_konsultasi']) ? (int)$_POST['id_konsultasi'] : 0;
 
-        // Validasi ID
+        // Validate ID
         if ($id <= 0) {
             $_SESSION['error_message'] = 'ID Konsultasi tidak valid.';
             header('Location: ' . BASE_URL . '/admin/konsultasi');
             exit;
         }
 
-        // 3. Ambil data jawaban
+        // Get answer
         $jawaban = trim($_POST['jawaban'] ?? '');
 
-        // Otomatis set status jadi 'dijawab' jika admin membalas
-        $status_jawaban = 'dijawab';
+        if (empty($jawaban)) {
+            $_SESSION['error_message'] = 'Jawaban tidak boleh kosong.';
+            header('Location: ' . BASE_URL . '/admin/konsultasi');
+            exit;
+        }
 
-        // Ambil ID Admin yang sedang login
+        // Get admin ID
         $id_admin_penjawab = $_SESSION['admin_id'] ?? 1;
 
         $konsultasiModel = $this->model('Konsultasi');
+        
+        // Get consultation details for email
+        $consultation = $konsultasiModel->getById($id);
+        
+        if (!$consultation) {
+            $_SESSION['error_message'] = 'Data konsultasi tidak ditemukan.';
+            header('Location: ' . BASE_URL . '/admin/konsultasi');
+            exit;
+        }
 
-        $payload = [
-            'jawaban'           => $jawaban,
-            'status_jawaban'    => $status_jawaban,
-            'id_admin_penjawab' => (int)$id_admin_penjawab
-        ];
-
-        // 4. Update Database
-        $ok = $konsultasiModel->updateAnswer($id, $payload);
+        // Update status to 'diterima'
+        $ok = $konsultasiModel->updateStatusAccept($id, $jawaban, (int)$id_admin_penjawab);
 
         if ($ok) {
-            $_SESSION['success_message'] = 'Jawaban konsultasi berhasil disimpan.';
+            // Send acceptance email
+            require_once './app/services/EmailService.php';
+            $emailService = new EmailService();
+            
+            $emailSent = $emailService->sendAcceptanceEmail(
+                $consultation['email_penanya'],
+                $consultation['nama_penanya'],
+                $consultation['pertanyaan'],
+                $jawaban
+            );
+
+            if ($emailSent) {
+                $_SESSION['success_message'] = 'Konsultasi berhasil diterima dan email notifikasi telah dikirim.';
+            } else {
+                $_SESSION['success_message'] = 'Konsultasi berhasil diterima, namun email gagal dikirim.';
+            }
         } else {
-            $_SESSION['error_message'] = 'Gagal menyimpan jawaban konsultasi.';
+            $_SESSION['error_message'] = 'Gagal menerima konsultasi.';
+        }
+
+        header('Location: ' . BASE_URL . '/admin/konsultasi');
+        exit;
+    }
+
+    /**
+     * Reject a consultation and send email notification
+     */
+    public function reject()
+    {
+        // Check POST method
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . BASE_URL . '/admin/konsultasi');
+            exit;
+        }
+
+        // Get consultation ID from POST
+        $id = isset($_POST['id_konsultasi']) ? (int)$_POST['id_konsultasi'] : 0;
+
+        // Validate ID
+        if ($id <= 0) {
+            $_SESSION['error_message'] = 'ID Konsultasi tidak valid.';
+            header('Location: ' . BASE_URL . '/admin/konsultasi');
+            exit;
+        }
+
+        // Get rejection reason
+        $alasan_tolak = trim($_POST['alasan_tolak'] ?? '');
+
+        if (empty($alasan_tolak)) {
+            $_SESSION['error_message'] = 'Alasan penolakan tidak boleh kosong.';
+            header('Location: ' . BASE_URL . '/admin/konsultasi');
+            exit;
+        }
+
+        // Get admin ID
+        $id_admin_penjawab = $_SESSION['admin_id'] ?? 1;
+
+        $konsultasiModel = $this->model('Konsultasi');
+        
+        // Get consultation details for email
+        $consultation = $konsultasiModel->getById($id);
+        
+        if (!$consultation) {
+            $_SESSION['error_message'] = 'Data konsultasi tidak ditemukan.';
+            header('Location: ' . BASE_URL . '/admin/konsultasi');
+            exit;
+        }
+
+        // Update status to 'ditolak'
+        $ok = $konsultasiModel->updateStatusReject($id, $alasan_tolak, (int)$id_admin_penjawab);
+
+        if ($ok) {
+            // Send rejection email
+            require_once './app/services/EmailService.php';
+            $emailService = new EmailService();
+            
+            $emailSent = $emailService->sendRejectionEmail(
+                $consultation['email_penanya'],
+                $consultation['nama_penanya'],
+                $consultation['pertanyaan'],
+                $alasan_tolak
+            );
+
+            if ($emailSent) {
+                $_SESSION['success_message'] = 'Konsultasi berhasil ditolak dan email notifikasi telah dikirim.';
+            } else {
+                $_SESSION['success_message'] = 'Konsultasi berhasil ditolak, namun email gagal dikirim.';
+            }
+        } else {
+            $_SESSION['error_message'] = 'Gagal menolak konsultasi.';
         }
 
         header('Location: ' . BASE_URL . '/admin/konsultasi');

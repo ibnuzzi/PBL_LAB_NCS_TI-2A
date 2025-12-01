@@ -1,6 +1,9 @@
 <?php
 // File: /app/bootstrap.php
 
+// 0. Load Composer autoload (for PHPMailer and other dependencies)
+require_once __DIR__ . '/../vendor/autoload.php';
+
 // 1. Load File Konfigurasi
 require_once 'core/config.php';
 

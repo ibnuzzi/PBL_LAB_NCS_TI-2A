@@ -38,6 +38,49 @@ class DokumenUmum
         return $this->db->resultSet();
     }
 
+    public function getDistinctYears()
+    {
+        // Mengambil tahun yang tersedia dari view v_arsip_gabungan
+        $this->db->query("SELECT DISTINCT tahun FROM v_arsip_gabungan WHERE tahun IS NOT NULL ORDER BY tahun DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllArsipLengkapByFilters($kategori = null, $tahun = null, $search = null)
+    {
+        // Filter berdasarkan kategori, tahun, dan search dari view v_arsip_gabungan
+        $sql = "SELECT * FROM v_arsip_gabungan WHERE 1=1";
+        
+        if ($kategori && $kategori !== 'semua') {
+            $sql .= " AND kategori = :kategori";
+        }
+        
+        if ($tahun && $tahun !== 'semua') {
+            $sql .= " AND tahun = :tahun";
+        }
+        
+        if ($search && trim($search) !== '') {
+            $sql .= " AND (judul ILIKE :search OR penulis_atau_tim ILIKE :search)";
+        }
+        
+        $sql .= " ORDER BY created_at DESC";
+        
+        $this->db->query($sql);
+        
+        if ($kategori && $kategori !== 'semua') {
+            $this->db->bind(':kategori', $kategori);
+        }
+        
+        if ($tahun && $tahun !== 'semua') {
+            $this->db->bind(':tahun', $tahun);
+        }
+        
+        if ($search && trim($search) !== '') {
+            $this->db->bind(':search', '%' . $search . '%');
+        }
+        
+        return $this->db->resultSet();
+    }
+
     public function getById($id)
     {
         $this->db->query("SELECT * FROM {$this->table} WHERE id_dokumen = :id");

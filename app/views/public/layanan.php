@@ -162,6 +162,46 @@ include 'app/views/templates/public/navbar.php';
     </div>
 </section>
 
+<div class="contact-map wow fadeInUp animated" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-name: fadeInUp;">
+    <div class="container-fluid">
+        <div class="google-map google-map__contact">
+            
+            <iframe 
+                title="Lokasi Politeknik Negeri Malang" 
+                src="https://maps.google.com/maps?q=-7.943892710794645,112.61450188551729&hl=id&z=19&output=embed" 
+                class="map__google-map" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+
+            <div class="google-map__contact__pin">
+                <img src="<?php echo BASE_URL; ?>/assets/images/shapes/pin.png" alt="Pin Lokasi">
+            </div>
+
+            <div class="google-map__contact__location">
+                <p class="google-map__contact__location__text">
+                    Jl. Soekarno Hatta No.9, Mojolangu, Kec. Lowokwaru, Jawa Barat, Jawa Timur 65141
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+                
+
+            <div class="google-map__contact__pin">
+                <img src="<?php echo BASE_URL; ?>/assets/images/shapes/pin.png" alt="Pin Lokasi">
+            </div>
+
+            <div class="google-map__contact__location">
+                <p class="google-map__contact__location__text">
+                    Jl. Soekarno Hatta No.9, Mojolangu, Kec. Lowokwaru, Jawa Barat, Jawa Timur 65141
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+                
+
 <?php
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';

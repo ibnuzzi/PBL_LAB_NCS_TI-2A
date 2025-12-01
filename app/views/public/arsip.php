@@ -21,21 +21,37 @@ include 'app/views/templates/public/navbar.php';
             <div class="col-lg-3">
                 <div class="product__sidebar product__sidebar-right">
 
-                    <div class="product__search  wow fadeInUp animated" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInUp;">
-                        <form action="#" class="product__sidebar__search">
-                            <button type="submit" aria-label="search submit">
-                                <span><i class="icon-search"></i></span>
-                            </button>
-                            <input type="text" placeholder="Cari di sini" fdprocessedid="x2kh0b">
-                        </form>
-                    </div><!-- /.search-widget -->
+                    <div class="product__search wow fadeInUp animated" data-wow-delay="500ms">
+    <form action="<?= BASE_URL ?>/arsip" method="GET" class="product__sidebar__search">
+        
+        <button type="submit" aria-label="search submit">
+            <span><i class="icon-search"></i></span>
+        </button>
+        
+        <input type="text" 
+               name="search" 
+               placeholder="Cari Judul atau Penulis..." 
+               value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+               
+        <?php if (!empty($_GET['kategori'])): ?>
+            <input type="hidden" name="kategori" value="<?= htmlspecialchars($_GET['kategori']) ?>">
+        <?php endif; ?>
+        <?php if (!empty($_GET['tahun'])): ?>
+            <input type="hidden" name="tahun" value="<?= htmlspecialchars($_GET['tahun']) ?>">
+        <?php endif; ?>
+
+    </form>
+</div>
 
                     <div class="product__categories  wow fadeInUp animated" data-wow-delay="900ms" style="visibility: visible; animation-delay: 900ms; animation-name: fadeInUp;">
                         <h3 class="product__categories__title">Categories</h3>
                         <ul class="list-unstyled service-sidebar__category__list">
-                            <?php $kategoriAktif = $data['kategori_aktif'] ?? 'semua'; ?>
+                            <?php 
+                            $kategoriAktif = $data['kategori_aktif'] ?? 'semua'; 
+                            $tahunParam = isset($_GET['tahun']) ? '&tahun=' . urlencode($_GET['tahun']) : '';
+                            ?>
                             <li class="<?= $kategoriAktif === 'semua' ? 'active' : '' ?>">
-                                <a href="?kategori=semua"> <i class="fa fa-folder-open"></i>Semua Dokumen</a>
+                                <a href="?kategori=semua<?= $tahunParam ?>"> <i class="fa fa-folder-open"></i>Semua Dokumen</a>
                             </li>
                             <?php
                             // Mapping icon untuk setiap kategori
@@ -55,7 +71,7 @@ include 'app/views/templates/public/navbar.php';
                                     $isActive = $kategoriAktif === $namaKategori ? 'active' : '';
                             ?>
                                     <li class="<?= $isActive ?>">
-                                        <a href="?kategori=<?= urlencode($namaKategori) ?>"> <i class="fa <?= $icon ?>"></i><?= htmlspecialchars($namaKategori) ?></a>
+                                        <a href="?kategori=<?= urlencode($namaKategori) ?><?= $tahunParam ?>"> <i class="fa <?= $icon ?>"></i><?= htmlspecialchars($namaKategori) ?></a>
                                     </li>
                             <?php
                                 endforeach;
@@ -63,6 +79,31 @@ include 'app/views/templates/public/navbar.php';
                             ?>
                         </ul>
                     </div><!-- /.category-widget -->
+
+                    <div class="product__categories  wow fadeInUp animated" data-wow-delay="1000ms" style="visibility: visible; animation-delay: 1000ms; animation-name: fadeInUp;">
+                        <h3 class="product__categories__title">Filter Tahun</h3>
+                        <ul class="list-unstyled service-sidebar__category__list">
+                            <?php $tahunAktif = $data['tahun_aktif'] ?? 'semua'; ?>
+                            <?php $kategoriParam = isset($_GET['kategori']) ? '&kategori=' . urlencode($_GET['kategori']) : ''; ?>
+                            <li class="<?= $tahunAktif === 'semua' ? 'active' : '' ?>">
+                                <a href="?tahun=semua<?= $kategoriParam ?>"> <i class="fa fa-calendar"></i>Semua Tahun</a>
+                            </li>
+                            <?php
+                            // Loop melalui tahun yang diambil dari database
+                            if (!empty($data['tahun_list'])):
+                                foreach ($data['tahun_list'] as $tahunItem):
+                                    $tahun = $tahunItem['tahun'];
+                                    $isActive = $tahunAktif === $tahun ? 'active' : '';
+                            ?>
+                                    <li class="<?= $isActive ?>">
+                                        <a href="?tahun=<?= urlencode($tahun) ?><?= $kategoriParam ?>"> <i class="fa fa-calendar-alt"></i><?= htmlspecialchars($tahun) ?></a>
+                                    </li>
+                            <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </ul>
+                    </div><!-- /.year-filter-widget -->
 
                 </div>
             </div>

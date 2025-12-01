@@ -61,9 +61,9 @@ class Pengabdian
         // 1. INSERT DATA UTAMA
         // (Perhatikan: kita tidak simpan string nama tim di sini lagi, tapi di tabel anggota)
         $query = "INSERT INTO {$this->table} 
-                    (judul_kegiatan, tahun_kegiatan, deskripsi_kegiatan, file_dokumen_pdf, id_admin_pencatat) 
+                    (judul_kegiatan, tahun_kegiatan, deskripsi_kegiatan, file_dokumen_pdf, id_admin_pencatat, anggota_luar) 
                   VALUES 
-                    (:judul, :tahun, :deskripsi, :file_pdf, :admin)";
+                    (:judul, :tahun, :deskripsi, :file_pdf, :admin, :anggota_luar)";
 
         $this->db->query($query);
         $this->db->bind(':judul', $data['judul_kegiatan']);
@@ -71,6 +71,7 @@ class Pengabdian
         $this->db->bind(':deskripsi', $data['deskripsi_kegiatan']);
         $this->db->bind(':file_pdf', $data['file_dokumen_pdf']);
         $this->db->bind(':admin', $data['id_admin_pencatat']);
+        $this->db->bind(':anggota_luar', $data['anggota_luar']);
 
         // Eksekusi Insert Utama
         if ($this->db->execute()) {
@@ -102,7 +103,8 @@ class Pengabdian
                 judul_kegiatan = :judul,
                 tahun_kegiatan = :tahun,
                 deskripsi_kegiatan = :deskripsi,
-                file_dokumen_pdf = :file_pdf
+                file_dokumen_pdf = :file_pdf,
+                anggota_luar = :anggota_luar
             WHERE id_pengabdian = :id
         ";
 
@@ -111,6 +113,7 @@ class Pengabdian
         $this->db->bind(':tahun', $data['tahun_kegiatan']);
         $this->db->bind(':deskripsi', $data['deskripsi_kegiatan']);
         $this->db->bind(':file_pdf', $data['file_dokumen_pdf']);
+        $this->db->bind(':anggota_luar', $data['anggota_luar']);
         $this->db->bind(':id', $data['id_pengabdian']);
 
         if (!$this->db->execute()) {

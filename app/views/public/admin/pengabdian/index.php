@@ -60,9 +60,10 @@ include './app/views/templates/admin/sidebar_admin.php';
                       class="btn btn-sm btn-outline-info me-1 btn-view-pengabdian"
                       data-judul="<?= htmlspecialchars($p['judul_kegiatan']); ?>"
                       data-tim="<?= htmlspecialchars($p['tim_pengabdi'] ?? '-'); ?>"
+                      data-anggota-luar="<?= htmlspecialchars($p['anggota_luar'] ?? ''); ?>"
                       data-tahun="<?= htmlspecialchars($p['tahun_kegiatan']); ?>"
                       data-deskripsi="<?= htmlspecialchars($p['deskripsi_kegiatan']); ?>"
-                      data-file="<?= BASE_URL . '/public/uploads/pengabdian/' . htmlspecialchars($p['file_dokumen_pdf']); ?>">
+                      data-file="<?= htmlspecialchars($p['file_dokumen_pdf'] ?? ''); ?>">
                       <i class="bx bx-show-alt"></i>
                     </button>
 
@@ -96,7 +97,7 @@ include './app/views/templates/admin/sidebar_admin.php';
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header bg-success text-white">
+        <div class="modal-header bg-primary text-white">
           <div>
             <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
             <small class="opacity-75">Informasi Lengkap Pengabdian Masyarakat</small>
@@ -111,7 +112,7 @@ include './app/views/templates/admin/sidebar_admin.php';
             <label class="form-label fw-bold text-muted small mb-1">
               <i class="bx bx-book-bookmark"></i> JUDUL PENGABDIAN
             </label>
-            <div class="alert alert-success mb-0">
+            <div class="alert alert-primary mb-0">
               <h5 class="mb-0 fw-bold" id="modalDetailJudul"></h5>
             </div>
           </div>
@@ -133,8 +134,18 @@ include './app/views/templates/admin/sidebar_admin.php';
             <label class="form-label fw-bold text-muted small mb-1">
               <i class="bx bx-group"></i> TIM PENGABDI
             </label>
-            <div class="alert alert-success mb-0" id="modalPengabdiInfo">
+            <div class="alert alert-primary mb-0" id="modalPengabdiInfo">
               <i class="bx bx-user-circle"></i> <span id="modalDetailTim"></span>
+            </div>
+          </div>
+
+          <!-- Anggota Luar -->
+          <div class="mb-3" id="wrapperAnggotaLuar" style="display: none;">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-group"></i> ANGGOTA LUAR
+            </label>
+            <div class="alert alert-info mb-0">
+              <i class="bx bx-user"></i> <span id="modalAnggotaLuar"></span>
             </div>
           </div>
 
@@ -161,7 +172,7 @@ include './app/views/templates/admin/sidebar_admin.php';
         </div>
 
         <div class="modal-footer bg-light">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
             <i class="bx bx-x"></i> Tutup
           </button>
         </div>
@@ -190,6 +201,7 @@ include './app/views/components/page_scripts.php';
       let judul = $(this).data("judul");
       let tahun = $(this).data("tahun");
       let tim = $(this).data("tim");
+      let anggotaLuar = $(this).data("anggota-luar");
       let deskripsi = $(this).data("deskripsi");
       let file = $(this).data("file");
 
@@ -202,10 +214,18 @@ include './app/views/components/page_scripts.php';
       // Set tim pengabdi
       if (tim && tim.trim() !== "" && tim !== "-") {
           $("#modalDetailTim").text(tim);
-          $("#modalPengabdiInfo").removeClass("alert-warning").addClass("alert-success");
+          $("#modalPengabdiInfo").removeClass("alert-warning").addClass("alert-primary");
       } else {
-          $("#modalPengabdiInfo").removeClass("alert-success").addClass("alert-warning");
+          $("#modalPengabdiInfo").removeClass("alert-primary").addClass("alert-warning");
           $("#modalDetailTim").text("Belum ada data tim pengabdi");
+      }
+
+      // Set anggota luar
+      if (anggotaLuar && anggotaLuar.trim() !== "") {
+          $("#wrapperAnggotaLuar").show();
+          $("#modalAnggotaLuar").text(anggotaLuar);
+      } else {
+          $("#wrapperAnggotaLuar").hide();
       }
 
       // Set deskripsi
@@ -218,7 +238,7 @@ include './app/views/components/page_scripts.php';
       // Set file
       if (file && file.trim() !== "") {
           $("#modalDetailFileContainer").html(`
-            <a href="${file}" target="_blank" class="btn btn-success btn-sm w-100">
+            <a href="<?= BASE_URL ?>/public/uploads/pengabdian/${file}" target="_blank" class="btn btn-primary btn-sm w-100">
               <i class="bx bx-download"></i> Unduh Dokumen PDF
             </a>
           `);

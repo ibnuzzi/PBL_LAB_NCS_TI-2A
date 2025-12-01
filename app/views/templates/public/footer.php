@@ -9,31 +9,26 @@
                             <img src="<?= BASE_URL ?>/public/assets/images/ClearLogoJTI.png" width="50%" alt="Logo Lab NCS">
                         </a>
                         <p class="footer-widget__text">Laboratorium Network and Cyber Crime (NCS) JTI Polinema, berfokus pada riset dan pengembangan keamanan jaringan serta forensik digital.</p>
-                        
+
                     </div>
                 </div>
-                
+
                 <div class="col-md-6 col-xl-2">
                     <div class="footer-widget footer-widget--link">
                         <h4 class="footer-widget__title">Link Terkait</h4>
                         <ul class="list-unstyled footer-widget__links">
-                            <li class="footer-widget__links__item"><a href="/tentang">Tentang Kami</a></li>
-                            <li class="footer-widget__links__item"><a href="/akademik">Akademik & Riset</a></li>
-                            <li class="footer-widget__links__item"><a href="/layanan">Fasilitas & Layanan</a></li>
-                            <li class="footer-widget__links__item"><a href="/berita">Berita</a></li>
-                            
                             <li class="footer-widget__links__item"><a href="https://www.polinema.ac.id/" target="_blank">Website Polinema</a></li>
                             <li class="footer-widget__links__item"><a href="https://jti.polinema.ac.id/" target="_blank">Website JTI</a></li>
                             <li class="footer-widget__links__item"><a href="https://sinta.kemdikbud.go.id/" target="_blank">SINTA</a></li>
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6 col-xl-3">
                     <div class="footer-widget footer-widget--about">
                         <h4 class="footer-widget__title">Kontak Kami</h4>
                         <ul class="list-unstyled footer-widget__info">
-                            <li class="footer-widget__info__item"> <span class="footer-widget__info__item__text">Gedung JTI, Politeknik Negeri Malang. Jl. Soekarno Hatta No.9, Malang, 65141</span></li>
+                            <li class="footer-widget__info__item"> <i class="footer-widget__info__item__text" aria-hidden="true"></i> <a href="https://maps.app.goo.gl/5FQfTFnQqJ4Va5mKA">Gedung JTI, Politeknik Negeri Malang. Jl. Soekarno Hatta No.9, Malang, 65141</a></li>
                             <li class="footer-widget__info__item"> <i class="icon-telephone-call-1" aria-hidden="true"></i> <a href="tel:0341404424">(0341) 404-424</a></li>
                             <li class="footer-widget__info__item"> <i class="icon-email" aria-hidden="true"></i> <a href="mailto:jti@polinema.ac.id">jti@polinema.ac.id</a></li>
                         </ul>
@@ -44,25 +39,25 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6 col-xl-3">
                     <div class="footer-widget footer-widget--team">
                         <h4 class="footer-widget__title">Tim Pengembang</h4>
-                        <p style="color: #ffffff; font-size: 15px; font-weight: 600; margin-bottom: 15px;">Kelompok 4 TI-2A</p>
-                        <ul class="list-unstyled footer-widget__team-list" style="color: #d1d5db; font-size: 14px; line-height: 1.9;">
-                            <li style="margin-bottom: 8px;">Muhammad Ibnu Zauzi</li>
-                            <li style="margin-bottom: 8px;">Athaulla Hafizh</li>
-                            <li style="margin-bottom: 8px;">Linda Octaviani</li>
-                            <li style="margin-bottom: 8px;">Muhammad Shabran</li>
-                            <li style="margin-bottom: 8px;">Rakagali Resda K. P.</li>
+                        <p>Kelompok 4 TI-2A</p>
+                        <ul class="list-unstyled footer-widget__team-list">
+                            <li>Muhammad Ibnu Zauzi</li>
+                            <li>Athaulla Hafizh</li>
+                            <li>Linda Octaviani</li>
+                            <li>Muhammad Shabran</li>
+                            <li>Rakagali Resda K. P.</li>
                         </ul>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
-    
+
     <div class="main-footer__bottom">
         <div class="container">
             <div class="main-footer__bottom__inner row">
@@ -75,7 +70,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="main-footer__shape">
         <img src="<?= BASE_URL ?>/public/assets/images/shapes/footer-shape-1-1.png" alt="shape">
     </div>

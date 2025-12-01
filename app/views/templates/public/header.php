@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/vendors/nouislider/nouislider.min.css">
     <!--  nouislider css plugins -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/vendors/nouislider/nouislider.pips.css">
-    <!--  nouislider css plugins -->
+    <!--  laboix icons -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/vendors/laboix-icons/style.css">
     <!--  slider css plugins -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/vendors/owl-carousel/css/owl.carousel.min.css">
@@ -50,33 +50,7 @@
 
     <!-- template styles -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/laboix.css">
-    <style>
-        /* Back to top button styles (lightweight, site-wide) */
-        html { scroll-behavior: smooth; }
-        #back-to-top {
-            position: fixed;
-            right: 20px;
-            bottom: 28px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #081d2f;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(8,29,47,0.12);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(8px);
-            transition: opacity .22s ease, transform .22s ease, visibility .22s;
-            z-index: 9999;
-            text-decoration: none;
-        }
-        #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        #back-to-top:hover { transform: translateY(-4px); }
-        #back-to-top .backtop-icon { font-size: 18px; line-height: 1; }
-    </style>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/lab-ncs-custom.css">
 </head>
 
 <body class="custom-cursor">

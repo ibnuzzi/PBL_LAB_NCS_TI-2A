@@ -4,7 +4,7 @@
 
             <div class="main-header__logo logo-laboix" style="flex-shrink: 0;">
                 <a href="<?php echo BASE_URL; ?>/">
-                    <img src="public/assets/images/ClearLogoJTI.png" alt="Lab NCS JTI Polinema" width="60">
+                    <img src="<?php echo BASE_URL; ?>/public/assets/images/ClearLogoJTI.png" alt="Lab NCS JTI Polinema" width="60">
                 </a>
             </div>
 
@@ -25,7 +25,7 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#">Layanan</a>
+                        <a href="#" style="pointer-events: none; cursor: default;">Layanan</a>
                         <ul class="sub-menu">
                             <li><a href="<?php echo BASE_URL; ?>/fasilitas">Fasilitas Lab</a></li>
                             <li><a href="<?php echo BASE_URL; ?>/layanan">Konsultasi Keamanan</a></li>
@@ -33,7 +33,7 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#">Aktivitas</a>
+                        <a href="#" style="pointer-events: none; cursor: default;">Aktivitas</a>
                         <ul class="sub-menu">
                             <li><a href="<?php echo BASE_URL; ?>/berita">Berita & Artikel</a></li>
                             <li><a href="<?php echo BASE_URL; ?>/galeri">Galeri Foto</a></li>
@@ -43,15 +43,6 @@
 
                     <li>
                         <a href="<?php echo BASE_URL; ?>/arsip">Arsip Digital</a>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="#">Tautan</a>
-                        <ul class="sub-menu">
-                            <li><a href="https://www.polinema.ac.id/" target="_blank">Polinema</a></li>
-                            <li><a href="https://jti.polinema.ac.id/" target="_blank">JTI Polinema</a></li>
-                            <li><a href="https://sinta.kemdikbud.go.id/" target="_blank">SINTA</a></li>
-                        </ul>
                     </li>
 
                 </ul>

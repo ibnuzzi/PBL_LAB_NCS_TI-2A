@@ -65,25 +65,6 @@ include 'app/views/templates/public/navbar.php';
                         <div class="sec-title wow fadeInUp animated" data-wow-duration="700ms">
                             <h6 class="sec-title__tagline">
                                 <img src="<?php echo BASE_URL; ?>/assets/images/shapes/sec-title-s-1.png" alt="Contact" class="sec-title__img">
-                                Konsultasi Online
-                            </h6>
-                            <h3 class="sec-title__title">Ajukan Pertanyaan Keamanan</h3>
-                        </div>
-                    </div>
-
-                    <?php if (isset($_SESSION['flash_message'])): ?>
-                        <div style="background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #c3e6cb;">
-                            <?php echo $_SESSION['flash_message'];
-                            unset($_SESSION['flash_message']); ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <form class="contact-one__form contact-form-validated form-one background-base wow fadeInUp animated"
-                        data-wow-duration="1500ms"
-                        action="<?php echo BASE_URL; ?>/layanan/store"
-                        method="POST">
-
-                        <div class="form-one__group">
                             <div class="form-one__control">
                                 <input type="text" name="nama_penanya" placeholder="Nama Lengkap Anda" required>
                             </div>
@@ -165,6 +146,32 @@ include 'app/views/templates/public/navbar.php';
         </div>
     </div>
 </section>
+
+<div class="contact-map wow fadeInUp animated" data-wow-duration="1500ms" style="visibility: visible; animation-duration: 1500ms; animation-name: fadeInUp;">
+    <div class="container-fluid">
+        <div class="google-map google-map__contact">
+            
+            <iframe 
+                title="Lokasi Politeknik Negeri Malang" 
+                src="https://maps.google.com/maps?q=-7.943892710794645,112.61450188551729&hl=id&z=19&output=embed" 
+                class="map__google-map" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+
+            <div class="google-map__contact__pin">
+                <img src="<?php echo BASE_URL; ?>/assets/images/shapes/pin.png" alt="Pin Lokasi">
+            </div>
+
+            <div class="google-map__contact__location">
+                <p class="google-map__contact__location__text">
+                    Jl. Soekarno Hatta No.9, Mojolangu, Kec. Lowokwaru, Jawa Barat, Jawa Timur 65141
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+                
 
 <?php
 include 'app/views/templates/public/footer.php';

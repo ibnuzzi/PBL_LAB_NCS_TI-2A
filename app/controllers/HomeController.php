@@ -86,7 +86,7 @@ class HomeController extends Controller
         $ok = $konsultasiModel->insert($payload);
 
         if ($ok) {
-            $_SESSION['flash_message'] = 'Pertanyaan Anda berhasil dikirim. Terima kasih!';
+            $_SESSION['flash_message'] = 'Pertanyaan Anda berhasil dikirim dan sedang menunggu persetujuan admin. Anda akan menerima notifikasi melalui email.';
         } else {
             $_SESSION['flash_message'] = 'Gagal mengirim pertanyaan. Silakan coba lagi.';
         }
@@ -102,18 +102,21 @@ class HomeController extends Controller
 
         $arsipModel = $this->model('DokumenUmum');
 
-        // Cek apakah ada parameter kategori di URL
+        // Cek apakah ada parameter kategori, tahun, dan search di URL
         $kategoriFilter = $_GET['kategori'] ?? 'semua';
+        $tahunFilter = $_GET['tahun'] ?? 'semua';
+        $searchFilter = $_GET['search'] ?? '';
 
-        // Filter berdasarkan kategori
-        if ($kategoriFilter !== 'semua') {
-            $data['arsip_list'] = $arsipModel->getAllArsipLengkapByKategori($kategoriFilter);
-        } else {
-            $data['arsip_list'] = $arsipModel->getAllArsipLengkap();
-        }
+        // Ambil daftar tahun yang tersedia
+        $data['tahun_list'] = $arsipModel->getDistinctYears();
 
-        // Simpan kategori yang sedang aktif untuk highlight di view
+        // Filter berdasarkan kategori, tahun, dan search
+        $data['arsip_list'] = $arsipModel->getAllArsipLengkapByFilters($kategoriFilter, $tahunFilter, $searchFilter);
+
+        // Simpan filter yang sedang aktif untuk highlight di view
         $data['kategori_aktif'] = $kategoriFilter;
+        $data['tahun_aktif'] = $tahunFilter;
+        $data['search_aktif'] = $searchFilter;
 
         $this->view('public/arsip', $data);
     }

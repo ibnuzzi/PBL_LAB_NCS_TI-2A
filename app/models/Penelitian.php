@@ -31,7 +31,7 @@ class Penelitian
 
     public function getLatest($limit)
     {
-        $this->db->query("SELECT * FROM {$this->table} ORDER BY tahun_penelitian DESC LIMIT :limit");
+        $this->db->query("SELECT * FROM {$this->table} ORDER BY created_at DESC, id_penelitian DESC LIMIT :limit");
         $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
     }
@@ -48,9 +48,9 @@ class Penelitian
     {
         // 1. INSERT UTAMA
         $query = "INSERT INTO {$this->table} 
-                    (judul_penelitian, tahun_penelitian, deskripsi_singkat, link_publikasi, file_dokumen_pdf, created_at) 
+                    (judul_penelitian, tahun_penelitian, deskripsi_singkat, link_publikasi, file_dokumen_pdf, anggota_luar, created_at) 
                   VALUES 
-                    (:judul, :tahun, :deskripsi, :link, :file_pdf, NOW())";
+                    (:judul, :tahun, :deskripsi, :link, :file_pdf, :anggota_luar, NOW())";
 
         $this->db->query($query);
         $this->db->bind(':judul', $data['judul_penelitian']);
@@ -58,6 +58,7 @@ class Penelitian
         $this->db->bind(':deskripsi', $data['deskripsi_singkat']);
         $this->db->bind(':link', $data['link_publikasi']);
         $this->db->bind(':file_pdf', $data['file_dokumen_pdf']);
+        $this->db->bind(':anggota_luar', $data['anggota_luar']);
 
         if ($this->db->execute()) {
 
@@ -90,6 +91,7 @@ class Penelitian
                 deskripsi_singkat = :deskripsi_singkat,
                 link_publikasi = :link_publikasi,
                 file_dokumen_pdf = :file_pdf,
+                anggota_luar = :anggota_luar,
                 updated_at = NOW()
             WHERE id_penelitian = :id
         ");
@@ -98,6 +100,7 @@ class Penelitian
         $this->db->bind(':deskripsi_singkat', $data['deskripsi_singkat']);
         $this->db->bind(':link_publikasi', $data['link_publikasi']);
         $this->db->bind(':file_pdf', $data['file_dokumen_pdf']);
+        $this->db->bind(':anggota_luar', $data['anggota_luar']);
         $this->db->bind(':id', $id);
 
         if ($this->db->execute()) {

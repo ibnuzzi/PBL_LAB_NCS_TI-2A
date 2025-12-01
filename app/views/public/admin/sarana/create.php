@@ -1,5 +1,5 @@
-<?php 
-include './app/views/templates/admin/header_admin.php'; 
+<?php
+include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
 ?>
 
@@ -33,37 +33,37 @@ include './app/views/templates/admin/sidebar_admin.php';
 
       <div class="card-body">
 
-        <form action="<?php echo BASE_URL; ?>/admin/sarana/store" 
-              method="POST" enctype="multipart/form-data">
+        <form action="<?php echo BASE_URL; ?>/admin/sarana/store"
+          method="POST" enctype="multipart/form-data">
 
           <div class="row g-3">
 
             <!-- NAMA SARANA -->
             <div class="col-md-6">
               <label class="form-label">Nama Sarana</label>
-              <input 
-                type="text" 
-                name="nama_sarana" 
-                class="form-control" 
+              <input
+                type="text"
+                name="nama_sarana"
+                class="form-control"
                 required>
             </div>
 
             <!-- JUMLAH -->
             <div class="col-md-6">
               <label class="form-label">Jumlah</label>
-              <input 
-                type="number" 
-                name="jumlah" 
-                class="form-control" 
+              <input
+                type="number"
+                name="jumlah"
+                class="form-control"
                 required>
             </div>
 
             <!-- FOTO -->
             <div class="col-md-6">
               <label class="form-label">Foto Sarana</label>
-              <input 
-                type="file" 
-                name="foto_sarana" 
+              <input
+                type="file"
+                name="foto_sarana"
                 class="form-control"
                 accept="image/*">
               <small class="text-muted">Opsional, JPG/PNG maksimum 5MB.</small>
@@ -72,9 +72,9 @@ include './app/views/templates/admin/sidebar_admin.php';
             <!-- DESKRIPSI -->
             <div class="col-12">
               <label class="form-label">Deskripsi</label>
-              <textarea 
-                name="deskripsi" 
-                class="form-control" 
+              <textarea
+                name="deskripsi_sarana"
+                class="form-control"
                 rows="4"></textarea>
             </div>
 
@@ -84,8 +84,8 @@ include './app/views/templates/admin/sidebar_admin.php';
             <button class="btn btn-primary">
               <i class="bx bx-save"></i> Simpan
             </button>
-            <a href="<?php echo BASE_URL; ?>/admin/sarana" 
-               class="btn btn-outline-secondary">Batal</a>
+            <a href="<?php echo BASE_URL; ?>/admin/sarana"
+              class="btn btn-outline-secondary">Batal</a>
           </div>
 
         </form>

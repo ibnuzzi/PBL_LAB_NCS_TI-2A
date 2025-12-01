@@ -2,65 +2,14 @@
 include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
-<style>
-    /* 1. Mengubah warna Teks, Link, dan UKURAN FONT */
-    .service-sidebar__category__list li a {
-        color: #28a745 !important;
-        /* Hijau */
-        font-size: 18px !important;
-        /* UKURAN FONT LEBIH BESAR (Standar biasanya 14-16px) */
-        font-weight: 600 !important;
-        /* Agak ditebalkan agar lebih terbaca */
-        transition: all 0.3s ease;
-        display: block;
-        /* Agar area klik lebih luas */
-        padding: 8px 0;
-        /* Memberi jarak antar list agar tidak mepet */
-    }
-
-    /* 2. Mengubah warna Icon dan UKURAN ICON */
-    .service-sidebar__category__list li a i {
-        color: #28a745 !important;
-        /* Hijau */
-        font-size: 16px !important;
-        /* Icon dibuat sedikit lebih besar dari teks */
-        margin-right: 12px;
-        /* Jarak antara icon dan teks */
-        width: 25px;
-        /* Menjaga kerapian jika lebar icon berbeda-beda */
-        text-align: center;
-    }
-
-    /* 3. Efek saat Mouse diarahkan (Hover) */
-    .service-sidebar__category__list li a:hover {
-        color: #198754 !important;
-        /* Hijau Tua */
-        background-color: #f0fdf4;
-        padding-left: 15px;
-        /* Geser lebih jauh sedikit */
-        border-radius: 5px;
-        text-decoration: none;
-        /* Menghilangkan garis bawah jika ada */
-    }
-
-    /* 4. Style untuk kategori aktif */
-    .service-sidebar__category__list li.active a {
-        color: #198754 !important;
-        background-color: #f0fdf4;
-        padding-left: 15px;
-        border-radius: 5px;
-        font-weight: 700 !important;
-    }
-</style>
 
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
         <h2 class="page-header__title">Arsip & Dokumen</h2>
         <ul class="nionx-breadcrumb list-unstyled">
-            <li><a href="index.php">Beranda</a></li>
-            <li><span>Aktivitas</span></li>
-            <li><span>Berita</span></li>
+            <li><a href="<?= BASE_URL ?>">Beranda</a></li>
+            <li><span>Arsip Digital</span></li>
         </ul>
     </div>
 </section>

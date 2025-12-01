@@ -105,15 +105,27 @@ include './app/views/templates/admin/sidebar_admin.php';
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header bg-danger text-white">
+        <div class="modal-header bg-primary text-white">
           <div>
-            <h5 class="modal-title mb-0" id="modalDetailJudul">Detail Dokumen</h5>
+            <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
             <small class="opacity-75">Informasi Dokumen Arsip</small>
           </div>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
+
+          <!-- Judul Dokumen -->
+          <div class="mb-4">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-file-text"></i> JUDUL DOKUMEN
+            </label>
+            <div class="alert alert-primary mb-0">
+              <h5 class="mb-0 fw-bold" id="modalDetailJudul"></h5>
+            </div>
+          </div>
+
+          <hr class="my-3">
 
           <!-- Tanggal Upload -->
           <div class="mb-3">
@@ -130,7 +142,7 @@ include './app/views/templates/admin/sidebar_admin.php';
             <label class="form-label fw-bold text-muted small mb-1">
               <i class="bx bx-category"></i> KATEGORI
             </label>
-            <div class="alert alert-danger mb-0">
+            <div class="alert alert-info mb-0">
               <i class="bx bx-folder"></i> <strong id="modalDetailKategori"></strong>
             </div>
           </div>
@@ -152,7 +164,7 @@ include './app/views/templates/admin/sidebar_admin.php';
             <label class="form-label fw-bold text-muted small mb-2">
               <i class="bx bx-download"></i> UNDUH DOKUMEN
             </label>
-            <a id="modalDetailFile" href="#" target="_blank" class="btn btn-danger btn-sm w-100">
+            <a id="modalDetailFile" href="#" target="_blank" class="btn btn-primary btn-sm w-100">
               <i class="bx bx-download"></i> Unduh / Lihat Dokumen
             </a>
           </div>
@@ -160,7 +172,7 @@ include './app/views/templates/admin/sidebar_admin.php';
         </div>
 
         <div class="modal-footer bg-light">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
             <i class="bx bx-x"></i> Tutup
           </button>
         </div>

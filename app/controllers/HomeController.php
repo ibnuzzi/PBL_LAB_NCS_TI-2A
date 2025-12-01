@@ -176,7 +176,7 @@ class HomeController extends Controller
             'judul_halaman' => 'Detail Berita - Lab NCS',
             'berita' => $berita,
             'admin' => $admin,
-            'latestPosts' => $beritaModel->getBeritaTerbaru(5)
+            'latestPosts' => $beritaModel->getBeritaTerbaru(6)
         ];
 
         if (!$data['berita']) {
@@ -209,15 +209,15 @@ class HomeController extends Controller
     public function indexFasilitas()
     {
         $fasilitasModel = $this->model('Sarana');
-        
+
         // Pagination settings
         $itemsPerPage = 9; // 3 rows x 3 columns
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $currentPage = max(1, $currentPage); // Ensure page is at least 1
-        
+
         // Calculate offset
         $offset = ($currentPage - 1) * $itemsPerPage;
-        
+
         // Get paginated data
         $list = $fasilitasModel->getPaginated($itemsPerPage, $offset);
         $totalItems = $fasilitasModel->getTotalCount();

@@ -604,9 +604,13 @@ if (!isset($pengelolaList)) {
                             </div>
                             <div class="case-studies__list__item__hover">
                                 <h4 class="case-studies__list__item__title">
-                                    <a href="<?= BASE_URL; ?>/arsip"><?= htmlspecialchars($penelitian['nama_dokumen']) ?></a>
+                                    <?php
+                                    $link = !empty($penelitian['link_publikasi']) ? $penelitian['link_publikasi'] : (BASE_URL . '/arsip?kategori=Penelitian');
+                                    $target = !empty($penelitian['link_publikasi']) ? '_blank' : '_self';
+                                    ?>
+                                    <a href="<?= htmlspecialchars($link) ?>" target="<?= $target ?>"><?= htmlspecialchars($penelitian['judul_penelitian']) ?></a>
                                 </h4>
-                                <p class="case-studies__list__item__text"><?= htmlspecialchars(date('Y', strtotime($penelitian['created_at']))) ?></p>
+                                <p class="case-studies__list__item__text"><?= htmlspecialchars(date('d M Y', strtotime($penelitian['created_at']))) ?></p>
                             </div>
                         </div>
                     </li>
@@ -776,7 +780,7 @@ if (!isset($pengelolaList)) {
                 <div class="service-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms'>
                     <div class="service-card__inner">
                         <div class="service-card__top">
-                            <h3 class="service-card__title"><a>Workstation</a></h3>
+                            <h3 class="service-card__title"><a href="<?= BASE_URL; ?>/fasilitas">Workstation</a></h3>
                         </div>
                         <div class="service-card__thumb">
                             <div class="service-card__thumb__item">
@@ -790,14 +794,13 @@ if (!isset($pengelolaList)) {
                 <div class="service-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='600ms'>
                     <div class="service-card__inner">
                         <div class="service-card__top">
-                            <h3 class="service-card__title"><a>Perangkat Lunak</a></h3>
+                            <h3 class="service-card__title"><a href="<?= BASE_URL; ?>/fasilitas">Perangkat Lunak</a></h3>
                         </div>
                         <div class="service-card__thumb">
                             <div class="service-card__thumb__item">
                                 <img src="public/assets/images/service/service-1-2.png" alt="Perangkat Lunak">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -911,7 +914,7 @@ if (!isset($pengelolaList)) {
     .video-cta__divider {
         position: absolute;
         top: 0;
-        left: 0;    
+        left: 0;
         width: 100%;
         height: 60px;
         z-index: 3;
@@ -1000,16 +1003,16 @@ if (!isset($pengelolaList)) {
                 <?php foreach ($latestNews as $news): ?>
                     <div class="col-md-6 col-lg-4">
                         <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='400ms' style="
-                            height: 100%;
-                            display: flex;
-                            flex-direction: column;
-                        ">
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                ">
                             <div class="blog-card__image">
                                 <div class="blog-card__image__item" style="
-                                    height: 250px;
-                                    overflow: hidden;
-                                    position: relative;
-                                ">
+                            height: 250px;
+                            overflow: hidden;
+                            position: relative;
+                        ">
                                     <?php
                                     $imgSrc = BASE_URL . '/public/assets/images/blog/blog-1-1.png'; // Default
                                     if (!empty($news['gambar_berita'])) {
@@ -1021,11 +1024,11 @@ if (!isset($pengelolaList)) {
                                     }
                                     ?>
                                     <img src="<?= $imgSrc ?>" alt="<?= htmlspecialchars($news['judul_berita']) ?>" style="
-                                        width: 100%;
-                                        height: 100%;
-                                        object-fit: cover;
-                                        object-position: center;
-                                    ">
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                object-position: center;
+                            ">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>" class="blog-card__image__link"></a>
                                 </div>
                                 <div class="blog-card__date">
@@ -1033,22 +1036,22 @@ if (!isset($pengelolaList)) {
                                 </div>
                             </div>
                             <div class="blog-card__content" style="
-                                flex: 1;
-                                display: flex;
-                                flex-direction: column;
-                            ">
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                    ">
                                 <div class="blog-card__author">
                                 </div>
                                 <h3 class="blog-card__title" style="
-                                    display: -webkit-box;
-                                    -webkit-line-clamp: 2;
-                                    -webkit-box-orient: vertical;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    min-height: 60px;
-                                    line-height: 1.4;
-                                    margin-bottom: 20px;
-                                ">
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            min-height: 60px;
+                            line-height: 1.4;
+                            margin-bottom: 20px;
+                        ">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>"><?= htmlspecialchars($news['judul_berita']) ?></a>
                                 </h3>
                                 <div class="blog-card__content__btn" style="margin-top: auto;">
@@ -1079,3 +1082,10 @@ if (!isset($pengelolaList)) {
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
+<style>
+    /* Remove + icon on news card hover */
+    .blog-card__image__link::before,
+    .blog-card__image__link::after {
+        display: none !important;
+    }
+</style>

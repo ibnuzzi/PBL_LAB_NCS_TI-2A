@@ -3,6 +3,10 @@ include './app/views/templates/admin/header_admin.php';
 include './app/views/templates/admin/sidebar_admin.php';
 ?>
 
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
 <div class="content-wrapper">
   <div class="container-xxl flex-grow-1 container-p-y">
 
@@ -42,46 +46,38 @@ include './app/views/templates/admin/sidebar_admin.php';
                    required>
           </div>
 
-          <!-- Tim Peneliti (Checkbox List) -->
+          <!-- Tim Peneliti (Select2) -->
           <div class="mb-3">
             <label class="form-label">Tim Peneliti <span class="text-danger">*</span></label>
-
             <?php if (!empty($list_pengelola)): ?>
-              <div class="border rounded p-3" style="max-height: 160px; overflow-y: auto; background-color: #f8f9fa;">
-                <div class="row g-2">
-                  <?php foreach ($list_pengelola as $p): ?>
-                    <?php
-                    // LOGIKA PRE-SELECTED
-                    // Cek apakah ID pengelola ini ada di array $selected_peneliti
-                    $isChecked = in_array($p['id_pengelola'], $selected_peneliti) ? 'checked' : '';
-                    ?>
-                    
-                    <div class="col-md-6">
-                      <div class="form-check p-3 border rounded bg-white">
-                        <input 
-                          class="form-check-input" 
-                          type="checkbox" 
-                          name="peneliti[]" 
-                          value="<?= $p['id_pengelola'] ?>" 
-                          id="peneliti_<?= $p['id_pengelola'] ?>"
-                          <?= $isChecked ?>>
-                        <label class="form-check-label w-100" for="peneliti_<?= $p['id_pengelola'] ?>">
-                          <strong><?= htmlspecialchars($p['nama_pengelola']) ?></strong><br>
-                          <small class="text-muted"><?= htmlspecialchars($p['jabatan']) ?></small>
-                        </label>
-                      </div>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
-              </div>
+              <select class="form-select select2" name="peneliti[]" multiple="multiple" required>
+                <?php foreach ($list_pengelola as $p): ?>
+                  <?php
+                  // Cek apakah ID pengelola ini ada di array $selected_peneliti
+                  $isSelected = in_array($p['id_pengelola'], $selected_peneliti) ? 'selected' : '';
+                  ?>
+                  <option value="<?= $p['id_pengelola'] ?>" <?= $isSelected ?>>
+                    <?= htmlspecialchars($p['nama_pengelola']) ?> (<?= htmlspecialchars($p['jabatan']) ?>)
+                  </option>
+                <?php endforeach; ?>
+              </select>
               <div class="form-text">
-                <i class="bx bx-info-circle"></i> Centang satu atau lebih peneliti untuk dipilih.
+                <i class="bx bx-info-circle"></i> Ketik nama untuk mencari. Bisa pilih lebih dari satu.
               </div>
             <?php else: ?>
               <div class="alert alert-warning">
                 <i class="bx bx-error-circle"></i> Belum ada data pengelola. Silakan tambahkan di menu Profil terlebih dahulu.
               </div>
             <?php endif; ?>
+          </div>
+
+          <!-- Anggota Luar -->
+          <div class="mb-3">
+            <label class="form-label">Anggota Luar (Opsional)</label>
+            <textarea name="anggota_luar" class="form-control" rows="2" placeholder="Tulis nama anggota luar jika ada (pisahkan dengan koma)"><?= htmlspecialchars($penelitian['anggota_luar'] ?? '') ?></textarea>
+            <div class="form-text">
+              <i class="bx bx-info-circle"></i> Masukkan nama anggota yang tidak terdaftar di sistem (misal: mahasiswa atau peneliti luar).
+            </div>
           </div>
 
           <!-- Tahun -->
@@ -95,7 +91,7 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <!-- Deskripsi -->
           <div class="mb-3">
-            <label class="form-label">Deskripsi Singkat</label>
+            <label class="form-label">Abstrak</label>
             <textarea class="form-control" name="deskripsi_singkat" rows="4" required><?= htmlspecialchars($penelitian['deskripsi_singkat']); ?></textarea>
           </div>
 
@@ -139,15 +135,18 @@ include './app/views/templates/admin/sidebar_admin.php';
   </div>
 </div>
 
-<script>
-  // Validasi minimal 1 checkbox harus dipilih
-  document.querySelector('form').addEventListener('submit', function(e) {
-    const checkboxes = document.querySelectorAll('input[name="peneliti[]"]:checked');
-    if (checkboxes.length === 0) {
-      e.preventDefault();
-      alert('Silakan pilih minimal 1 anggota tim peneliti!');
-    }
-  });
-</script>
-
 <?php include './app/views/templates/admin/footer_admin.php'; ?>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+        theme: 'bootstrap-5',
+        placeholder: 'Pilih Anggota Tim',
+        allowClear: true,
+        width: '100%'
+    });
+});
+</script>

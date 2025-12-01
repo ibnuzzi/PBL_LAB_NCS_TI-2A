@@ -109,15 +109,27 @@ include './app/views/templates/admin/sidebar_admin.php';
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
 
-        <div class="modal-header bg-warning text-dark">
+        <div class="modal-header bg-primary text-white">
           <div>
-            <h5 class="modal-title mb-0 fw-bold" id="detailNamaAgenda">Detail Agenda</h5>
+            <h5 class="modal-title mb-0 fw-bold" style="color: white;">Informasi Detail</h5>
             <small class="opacity-75">Informasi Lengkap Kegiatan</small>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
+
+          <!-- Nama Agenda -->
+          <div class="mb-4">
+            <label class="form-label fw-bold text-muted small mb-1">
+              <i class="bx bx-bookmarks"></i> NAMA AGENDA
+            </label>
+            <div class="alert alert-primary mb-0">
+              <h5 class="mb-0 fw-bold" id="detailNamaAgenda"></h5>
+            </div>
+          </div>
+
+          <hr class="my-3">
 
           <!-- Gambar Preview -->
           <div class="mb-4 text-center">
@@ -154,7 +166,7 @@ include './app/views/templates/admin/sidebar_admin.php';
             <label class="form-label fw-bold text-muted small mb-1">
               <i class="bx bx-map"></i> LOKASI
             </label>
-            <div class="alert alert-warning mb-0">
+            <div class="alert alert-primary mb-0">
               <i class="bx bx-map-pin"></i> <span id="detailLokasi"></span>
             </div>
           </div>
@@ -172,7 +184,7 @@ include './app/views/templates/admin/sidebar_admin.php';
         </div>
 
         <div class="modal-footer bg-light">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
             <i class="bx bx-x"></i> Tutup
           </button>
         </div>

@@ -11,7 +11,7 @@ include 'app/views/templates/public/navbar.php';
         <ul class="nionx-breadcrumb list-unstyled">
             <li><a href="<?= BASE_URL ?>">Beranda</a></li>
             <li><span>Aktivitas</span></li>
-            <li><span>Berita</span></li>
+            <li><span>Berita & Artikel</span></li>
         </ul>
     </div>
 </section>
@@ -41,11 +41,11 @@ include 'app/views/templates/public/navbar.php';
         <div class="row gutter-y-30" id="berita-items">
             <?php if (!empty($beritas) && is_array($beritas)): ?>
                 <?php foreach ($beritas as $index => $b): ?>
-                    <?php 
-                        // MENYIAPKAN DATA PENCARIAN
-                        // Menggabungkan Judul dan Tanggal (Format: 25 Aug 2025) agar user bisa cari berdasarkan bulan/tahun
-                        $dateFormatted = date('d M Y', strtotime($b['tanggal_publish']));
-                        $searchableContent = strtolower($b['judul_berita'] . ' ' . $dateFormatted); 
+                    <?php
+                    // MENYIAPKAN DATA PENCARIAN
+                    // Menggabungkan Judul dan Tanggal (Format: 25 Aug 2025) agar user bisa cari berdasarkan bulan/tahun
+                    $dateFormatted = date('d M Y', strtotime($b['tanggal_publish']));
+                    $searchableContent = strtolower($b['judul_berita'] . ' ' . $dateFormatted);
                     ?>
                     <div class="col-md-6 col-lg-4 berita-item" data-search="<?= htmlspecialchars($searchableContent) ?>">
                         <div class="blog-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='<?= (400 + ($index * 200)) ?>ms' style="
@@ -60,9 +60,9 @@ include 'app/views/templates/public/navbar.php';
                                     position: relative;
                                 ">
                                     <?php
-                                        // Handle gambar default jika kosong
-                                        $imgName = !empty($b['gambar_berita']) ? $b['gambar_berita'] : 'default.png';
-                                        $img = BASE_URL . '/public/uploads/berita/' . $imgName;
+                                    // Handle gambar default jika kosong
+                                    $imgName = !empty($b['gambar_berita']) ? $b['gambar_berita'] : 'default.png';
+                                    $img = BASE_URL . '/public/uploads/berita/' . $imgName;
                                     ?>
                                     <img src="<?= $img ?>" alt="<?= htmlspecialchars($b['judul_berita']) ?>" loading="lazy" style="
                                         width: 100%;
@@ -83,7 +83,7 @@ include 'app/views/templates/public/navbar.php';
                                 flex-direction: column;
                             ">
                                 <div class="blog-card__author">
-                                    </div>
+                                </div>
                                 <h3 class="blog-card__title" style="
                                     display: -webkit-box;
                                     -webkit-line-clamp: 2;
@@ -114,7 +114,7 @@ include 'app/views/templates/public/navbar.php';
 
         <div class="search-no-results" style="display:none; text-align:center; padding:40px 20px;">
             <div class="search-no-results__icon">
-                 </div>
+            </div>
             <h3 class="search-no-results__title">Hasil Tidak Ditemukan</h3>
             <p class="search-no-results__message">Maaf, tidak ada berita yang cocok dengan kata kunci pencarian Anda. Silakan coba kata kunci lain.</p>
         </div>
@@ -131,3 +131,10 @@ include 'app/views/templates/public/navbar.php';
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
+<style>
+    /* Remove + icon on news card hover */
+    .blog-card__image__link::before,
+    .blog-card__image__link::after {
+        display: none !important;
+    }
+</style>

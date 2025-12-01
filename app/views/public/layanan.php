@@ -2,18 +2,15 @@
 include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
-<?php
-// File: /app/views/public/layanan.php
-?>
 
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
         <h2 class="page-header__title">Layanan</h2>
         <ul class="nionx-breadcrumb list-unstyled">
-            <li><a href="index.php">Beranda</a></li>
-            <li><span>Fasilitas & Layanan</span></li>
+            <li><a href="<?= BASE_URL ?>">Beranda</a></li>
             <li><span>Layanan</span></li>
+            <li><span>Konsultasi Keamanan</span></li>
         </ul>
     </div>
 </section>
@@ -24,37 +21,36 @@ include 'app/views/templates/public/navbar.php';
             <div class="col-lg-5">
                 <div class="contact-one__content">
                     <ul class="list-unstyled contact-one__info">
-                        <li class="contact-one__info__item">
-                            <div class="contact-one__info__icon">
+                        <li class="contact-one__info__item" style="display: flex; align-items: center;">
+                            <div class="contact-one__info__icon" style="display: flex; align-items: center; justify-content: center;">
                                 <i class="icon-telephone-call-1"></i>
                             </div>
-                            <div class="contact-one__info__content">
+                            <div class="contact-one__info__content" style="display: flex; flex-direction: column; justify-content: center;">
                                 <p class="contact-one__info__text">Butuh bantuan cepat?</p>
                                 <h4 class="contact-one__info__title"><a href="tel:+62341404424">(0341) 404-424</a></h4>
                             </div>
                         </li>
-                        <li class="contact-one__info__item">
-                            <div class="contact-one__info__icon">
+                        <li class="contact-one__info__item" style="display: flex; align-items: center;">
+                            <div class="contact-one__info__icon" style="display: flex; align-items: center; justify-content: center;">
                                 <i class="icon-email"></i>
                             </div>
-                            <div class="contact-one__info__content">
+                            <div class="contact-one__info__content" style="display: flex; flex-direction: column; justify-content: center;">
                                 <p class="contact-one__info__text">Kirim email ke lab</p>
                                 <h4 class="contact-one__info__title"><a href="mailto:ncs@polinema.ac.id">ncs@polinema.ac.id</a></h4>
                             </div>
                         </li>
-                        <li class="contact-one__info__item">
-                            <div class="contact-one__info__icon">
+                        <li class="contact-one__info__item" style="display: flex; align-items: center;">
+                            <div class="contact-one__info__icon" style="display: flex; align-items: center; justify-content: center;">
                                 <i class="icon-pin"></i>
                             </div>
-                            <div class="contact-one__info__content">
+                            <div class="contact-one__info__content" style="display: flex; flex-direction: column; justify-content: center;">
                                 <p class="contact-one__info__text">Lokasi Lab</p>
-                                <h4 class="contact-one__info__title"><a href="#">Gedung JTI, Polinema</a></h4>
+                                <h4 class="contact-one__info__title"><a href="https://maps.app.goo.gl/5FQfTFnQqJ4Va5mKA" target="_blank">Gedung JTI, Polinema</a></h4>
                             </div>
                         </li>
                     </ul>
 
                     <div class="contact-one__content__thumb">
-                        <img src="<?php echo BASE_URL; ?>/assets/images/resources/man-contact.png" alt="laboix">
                     </div>
                 </div>
             </div>
@@ -65,6 +61,25 @@ include 'app/views/templates/public/navbar.php';
                         <div class="sec-title wow fadeInUp animated" data-wow-duration="700ms">
                             <h6 class="sec-title__tagline">
                                 <img src="<?php echo BASE_URL; ?>/assets/images/shapes/sec-title-s-1.png" alt="Contact" class="sec-title__img">
+                                Konsultasi Online
+                            </h6>
+                            <h3 class="sec-title__title">Ajukan Pertanyaan Keamanan</h3>
+                        </div>
+                    </div>
+
+                    <?php if (isset($_SESSION['flash_message'])): ?>
+                        <div style="background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #c3e6cb;">
+                            <?php echo $_SESSION['flash_message'];
+                            unset($_SESSION['flash_message']); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form class="contact-one__form contact-form-validated form-one background-base wow fadeInUp animated"
+                        data-wow-duration="1500ms"
+                        action="<?php echo BASE_URL; ?>/layanan/store"
+                        method="POST">
+
+                        <div class="form-one__group">
                             <div class="form-one__control">
                                 <input type="text" name="nama_penanya" placeholder="Nama Lengkap Anda" required>
                             </div>
@@ -158,6 +173,20 @@ include 'app/views/templates/public/navbar.php';
                 allowfullscreen="" 
                 loading="lazy">
             </iframe>
+
+            <div class="google-map__contact__pin">
+                <img src="<?php echo BASE_URL; ?>/assets/images/shapes/pin.png" alt="Pin Lokasi">
+            </div>
+
+            <div class="google-map__contact__location">
+                <p class="google-map__contact__location__text">
+                    Jl. Soekarno Hatta No.9, Mojolangu, Kec. Lowokwaru, Jawa Barat, Jawa Timur 65141
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+                
 
             <div class="google-map__contact__pin">
                 <img src="<?php echo BASE_URL; ?>/assets/images/shapes/pin.png" alt="Pin Lokasi">

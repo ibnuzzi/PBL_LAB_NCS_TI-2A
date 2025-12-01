@@ -102,8 +102,8 @@ include './app/views/templates/admin/sidebar_admin.php';
 
         <div class="modal-header bg-info text-white">
           <div>
-            <h5 class="modal-title mb-0">Profil Pengelola</h5>
-            <small class="opacity-75">Informasi Detail</small>
+            <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
+            <small class="opacity-75">Profil Pengelola Laboratorium</small>
           </div>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>

@@ -110,9 +110,112 @@ include './app/views/templates/admin/sidebar_admin.php';
   </div>
 
   <?php
-  include './app/views/components/modal.php';
   include './app/views/components/toaster.php';
   ?>
+  
+  <!-- MODAL DETAIL BERITA (CUSTOM BLUE) -->
+  <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <div>
+                    <h5 class="modal-title mb-0" style="color: white;">Informasi Detail</h5>
+                    <small class="opacity-75">Informasi Lengkap Berita</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Judul/Nama -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-muted small mb-1">
+                        <i class="bx bx-bookmark"></i> JUDUL BERITA
+                    </label>
+                    <div class="alert alert-primary mb-0">
+                        <h5 class="mb-0 fw-bold" data-fill-text="judul">-</h5>
+                    </div>
+                </div>
+
+                <hr class="my-3">
+
+                <!-- Preview Gambar -->
+                <div class="mb-4 text-center">
+                    <label class="form-label fw-bold text-muted small mb-2">
+                        <i class="bx bx-image"></i> PREVIEW GAMBAR
+                    </label>
+                    <div class="border rounded p-2 bg-light">
+                        <img data-fill-src="gambar" src="" alt="Gambar" class="img-fluid rounded" style="max-height: 350px; object-fit: contain;" />
+                    </div>
+                </div>
+
+                <hr class="my-3">
+
+                <!-- Tanggal (jika ada) -->
+                <div class="mb-3" data-section="tanggal">
+                    <label class="form-label fw-bold text-muted small mb-1">
+                        <i class="bx bx-calendar"></i> TANGGAL PUBLISH
+                    </label>
+                    <p class="fs-6 mb-0">
+                        <span data-fill-text="tanggal">-</span>
+                    </p>
+                </div>
+
+                <hr class="my-3" data-section="tanggal">
+
+                <!-- Deskripsi -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-muted small mb-1">
+                        <i class="bx bx-file-blank"></i> ISI BERITA
+                    </label>
+                    <div class="bg-light p-3 rounded">
+                        <div data-fill-html="deskripsi" class="mb-0">-</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    <i class="bx bx-x"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<script>
+// Auto-fill modal khusus berita
+document.addEventListener("DOMContentLoaded", function() {
+    const modalDetail = document.getElementById('modalDetail');
+    
+    if (modalDetail) {
+        modalDetail.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            
+            // Fill text elements
+            modalDetail.querySelectorAll('[data-fill-text]').forEach(el => {
+                const key = el.getAttribute('data-fill-text');
+                const value = button.getAttribute('data-' + key) || '-';
+                el.textContent = value;
+            });
+
+            // Fill HTML elements (untuk isi berita yang mungkin ada tag HTML)
+            modalDetail.querySelectorAll('[data-fill-html]').forEach(el => {
+                const key = el.getAttribute('data-fill-html');
+                const value = button.getAttribute('data-' + key) || '-';
+                el.innerHTML = value; // Gunakan innerHTML agar tag HTML ter-render
+            });
+            
+            // Fill image source
+            modalDetail.querySelectorAll('[data-fill-src]').forEach(el => {
+                const key = el.getAttribute('data-fill-src');
+                const value = button.getAttribute('data-' + key);
+                if (value) {
+                    el.setAttribute('src', value);
+                }
+            });
+        });
+    }
+});
+</script>
 </div>
 
 

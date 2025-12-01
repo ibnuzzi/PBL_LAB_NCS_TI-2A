@@ -8,7 +8,7 @@ $isDashboard = stripos($currentPath, '/admin/dashboard') !== false;
 $isBerita = stripos($currentPath, '/admin/berita') !== false;
 $isAgenda = stripos($currentPath, '/admin/agenda') !== false;
 $isGaleri = stripos($currentPath, '/admin/gallery') !== false;
-$isStruktur = stripos($currentPath, '/admin/struktur') !== false;
+$isStruktur = stripos($currentPath, '/admin/pengelola') !== false;
 $isHalamanStatis = stripos($currentPath, '/admin/halaman-statis') !== false;
 $isKonsultasi = stripos($currentPath, '/admin/konsultasi') !== false;
 $isSaranaPrasarana = stripos($currentPath, '/admin/sarana') !== false;

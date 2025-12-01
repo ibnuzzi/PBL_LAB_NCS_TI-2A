@@ -97,7 +97,8 @@ class AdminPengabdianController extends Controller
             'deskripsi_kegiatan' => $deskripsi,
             'file_dokumen_pdf'   => $file_pdf,
             'id_admin_pencatat'  => $_SESSION['admin_id'] ?? 1,
-            'anggota_ids'        => $anggota_ids
+            'anggota_ids'        => $anggota_ids,
+            'anggota_luar'       => $_POST['anggota_luar'] ?? null
         ];
 
         $model = $this->model('Pengabdian');
@@ -217,7 +218,8 @@ class AdminPengabdianController extends Controller
             'tahun_kegiatan'     => $tahun,
             'deskripsi_kegiatan' => $deskripsi,
             'file_dokumen_pdf'   => $file_pdf,
-            'anggota_ids'        => $anggota_ids // Array ID anggota baru
+            'anggota_ids'        => $anggota_ids, // Array ID anggota baru
+            'anggota_luar'       => $_POST['anggota_luar'] ?? null
         ];
 
         // 6. UPDATE VIA MODEL

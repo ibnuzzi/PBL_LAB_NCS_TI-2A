@@ -120,6 +120,7 @@ class AdminPenelitianController extends Controller
             'deskripsi_singkat' => $deskripsi_singkat,
             'link_publikasi' => $link_publikasi,
             'file_dokumen_pdf' => $file_name,
+            'anggota_luar' => $_POST['anggota_luar'] ?? null,
             'peneliti' => $peneliti_array  // Array ID
         ];
 
@@ -244,6 +245,7 @@ class AdminPenelitianController extends Controller
             'deskripsi_singkat' => $deskripsi_singkat,
             'link_publikasi' => $link_publikasi,
             'file_dokumen_pdf' => $file_name,
+            'anggota_luar' => $_POST['anggota_luar'] ?? null,
             'peneliti' => $peneliti_array  // Array ID
         ];
 

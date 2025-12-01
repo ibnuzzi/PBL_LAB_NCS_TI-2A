@@ -112,3 +112,30 @@ include './app/views/templates/admin/sidebar_admin.php';
 // Footer (includes scripts)
 include './app/views/templates/admin/footer_admin.php';
 ?>
+
+<!-- Summernote Lite CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<!-- Summernote Lite JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<!-- Initialize Summernote -->
+<script>
+$(document).ready(function() {
+  $('#isi_berita').summernote({
+    height: 300,
+    placeholder: 'Tulis isi berita di sini...',
+    tabsize: 2,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'italic', 'clear']],
+      ['fontname', ['fontname']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+});
+</script>

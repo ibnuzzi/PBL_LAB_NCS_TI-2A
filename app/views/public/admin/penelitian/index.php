@@ -63,6 +63,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                     data-tahun="<?= htmlspecialchars($p['tahun_penelitian']); ?>"
                     data-deskripsi="<?= htmlspecialchars($p['deskripsi_singkat'] ?? ''); ?>"
                     data-peneliti="<?= htmlspecialchars($p['peneliti'] ?? 'Belum ada data'); ?>"
+                    data-anggota-luar="<?= htmlspecialchars($p['anggota_luar'] ?? ''); ?>"
                     data-link="<?= htmlspecialchars($p['link_publikasi'] ?? ''); ?>"
                     data-file="<?= htmlspecialchars($p['file_dokumen_pdf'] ?? ''); ?>"
                   >
@@ -146,8 +147,18 @@ include './app/views/components/page_scripts.php';
           <label class="form-label fw-bold text-muted small mb-1">
             <i class="bx bx-group"></i> TIM PENELITI
           </label>
-          <div class="alert alert-info mb-0" id="modalPenelitiInfo">
+          <div class="alert alert-primary mb-0" id="modalPenelitiInfo">
             <i class="bx bx-user-circle"></i> <span id="modalTimPeneliti"></span>
+          </div>
+        </div>
+
+        <!-- Anggota Luar -->
+        <div class="mb-3" id="wrapperAnggotaLuar" style="display: none;">
+          <label class="form-label fw-bold text-muted small mb-1">
+            <i class="bx bx-group"></i> ANGGOTA LUAR
+          </label>
+          <div class="alert alert-info mb-0">
+            <i class="bx bx-user"></i> <span id="modalAnggotaLuar"></span>
           </div>
         </div>
 
@@ -187,7 +198,7 @@ include './app/views/components/page_scripts.php';
       </div>
 
       <div class="modal-footer bg-light">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
           <i class="bx bx-x"></i> Tutup
         </button>
       </div>
@@ -205,6 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let tahun = $(this).data("tahun");
     let deskripsi = $(this).data("deskripsi");
     let peneliti = $(this).data("peneliti");
+    let anggotaLuar = $(this).data("anggota-luar");
     let link = $(this).data("link");
     let file = $(this).data("file");
 
@@ -216,10 +228,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Set tim peneliti
     if (peneliti && peneliti.trim() !== "" && peneliti !== "Belum ada data") {
+        $("#modalPenelitiInfo").removeClass("alert-warning").addClass("alert-primary");
         $("#modalTimPeneliti").text(peneliti);
     } else {
-        $("#modalPenelitiInfo").removeClass("alert-info").addClass("alert-warning");
+        $("#modalPenelitiInfo").removeClass("alert-primary").addClass("alert-warning");
         $("#modalTimPeneliti").text("Belum ada data tim peneliti");
+    }
+
+    // Set anggota luar
+    if (anggotaLuar && anggotaLuar.trim() !== "") {
+        $("#wrapperAnggotaLuar").show();
+        $("#modalAnggotaLuar").text(anggotaLuar);
+    } else {
+        $("#wrapperAnggotaLuar").hide();
     }
 
     // Set deskripsi
@@ -232,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Link Publikasi
     if (link && link.trim() !== "") {
         $("#modalLinkPenelitian").html(`
-          <a href="${link}" target="_blank" class="btn btn-info btn-sm w-100">
+          <a href="${link}" target="_blank" class="btn btn-primary btn-sm w-100">
             <i class="bx bx-link-external"></i> Buka Link
           </a>
         `);
@@ -245,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // File Dokumen PDF
     if (file && file.trim() !== "") {
         $("#modalFilePenelitian").html(`
-          <a href="<?= BASE_URL ?>/public/uploads/penelitian/${file}" target="_blank" class="btn btn-success btn-sm w-100">
+          <a href="<?= BASE_URL ?>/public/uploads/penelitian/${file}" target="_blank" class="btn btn-primary btn-sm w-100">
             <i class="bx bx-download"></i> Unduh PDF
           </a>
         `);

@@ -38,6 +38,8 @@
     <!--  jquery-circleType js plugins -->
     <script src="<?= BASE_URL ?>/public/vendors/jquery-circleType/jquery.circleType.js"></script>
     <script src="<?= BASE_URL ?>/public/vendors/jquery-lettering/jquery.lettering.min.js"></script>
+    <!-- home carousel js -->
+    <script src="<?= BASE_URL ?>/public/js/lab-ncs-home-carousel.js"></script>
     <!-- template js -->
     <script src="<?= BASE_URL ?>/public/js/laboix.js"></script>
     <script>

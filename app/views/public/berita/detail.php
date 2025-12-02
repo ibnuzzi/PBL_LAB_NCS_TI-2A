@@ -9,6 +9,8 @@ include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
 
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/lab-ncs-berita-detail.css?v=<?= filemtime(__DIR__ . '/../../../../public/css/lab-ncs-berita-detail.css') ?>">
+
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(<?= BASE_URL ?>/public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
@@ -123,22 +125,6 @@ include 'app/views/templates/public/navbar.php';
                                 </article>
                             <?php endforeach; ?>
                         </div>
-
-                        <style>
-                            .latest-post-card a:hover {
-                                background-color: #f9f9f9 !important;
-                                transform: translateY(-3px);
-                                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-                            }
-
-                            .latest-post-card a:hover h4 {
-                                color: #1ea37a !important;
-                            }
-
-                            .latest-post-card a:hover img {
-                                transform: scale(1.1);
-                            }
-                        </style>
                     <?php else: ?>
                         <p style="color: #999; font-size: 14px; text-align: center; padding: 20px;">Belum ada berita terbaru.</p>
                     <?php endif; ?>

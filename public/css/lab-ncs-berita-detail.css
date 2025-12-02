@@ -1,0 +1,26 @@
+/* ============================================================================
+   LAB NCS BERITA DETAIL PAGE STYLES
+   ============================================================================
+   This file contains all CSS for the berita/detail.php (individual news article)
+   Extracted from embedded <style> blocks for better maintainability and caching
+   ============================================================================ */
+
+/* ============================================================================
+   LATEST POSTS SIDEBAR WIDGET
+   ============================================================================ */
+
+.latest-post-card a:hover {
+    background-color: #f9f9f9 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.latest-post-card a:hover h4 {
+    color: #1ea37a !important;
+}
+
+.latest-post-card a:hover img {
+    transform: scale(1.1);
+}
+
+/* End CSS extracted from berita/detail.php */

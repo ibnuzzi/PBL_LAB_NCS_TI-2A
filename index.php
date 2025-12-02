@@ -101,7 +101,9 @@ Route::add('GET', '/admin/gallery/delete/{id}', 'AdminGalleryController', 'delet
 Route::add('GET',  '/admin/konsultasi',            'AdminKonsultasiController', 'index');
 Route::add('GET',  '/admin/konsultasi/create',     'AdminKonsultasiController', 'create');
 Route::add('POST', '/admin/konsultasi/store',      'AdminKonsultasiController', 'store');
-Route::add('POST', '/admin/konsultasi/update', 'AdminKonsultasiController', 'update');
+Route::add('POST', '/admin/konsultasi/update',     'AdminKonsultasiController', 'update');
+Route::add('POST', '/admin/konsultasi/approve',    'AdminKonsultasiController', 'approve');
+Route::add('POST', '/admin/konsultasi/reject',     'AdminKonsultasiController', 'reject');
 Route::add('GET',  '/admin/konsultasi/delete/{id}', 'AdminKonsultasiController', 'delete');
 
 // ================= SARANA PRASARANA =====================

@@ -289,7 +289,7 @@ if (!isset($pengelolaList)) {
                                     ?>
                                     <a href="<?= htmlspecialchars($link) ?>" target="<?= $target ?>"><?= htmlspecialchars($penelitian['judul_penelitian']) ?></a>
                                 </h4>
-                                <p class="case-studies__list__item__text"><?= htmlspecialchars(date('d M Y', strtotime($penelitian['created_at']))) ?></p>
+                                <p class="case-studies__list__item__text"><?= DateHelper::toIndonesianDate($penelitian['created_at'], 'long') ?></p>
                             </div>
                         </div>
                     </li>

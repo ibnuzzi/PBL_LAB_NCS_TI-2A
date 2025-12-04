@@ -110,7 +110,7 @@ if (!isset($pengelolaList)) {
 ?>
 
 <!-- Tim Kami section start -->
-<section class="team-one team-one--home" style="margin-bottom: 10%;">
+<section class="team-one team-one--home team-section-margin">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -124,6 +124,10 @@ if (!isset($pengelolaList)) {
         </div>
 
         <?php if (!empty($pengelolaList)): ?>
+            <!-- Set total slides for carousel JS -->
+            <script>
+                window.homeTotalSlides = <?= count($pengelolaList) ?>;
+            </script>
             <!-- Team Carousel -->
             <div class="team-carousel-wrapper">
                 <div class="team-carousel" id="teamCarousel">
@@ -168,12 +172,12 @@ if (!isset($pengelolaList)) {
                 </div>
 
                 <!-- Navigation Arrows -->
-                <button class="team-carousel__nav team-carousel__nav--prev" onclick="moveCarouselHome(-1)" aria-label="Previous">
+                <button class="team-carousel__nav team-carousel__nav--prev" type="button" aria-label="Previous slide">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg>
                 </button>
-                <button class="team-carousel__nav team-carousel__nav--next" onclick="moveCarouselHome(1)" aria-label="Next">
+                <button class="team-carousel__nav team-carousel__nav--next" type="button" aria-label="Next slide">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
@@ -182,14 +186,14 @@ if (!isset($pengelolaList)) {
                 <!-- Dots Indicator -->
                 <div class="team-carousel__dots">
                     <?php for ($i = 0; $i < count($pengelolaList); $i++): ?>
-                        <span class="dot <?= $i === 0 ? 'active' : '' ?>" onclick="currentSlideHome(<?= $i ?>)" aria-label="Slide <?= $i + 1 ?>"></span>
+                        <span class="dot <?= $i === 0 ? 'active' : '' ?>" role="button" tabindex="0" aria-label="Slide <?= $i + 1 ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>"></span>
                     <?php endfor; ?>
                 </div>
             </div>
         <?php else: ?>
             <!-- Fallback message -->
-            <div class="text-center" style="padding: 60px 0;">
-                <p style="color: #666; font-size: 16px;">Data tim pengelola belum tersedia.</p>
+            <div class="text-center team-empty-state-container">
+                <p class="team-empty-state-text">Data tim pengelola belum tersedia.</p>
             </div>
         <?php endif; ?>
     </div>
@@ -387,7 +391,7 @@ if (!isset($pengelolaList)) {
 <!-- Video section End - CSS moved to lab-ncs-home.css -->
 
 <!-- Berita section Start -->
-<section class="blog-one blog-one--home" style="padding: 120px 0 90px;">
+<section class="blog-one blog-one--home blog-section-padding">
     <div class="container">
         <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
             <h6 class="sec-title__tagline">
@@ -406,11 +410,7 @@ if (!isset($pengelolaList)) {
                     flex-direction: column;
                 ">
                             <div class="blog-card__image">
-                                <div class="blog-card__image__item" style="
-                            height: 250px;
-                            overflow: hidden;
-                            position: relative;
-                        ">
+                                <div class="blog-card__image__item blog-card-image-item">
                                     <?php
                                     $imgSrc = BASE_URL . '/public/assets/images/blog/blog-1-1.png'; // Default
                                     if (!empty($news['gambar_berita'])) {
@@ -421,38 +421,20 @@ if (!isset($pengelolaList)) {
                                         }
                                     }
                                     ?>
-                                    <img src="<?= $imgSrc ?>" alt="<?= htmlspecialchars($news['judul_berita']) ?>" style="
-                                width: 100%;
-                                height: 100%;
-                                object-fit: cover;
-                                object-position: center;
-                            ">
+                                    <img src="<?= $imgSrc ?>" alt="<?= htmlspecialchars($news['judul_berita']) ?>" class="blog-card-img">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>" class="blog-card__image__link"></a>
                                 </div>
                                 <div class="blog-card__date">
                                     <span class="blog-card__date__day"><?= date('d', strtotime($news['tanggal_publish'])) ?></span><?= strtoupper(date('M', strtotime($news['tanggal_publish']))) ?>
                                 </div>
                             </div>
-                            <div class="blog-card__content" style="
-                        flex: 1;
-                        display: flex;
-                        flex-direction: column;
-                    ">
+                            <div class="blog-card__content blog-card-content-custom">
                                 <div class="blog-card__author">
                                 </div>
-                                <h3 class="blog-card__title" style="
-                            display: -webkit-box;
-                            -webkit-line-clamp: 2;
-                            -webkit-box-orient: vertical;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            min-height: 60px;
-                            line-height: 1.4;
-                            margin-bottom: 20px;
-                        ">
+                                <h3 class="blog-card__title blog-card-title-custom">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>"><?= htmlspecialchars($news['judul_berita']) ?></a>
                                 </h3>
-                                <div class="blog-card__content__btn" style="margin-top: auto;">
+                                <div class="blog-card__content__btn blog-card-btn-wrapper">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>" class="blog-card__content__btn__link">
                                         Baca Selengkapnya<i class="icon-arrow"></i>
                                     </a>

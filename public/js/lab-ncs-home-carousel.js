@@ -3,6 +3,7 @@
  * Extracted from: app/views/public/home.php (lines 439-545)
  * Purpose: Team carousel navigation and auto-slide functionality
  * Last Updated: 2025-12-02
+ * Fixed: Autoscroll timing bug and smooth transition
  */
 
 (function() {
@@ -11,6 +12,7 @@
     // Initialize carousel variables
     let homeCurrentIndex = 0;
     let homeAutoSlideInterval;
+    let resizeTimeout;
     const homeTotalSlides = window.homeTotalSlides || 0;
     const homeCarousel = document.getElementById('teamCarousel');
     const homeDots = document.querySelectorAll('.team-carousel__dots .dot');
@@ -34,7 +36,7 @@
      * Move carousel in specified direction
      * @param {number} direction - 1 for next, -1 for previous
      */
-    window.moveCarouselHome = function(direction) {
+    function moveCarouselHome(direction) {
         if (homeTotalSlides === 0) return;
 
         homeCurrentIndex += direction;
@@ -48,19 +50,19 @@
 
         updateCarouselHome();
         resetAutoSlideHome();
-    };
+    }
 
     /**
      * Jump to specific slide
      * @param {number} index - Slide index to navigate to
      */
-    window.currentSlideHome = function(index) {
+    function currentSlideHome(index) {
         if (homeTotalSlides === 0) return;
 
         homeCurrentIndex = index;
         updateCarouselHome();
         resetAutoSlideHome();
-    };
+    }
 
     /**
      * Auto-slide to next slide
@@ -77,10 +79,11 @@
 
     /**
      * Start auto-slide interval
+     * Fixed: Increased from 5000ms to 6000ms for smoother scrolling
      */
     function startAutoSlideHome() {
         if (homeTotalSlides > 1) {
-            homeAutoSlideInterval = setInterval(autoSlideHome, 5000);
+            homeAutoSlideInterval = setInterval(autoSlideHome, 6000);
         }
     }
 
@@ -105,11 +108,46 @@
                 wrapper.addEventListener('mouseenter', () => clearInterval(homeAutoSlideInterval));
                 wrapper.addEventListener('mouseleave', startAutoSlideHome);
             }
+
+            // Event Listeners for Navigation Buttons
+            const prevBtn = document.querySelector('.team-carousel__nav--prev');
+            const nextBtn = document.querySelector('.team-carousel__nav--next');
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', function() {
+                    moveCarouselHome(-1);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    moveCarouselHome(1);
+                });
+            }
+
+            // Event Listeners for Dots
+            homeDots.forEach((dot, index) => {
+                dot.addEventListener('click', function() {
+                    currentSlideHome(index);
+                });
+                
+                // Accessibility: Allow Enter key on dots
+                dot.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        currentSlideHome(index);
+                    }
+                });
+            });
         }
     });
 
     /**
-     * Handle window resize for responsive carousel
+     * Handle window resize for responsive carousel with debounce
      */
-    window.addEventListener('resize', updateCarouselHome);
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            requestAnimationFrame(updateCarouselHome);
+        }, 150);
+    });
 })();

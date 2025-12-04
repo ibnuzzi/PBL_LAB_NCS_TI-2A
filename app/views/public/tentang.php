@@ -11,7 +11,7 @@ if (!isset($pengelolaList)) {
 
 <!-- Page Header -->
 <section class="page-header">
-    <div class="page-header__bg" style="background-image: url(<?= BASE_URL ?>/public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+    <div class="page-header__bg page-header__bg-custom"></div>
     <div class="container">
         <h2 class="page-header__title">Tentang Kami</h2>
         <ul class="nionx-breadcrumb list-unstyled">
@@ -99,7 +99,7 @@ if (!isset($pengelolaList)) {
                 <div class="visi-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms">
                     <div class="visi-card__inner">
                         <div class="visi-card__icon">
-                            <i class="fas fa-bullseye" style="font-size: 32px; color: white;"></i>
+                            <i class="fas fa-bullseye visi-misi-icon-large"></i>
                         </div>
                         <div class="visi-card__content">
                             <h4 class="visi-card__title">Visi</h4>
@@ -114,7 +114,7 @@ if (!isset($pengelolaList)) {
                 <div class="misi-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="400ms">
                     <div class="misi-card__inner">
                         <div class="misi-card__icon">
-                            <i class="fas fa-rocket" style="font-size: 32px; color: white;"></i>
+                            <i class="fas fa-rocket visi-misi-icon-large"></i>
                         </div>
                         <div class="misi-card__content">
                             <h4 class="misi-card__title">Misi</h4>
@@ -125,29 +125,29 @@ if (!isset($pengelolaList)) {
                                     </div>
                                     <p class="misi-list__text">Menyelenggarakan kegiatan praktikum yang berkualitas untuk menghasilkan lulusan dengan kompetensi tinggi di bidang jaringan komputer dan keamanan siber.</p>
                                 </li>
-                                <li style="display: flex; align-items: flex-start; margin-bottom: 18px; padding-left: 0;">
-                                    <div style="flex-shrink: 0; width: 36px; height: 36px; background: linear-gradient(135deg, rgba(26, 58, 107, 0.15) 0%, rgba(45, 90, 158, 0.15) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; margin-top: 2px; box-shadow: 0 2px 8px rgba(26, 58, 107, 0.1);">
-                                        <i class="fas fa-check" style="color: #1a3a6b; font-size: 16px; font-weight: 700;"></i>
+                                <li class="misi-list-item">
+                                    <div class="misi-icon-container">
+                                        <i class="fas fa-check misi-icon-check"></i>
                                     </div>
-                                    <p style="margin: 0; color: #444; font-size: 15px; line-height: 1.8; flex: 1;">Mengembangkan penelitian terapan dalam bidang jaringan, keamanan sistem, Internet of Things (IoT), serta teknologi monitoring yang relevan dengan kebutuhan industri dan masyarakat.</p>
+                                    <p class="misi-text">Mengembangkan penelitian terapan dalam bidang jaringan, keamanan sistem, Internet of Things (IoT), serta teknologi monitoring yang relevan dengan kebutuhan industri dan masyarakat.</p>
                                 </li>
-                                <li style="display: flex; align-items: flex-start; margin-bottom: 18px; padding-left: 0;">
-                                    <div style="flex-shrink: 0; width: 36px; height: 36px; background: linear-gradient(135deg, rgba(26, 58, 107, 0.15) 0%, rgba(45, 90, 158, 0.15) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; margin-top: 2px; box-shadow: 0 2px 8px rgba(26, 58, 107, 0.1);">
-                                        <i class="fas fa-check" style="color: #1a3a6b; font-size: 16px; font-weight: 700;"></i>
+                                <li class="misi-list-item">
+                                    <div class="misi-icon-container">
+                                        <i class="fas fa-check misi-icon-check"></i>
                                     </div>
-                                    <p style="margin: 0; color: #444; font-size: 15px; line-height: 1.8; flex: 1;">Menyediakan layanan uji keamanan, pendampingan, serta pelatihan bagi civitas akademika maupun mitra eksternal melalui kerja sama dengan industri, pemerintah, dan lembaga lainnya.</p>
+                                    <p class="misi-text">Menyediakan layanan uji keamanan, pendampingan, serta pelatihan bagi civitas akademika maupun mitra eksternal melalui kerja sama dengan industri, pemerintah, dan lembaga lainnya.</p>
                                 </li>
-                                <li style="display: flex; align-items: flex-start; margin-bottom: 18px; padding-left: 0;">
-                                    <div style="flex-shrink: 0; width: 36px; height: 36px; background: linear-gradient(135deg, rgba(26, 58, 107, 0.15) 0%, rgba(45, 90, 158, 0.15) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; margin-top: 2px; box-shadow: 0 2px 8px rgba(26, 58, 107, 0.1);">
-                                        <i class="fas fa-check" style="color: #1a3a6b; font-size: 16px; font-weight: 700;"></i>
+                                <li class="misi-list-item">
+                                    <div class="misi-icon-container">
+                                        <i class="fas fa-check misi-icon-check"></i>
                                     </div>
-                                    <p style="margin: 0; color: #444; font-size: 15px; line-height: 1.8; flex: 1;">Meningkatkan kapasitas dosen, teknisi, dan asisten laboratorium dalam menguasai teknologi terkini melalui pelatihan, sertifikasi, dan partisipasi aktif dalam komunitas profesional.</p>
+                                    <p class="misi-text">Meningkatkan kapasitas dosen, teknisi, dan asisten laboratorium dalam menguasai teknologi terkini melalui pelatihan, sertifikasi, dan partisipasi aktif dalam komunitas profesional.</p>
                                 </li>
-                                <li style="display: flex; align-items: flex-start; margin-bottom: 0; padding-left: 0;">
-                                    <div style="flex-shrink: 0; width: 36px; height: 36px; background: linear-gradient(135deg, rgba(26, 58, 107, 0.15) 0%, rgba(45, 90, 158, 0.15) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; margin-top: 2px; box-shadow: 0 2px 8px rgba(26, 58, 107, 0.1);">
-                                        <i class="fas fa-check" style="color: #1a3a6b; font-size: 16px; font-weight: 700;"></i>
+                                <li class="misi-list-item" style="margin-bottom: 0;">
+                                    <div class="misi-icon-container">
+                                        <i class="fas fa-check misi-icon-check"></i>
                                     </div>
-                                    <p style="margin: 0; color: #444; font-size: 15px; line-height: 1.8; flex: 1;">Mendukung peningkatan literasi keamanan digital masyarakat melalui workshop, seminar, dan program pengabdian berbasis teknologi informasi.</p>
+                                    <p class="misi-text">Mendukung peningkatan literasi keamanan digital masyarakat melalui workshop, seminar, dan program pengabdian berbasis teknologi informasi.</p>
                                 </li>
                             </ul>
                         </div>
@@ -245,156 +245,16 @@ if (!isset($pengelolaList)) {
         <?php else: ?>
             <!-- Fallback message -->
             <div class="text-center team-empty-state">
-                <p style="color: #666; font-size: 16px;">Data tim pengelola belum tersedia.</p>
+                <p class="team-empty-state-text">Data tim pengelola belum tersedia.</p>
             </div>
         <?php endif; ?>
     </div>
 </section>
 <!-- Tim Kami section End -->
 
-
-
+<!-- Set total slides for carousel JS -->
 <script>
-    // Improved Carousel Logic - No Duplicates, Smooth Experience
-    let homeCurrentIndex = 0;
-    let homeAutoSlideInterval;
-    const homeTotalSlides = <?= !empty($pengelolaList) ? count($pengelolaList) : 0 ?>;
-    const homeCarousel = document.getElementById('teamCarousel');
-    const homeDots = document.querySelectorAll('.team-carousel__dots .dot');
-
-    function updateCarouselHome() {
-        if (!homeCarousel || homeTotalSlides === 0) return;
-
-        const slideWidth = document.querySelector('.team-slide').offsetWidth + 25;
-        homeCarousel.style.transform = `translateX(-${homeCurrentIndex * slideWidth}px)`;
-
-        // Update dots
-        homeDots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === homeCurrentIndex);
-        });
-    }
-
-    function moveCarouselHome(direction) {
-        if (homeTotalSlides === 0) return;
-
-        homeCurrentIndex += direction;
-
-        // Wrap around logic - smooth circular navigation
-        if (homeCurrentIndex >= homeTotalSlides) {
-            homeCurrentIndex = 0;
-        } else if (homeCurrentIndex < 0) {
-            homeCurrentIndex = homeTotalSlides - 1;
-        }
-
-        updateCarouselHome();
-        resetAutoSlideHome();
-    }
-
-    function currentSlideHome(index) {
-        if (homeTotalSlides === 0) return;
-
-        homeCurrentIndex = index;
-        updateCarouselHome();
-        resetAutoSlideHome();
-    }
-
-    function autoSlideHome() {
-        if (homeTotalSlides === 0) return;
-
-        homeCurrentIndex++;
-        if (homeCurrentIndex >= homeTotalSlides) {
-            homeCurrentIndex = 0;
-        }
-        updateCarouselHome();
-    }
-
-    function startAutoSlideHome() {
-        if (homeTotalSlides > 1) {
-            homeAutoSlideInterval = setInterval(autoSlideHome, 5000);
-        }
-    }
-
-    function resetAutoSlideHome() {
-        clearInterval(homeAutoSlideInterval);
-        startAutoSlideHome();
-    }
-
-    // Initialize carousel on DOM load
-    document.addEventListener('DOMContentLoaded', function() {
-        if (homeTotalSlides > 0) {
-            updateCarouselHome();
-            startAutoSlideHome();
-
-            const wrapper = document.querySelector('.team-carousel-wrapper');
-            if (wrapper) {
-                wrapper.addEventListener('mouseenter', () => clearInterval(homeAutoSlideInterval));
-                wrapper.addEventListener('mouseleave', startAutoSlideHome);
-            }
-        }
-    });
-
-    window.addEventListener('resize', updateCarouselHome);
-</script>
-
-
-
-
-<script>
-    // Smooth Scroll Handler with Clean URLs
-    document.addEventListener('DOMContentLoaded', function() {
-        // Handle clicks on navigation links with data-scroll attribute
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a[data-scroll]');
-            if (link) {
-                e.preventDefault();
-                const targetId = link.getAttribute('data-scroll');
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    // Smooth scroll to target
-                    const headerOffset = 100; // Account for sticky header
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-
-                    // Clean the URL (remove any hash)
-                    history.pushState('', document.title, window.location.pathname);
-                }
-            }
-        });
-
-        // Handle URL hash on page load (if someone uses direct link with hash)
-        function handleHashOnLoad() {
-            const hash = window.location.hash;
-            if (hash) {
-                const targetId = hash.substring(1); // Remove the # symbol
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    setTimeout(() => {
-                        const headerOffset = 100;
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-
-                        // Clean the URL after scrolling
-                        setTimeout(() => {
-                            history.pushState('', document.title, window.location.pathname);
-                        }, 100);
-                    }, 100);
-                }
-            }
-        }
-        handleHashOnLoad();
-    });
+    window.homeTotalSlides = <?= !empty($pengelolaList) ? count($pengelolaList) : 0 ?>;
 </script>
 
 <!-- Jam Operasional Lab Section -->
@@ -403,7 +263,7 @@ if (!isset($pengelolaList)) {
         <div class="row">
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
-                    <h6 class="sec-title__tagline"><i class="icon-clock1" style="margin-right: 8px; font-size: 18px; color: #0EBD66;"></i>JAM OPERASIONAL</h6>
+                    <h6 class="sec-title__tagline"><i class="icon-clock1 jam-operasional-icon-small"></i>JAM OPERASIONAL</h6>
                     <h3 class="sec-title__title">Waktu Operasional Laboratorium</h3>
                 </div>
             </div>
@@ -416,7 +276,7 @@ if (!isset($pengelolaList)) {
                         <!-- Hari Kerja -->
                         <div class="schedule-item--weekday">
                             <div class="schedule-icon">
-                                <i class="icon-clock1" style="font-size: 28px; color: white;"></i>
+                                <i class="icon-clock1 jam-operasional-icon-large"></i>
                             </div>
                             <div class="schedule-content">
                                 <h5 class="schedule-day">Senin - Jumat</h5>
@@ -427,7 +287,7 @@ if (!isset($pengelolaList)) {
                         <!-- Akhir Pekan -->
                         <div class="schedule-item--weekend">
                             <div class="schedule-icon">
-                                <i class="icon-clock1" style="font-size: 28px; color: white;"></i>
+                                <i class="icon-clock1 jam-operasional-icon-large"></i>
                             </div>
                             <div class="schedule-content">
                                 <h5 class="schedule-day">Sabtu - Minggu</h5>
@@ -441,7 +301,7 @@ if (!isset($pengelolaList)) {
                         <div class="schedule-info__inner">
                             <i class="fas fa-info-circle schedule-info__icon"></i>
                             <p class="schedule-info__text">
-                                Untuk keperluan khusus di luar jam operasional, silakan hubungi kami terlebih dahulu melalui email atau telepon yang tertera pada halaman kontak.
+                                Untuk keperluan khusus di luar jam operasional, silakan hubungi kami terlebih dahulu melalui email atau telepon yang tertera pada kontak dibawah.
                             </p>
                         </div>
                     </div>
@@ -455,3 +315,4 @@ if (!isset($pengelolaList)) {
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
+<script src="<?= BASE_URL ?>/public/js/tentang-carousel.js"></script>

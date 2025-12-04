@@ -14,7 +14,7 @@ include 'app/views/templates/public/navbar.php';
                 <div class="login-card">
 
                     <div class="text-center mb-4">
-                        <div style="width: 70px; height: 70px; background: #e0f7fa; color: #006064; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 28px;">
+                        <div class="login-icon-wrapper">
                             <i class="fa fa-lock"></i>
                         </div>
                     </div>
@@ -22,8 +22,8 @@ include 'app/views/templates/public/navbar.php';
                     <h3 class="login-page__wrap__title">Login Admin</h3>
 
                     <?php if (!empty($error)): ?>
-                        <div style="color: #721c24; background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; margin-bottom: 25px; border-radius: 8px; font-size: 14px; display: flex; align-items: center;">
-                            <i class="fa fa-exclamation-circle me-2" style="font-size: 18px; margin-right: 10px;"></i>
+                        <div class="login-error-alert">
+                            <i class="fa fa-exclamation-circle me-2 login-error-icon"></i>
                             <div><?php echo $error; ?></div>
                         </div>
                     <?php endif; ?>
@@ -41,7 +41,7 @@ include 'app/views/templates/public/navbar.php';
                         <div class="login-page__checked-box d-flex justify-content-between align-items-center mb-4">
                             <div class="login-page__checked-inner">
                                 <input type="checkbox" name="save-data" id="save-data">
-                                <label for="save-data" style="font-size: 13px;">Ingat Saya</label>
+                                <label for="save-data" class="login-remember-label">Ingat Saya</label>
                             </div>
                         </div>
 
@@ -54,7 +54,7 @@ include 'app/views/templates/public/navbar.php';
                     </form>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="<?php echo BASE_URL; ?>/" style="color: #6c757d; font-size: 14px; text-decoration: none; transition: color 0.3s;">
+                    <a href="<?php echo BASE_URL; ?>/" class="login-back-link">
                         <i class="fa fa-arrow-left me-1"></i> Kembali ke Beranda
                     </a>
                 </div>

@@ -1,110 +1,122 @@
-// Team Carousel Logic for Tentang Page - Group-Based Pagination (2 members per page)
-let homeCurrentIndex = 0;
-let homeAutoSlideInterval;
-const homeTotalSlides = document.querySelectorAll('#teamCarousel .team-slide').length;
-const MEMBERS_PER_PAGE = 2; // Show 2 members per page/dot
-const homeTotalPages = Math.ceil(homeTotalSlides / MEMBERS_PER_PAGE);
-const homeCarousel = document.getElementById('teamCarousel');
+/**
+ * LAB NCS - TENTANG PAGE CAROUSEL SCRIPT
+ * Purpose: Team carousel navigation and auto-slide functionality for tentang.php
+ * Last Updated: 2025-12-02
+ * Fixed: Autoscroll timing bug and smooth transition
+ */
 
-// Update dots to reflect pages, not individual members
-function initializePaginationDots() {
-    const dotsContainer = document.querySelector('.team-carousel__dots');
-    if (!dotsContainer || homeTotalSlides === 0) return;
-    
-    // Clear existing dots (yang dibuat PHP)
-    dotsContainer.innerHTML = '';
-    
-    // Create dots based on pages (groups of 2)
-    for (let i = 0; i < homeTotalPages; i++) {
-        const dot = document.createElement('span');
-        dot.className = 'dot' + (i === 0 ? ' active' : '');
-        dot.onclick = () => currentSlideHome(i);
-        dot.setAttribute('aria-label', `Page ${i + 1}`);
-        dotsContainer.appendChild(dot);
-    }
-}
+(function() {
+    'use strict';
 
-function updateCarouselHome() {
-    if (!homeCarousel || homeTotalSlides === 0) return;
+    // Initialize carousel variables
+    let homeCurrentIndex = 0;
+    let homeAutoSlideInterval;
+    let resizeTimeout;
+    const homeTotalSlides = window.homeTotalSlides || 0;
+    const homeCarousel = document.getElementById('teamCarousel');
+    const homeDots = document.querySelectorAll('.team-carousel__dots .dot');
 
-    // Calculate scroll position for group of 2
-    const slideWidth = document.querySelector('.team-slide').offsetWidth + 25; // width + gap
-    const scrollPosition = homeCurrentIndex * MEMBERS_PER_PAGE * slideWidth;
-    
-    homeCarousel.style.transform = `translateX(-${scrollPosition}px)`;
+    /**
+     * Update carousel position and dot indicators
+     */
+    function updateCarouselHome() {
+        if (!homeCarousel || homeTotalSlides === 0) return;
 
-    // Update dots (page indicators)
-    const dots = document.querySelectorAll('.team-carousel__dots .dot');
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === homeCurrentIndex);
-    });
-}
+        const slideWidth = document.querySelector('.team-slide').offsetWidth + 25;
+        homeCarousel.style.transform = `translateX(-${homeCurrentIndex * slideWidth}px)`;
 
-function moveCarouselHome(direction) {
-    if (homeTotalSlides === 0) return;
-
-    homeCurrentIndex += direction;
-
-    // Wrap around logic
-    if (homeCurrentIndex >= homeTotalPages) {
-        homeCurrentIndex = 0;
-    } else if (homeCurrentIndex < 0) {
-        homeCurrentIndex = homeTotalPages - 1;
+        // Update dots
+        homeDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === homeCurrentIndex);
+        });
     }
 
-    updateCarouselHome();
-    resetAutoSlideHome();
-}
+    /**
+     * Move carousel in specified direction (globally accessible)
+     * @param {number} direction - 1 for next, -1 for previous
+     */
+    window.moveCarouselHome = function(direction) {
+        if (homeTotalSlides === 0) return;
 
-function currentSlideHome(pageIndex) {
-    if (homeTotalSlides === 0) return;
+        homeCurrentIndex += direction;
 
-    homeCurrentIndex = pageIndex;
-    updateCarouselHome();
-    resetAutoSlideHome();
-}
+        // Wrap around logic - smooth circular navigation
+        if (homeCurrentIndex >= homeTotalSlides) {
+            homeCurrentIndex = 0;
+        } else if (homeCurrentIndex < 0) {
+            homeCurrentIndex = homeTotalSlides - 1;
+        }
 
-function autoSlideHome() {
-    if (homeTotalSlides === 0) return;
-
-    homeCurrentIndex++;
-    if (homeCurrentIndex >= homeTotalPages) {
-        homeCurrentIndex = 0;
-    }
-    updateCarouselHome();
-}
-
-function startAutoSlideHome() {
-    if (homeTotalPages > 1) {
-        // Stable 5-second interval
-        homeAutoSlideInterval = setInterval(autoSlideHome, 5000);
-    }
-}
-
-function resetAutoSlideHome() {
-    if (homeAutoSlideInterval) {
-        clearInterval(homeAutoSlideInterval);
-    }
-    startAutoSlideHome();
-}
-
-// Initialize carousel on DOM load
-document.addEventListener('DOMContentLoaded', function() {
-    if (homeTotalSlides > 0) {
-        initializePaginationDots(); // Create dots for pages (NOT per member!)
         updateCarouselHome();
-        startAutoSlideHome();
+        resetAutoSlideHome();
+    };
 
-        const wrapper = document.querySelector('.team-carousel-wrapper');
-        if (wrapper) {
-            wrapper.addEventListener('mouseenter', () => {
-                if (homeAutoSlideInterval) {
-                    clearInterval(homeAutoSlideInterval);
-                }
-            });
-            wrapper.addEventListener('mouseleave', startAutoSlideHome);
+    /**
+     * Jump to specific slide (globally accessible)
+     * @param {number} index - Slide index to navigate to
+     */
+    window.currentSlideHome = function(index) {
+        if (homeTotalSlides === 0) return;
+
+        homeCurrentIndex = index;
+        updateCarouselHome();
+        resetAutoSlideHome();
+    };
+
+    /**
+     * Auto-slide to next slide
+     */
+    function autoSlideHome() {
+        if (homeTotalSlides === 0) return;
+
+        homeCurrentIndex++;
+        if (homeCurrentIndex >= homeTotalSlides) {
+            homeCurrentIndex = 0;
+        }
+        updateCarouselHome();
+    }
+
+    /**
+     * Start auto-slide interval
+     * Fixed: Increased from 5000ms to 6000ms for smoother scrolling
+     */
+    function startAutoSlideHome() {
+        if (homeTotalSlides > 1) {
+            homeAutoSlideInterval = setInterval(autoSlideHome, 6000);
         }
     }
-});
 
-window.addEventListener('resize', updateCarouselHome);
+    /**
+     * Reset auto-slide interval
+     */
+    function resetAutoSlideHome() {
+        clearInterval(homeAutoSlideInterval);
+        startAutoSlideHome();
+    }
+
+    /**
+     * Initialize carousel on DOM ready
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+        if (homeTotalSlides > 0) {
+            updateCarouselHome();
+            startAutoSlideHome();
+
+            const wrapper = document.querySelector('.team-carousel-wrapper');
+            if (wrapper) {
+                wrapper.addEventListener('mouseenter', () => clearInterval(homeAutoSlideInterval));
+                wrapper.addEventListener('mouseleave', startAutoSlideHome);
+            }
+        }
+    });
+
+    /**
+     * Handle window resize for responsive carousel with debounce
+     */
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            requestAnimationFrame(updateCarouselHome);
+        }, 150);
+    });
+})();

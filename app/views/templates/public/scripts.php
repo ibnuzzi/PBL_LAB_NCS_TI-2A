@@ -42,13 +42,15 @@
     <script src="<?= BASE_URL ?>/public/js/lab-ncs-home-carousel.js"></script>
     <!-- template js -->
     <script src="<?= BASE_URL ?>/public/js/laboix.js"></script>
+    <script src="<?= BASE_URL ?>/public/js/lab-ncs.js"></script>
     <script>
         // Back to top: show after scrolling and smooth animate to top
-        (function($){
-            $(function(){
+        (function($) {
+            $(function() {
                 var $btn = $('#back-to-top');
                 if (!$btn.length) return;
-                function toggleBtn(){
+
+                function toggleBtn() {
                     if ($(window).scrollTop() > 220) {
                         $btn.addClass('show');
                     } else {
@@ -57,177 +59,182 @@
                 }
                 toggleBtn();
                 $(window).on('scroll', toggleBtn);
-                $btn.on('click', function(e){
+                $btn.on('click', function(e) {
                     e.preventDefault();
-                    $('html, body').animate({ scrollTop: 0 }, 600);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 600);
                 });
             });
-            
+
             document.addEventListener('DOMContentLoaded', function() {
 
-    /**
-     * FUNGSI UTAMA: PAGINATION DINAMIS
-     * Fungsi ini menangani logika paging, searching, dan navigasi
-     * untuk halaman apa pun (Agenda, Berita, Galeri).
-     */
-    function initDynamicPagination(config) {
-        // 1. Ambil Elemen Berdasarkan Konfigurasi
-        const searchInput = document.getElementById(config.searchId);
-        const listItems = document.querySelectorAll(config.itemSelector);
-        const paginationContainer = document.getElementById(config.paginationId);
-        const paginationWrapper = document.querySelector(config.wrapperClass);
-        const noResultsMsg = document.querySelector('.search-no-results'); // Asumsi class ini sama di semua page
+                /**
+                 * FUNGSI UTAMA: PAGINATION DINAMIS
+                 * Fungsi ini menangani logika paging, searching, dan navigasi
+                 * untuk halaman apa pun (Agenda, Berita, Galeri).
+                 */
+                function initDynamicPagination(config) {
+                    // 1. Ambil Elemen Berdasarkan Konfigurasi
+                    const searchInput = document.getElementById(config.searchId);
+                    const listItems = document.querySelectorAll(config.itemSelector);
+                    const paginationContainer = document.getElementById(config.paginationId);
+                    const paginationWrapper = document.querySelector(config.wrapperClass);
+                    const noResultsMsg = document.querySelector('.search-no-results'); // Asumsi class ini sama di semua page
 
-        // Jika elemen utama tidak ditemukan di halaman ini, hentikan fungsi (mencegah error)
-        if (!searchInput || listItems.length === 0 || !paginationContainer) return;
+                    // Jika elemen utama tidak ditemukan di halaman ini, hentikan fungsi (mencegah error)
+                    if (!searchInput || listItems.length === 0 || !paginationContainer) return;
 
-        // 2. Setup Variabel
-        const itemsPerPage = config.perPage || 6;
-        let currentPage = 1;
-        const totalPages = Math.ceil(listItems.length / itemsPerPage);
+                    // 2. Setup Variabel
+                    const itemsPerPage = config.perPage || 6;
+                    let currentPage = 1;
+                    const totalPages = Math.ceil(listItems.length / itemsPerPage);
 
-        // 3. Fungsi: Tampilkan Halaman Tertentu
-        function showPage(page) {
-            const start = (page - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
+                    // 3. Fungsi: Tampilkan Halaman Tertentu
+                    function showPage(page) {
+                        const start = (page - 1) * itemsPerPage;
+                        const end = start + itemsPerPage;
 
-            listItems.forEach((item, index) => {
-                // Tampilkan hanya item dalam range halaman ini
-                if (index >= start && index < end) {
-                    item.style.display = '';
-                    item.classList.add('animate__fadeIn'); // Efek animasi (opsional)
-                } else {
-                    item.style.display = 'none';
-                    item.classList.remove('animate__fadeIn');
-                }
-            });
+                        listItems.forEach((item, index) => {
+                            // Tampilkan hanya item dalam range halaman ini
+                            if (index >= start && index < end) {
+                                item.style.display = '';
+                                item.classList.add('animate__fadeIn'); // Efek animasi (opsional)
+                            } else {
+                                item.style.display = 'none';
+                                item.classList.remove('animate__fadeIn');
+                            }
+                        });
 
-            renderButtons(page);
-            
-            // Scroll otomatis ke atas list saat ganti halaman (UX)
-            if (page > 1) {
-                const wrapper = document.querySelector(config.sectionSelector);
-                if(wrapper) {
-                    window.scrollTo({ top: wrapper.offsetTop - 100, behavior: 'smooth' });
-                }
-            }
-        }
+                        renderButtons(page);
 
-        // 4. Fungsi: Render Tombol Angka Pagination
-        function renderButtons(activePage) {
-            paginationContainer.innerHTML = ''; // Reset tombol
-
-            // Jika hanya 1 halaman, sembunyikan pagination
-            if (totalPages <= 1) {
-                if(paginationWrapper) paginationWrapper.style.display = 'none';
-                return;
-            }
-            
-            if(paginationWrapper) paginationWrapper.style.display = 'flex';
-
-            // Helper untuk membuat LI dan A
-            const createBtn = (label, pageNum, isDisabled, isActive) => {
-                const li = document.createElement('li');
-                if (isDisabled) li.className = 'disabled';
-                if (isActive) li.className = 'active';
-
-                const a = document.createElement('a');
-                a.href = '#';
-                a.innerHTML = label;
-                a.onclick = (e) => {
-                    e.preventDefault();
-                    if (!isDisabled && !isActive) {
-                        currentPage = pageNum;
-                        showPage(pageNum);
+                        // Scroll otomatis ke atas list saat ganti halaman (UX)
+                        if (page > 1) {
+                            const wrapper = document.querySelector(config.sectionSelector);
+                            if (wrapper) {
+                                window.scrollTo({
+                                    top: wrapper.offsetTop - 100,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }
                     }
-                };
-                li.appendChild(a);
-                paginationContainer.appendChild(li);
-            };
 
-            // Tombol Prev
-            createBtn('&laquo;', activePage - 1, activePage === 1, false);
+                    // 4. Fungsi: Render Tombol Angka Pagination
+                    function renderButtons(activePage) {
+                        paginationContainer.innerHTML = ''; // Reset tombol
 
-            // Tombol Angka
-            for (let i = 1; i <= totalPages; i++) {
-                createBtn(i, i, false, i === activePage);
-            }
+                        // Jika hanya 1 halaman, sembunyikan pagination
+                        if (totalPages <= 1) {
+                            if (paginationWrapper) paginationWrapper.style.display = 'none';
+                            return;
+                        }
 
-            // Tombol Next
-            createBtn('&raquo;', activePage + 1, activePage === totalPages, false);
-        }
+                        if (paginationWrapper) paginationWrapper.style.display = 'flex';
 
-        // 5. Fungsi: Search Logic
-        function handleSearch(e) {
-            const query = e.target.value.toLowerCase().trim();
+                        // Helper untuk membuat LI dan A
+                        const createBtn = (label, pageNum, isDisabled, isActive) => {
+                            const li = document.createElement('li');
+                            if (isDisabled) li.className = 'disabled';
+                            if (isActive) li.className = 'active';
 
-            if (query.length > 0) {
-                // Mode Search: Matikan pagination, filter manual
-                if(paginationWrapper) paginationWrapper.style.display = 'none';
-                let visibleCount = 0;
+                            const a = document.createElement('a');
+                            a.href = '#';
+                            a.innerHTML = label;
+                            a.onclick = (e) => {
+                                e.preventDefault();
+                                if (!isDisabled && !isActive) {
+                                    currentPage = pageNum;
+                                    showPage(pageNum);
+                                }
+                            };
+                            li.appendChild(a);
+                            paginationContainer.appendChild(li);
+                        };
 
-                listItems.forEach(item => {
-                    const searchData = item.getAttribute('data-search');
-                    if (searchData && searchData.includes(query)) {
-                        item.style.display = '';
-                        visibleCount++;
-                    } else {
-                        item.style.display = 'none';
+                        // Tombol Prev
+                        createBtn('&laquo;', activePage - 1, activePage === 1, false);
+
+                        // Tombol Angka
+                        for (let i = 1; i <= totalPages; i++) {
+                            createBtn(i, i, false, i === activePage);
+                        }
+
+                        // Tombol Next
+                        createBtn('&raquo;', activePage + 1, activePage === totalPages, false);
                     }
+
+                    // 5. Fungsi: Search Logic
+                    function handleSearch(e) {
+                        const query = e.target.value.toLowerCase().trim();
+
+                        if (query.length > 0) {
+                            // Mode Search: Matikan pagination, filter manual
+                            if (paginationWrapper) paginationWrapper.style.display = 'none';
+                            let visibleCount = 0;
+
+                            listItems.forEach(item => {
+                                const searchData = item.getAttribute('data-search');
+                                if (searchData && searchData.includes(query)) {
+                                    item.style.display = '';
+                                    visibleCount++;
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+
+                            // Tampilkan pesan "Tidak Ditemukan" jika hasil 0
+                            if (noResultsMsg) noResultsMsg.style.display = (visibleCount === 0) ? 'block' : 'none';
+
+                        } else {
+                            // Mode Normal: Reset ke halaman 1
+                            if (noResultsMsg) noResultsMsg.style.display = 'none';
+                            currentPage = 1;
+                            showPage(1);
+                        }
+                    }
+
+                    // 6. Inisialisasi
+                    searchInput.addEventListener('keyup', handleSearch);
+                    showPage(1); // Mulai dari halaman 1
+                }
+
+
+                /* ============================================================
+                   IMPLEMENTASI KE HALAMAN-HALAMAN (Settingan Dinamis)
+                ============================================================ */
+
+                // 1. Setup untuk Halaman AGENDA
+                initDynamicPagination({
+                    searchId: 'agenda-search-input', // ID Input Search
+                    itemSelector: '.agenda-list__items .agenda-item', // Class Item Agenda
+                    paginationId: 'pagination-container', // ID UL Pagination
+                    wrapperClass: '.pagination-wrapper', // Class Wrapper Pagination
+                    sectionSelector: '.agenda-list', // Untuk auto-scroll
+                    perPage: 6 // Jumlah item per halaman
                 });
 
-                // Tampilkan pesan "Tidak Ditemukan" jika hasil 0
-                if (noResultsMsg) noResultsMsg.style.display = (visibleCount === 0) ? 'block' : 'none';
-            
-            } else {
-                // Mode Normal: Reset ke halaman 1
-                if (noResultsMsg) noResultsMsg.style.display = 'none';
-                currentPage = 1;
-                showPage(1);
-            }
-        }
+                // 2. Setup untuk Halaman BERITA
+                initDynamicPagination({
+                    searchId: 'berita-search-input', // Pastikan ID di HTML Berita sudah diubah
+                    itemSelector: '.berita-item', // Class Item Berita
+                    paginationId: 'berita-pagination-container',
+                    wrapperClass: '.berita-pagination-wrapper',
+                    sectionSelector: '.blog-one',
+                    perPage: 6
+                });
 
-        // 6. Inisialisasi
-        searchInput.addEventListener('keyup', handleSearch);
-        showPage(1); // Mulai dari halaman 1
-    }
+                // 3. Setup untuk Halaman GALERI
+                initDynamicPagination({
+                    searchId: 'gallery-search-input', // Galeri pakai ID search yg sama dengan agenda (jika file terpisah)
+                    itemSelector: '.gallery-item', // Class Item Galeri
+                    paginationId: 'gallery-pagination-container',
+                    wrapperClass: '.gallery-pagination-wrapper',
+                    sectionSelector: '.gallery-page',
+                    perPage: 6 // Galeri biasanya butuh lebih banyak item
+                });
 
-
-    /* ============================================================
-       IMPLEMENTASI KE HALAMAN-HALAMAN (Settingan Dinamis)
-    ============================================================ */
-
-    // 1. Setup untuk Halaman AGENDA
-    initDynamicPagination({
-        searchId:        'agenda-search-input',       // ID Input Search
-        itemSelector:    '.agenda-list__items .agenda-item', // Class Item Agenda
-        paginationId:    'pagination-container',      // ID UL Pagination
-        wrapperClass:    '.pagination-wrapper',       // Class Wrapper Pagination
-        sectionSelector: '.agenda-list',              // Untuk auto-scroll
-        perPage:         6                            // Jumlah item per halaman
-    });
-
-    // 2. Setup untuk Halaman BERITA
-    initDynamicPagination({
-        searchId:        'berita-search-input',       // Pastikan ID di HTML Berita sudah diubah
-        itemSelector:    '.berita-item',              // Class Item Berita
-        paginationId:    'berita-pagination-container',
-        wrapperClass:    '.berita-pagination-wrapper',
-        sectionSelector: '.blog-one',
-        perPage:         6
-    });
-
-    // 3. Setup untuk Halaman GALERI
-    initDynamicPagination({
-        searchId:        'gallery-search-input',       // Galeri pakai ID search yg sama dengan agenda (jika file terpisah)
-        itemSelector:    '.gallery-item',             // Class Item Galeri
-        paginationId:    'gallery-pagination-container',
-        wrapperClass:    '.gallery-pagination-wrapper',
-        sectionSelector: '.gallery-page',
-        perPage:         6                            // Galeri biasanya butuh lebih banyak item
-    });
-
-});
+            });
         })(jQuery);
 
         // === Gallery Page Search Logic (same as Agenda) ===
@@ -241,13 +248,13 @@
                 const totalPages = Math.ceil($items.length / itemsPerPage);
                 let currentPage = 1;
 
-                $items.each(function(idx){
+                $items.each(function(idx) {
                     originalContent[idx] = {
                         title: $(this).find('h3').html(),
                         meta: $(this).find('.agenda-item__meta span').html()
                     };
                 });
-                
+
                 function showPage(page) {
                     currentPage = page;
                     const start = (page - 1) * itemsPerPage;
@@ -255,7 +262,7 @@
 
                     $items.hide().slice(start, end).show();
                     renderPagination();
-                    
+
                     if (page > 1) {
                         $('html, body').animate({
                             scrollTop: $('.agenda-list').offset().top - 100
@@ -268,7 +275,7 @@
                         $('.pagination-wrapper').hide();
                         return;
                     }
-                    
+
                     $('.pagination-wrapper').show();
                     var paginationHtml = '';
 
@@ -314,7 +321,10 @@
 
                     $matchingItems.each(function() {
                         var idx = $items.index(this);
-                        var orig = originalContent[idx] || { title: $(this).find('h3').html(), meta: $(this).find('.agenda-item__meta span').html() };
+                        var orig = originalContent[idx] || {
+                            title: $(this).find('h3').html(),
+                            meta: $(this).find('.agenda-item__meta span').html()
+                        };
                         $(this).find('h3').html(orig.title.replace(regex, '<mark class="search-highlight">$1</mark>'));
                         $(this).show();
                     });
@@ -326,7 +336,9 @@
                     }
                 }
 
-                $('#gallery-search-input').on('input', function(){ applySearch($(this).val()); });
+                $('#gallery-search-input').on('input', function() {
+                    applySearch($(this).val());
+                });
 
                 showPage(1);
             }
@@ -343,13 +355,13 @@
                 const totalPages = Math.ceil($items.length / itemsPerPage);
                 let currentPage = 1;
 
-                $items.each(function(idx){
+                $items.each(function(idx) {
                     originalContent[idx] = {
                         title: $(this).find('h3').html(),
                         meta: $(this).find('.agenda-item__meta span').html()
                     };
                 });
-                
+
                 function showPage(page) {
                     currentPage = page;
                     const start = (page - 1) * itemsPerPage;
@@ -357,7 +369,7 @@
 
                     $items.hide().slice(start, end).show();
                     renderPagination();
-                    
+
                     if (page > 1) {
                         $('html, body').animate({
                             scrollTop: $('.agenda-list').offset().top - 100
@@ -370,7 +382,7 @@
                         $('.pagination-wrapper').hide();
                         return;
                     }
-                    
+
                     $('.pagination-wrapper').show();
                     var paginationHtml = '';
 
@@ -416,7 +428,10 @@
 
                     $matchingItems.each(function() {
                         var idx = $items.index(this);
-                        var orig = originalContent[idx] || { title: $(this).find('h3').html(), meta: $(this).find('.agenda-item__meta span').html() };
+                        var orig = originalContent[idx] || {
+                            title: $(this).find('h3').html(),
+                            meta: $(this).find('.agenda-item__meta span').html()
+                        };
                         $(this).find('h3').html(orig.title.replace(regex, '<mark class="search-highlight">$1</mark>'));
                         $(this).show();
                     });
@@ -428,12 +443,15 @@
                     }
                 }
 
-                $('#berita-search-input').on('input', function(){ applySearch($(this).val()); });
+                $('#berita-search-input').on('input', function() {
+                    applySearch($(this).val());
+                });
 
                 showPage(1);
             }
         }
     </script>
 
-</body>
-</html>
+    </body>
+
+    </html>

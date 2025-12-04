@@ -21,7 +21,14 @@ class Penelitian
                     FROM tbl_penelitian_anggota pa
                     JOIN tbl_pengelola pe ON pa.id_pengelola = pe.id_pengelola
                     WHERE pa.id_penelitian = p.id_penelitian
-                ) AS peneliti
+                ) AS peneliti,
+                (
+                    SELECT pe.nama_pengelola
+                    FROM tbl_penelitian_anggota pa
+                    JOIN tbl_pengelola pe ON pa.id_pengelola = pe.id_pengelola
+                    WHERE pa.id_penelitian = p.id_penelitian
+                    LIMIT 1
+                ) AS first_author
             FROM tbl_penelitian p
             ORDER BY p.tahun_penelitian DESC, p.id_penelitian DESC";
 

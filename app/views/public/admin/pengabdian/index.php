@@ -27,7 +27,9 @@ include './app/views/templates/admin/sidebar_admin.php';
             <tr>
               <th>No</th>
               <th>Judul Pengabdian</th>
+              <th>Authors</th>
               <th>Tahun</th>
+              <th>Tanggal Input</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -51,7 +53,26 @@ include './app/views/templates/admin/sidebar_admin.php';
                     <?= htmlspecialchars($p['judul_kegiatan']); ?>
                   </td>
 
+                  <td>
+                    <?php if (!empty($p['first_author'])): ?>
+                      <?= htmlspecialchars($p['first_author']); ?>
+                    <?php else: ?>
+                      <span class="text-muted">-</span>
+                    <?php endif; ?>
+                  </td>
+
                   <td><?= htmlspecialchars($p['tahun_kegiatan']); ?></td>
+
+                  <td>
+                    <?php 
+                    if (!empty($p['created_at'])) {
+                      $date = new DateTime($p['created_at']);
+                      echo $date->format('d M Y');
+                    } else {
+                      echo '<span class="text-muted">-</span>';
+                    }
+                    ?>
+                  </td>
 
                   <td>
                     <!-- DETAIL -->

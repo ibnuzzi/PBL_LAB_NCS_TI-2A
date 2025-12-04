@@ -23,8 +23,9 @@
 }
 
 .team-slide {
-  min-width: calc(25% - 19px);
-  flex-shrink: 0;
+  flex: 0 0 calc((100% - 75px) / 4); /* (100% - 3gaps*25px) / 4 cards */
+  max-width: calc((100% - 75px) / 4);
+  min-width: 0; /* Allow flexbox to shrink if needed */
 }
 
 /* Enhanced Card Styling */
@@ -110,19 +111,22 @@
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .team-slide {
-    min-width: calc(33.333% - 17px);
+    flex: 0 0 calc((100% - 50px) / 3); /* 3 cards: (100% - 2gaps*25px) / 3 */
+    max-width: calc((100% - 50px) / 3);
   }
 }
 
 @media (max-width: 992px) {
   .team-slide {
-    min-width: calc(50% - 13px);
+    flex: 0 0 calc((100% - 25px) / 2); /* 2 cards: (100% - 1gap*25px) / 2 */
+    max-width: calc((100% - 25px) / 2);
   }
 }
 
 @media (max-width: 768px) {
   .team-slide {
-    min-width: 100%;
+    flex: 0 0 100%; /* 1 card: 100% */
+    max-width: 100%;
   }
 
   .team-carousel-wrapper {
@@ -276,10 +280,11 @@
   flex-wrap: wrap;
   margin: 0 -15px;
   justify-content: center;
+  align-items: flex-start; /* Membuat card kiri-kanan sejajar dengan tengah */
 }
 
 .case-studies__list__item {
-  width: 25%;
+  width: 25%; /* Layout asli - 4 kolom */
   padding: 0 15px;
   margin-bottom: 30px;
 }
@@ -585,7 +590,7 @@
 }
 
 .blog-section-padding {
-    padding: 120px 0 90px;
+    padding: 60px 0 90px;
 }
 
 .blog-card-custom {

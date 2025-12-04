@@ -19,7 +19,7 @@ include 'app/views/templates/public/navbar.php';
                         </div>
                     </div>
 
-                    <h3 class="login-page__wrap__title">Login Admin</h3>
+                    <h3 class="login-page__wrap__title">Admin</h3>
 
                     <?php if (!empty($error)): ?>
                         <div class="login-error-alert">
@@ -38,16 +38,9 @@ include 'app/views/templates/public/navbar.php';
                             <input type="password" name="password" placeholder="Password" required>
                         </div>
 
-                        <div class="login-page__checked-box d-flex justify-content-between align-items-center mb-4">
-                            <div class="login-page__checked-inner">
-                                <input type="checkbox" name="save-data" id="save-data">
-                                <label for="save-data" class="login-remember-label">Ingat Saya</label>
-                            </div>
-                        </div>
-
                         <div class="login-page__form-btn-box">
                             <button type="submit" class="laboix-btn laboix-btn--secondary">
-                                <span>MASUK DASHBOARD</span>
+                                <span>LOGIN</span>
                             </button>
                         </div>
 

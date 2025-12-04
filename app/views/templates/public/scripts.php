@@ -43,6 +43,8 @@
     <!-- template js -->
     <script src="<?= BASE_URL ?>/public/js/laboix.js"></script>
     <script src="<?= BASE_URL ?>/public/js/lab-ncs.js"></script>
+    <!-- toast notification js -->
+    <script src="<?= BASE_URL ?>/public/js/toast-notification.js"></script>
     <script>
         // Back to top: show after scrolling and smooth animate to top
         (function($) {

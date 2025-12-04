@@ -8,6 +8,8 @@ if (!isset($pengelolaList)) {
     $pengelolaList = [];
 }
 ?>
+<!-- Load extracted CSS for team carousel (sama dengan home.php) -->
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/lab-ncs-home.css?v=<?= filemtime(__DIR__ . '/../../../public/css/lab-ncs-home.css') ?>">
 
 <!-- Page Header -->
 <section class="page-header">
@@ -180,6 +182,10 @@ if (!isset($pengelolaList)) {
         </div>
 
         <?php if (!empty($pengelolaList)): ?>
+            <!-- Set total slides for carousel JS -->
+            <script>
+                window.homeTotalSlides = <?= count($pengelolaList) ?>;
+            </script>
             <!-- Team Carousel -->
             <div class="team-carousel-wrapper">
                 <div class="team-carousel" id="teamCarousel">
@@ -224,12 +230,12 @@ if (!isset($pengelolaList)) {
                 </div>
 
                 <!-- Navigation Arrows -->
-                <button class="team-carousel__nav team-carousel__nav--prev" onclick="moveCarouselHome(-1)" aria-label="Previous">
+                <button class="team-carousel__nav team-carousel__nav--prev" type="button" aria-label="Previous slide">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg>
                 </button>
-                <button class="team-carousel__nav team-carousel__nav--next" onclick="moveCarouselHome(1)" aria-label="Next">
+                <button class="team-carousel__nav team-carousel__nav--next" type="button" aria-label="Next slide">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
@@ -238,24 +244,20 @@ if (!isset($pengelolaList)) {
                 <!-- Dots Indicator -->
                 <div class="team-carousel__dots">
                     <?php for ($i = 0; $i < count($pengelolaList); $i++): ?>
-                        <span class="dot <?= $i === 0 ? 'active' : '' ?>" onclick="currentSlideHome(<?= $i ?>)" aria-label="Slide <?= $i + 1 ?>"></span>
+                        <span class="dot <?= $i === 0 ? 'active' : '' ?>" role="button" tabindex="0" aria-label="Slide <?= $i + 1 ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>"></span>
                     <?php endfor; ?>
                 </div>
             </div>
         <?php else: ?>
             <!-- Fallback message -->
-            <div class="text-center team-empty-state">
+            <div class="text-center team-empty-state-container">
                 <p class="team-empty-state-text">Data tim pengelola belum tersedia.</p>
             </div>
         <?php endif; ?>
     </div>
 </section>
 <!-- Tim Kami section End -->
-
-<!-- Set total slides for carousel JS -->
-<script>
-    window.homeTotalSlides = <?= !empty($pengelolaList) ? count($pengelolaList) : 0 ?>;
-</script>
+<!-- CSS and JavaScript moved to: lab-ncs-home.css and lab-ncs-home-carousel.js -->
 
 <!-- Jam Operasional Lab Section -->
 <section class="jam-operasional-section">
@@ -315,4 +317,3 @@ if (!isset($pengelolaList)) {
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
-<script src="<?= BASE_URL ?>/public/js/tentang-carousel.js"></script>

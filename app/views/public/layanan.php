@@ -135,7 +135,7 @@ include 'app/views/templates/public/navbar.php';
                                         <span style="display: flex; align-items: center; font-size: 13px; color: #6c757d; font-weight: 400; gap: 5px;">
                                             <span>Oleh: <strong style="color: #495057;"><?php echo htmlspecialchars($item['nama_penanya']); ?></strong></span>
                                             <span style="color: #adb5bd;">•</span>
-                                            <span style="color: #6c757d;"><?php echo date('d M Y', strtotime($item['tanggal_tanya'])); ?></span>
+                                            <span style="color: #6c757d;"><?php echo date('d M Y, H:i', strtotime($item['tanggal_tanya'])); ?> WIB</span>
                                         </span>
                                     </span>
                                 </span>
@@ -158,6 +158,10 @@ include 'app/views/templates/public/navbar.php';
                                             <i class="fas fa-user-shield" style="color: #1a3a6b; font-size: 14px;"></i>
                                             <span style="font-size: 13px; font-weight: 600; color: #1a3a6b;">
                                                 Dijawab oleh Tim Lab NCS
+                                            </span>
+                                            <span style="color: #adb5bd;">•</span>
+                                            <span style="font-size: 13px; font-weight: 500; color: #6c757d;">
+                                                <?php echo date('d M Y, H:i', strtotime($item['tanggal_jawab'])); ?> WIB
                                             </span>
                                         </div>
                                     </div>
@@ -268,3 +272,5 @@ include 'app/views/templates/public/navbar.php';
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
+
+<script src="<?= BASE_URL ?>/public/js/layanan-ajax.js"></script>

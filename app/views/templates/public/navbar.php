@@ -44,10 +44,6 @@
             </nav>
 
             <div>
-                <div>
-                    <a href="<?php echo BASE_URL; ?>/login" class="laboix-btn main-header__btn">Login</a>
-                </div>
-
                 <div class="mobile-nav__btn mobile-nav__toggler">
                     <span></span><span></span><span></span>
                 </div>

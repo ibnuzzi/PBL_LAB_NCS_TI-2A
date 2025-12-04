@@ -51,6 +51,7 @@
     <!-- template styles -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/laboix.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/lab-ncs-custom.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/toast-notification.css">
 </head>
 
 <body class="custom-cursor">

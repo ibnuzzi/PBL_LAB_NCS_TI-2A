@@ -157,7 +157,7 @@ if (!isset($pengelolaList)) {
                                                 <h3 class="team-card__content__title">
                                                     <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>"><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
                                                 </h3>
-                                                <h6 class="team-card__content__designation"><?= htmlspecialchars($member['jabatan'] ?? 'Staff') ?></h6>
+                                                <h6 class="team-card__content__designation"><?= htmlspecialchars($member['nama_jabatan'] ?? 'Staff') ?></h6>
                                             </div>
                                         </div>
                                     </div>

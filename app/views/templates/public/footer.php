@@ -67,11 +67,15 @@
                 <div class="col-md-5 text-md-right">
                     <p class="main-footer__copyright">Website by Kelompok 4 TI-2A</p>
                 </div>
+<<<<<<< Updated upstream
             </div>
         </div>
     </div>
 
     <div class="main-footer__shape">
+=======
+            </div></div></div><div class="main-footer__shape">
+>>>>>>> Stashed changes
         <img src="<?= BASE_URL ?>/public/assets/images/shapes/footer-shape-1-1.png" alt="shape">
     </div>
     <div class="main-footer__shape main-footer__shape--two">
@@ -80,4 +84,8 @@
 
 </footer>
 <!-- Back to top button (site-wide) -->
+<<<<<<< Updated upstream
 <a id="back-to-top" href="#" aria-label="Back to top"><span class="backtop-icon">&#8679;</span></a>
+=======
+<a id="back-to-top" href="#" aria-label="Back to top"><span class="backtop-icon">&#8679;</span></a>
+>>>>>>> Stashed changes

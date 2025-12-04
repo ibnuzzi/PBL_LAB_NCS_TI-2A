@@ -38,6 +38,7 @@
     <!--  jquery-circleType js plugins -->
     <script src="<?= BASE_URL ?>/public/vendors/jquery-circleType/jquery.circleType.js"></script>
     <script src="<?= BASE_URL ?>/public/vendors/jquery-lettering/jquery.lettering.min.js"></script>
+<<<<<<< Updated upstream
     <!-- home carousel js -->
     <script src="<?= BASE_URL ?>/public/js/lab-ncs-home-carousel.js"></script>
     <!-- template js -->
@@ -53,6 +54,17 @@
                 if (!$btn.length) return;
 
                 function toggleBtn() {
+=======
+    <!-- template js -->
+    <script src="<?= BASE_URL ?>/public/js/laboix.js"></script>
+    <script>
+        // Back to top: show after scrolling and smooth animate to top
+        (function($){
+            $(function(){
+                var $btn = $('#back-to-top');
+                if (!$btn.length) return;
+                function toggleBtn(){
+>>>>>>> Stashed changes
                     if ($(window).scrollTop() > 220) {
                         $btn.addClass('show');
                     } else {
@@ -61,6 +73,7 @@
                 }
                 toggleBtn();
                 $(window).on('scroll', toggleBtn);
+<<<<<<< Updated upstream
                 $btn.on('click', function(e) {
                     e.preventDefault();
                     $('html, body').animate({
@@ -457,3 +470,14 @@
     </body>
 
     </html>
+=======
+                $btn.on('click', function(e){
+                    e.preventDefault();
+                    $('html, body').animate({ scrollTop: 0 }, 600);
+                });
+            });
+        })(jQuery);
+    </script>
+</body>
+</html>
+>>>>>>> Stashed changes

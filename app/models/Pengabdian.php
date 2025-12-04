@@ -19,7 +19,14 @@ class Pengabdian
                     FROM tbl_pengabdian_anggota pa
                     JOIN tbl_pengelola pe ON pa.id_pengelola = pe.id_pengelola
                     WHERE pa.id_pengabdian = p.id_pengabdian
-                ) AS tim_pengabdi
+                ) AS tim_pengabdi,
+                (
+                    SELECT pe.nama_pengelola
+                    FROM tbl_pengabdian_anggota pa
+                    JOIN tbl_pengelola pe ON pa.id_pengelola = pe.id_pengelola
+                    WHERE pa.id_pengabdian = p.id_pengabdian
+                    LIMIT 1
+                ) AS first_author
             FROM tbl_pengabdian p
             ORDER BY p.tahun_kegiatan DESC, p.id_pengabdian DESC";
 

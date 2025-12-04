@@ -4,6 +4,8 @@ include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
 
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/lab-ncs-berita.css?v=<?= filemtime(__DIR__ . '/../../../public/css/lab-ncs-berita.css') ?>">
+
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
@@ -131,10 +133,3 @@ include 'app/views/templates/public/navbar.php';
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
-<style>
-    /* Remove + icon on news card hover */
-    .blog-card__image__link::before,
-    .blog-card__image__link::after {
-        display: none !important;
-    }
-</style>

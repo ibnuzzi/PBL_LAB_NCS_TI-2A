@@ -1,0 +1,18 @@
+/* ============================================================================
+   LAB NCS BERITA (NEWS) PAGE STYLES
+   ============================================================================
+   This file contains all CSS for the berita.php (news listing page)
+   Extracted from embedded <style> blocks for better maintainability and caching
+   ============================================================================ */
+
+/* ============================================================================
+   NEWS CARD OVERLAY STYLING
+   ============================================================================ */
+
+/* Remove + icon on news card hover */
+.blog-card__image__link::before,
+.blog-card__image__link::after {
+    display: none !important;
+}
+
+/* End CSS extracted from berita.php */

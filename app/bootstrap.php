@@ -11,6 +11,9 @@ require_once 'core/config.php';
 require_once 'core/controller.php'; // <-- Ini memperbaiki error 'Controller'
 require_once 'core/database.php';
 
+// 2.5 Load Helpers
+require_once 'app/helpers/DateHelper.php';
+
 // INI YANG MEMPERBAIKI ERROR ANDA SEKARANG:
 require_once 'core/app.php'; 
 

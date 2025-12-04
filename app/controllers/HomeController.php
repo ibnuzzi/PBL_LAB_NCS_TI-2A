@@ -36,14 +36,11 @@ class HomeController extends Controller
 
     public function layanan()
     {
-
         $konsultasiModel = $this->model('Konsultasi');
         $data['daftar_konsultasi'] = $konsultasiModel->getAllDijawab();
         $data['judul_halaman'] = 'Layanan Konsultasi - Lab NCS';
 
-        $this->view('templates/public/header', $data);
         $this->view('public/layanan', $data);
-        $this->view('templates/public/footer');
     }
 
     public function kirimLayanan()
@@ -52,6 +49,10 @@ class HomeController extends Controller
             header('Location: ' . BASE_URL . '/layanan');
             exit;
         }
+
+        // Check if this is an AJAX request
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         // Trim inputs
         $nama_penanya = trim($_POST['nama_penanya'] ?? '');
@@ -71,9 +72,20 @@ class HomeController extends Controller
         }
 
         if (!empty($errors)) {
-            $_SESSION['flash_message'] = implode('<br>', $errors);
-            header('Location: ' . BASE_URL . '/layanan');
-            exit;
+            if ($isAjax) {
+                // Return JSON error response for AJAX
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => false,
+                    'message' => implode('<br>', $errors)
+                ]);
+                exit;
+            } else {
+                // Regular form submission
+                $_SESSION['flash_message'] = implode('<br>', $errors);
+                header('Location: ' . BASE_URL . '/layanan');
+                exit;
+            }
         }
 
         // Insert konsultasi
@@ -85,14 +97,31 @@ class HomeController extends Controller
         ];
         $ok = $konsultasiModel->insert($payload);
 
-        if ($ok) {
-            $_SESSION['flash_message'] = 'Pertanyaan Anda berhasil dikirim dan sedang menunggu persetujuan admin. Anda akan menerima notifikasi melalui email.';
+        if ($isAjax) {
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            if ($ok) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Pertanyaan Anda berhasil dikirim dan sedang menunggu persetujuan admin. Terima kasih!'
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Gagal mengirim pertanyaan. Silakan coba lagi.'
+                ]);
+            }
+            exit;
         } else {
-            $_SESSION['flash_message'] = 'Gagal mengirim pertanyaan. Silakan coba lagi.';
+            // Regular form submission with redirect
+            if ($ok) {
+                $_SESSION['flash_message'] = 'Pertanyaan Anda berhasil dikirim dan sedang menunggu persetujuan admin. Terima kasih!';
+            } else {
+                $_SESSION['flash_message'] = 'Gagal mengirim pertanyaan. Silakan coba lagi.';
+            }
+            header('Location: ' . BASE_URL . '/layanan');
+            exit;
         }
-
-        header('Location: ' . BASE_URL . '/layanan');
-        exit;
     }
 
     public function arsip()

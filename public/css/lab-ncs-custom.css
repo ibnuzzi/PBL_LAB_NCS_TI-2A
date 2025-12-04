@@ -1640,6 +1640,7 @@ span.error::before {
         left: 10px;
         right: 10px;
         bottom: 10px;
+    }
 }
 
 @media (max-width: 768px) {

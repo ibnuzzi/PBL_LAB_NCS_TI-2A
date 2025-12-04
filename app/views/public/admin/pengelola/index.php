@@ -26,6 +26,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               <th>No</th>
               <th>Foto</th>
               <th>Nama Pengelola</th>
+              <th>NID/NIP</th>
               <th>Jabatan</th>
               <th>Aksi</th>
             </tr>
@@ -46,6 +47,13 @@ include './app/views/templates/admin/sidebar_admin.php';
                   $foto = !empty($p['foto_pengelola'])
                           ? BASE_URL . "/public/uploads/pengelola/" . $p['foto_pengelola']
                           : BASE_URL . "/public/assets/images/default/user_default.png";
+
+                  // Keminatan string
+                  $keminatan_str = '';
+                  if (!empty($p['keminatan_list'])) {
+                    $keminatan_names = array_map(function($k) { return $k['nama_keminatan']; }, $p['keminatan_list']);
+                    $keminatan_str = implode(', ', $keminatan_names);
+                  }
             ?>
               <tr>
                 <td><?= $no++; ?></td>
@@ -56,7 +64,9 @@ include './app/views/templates/admin/sidebar_admin.php';
 
                 <td><?= htmlspecialchars($p['nama_pengelola']); ?></td>
 
-                <td><?= htmlspecialchars($p['jabatan']); ?></td>
+                <td><?= htmlspecialchars($p['nid_nip'] ?? '-'); ?></td>
+
+                <td><?= htmlspecialchars($p['nama_jabatan'] ?? 'Tidak ada jabatan'); ?></td>
 
                 <td>
                   <!-- DETAIL -->
@@ -64,7 +74,9 @@ include './app/views/templates/admin/sidebar_admin.php';
                     type="button"
                     class="btn btn-sm btn-outline-info me-1 btn-view"
                     data-nama="<?= htmlspecialchars($p['nama_pengelola']); ?>"
-                    data-jabatan="<?= htmlspecialchars($p['jabatan']); ?>"
+                    data-nip="<?= htmlspecialchars($p['nid_nip'] ?? '-'); ?>"
+                    data-jabatan="<?= htmlspecialchars($p['nama_jabatan'] ?? 'Tidak ada jabatan'); ?>"
+                    data-keminatan="<?= htmlspecialchars($keminatan_str ?: '-'); ?>"
                     data-foto="<?= $foto ?>">
                     <i class="bx bx-show-alt"></i>
                   </button>
@@ -120,9 +132,18 @@ include './app/views/templates/admin/sidebar_admin.php';
           <!-- Nama -->
           <h4 id="detailNama" class="fw-bold mb-2"></h4>
 
+          <!-- NID/NIP -->
+          <p class="text-muted mb-3"><strong>NID/NIP:</strong> <span id="detailNIP"></span></p>
+
           <!-- Jabatan -->
-          <div class="alert alert-info mb-0">
+          <div class="alert alert-info mb-3">
             <i class="bx bx-briefcase-alt-2"></i> <strong id="detailJabatan"></strong>
+          </div>
+
+          <!-- Keminatan -->
+          <div class="alert alert-success mb-0">
+            <i class="bx bx-book-bookmark"></i> <strong>Keminatan:</strong><br>
+            <span id="detailKeminatan" class="small"></span>
           </div>
 
         </div>
@@ -152,11 +173,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $(".btn-view").on("click", function () {
     let nama = $(this).data("nama");
+    let nip = $(this).data("nip");
     let jabatan = $(this).data("jabatan");
+    let keminatan = $(this).data("keminatan");
     let foto = $(this).data("foto");
 
     $("#detailNama").text(nama);
+    $("#detailNIP").text(nip);
     $("#detailJabatan").text(jabatan);
+    $("#detailKeminatan").text(keminatan);
     $("#detailFoto").attr("src", foto);
 
     new bootstrap.Modal(document.getElementById("modalDetailPengelola")).show();

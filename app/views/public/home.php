@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
@@ -132,7 +132,7 @@ if (!isset($pengelolaList)) {
                         if (!empty($member['foto_pengelola'])) {
                             $imageName = ltrim(trim($member['foto_pengelola']), '/');
                             $photoPath = BASE_URL . '/public/uploads/pengelola/' . $imageName;
-                            $serverPath = __DIR__ . '/../../../public/uploads/pengelola/' . $imageName;
+                $serverPath = __DIR__ . '/../../../public/uploads/pengelola/' . $imageName;
                             if (!@file_exists($serverPath)) {
                                 $photoPath = BASE_URL . '/public/assets/images/team/default-avatar.jpg';
                             }
@@ -149,11 +149,7 @@ if (!isset($pengelolaList)) {
                                         <div class="team-card__content__inner">
                                             <div class="team-card__content__item">
                                                 <h3 class="team-card__content__title">
-                                                    <?php if (!empty($member['link_profil'])): ?>
-                                                        <a href="<?= htmlspecialchars($member['link_profil']) ?>" target="_blank"><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
-                                                    <?php else: ?>
-                                                        <a><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
-                                                    <?php endif; ?>
+                                                    <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>"><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
                                                 </h3>
                                                 <h6 class="team-card__content__designation"><?= htmlspecialchars($member['jabatan'] ?? 'Staff') ?></h6>
                                             </div>
@@ -167,11 +163,6 @@ if (!isset($pengelolaList)) {
 
                 <!-- Navigation Arrows -->
                 <button class="team-carousel__nav team-carousel__nav--prev" onclick="moveCarouselHome(-1)" aria-label="Previous">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <button class="team-carousel__nav team-carousel__nav--next" onclick="moveCarouselHome(1)" aria-label="Next">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>

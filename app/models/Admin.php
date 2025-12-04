@@ -69,5 +69,39 @@ class Admin {
             return false;
         }
     }
+
+    /**
+     * Update profile admin
+     * @param array $data (id_admin, nama_lengkap, email)
+     */
+    public function updateProfile($data) {
+        $query = "UPDATE " . $this->table . " 
+                  SET nama_lengkap = :nama, email = :email 
+                  WHERE id_admin = :id";
+
+        $this->db->query($query);
+        $this->db->bind(':nama', $data['nama_lengkap']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':id', $data['id_admin']);
+
+        return $this->db->execute();
+    }
+
+    /**
+     * Update password admin
+     * @param int $id_admin
+     * @param string $new_password_hash
+     */
+    public function updatePassword($id_admin, $new_password_hash) {
+        $query = "UPDATE " . $this->table . " 
+                  SET password = :password 
+                  WHERE id_admin = :id";
+
+        $this->db->query($query);
+        $this->db->bind(':password', $new_password_hash);
+        $this->db->bind(':id', $id_admin);
+
+        return $this->db->execute();
+    }
 }
 ?>

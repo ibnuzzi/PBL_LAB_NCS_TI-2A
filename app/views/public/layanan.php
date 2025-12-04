@@ -187,16 +187,6 @@ include 'app/views/templates/public/navbar.php';
     </div>
 </div>
                 
-
-            <div class="google-map__contact__pin">
-                <img src="<?php echo BASE_URL; ?>/assets/images/shapes/pin.png" alt="Pin Lokasi">
-            </div>
-
-            <div class="google-map__contact__location">
-                <p class="google-map__contact__location__text">
-                    Jl. Soekarno Hatta No.9, Mojolangu, Kec. Lowokwaru, Jawa Barat, Jawa Timur 65141
-                </p>
-            </div>
         </div>
     </div>
 </div>

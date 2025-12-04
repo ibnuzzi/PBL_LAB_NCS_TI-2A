@@ -14,10 +14,18 @@ class AdminPengelolaController extends Controller {
     public function index()
     {
         $model = $this->model('Pengelola');
+        $keminatanModel = $this->model('Keminatan');
+
+        $pengelola_list = $model->getAll();
+
+        // Ambil keminatan untuk setiap pengelola
+        foreach ($pengelola_list as &$pengelola) {
+            $pengelola['keminatan_list'] = $keminatanModel->getByPengelolaId($pengelola['id_pengelola']);
+        }
 
         $data = [
             'judul_halaman' => 'Struktur Pengelola - Lab NCS',
-            'pengelola_list' => $model->getAll()
+            'pengelola_list' => $pengelola_list
         ];
 
         $this->view('templates/admin/header_admin', $data);
@@ -30,7 +38,14 @@ class AdminPengelolaController extends Controller {
      */
     public function create()
     {
-        $data = ['judul_halaman' => 'Tambah Pengelola'];
+        $jabatanModel = $this->model('Jabatan');
+        $keminatanModel = $this->model('Keminatan');
+
+        $data = [
+            'judul_halaman' => 'Tambah Pengelola',
+            'jabatan_list' => $jabatanModel->getAll(),
+            'keminatan_list' => $keminatanModel->getAll()
+        ];
 
         $this->view('templates/admin/header_admin', $data);
         $this->view('public/admin/pengelola/create', $data);
@@ -47,13 +62,14 @@ class AdminPengelolaController extends Controller {
             exit;
         }
 
-        $nama   = trim($_POST['nama_pengelola'] ?? '');
-        $jabatan = trim($_POST['jabatan'] ?? '');
-        $urutan = (int)($_POST['urutan'] ?? 0);
-        $id_admin = $_SESSION['admin_id'] ?? 1;
+        $nama      = trim($_POST['nama_pengelola'] ?? '');
+        $nid_nip   = trim($_POST['nid_nip'] ?? '');
+        $id_jabatan = (int)($_POST['id_jabatan'] ?? 0);
+        $id_admin  = $_SESSION['admin_id'] ?? 1;
+        $keminatan_ids = $_POST['keminatan'] ?? [];
 
-        if (empty($nama) || empty($jabatan)) {
-            $_SESSION['error_message'] = 'Nama dan jabatan wajib diisi.';
+        if (empty($nama)) {
+            $_SESSION['error_message'] = 'Nama pengelola wajib diisi.';
             header("Location: " . BASE_URL . "/admin/pengelola/create");
             exit;
         }
@@ -75,14 +91,22 @@ class AdminPengelolaController extends Controller {
         $model = $this->model('Pengelola');
 
         $payload = [
-            'nama_pengelola' => $nama,
-            'jabatan'        => $jabatan,
-            'foto_pengelola' => $foto,
-            'urutan'         => $urutan,
+            'nama_pengelola'    => $nama,
+            'nid_nip'           => $nid_nip,
+            'id_jabatan'        => $id_jabatan > 0 ? $id_jabatan : null,
+            'foto_pengelola'    => $foto,
             'id_admin_pencatat' => $id_admin
         ];
 
         $ok = $model->insert($payload);
+
+        if ($ok) {
+            // Get last inserted ID and assign keminatan
+            $id_pengelola = $model->getLastInsertId();
+            if (!empty($keminatan_ids)) {
+                $model->assignKeminatan($id_pengelola, $keminatan_ids);
+            }
+        }
 
         $_SESSION[$ok ? 'success_message' : 'error_message'] =
             $ok ? "Pengelola berhasil ditambahkan." : "Gagal menambahkan pengelola.";
@@ -110,9 +134,16 @@ class AdminPengelolaController extends Controller {
             exit;
         }
 
+        $jabatanModel = $this->model('Jabatan');
+        $keminatanModel = $this->model('Keminatan');
+        $selectedKeminatan = $model->getKeminatanIds($id);
+
         $data = [
             'judul_halaman' => 'Edit Pengelola',
-            'pengelola'     => $row
+            'pengelola'     => $row,
+            'jabatan_list'  => $jabatanModel->getAll(),
+            'keminatan_list' => $keminatanModel->getAll(),
+            'selected_keminatan' => $selectedKeminatan
         ];
 
         $this->view('templates/admin/header_admin', $data);
@@ -139,9 +170,10 @@ class AdminPengelolaController extends Controller {
             exit;
         }
 
-        $nama   = trim($_POST['nama_pengelola']);
-        $jabatan = trim($_POST['jabatan']);
-        $urutan = (int)$_POST['urutan'];
+        $nama      = trim($_POST['nama_pengelola']);
+        $nid_nip   = trim($_POST['nid_nip'] ?? '');
+        $id_jabatan = (int)($_POST['id_jabatan'] ?? 0);
+        $keminatan_ids = $_POST['keminatan'] ?? [];
 
         include './app/services/ImageService.php';
 
@@ -167,12 +199,17 @@ class AdminPengelolaController extends Controller {
         $payload = [
             'id_pengelola'   => $id,
             'nama_pengelola' => $nama,
-            'jabatan'        => $jabatan,
+            'nid_nip'        => $nid_nip,
+            'id_jabatan'     => $id_jabatan > 0 ? $id_jabatan : null,
             'foto_pengelola' => $foto,
-            'urutan'         => $urutan,
         ];
 
         $ok = $model->update($payload);
+
+        if ($ok) {
+            // Update keminatan
+            $model->assignKeminatan($id, $keminatan_ids);
+        }
 
         $_SESSION[$ok ? 'success_message' : 'error_message'] =
             $ok ? "Pengelola berhasil diperbarui." : "Gagal memperbarui pengelola.";

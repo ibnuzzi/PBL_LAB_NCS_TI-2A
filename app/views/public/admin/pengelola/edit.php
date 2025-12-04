@@ -35,23 +35,50 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <!-- Nama -->
           <div class="mb-3">
-            <label class="form-label">Nama Pengelola</label>
+            <label class="form-label">Nama Pengelola <span class="text-danger">*</span></label>
             <input type="text" name="nama_pengelola" class="form-control"
                    value="<?= htmlspecialchars($pengelola['nama_pengelola']) ?>" required>
+          </div>
+
+          <!-- NID/NIP -->
+          <div class="mb-3">
+            <label class="form-label">NID/NIP</label>
+            <input type="text" name="nid_nip" class="form-control" 
+                   value="<?= htmlspecialchars($pengelola['nid_nip'] ?? '') ?>" placeholder="Opsional">
           </div>
 
           <!-- Jabatan -->
           <div class="mb-3">
             <label class="form-label">Jabatan</label>
-            <input type="text" name="jabatan" class="form-control"
-                   value="<?= htmlspecialchars($pengelola['jabatan']) ?>" required>
+            <select name="id_jabatan" class="form-select">
+              <option value="">-- Pilih Jabatan --</option>
+              <?php if (!empty($jabatan_list)): foreach ($jabatan_list as $j): ?>
+                <option value="<?= $j['id_jabatan']; ?>" 
+                        <?= ($pengelola['id_jabatan'] == $j['id_jabatan']) ? 'selected' : ''; ?>>
+                  <?= htmlspecialchars($j['nama_jabatan']); ?>
+                </option>
+              <?php endforeach; endif; ?>
+            </select>
           </div>
 
-          <!-- Urutan -->
+          <!-- Keminatan (Multiple) -->
           <div class="mb-3">
-            <label class="form-label">Urutan Tampil</label>
-            <input type="number" name="urutan" class="form-control" min="1"
-                   value="<?= htmlspecialchars($pengelola['urutan']) ?>" required>
+            <label class="form-label">Keminatan / Keilmuan</label>
+            <small class="text-muted d-block mb-2">Pilih satu atau lebih keminatan</small>
+            <div class="row">
+              <?php if (!empty($keminatan_list)): foreach ($keminatan_list as $k): ?>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="keminatan[]" 
+                           value="<?= $k['id_keminatan']; ?>" id="keminatan_<?= $k['id_keminatan']; ?>"
+                           <?= in_array($k['id_keminatan'], $selected_keminatan ?? []) ? 'checked' : ''; ?>>
+                    <label class="form-check-label" for="keminatan_<?= $k['id_keminatan']; ?>">
+                      <?= htmlspecialchars($k['nama_keminatan']); ?>
+                    </label>
+                  </div>
+                </div>
+              <?php endforeach; endif; ?>
+            </div>
           </div>
 
           <!-- Foto Lama -->

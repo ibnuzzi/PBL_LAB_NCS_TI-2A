@@ -62,6 +62,7 @@ Route::add('GET', '/layanan', 'HomeController', 'layanan');
 Route::add('POST', '/layanan/store', 'HomeController', 'kirimLayanan');
 Route::add('GET', '/arsip', 'HomeController', 'arsip');
 Route::add('GET', '/tentang', 'HomeController', 'tentang');
+Route::add('GET', '/pengelola/{id}', 'HomeController', 'detailPengelola');
 Route::add('GET', '/agenda', 'HomeController', 'indexAgenda');
 Route::add('GET', '/fasilitas', 'HomeController', 'indexFasilitas');
 
@@ -148,13 +149,28 @@ Route::add('POST', '/admin/dokumen_kategori/update', 'AdminDokumenKategoriContro
 Route::add('GET',  '/admin/dokumen_kategori/delete/{id}', 'AdminDokumenKategoriController', 'delete');
 
 // PENGELOLA
-Route::add('GET',  '/admin/pengelola',                 'AdminPengelolaController', 'index');
-Route::add('GET',  '/admin/pengelola/create',          'AdminPengelolaController', 'create');
-Route::add('POST', '/admin/pengelola/store',           'AdminPengelolaController', 'store');
-Route::add('GET',  '/admin/pengelola/edit/{id}',   'AdminPengelolaController', 'edit');
+Route::add('GET',  '/admin/pengelola', 'AdminPengelolaController', 'index');
+Route::add('GET',  '/admin/pengelola/create', 'AdminPengelolaController', 'create');
+Route::add('POST', '/admin/pengelola/store', 'AdminPengelolaController', 'store');
+Route::add('GET',  '/admin/pengelola/edit/{id}', 'AdminPengelolaController', 'edit');
 Route::add('POST', '/admin/pengelola/update/{id}', 'AdminPengelolaController', 'update');
 Route::add('GET',  '/admin/pengelola/delete/{id}', 'AdminPengelolaController', 'delete');
 
+Route::add('GET',  '/admin/jabatan', 'AdminJabatanController', 'index');
+Route::add('POST', '/admin/jabatan/store', 'AdminJabatanController', 'store');
+Route::add('POST', '/admin/jabatan/update', 'AdminJabatanController', 'update');
+Route::add('GET',  '/admin/jabatan/delete/{id}', 'AdminJabatanController', 'delete');
+
+Route::add('GET',  '/admin/minat_ilmu', 'AdminKeminatanController', 'index');
+Route::add('POST', '/admin/minat_ilmu/store', 'AdminKeminatanController', 'store');
+Route::add('POST', '/admin/minat_ilmu/update', 'AdminKeminatanController', 'update');
+Route::add('GET',  '/admin/minat_ilmu/delete/{id}', 'AdminKeminatanController', 'delete');
+
+// PROFILE & PASSWORD
+Route::add('GET',  '/admin/profile', 'AdminProfileController', 'index');
+Route::add('POST', '/admin/profile/update', 'AdminProfileController', 'update');
+Route::add('GET',  '/admin/change-password', 'AdminProfileController', 'changePassword');
+Route::add('POST', '/admin/profile/update-password', 'AdminProfileController', 'updatePassword');
 
 // 6. JALANKAN ROUTER
 Route::dispatch($routePath, $_SERVER['REQUEST_METHOD']);

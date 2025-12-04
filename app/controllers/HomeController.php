@@ -135,6 +135,41 @@ class HomeController extends Controller
         $this->view('public/tentang', $data);
     }
 
+    public function detailPengelola($id = null)
+    {
+        if (!$id) {
+            header('Location: ' . BASE_URL . '/tentang');
+            exit;
+        }
+
+        $pengelolaModel = $this->model('Pengelola');
+        $keminatanModel = $this->model('Keminatan');
+        
+        $pengelola = $pengelolaModel->getById($id);
+
+        if (!$pengelola) {
+            header("HTTP/1.0 404 Not Found");
+            $this->view('templates/public/header', ['judul_halaman' => '404 Not Found']);
+            $this->view('errors/404');
+            $this->view('templates/public/footer');
+            return;
+        }
+
+        // Get keminatan list for this pengelola
+        $keminatanList = $keminatanModel->getByPengelolaId($id);
+        
+        // Add keminatan_list to pengelola array for easier access in view
+        $pengelola['keminatan_list'] = $keminatanList;
+
+        $data = [
+            'judul_halaman' => htmlspecialchars($pengelola['nama_pengelola']) . ' - Lab NCS',
+            'pengelola' => $pengelola,
+            'keminatanList' => $keminatanList
+        ];
+
+        $this->view('public/pengelola/detail', $data);
+    }
+
     public function indexAgenda()
     {
         $agendaModel = $this->model('Agenda');

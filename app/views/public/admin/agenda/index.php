@@ -53,49 +53,56 @@ include './app/views/templates/admin/sidebar_admin.php';
                 $gambarUrl = !empty($a['gambar_agenda'])
                   ? BASE_URL . "/public/uploads/agenda/" . $a['gambar_agenda']
                   : BASE_URL . "/public/assets/images/default/nodata.png";
+
+                // Add cache busting parameter
+                if (!empty($a['gambar_agenda'])) {
+                  $imagePath = __DIR__ . '/../../../../public/uploads/agenda/' . $a['gambar_agenda'];
+                  $cacheParam = file_exists($imagePath) ? '?v=' . filemtime($imagePath) : '?v=' . time();
+                  $gambarUrl .= $cacheParam;
+                }
             ?>
 
-            <tr>
-              <td><?= $no++; ?></td>
+                <tr>
+                  <td><?= $no++; ?></td>
 
-              <td><?= htmlspecialchars($a['nama_agenda']); ?></td>
+                  <td><?= htmlspecialchars($a['nama_agenda']); ?></td>
 
-              <td><?= $mulaiTxt; ?></td>
+                  <td><?= $mulaiTxt; ?></td>
 
-              <td><?= $selesaiTxt; ?></td>
+                  <td><?= $selesaiTxt; ?></td>
 
-              <td>
+                  <td>
 
-                <!-- VIEW -->
-                <button
-                  type="button"
-                  class="btn btn-sm btn-outline-info me-1 btn-view"
-                  data-nama="<?= htmlspecialchars($a['nama_agenda']); ?>"
-                  data-deskripsi="<?= htmlspecialchars($a['deskripsi_agenda'] ?? ''); ?>"
-                  data-lokasi="<?= htmlspecialchars($a['lokasi'] ?? ''); ?>"
-                  data-mulai="<?= $mulaiTxt; ?>"
-                  data-selesai="<?= $selesaiTxt; ?>"
-                  data-gambar="<?= $gambarUrl; ?>"
-                >
-                  <i class="bx bx-show-alt"></i>
-                </button>
+                    <!-- VIEW -->
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-info me-1 btn-view"
+                      data-nama="<?= htmlspecialchars($a['nama_agenda']); ?>"
+                      data-deskripsi="<?= htmlspecialchars($a['deskripsi_agenda'] ?? ''); ?>"
+                      data-lokasi="<?= htmlspecialchars($a['lokasi'] ?? ''); ?>"
+                      data-mulai="<?= $mulaiTxt; ?>"
+                      data-selesai="<?= $selesaiTxt; ?>"
+                      data-gambar="<?= $gambarUrl; ?>">
+                      <i class="bx bx-show-alt"></i>
+                    </button>
 
-                <!-- EDIT -->
-                <a href="<?= BASE_URL ?>/admin/agenda/edit/<?= $a['id_agenda']; ?>"
-                   class="btn btn-sm btn-outline-primary me-1">
-                  <i class="bx bx-edit-alt"></i>
-                </a>
+                    <!-- EDIT -->
+                    <a href="<?= BASE_URL ?>/admin/agenda/edit/<?= $a['id_agenda']; ?>"
+                      class="btn btn-sm btn-outline-primary me-1">
+                      <i class="bx bx-edit-alt"></i>
+                    </a>
 
-                <!-- DELETE -->
-                <a href="<?= BASE_URL ?>/admin/agenda/delete/<?= $a['id_agenda']; ?>"
-                   class="btn btn-sm btn-outline-danger btn-delete">
-                  <i class="bx bx-trash"></i>
-                </a>
-              </td>
+                    <!-- DELETE -->
+                    <a href="<?= BASE_URL ?>/admin/agenda/delete/<?= $a['id_agenda']; ?>"
+                      class="btn btn-sm btn-outline-danger btn-delete">
+                      <i class="bx bx-trash"></i>
+                    </a>
+                  </td>
 
-            </tr>
+                </tr>
 
-            <?php endforeach; endif; ?>
+            <?php endforeach;
+            endif; ?>
 
           </tbody>
         </table>
@@ -205,44 +212,44 @@ include './app/views/components/page_scripts.php';
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
 
-  $(".btn-view").click(function () {
+    $(".btn-view").click(function() {
 
-    let nama = $(this).data("nama");
-    let deskripsi = $(this).data("deskripsi");
-    let lokasi = $(this).data("lokasi");
-    let mulai = $(this).data("mulai");
-    let selesai = $(this).data("selesai");
-    let gambar = $(this).data("gambar");
+      let nama = $(this).data("nama");
+      let deskripsi = $(this).data("deskripsi");
+      let lokasi = $(this).data("lokasi");
+      let mulai = $(this).data("mulai");
+      let selesai = $(this).data("selesai");
+      let gambar = $(this).data("gambar");
 
-    // Set judul
-    $("#detailNamaAgenda").text(nama);
+      // Set judul
+      $("#detailNamaAgenda").text(nama);
 
-    // Set gambar
-    $("#detailGambar").attr("src", gambar);
+      // Set gambar
+      $("#detailGambar").attr("src", gambar);
 
-    // Set tanggal
-    $("#detailMulai").html(`<strong>${mulai}</strong>`);
-    $("#detailSelesai").html(`<strong>${selesai}</strong>`);
+      // Set tanggal
+      $("#detailMulai").html(`<strong>${mulai}</strong>`);
+      $("#detailSelesai").html(`<strong>${selesai}</strong>`);
 
-    // Set lokasi
-    if (lokasi && lokasi.trim() !== "") {
+      // Set lokasi
+      if (lokasi && lokasi.trim() !== "") {
         $("#detailLokasi").text(lokasi);
-    } else {
+      } else {
         $("#detailLokasi").html(`<em>Belum ditentukan</em>`);
-    }
+      }
 
-    // Set deskripsi
-    if (deskripsi && deskripsi.trim() !== "") {
+      // Set deskripsi
+      if (deskripsi && deskripsi.trim() !== "") {
         $("#detailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
-    } else {
+      } else {
         $("#detailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
-    }
+      }
 
-    // Show modal
-    new bootstrap.Modal(document.getElementById("modalDetailAgenda")).show();
+      // Show modal
+      new bootstrap.Modal(document.getElementById("modalDetailAgenda")).show();
+    });
+
   });
-
-});
 </script>

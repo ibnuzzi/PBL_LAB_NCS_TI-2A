@@ -14,7 +14,7 @@ include 'app/views/templates/public/navbar.php';
 <section class="page-header">
     <div class="page-header__bg" style="background-image: url(<?= BASE_URL ?>/public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
     <div class="container">
-        <h2 class="page-header__title"><?= htmlspecialchars($berita['judul_berita']) ?></h2>
+        <h2 class="page-header__title">Detail Berita</h2>
         <ul class="nionx-breadcrumb list-unstyled">
             <li><a href="<?= BASE_URL ?>">Beranda</a></li>
             <li><a href="<?= BASE_URL ?>/berita">Berita</a></li>
@@ -28,13 +28,38 @@ include 'app/views/templates/public/navbar.php';
         <div class="row">
             <!-- Main Content: Left Column (8 cols) -->
             <div class="col-lg-8 mb-4 mb-lg-0">
-                <!-- Featured Image -->
-                <div class="blog-single__image mb-4">
+                <!-- Article Title - Primary focal point -->
+                <h1 class="article-title">
+                    <?= htmlspecialchars($berita['judul_berita']) ?>
+                </h1>
+
+                <!-- Article Metadata - Professional info display -->
+                <div class="article-meta">
+                    <div class="meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        <span><?= date('d F Y', strtotime($berita['tanggal_publish'])) ?></span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="far fa-user-circle"></i>
+                        <span>Admin Lab NCS</span>
+                    </div>
+                    <?php
+                    // Calculate reading time (avg 200 words per minute)
+                    $wordCount = str_word_count(strip_tags($berita['isi_berita']));
+                    $readingTime = max(1, ceil($wordCount / 200));
+                    ?>
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <span><?= $readingTime ?> menit baca</span>
+                    </div>
+                </div>
+
+                <!-- Featured Image with modern presentation -->
+                <div class="article-featured-image">
                     <?php
                     $defaultImg = BASE_URL . '/public/assets/images/empty/empty_data.jpg';
                     $imgUrl = $defaultImg;
                     if (!empty($berita['gambar_berita'])) {
-                        // server-side path detection to avoid broken images
                         $serverPath = realpath(__DIR__ . '/../../../../public/uploads/berita/') ?: (__DIR__ . '/../../../../public/uploads/berita/');
                         $candidate = rtrim($serverPath, '/') . '/' . $berita['gambar_berita'];
                         if (file_exists($candidate)) {
@@ -42,104 +67,18 @@ include 'app/views/templates/public/navbar.php';
                         }
                     }
                     ?>
-                    <img src="<?= $imgUrl ?>" alt="<?= htmlspecialchars($berita['judul_berita']) ?>" class="img-fluid rounded" style="width: 100%; max-height: 520px; object-fit: cover;">
+                    <img src="<?= $imgUrl ?>" alt="<?= htmlspecialchars($berita['judul_berita']) ?>" class="img-fluid">
                 </div>
 
-                <!-- Article Meta (author only; comments removed) -->
-                <div class="blog-single__meta mb-3" style="display: flex; gap: 12px; align-items: center; color: #666; font-size: 14px;">
-                    <span>
-                        <i class="far fa-user-circle" style="margin-right: 6px;"></i>
-                        <strong>By admin</strong>
-                    </span>
-<<<<<<< Updated upstream
-=======
-                </div>
-
-                <!-- Article Title -->
-                <h1 class="blog-single__title" style="font-size: 32px; font-weight: 700; color: #081d2f; margin-bottom: 24px; line-height: 1.3;">
-                    <?= htmlspecialchars($berita['judul_berita']) ?>
-                </h1>
-
-                <!-- Article Body Content -->
-                <div class="blog-single__body" style="font-size: 15px; line-height: 1.8; color: #555; margin-bottom: 40px;">
+                <!-- Article Body Content with enhanced readability -->
+                <div class="article-content">
                     <?= $berita['isi_berita'] ?>
                 </div>
 
-                <!-- Back Button -->
-                <div style="margin-top: 40px;">
-                    <a href="<?= BASE_URL ?>/berita" class="btn btn-outline-secondary btn-sm">
-                        ← Kembali ke Berita
-                    </a>
-                </div>
-            </div>
-
-            <!-- Sidebar: Right Column (4 cols) -->
-            <div class="col-lg-4">
-                <!-- Latest Post Widget -->
-                <aside class="blog-sidebar" style="background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 1px 0 rgba(0,0,0,0.04);">
-                    <h3 style="font-size: 24px; font-weight: 700; color: #081d2f; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid #e6e6e6;">
-                        Latest post
-                    </h3>
-
-                    <?php
-                        // Limit latest posts to maximum 5 items
-                        $latestList = [];
-                        if (!empty($latestPosts) && is_array($latestPosts)) {
-                            $latestList = array_slice($latestPosts, 0, 5);
-                        }
-                    ?>
-                    <?php if (!empty($latestList)): ?>
-                        <div class="blog-widget__list">
-                            <?php foreach ($latestList as $post): ?>
-                                <article style="margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #f0f0f0; display: flex; gap: 12px; align-items: flex-start;">
-                                    <div style="flex: 0 0 36%;">
-                                        <?php
-                                            $postImgUrl = BASE_URL . '/public/assets/images/empty/empty_data.jpg';
-                                            if (!empty($post['gambar_berita'])) {
-                                                $candidate = realpath(__DIR__ . '/../../../../public/uploads/berita/') ?: (__DIR__ . '/../../../../public/uploads/berita/');
-                                                $candidate = rtrim($candidate, '/') . '/' . $post['gambar_berita'];
-                                                if (file_exists($candidate)) {
-                                                    $postImgUrl = BASE_URL . '/public/uploads/berita/' . $post['gambar_berita'];
-                                                }
-                                            }
-                                        ?>
-                                        <a href="<?= BASE_URL ?>/berita/detail/<?= htmlspecialchars($post['id_berita']) ?>">
-                                            <img src="<?= $postImgUrl ?>" alt="<?= htmlspecialchars($post['judul_berita']) ?>" style="width:100%; height:84px; object-fit:cover; border-radius:6px; display:block;" loading="lazy">
-                                        </a>
-                                    </div>
-                                    <div style="flex: 1 1 64%;">
-                                        <div style="font-size: 12px; color: #1ea37a; font-weight: 600; margin-bottom: 6px;">
-                                            <?= date('d M Y', strtotime($post['tanggal_publish'])) ?>
-                                        </div>
-                                        <h4 style="font-size: 14px; font-weight: 600; margin: 0; line-height:1.25;">
-                                            <a href="<?= BASE_URL ?>/berita/detail/<?= htmlspecialchars($post['id_berita']) ?>" style="text-decoration:none; color:#081d2f;">
-                                                <?= htmlspecialchars(strlen($post['judul_berita']) > 60 ? substr($post['judul_berita'], 0, 60) . '...' : $post['judul_berita']) ?>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php else: ?>
-                        <p style="color: #999; font-size: 14px;">Belum ada berita terbaru.</p>
-                    <?php endif; ?>
->>>>>>> Stashed changes
-                </div>
-
-                <!-- Article Title -->
-                <h1 class="blog-single__title" style="font-size: 32px; font-weight: 700; color: #081d2f; margin-bottom: 24px; line-height: 1.3;">
-                    <?= htmlspecialchars($berita['judul_berita']) ?>
-                </h1>
-
-                <!-- Article Body Content -->
-                <div class="blog-single__body" style="font-size: 15px; line-height: 1.8; color: #555; margin-bottom: 40px;">
-                    <?= $berita['isi_berita'] ?>
-                </div>
-
-                <!-- Back Button -->
-                <div style="margin-top: 40px;">
-                    <a href="<?= BASE_URL ?>/berita" class="btn btn-outline-secondary btn-sm">
-                        ← Kembali ke Berita
+                <!-- Back to News Button -->
+                <div class="article-actions">
+                    <a href="<?= BASE_URL ?>/berita" class="btn-back-to-news">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Berita
                     </a>
                 </div>
             </div>

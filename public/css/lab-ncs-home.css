@@ -23,9 +23,9 @@
 }
 
 .team-slide {
-  flex: 0 0 calc((100% - 75px) / 4); /* (100% - 3gaps*25px) / 4 cards */
-  max-width: calc((100% - 75px) / 4);
-  min-width: 0; /* Allow flexbox to shrink if needed */
+  flex: 0 0 calc((100% - 50px) / 3.5);
+  max-width: calc((100% - 50px) / 3.5);
+  min-width: 0;
 }
 
 /* Enhanced Card Styling */
@@ -47,15 +47,14 @@
 
 .team-slide .team-card__image {
   width: 100%;
-  height: 320px;
+  height: 360px; /* Increased height for better proportions */
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef4 100%);
+  display: block;
+  background: #f5f7fa;
   position: relative;
   flex-shrink: 0;
-  aspect-ratio: 1/1;
+  padding: 0; /* Ensure no padding */
+  margin: 0; /* Ensure no margin */
 }
 
 .team-slide .team-card__image::after {
@@ -66,15 +65,21 @@
   right: 0;
   height: 4px;
   background: linear-gradient(90deg, #1a3a6b 0%, #2d5a9e 50%, #1a3a6b 100%);
+  z-index: 1; /* Above image */
 }
 
 .team-slide .team-card__image img {
   width: 100%;
+  min-width: 100%; /* Force full width even for portrait */
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover; /* Fill entire area, crop if needed */
+  object-position: center; /* Center the crop */
   transition: transform 0.5s ease;
   display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
 }
 
 .team-slide .team-card:hover .team-card__image img {
@@ -111,22 +116,34 @@
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .team-slide {
-    flex: 0 0 calc((100% - 50px) / 3); /* 3 cards: (100% - 2gaps*25px) / 3 */
+    flex: 0 0 calc((100% - 50px) / 3); /* 3 cards */
     max-width: calc((100% - 50px) / 3);
+  }
+  
+  .team-slide .team-card__image {
+    height: 340px; /* Slightly smaller on medium screens */
   }
 }
 
 @media (max-width: 992px) {
   .team-slide {
-    flex: 0 0 calc((100% - 25px) / 2); /* 2 cards: (100% - 1gap*25px) / 2 */
+    flex: 0 0 calc((100% - 25px) / 2); /* 2 cards */
     max-width: calc((100% - 25px) / 2);
+  }
+  
+  .team-slide .team-card__image {
+    height: 320px;
   }
 }
 
 @media (max-width: 768px) {
   .team-slide {
-    flex: 0 0 100%; /* 1 card: 100% */
+    flex: 0 0 100%; /* 1 card */
     max-width: 100%;
+  }
+  
+  .team-slide .team-card__image {
+    height: 400px; /* Taller on mobile for portrait */
   }
 
   .team-carousel-wrapper {
@@ -167,11 +184,11 @@
 }
 
 .team-carousel__nav--prev {
-  left: 12px;
+  left: 0; /* Tight to left edge */
 }
 
 .team-carousel__nav--next {
-  right: 12px;
+  right: 0; /* Tight to right edge - eliminates gap */
 }
 
 .team-carousel__nav svg {

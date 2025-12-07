@@ -92,7 +92,7 @@ if (!empty($pengelola['foto_pengelola'])) {
                                     <div class="info-item">
                                         <span class="info-item__label">
                                             <i class="fas fa-id-badge"></i>
-                                            NID/NIP
+                                            NIDN/NIP
                                         </span>
                                         <span class="info-item__value">
                                             <?= htmlspecialchars($pengelola['nid_nip']) ?>

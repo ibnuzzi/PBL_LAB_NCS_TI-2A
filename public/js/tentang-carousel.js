@@ -18,11 +18,11 @@
     
     /**
      * Get number of cards visible per slide based on viewport width
-     * Matches the CSS breakpoints in lab-ncs-home.css
+     * Matches the CSS breakpoints in lab-ncs-custom.css
      */
     function getCardsPerSlide() {
         const width = window.innerWidth;
-        if (width >= 1200) return 4;  // Desktop: 4 cards (25%)
+        if (width >= 1200) return 3.5;  // Desktop: 3.5 cards (fixed to match CSS)
         if (width >= 992) return 3;   // Tablet large: 3 cards (33.333%)
         if (width >= 768) return 2;   // Tablet: 2 cards (50%)
         return 1;                      // Mobile: 1 card (100%)
@@ -53,8 +53,32 @@
             homeCurrentIndex = totalPages - 1;
         }
         
-        // Calculate transform based on cards per slide
-        homeCarousel.style.transform = `translateX(-${homeCurrentIndex * cardsPerSlide * slideWidth}px)`;
+        // CRITICAL FIX: Check if we're on last page
+        const isLastPage = homeCurrentIndex === (totalPages - 1);
+        let translateDistance;
+        
+        if (isLastPage) {
+            // On last page: only scroll enough to show remaining cards
+            // This eliminates white space on the right
+            const cardsShown = homeCurrentIndex * cardsPerSlide;
+            const remainingCards = homeTotalMembers - cardsShown;
+            
+            // If remaining cards < cardsPerSlide, adjust to show only remaining
+            if (remainingCards < cardsPerSlide) {
+                // Scroll to show last card at the right edge (no white space)
+                translateDistance = (homeTotalMembers - cardsPerSlide) * slideWidth;
+                // Prevent negative scroll
+                translateDistance = Math.max(0, translateDistance);
+            } else {
+                // Normal scroll for last page if it has full cards
+                translateDistance = homeCurrentIndex * cardsPerSlide * slideWidth;
+            }
+        } else {
+            // Normal pages: scroll by full card increments
+            translateDistance = homeCurrentIndex * cardsPerSlide * slideWidth;
+        }
+        
+        homeCarousel.style.transform = `translateX(-${translateDistance}px)`;
 
         // Update dots
         homeDots.forEach((dot, index) => {

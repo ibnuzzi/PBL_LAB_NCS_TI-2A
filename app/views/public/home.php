@@ -138,7 +138,7 @@ if (!isset($pengelolaList)) {
                         if (!empty($member['foto_pengelola'])) {
                             $imageName = ltrim(trim($member['foto_pengelola']), '/');
                             $photoPath = BASE_URL . '/public/uploads/pengelola/' . $imageName;
-                $serverPath = __DIR__ . '/../../../public/uploads/pengelola/' . $imageName;
+                            $serverPath = __DIR__ . '/../../../public/uploads/pengelola/' . $imageName;
                             if (!@file_exists($serverPath)) {
                                 $photoPath = BASE_URL . '/public/assets/images/team/default-avatar.jpg';
                             }
@@ -414,6 +414,9 @@ if (!isset($pengelolaList)) {
                                         $serverPath = __DIR__ . '/../../../public/uploads/berita/' . $news['gambar_berita'];
                                         if (file_exists($serverPath)) {
                                             $imgSrc = BASE_URL . '/public/uploads/berita/' . $news['gambar_berita'];
+                                            // Add cache busting
+                                            $cacheParam = '?v=' . filemtime($serverPath);
+                                            $imgSrc .= $cacheParam;
                                         }
                                     }
                                     ?>

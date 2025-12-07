@@ -48,81 +48,81 @@ include './app/views/templates/admin/sidebar_admin.php';
               name="judul_pengabdian"
               required>
           </div>
-          
-            <!-- Tim Pengabdi (Select2) -->
-            <div class="mb-3">
-              <label class="form-label">Tim Pengabdi (Pilih Anggota) <span class="text-danger">*</span></label>
-              <?php if (!empty($list_pengelola)): ?>
-                <select class="form-select select2" name="anggota[]" multiple="multiple" required>
-                  <?php foreach ($list_pengelola as $p): ?>
-                    <option value="<?= $p['id_pengelola'] ?>">
-                      <?= htmlspecialchars($p['nama_pengelola']) ?> (<?= htmlspecialchars($p['jabatan']) ?>)
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-                <div class="form-text">
-                  <i class="bx bx-info-circle"></i> Ketik nama untuk mencari. Bisa pilih lebih dari satu.
-                </div>
-              <?php else: ?>
-                <div class="alert alert-warning">
-                  <i class="bx bx-error-circle"></i> Belum ada data pengelola. Silakan tambahkan di menu Profil terlebih dahulu.
-                </div>
-              <?php endif; ?>
-            </div>
 
-            <!-- Anggota Luar -->
-            <div class="mb-3">
-              <label class="form-label">Anggota Luar (Opsional)</label>
-              <textarea name="anggota_luar" class="form-control" rows="2" placeholder="Tulis nama anggota luar jika ada (pisahkan dengan koma)"></textarea>
+          <!-- Tim Pengabdi (Select2) -->
+          <div class="mb-3">
+            <label class="form-label">Tim Pengabdi (Pilih Anggota) <span class="text-danger">*</span></label>
+            <?php if (!empty($list_pengelola)): ?>
+              <select class="form-select select2" name="anggota[]" multiple="multiple" required>
+                <?php foreach ($list_pengelola as $p): ?>
+                  <option value="<?= $p['id_pengelola'] ?>">
+                    <?= htmlspecialchars($p['nama_pengelola']) ?><?php if (!empty($p['jabatan'])): ?> (<?= htmlspecialchars($p['jabatan']) ?>)<?php endif; ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
               <div class="form-text">
-                <i class="bx bx-info-circle"></i> Masukkan nama anggota yang tidak terdaftar di sistem (misal: mahasiswa atau peneliti luar).
+                <i class="bx bx-info-circle"></i> Ketik nama untuk mencari. Bisa pilih lebih dari satu.
               </div>
-            </div>
+            <?php else: ?>
+              <div class="alert alert-warning">
+                <i class="bx bx-error-circle"></i> Belum ada data pengelola. Silakan tambahkan di menu Profil terlebih dahulu.
+              </div>
+            <?php endif; ?>
+          </div>
 
-            <!-- Tahun -->
-            <div class="mb-3">
-              <label for="tahun_pengabdian" class="form-label">Tahun</label>
-              <input type="number"
-                class="form-control"
-                id="tahun_pengabdian"
-                name="tahun_pengabdian"
-                min="1900"
-                max="2100"
-                required>
+          <!-- Anggota Luar -->
+          <div class="mb-3">
+            <label class="form-label">Anggota Luar (Opsional)</label>
+            <textarea name="anggota_luar" class="form-control" rows="2" placeholder="Tulis nama anggota luar jika ada (pisahkan dengan koma)"></textarea>
+            <div class="form-text">
+              <i class="bx bx-info-circle"></i> Masukkan nama anggota yang tidak terdaftar di sistem (misal: mahasiswa atau peneliti luar).
             </div>
+          </div>
 
-            <!-- Deskripsi -->
-            <div class="mb-3">
-              <label for="deskripsi_kegiatan" class="form-label">Abstrak</label>
-              <textarea class="form-control"
-                id="deskripsi_kegiatan"
-                name="deskripsi_kegiatan"
-                rows="4"
-                required></textarea>
-            </div>
+          <!-- Tahun -->
+          <div class="mb-3">
+            <label for="tahun_pengabdian" class="form-label">Tahun</label>
+            <input type="number"
+              class="form-control"
+              id="tahun_pengabdian"
+              name="tahun_pengabdian"
+              min="1900"
+              max="2100"
+              required>
+          </div>
 
-            <!-- PDF Upload -->
-            <div class="mb-3">
-              <label for="file_dokumen" class="form-label">File Dokumen (PDF)</label>
-              <input type="file"
-                class="form-control"
-                id="file_dokumen"
-                name="file_dokumen"
-                accept="application/pdf"
-                required>
-              <small class="text-muted">Hanya file PDF. Maksimal 10MB.</small>
-            </div>
+          <!-- Deskripsi -->
+          <div class="mb-3">
+            <label for="deskripsi_kegiatan" class="form-label">Abstrak</label>
+            <textarea class="form-control"
+              id="deskripsi_kegiatan"
+              name="deskripsi_kegiatan"
+              rows="4"
+              required></textarea>
+          </div>
 
-            <!-- ACTION BUTTONS -->
-            <div class="mt-4 d-flex gap-2">
-              <button class="btn btn-primary">
-                <i class="bx bx-save"></i> Simpan
-              </button>
+          <!-- PDF Upload -->
+          <div class="mb-3">
+            <label for="file_dokumen" class="form-label">File Dokumen (PDF)</label>
+            <input type="file"
+              class="form-control"
+              id="file_dokumen"
+              name="file_dokumen"
+              accept="application/pdf"
+              required>
+            <small class="text-muted">Hanya file PDF. Maksimal 10MB.</small>
+          </div>
 
-              <a href="<?= BASE_URL ?>/admin/pengabdian" class="btn btn-light">
-                Batal
-              </a>
-            </div>
+          <!-- ACTION BUTTONS -->
+          <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary">
+              <i class="bx bx-save"></i> Simpan
+            </button>
+
+            <a href="<?= BASE_URL ?>/admin/pengabdian" class="btn btn-light">
+              Batal
+            </a>
+          </div>
 
         </form>
 
@@ -139,12 +139,12 @@ include './app/views/templates/admin/sidebar_admin.php';
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
     $('.select2').select2({
-        theme: 'bootstrap-5',
-        placeholder: 'Pilih Anggota Tim',
-        allowClear: true,
-        width: '100%'
+      theme: 'bootstrap-5',
+      placeholder: 'Pilih Anggota Tim',
+      allowClear: true,
+      width: '100%'
     });
-});
+  });
 </script>

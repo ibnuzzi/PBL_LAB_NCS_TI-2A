@@ -53,7 +53,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               rows="5"
               class="form-control"
               placeholder="Tulis isi berita di sini..."
-              required><?php echo htmlspecialchars($berita['isi_berita'] ?? ''); ?></textarea>
+              required><?php echo $berita['isi_berita'] ?? ''; ?></textarea>
           </div>
 
           <!-- Gambar -->
@@ -121,21 +121,21 @@ include './app/views/templates/admin/footer_admin.php';
 
 <!-- Initialize Summernote -->
 <script>
-$(document).ready(function() {
-  $('#isi_berita').summernote({
-    height: 300,
-    placeholder: 'Tulis isi berita di sini...',
-    tabsize: 2,
-    toolbar: [
-      ['style', ['style']],
-      ['font', ['bold', 'underline', 'italic', 'clear']],
-      ['fontname', ['fontname']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['table', ['table']],
-      ['insert', ['link', 'picture', 'video']],
-      ['view', ['fullscreen', 'codeview', 'help']]
-    ]
+  $(document).ready(function() {
+    $('#isi_berita').summernote({
+      height: 300,
+      placeholder: 'Tulis isi berita di sini...',
+      tabsize: 2,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'italic', 'clear']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
   });
-});
 </script>

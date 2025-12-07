@@ -53,7 +53,7 @@ html {
 .team-carousel-wrapper {
   position: relative;
   overflow: hidden;
-  padding: 40px 70px;
+  padding: 40px 70px 60px; /* Restored original padding */
   margin-top: 30px;
 }
 
@@ -64,7 +64,7 @@ html {
 }
 
 .team-slide {
-  min-width: calc(25% - 19px);
+  min-width: calc(28.5% - 19px); /* Restored: wider cards */
   flex-shrink: 0;
 }
 
@@ -84,15 +84,14 @@ html {
 
 .team-slide .team-card__image {
   width: 100%;
-  height: 320px;
+  height: 360px; /* Increased height - matches home.php */
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef4 100%);
+  display: block;
+  background: #f5f7fa;
   position: relative;
   flex-shrink: 0;
-  aspect-ratio: 1/1;
+  padding: 0; /* Ensure no padding */
+  margin: 0; /* Ensure no margin */
 }
 
 .team-slide .team-card__image::after {
@@ -103,15 +102,21 @@ html {
   right: 0;
   height: 4px;
   background: linear-gradient(90deg, #1a3a6b 0%, #2d5a9e 50%, #1a3a6b 100%);
+  z-index: 1; /* Above image */
 }
 
 .team-slide .team-card__image img {
   width: 100%;
+  min-width: 100%; /* Force full width even for portrait */
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover; /* Fill entire area, crop if needed */
+  object-position: center; /* Center the crop */
   transition: transform 0.5s ease;
   display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
 }
 
 .team-slide .team-card:hover .team-card__image img {
@@ -149,17 +154,29 @@ html {
   .team-slide {
     min-width: calc(33.333% - 17px);
   }
+  
+  .team-slide .team-card__image {
+    height: 340px; /* Slightly smaller on medium screens */
+  }
 }
 
 @media (max-width: 992px) {
   .team-slide {
     min-width: calc(50% - 13px);
   }
+  
+  .team-slide .team-card__image {
+    height: 320px;
+  }
 }
 
 @media (max-width: 768px) {
   .team-slide {
     min-width: 100%;
+  }
+  
+  .team-slide .team-card__image {
+    height: 400px; /* Taller on mobile for portrait */
   }
 
   .team-carousel-wrapper {
@@ -199,11 +216,11 @@ html {
 }
 
 .team-carousel__nav--prev {
-  left: 12px;
+  left: 0; /* Tight to left edge */
 }
 
 .team-carousel__nav--next {
-  right: 12px;
+  right: 0; /* Tight to right edge */
 }
 
 .team-carousel__nav svg {

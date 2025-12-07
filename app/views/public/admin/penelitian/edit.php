@@ -41,9 +41,9 @@ include './app/views/templates/admin/sidebar_admin.php';
           <div class="mb-3">
             <label class="form-label">Judul Penelitian</label>
             <input type="text" class="form-control"
-                   name="judul_penelitian"
-                   value="<?= htmlspecialchars($penelitian['judul_penelitian']); ?>"
-                   required>
+              name="judul_penelitian"
+              value="<?= htmlspecialchars($penelitian['judul_penelitian']); ?>"
+              required>
           </div>
 
           <!-- Tim Peneliti (Select2) -->
@@ -57,7 +57,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                   $isSelected = in_array($p['id_pengelola'], $selected_peneliti) ? 'selected' : '';
                   ?>
                   <option value="<?= $p['id_pengelola'] ?>" <?= $isSelected ?>>
-                    <?= htmlspecialchars($p['nama_pengelola']) ?> (<?= htmlspecialchars($p['jabatan']) ?>)
+                    <?= htmlspecialchars($p['nama_pengelola']) ?><?php if (!empty($p['jabatan'])): ?> (<?= htmlspecialchars($p['jabatan']) ?>)<?php endif; ?>
                   </option>
                 <?php endforeach; ?>
               </select>
@@ -84,9 +84,9 @@ include './app/views/templates/admin/sidebar_admin.php';
           <div class="mb-3">
             <label class="form-label">Tahun Penelitian</label>
             <input type="number" min="1900" max="2100" class="form-control"
-                   name="tahun_penelitian"
-                   value="<?= htmlspecialchars($penelitian['tahun_penelitian']); ?>"
-                   required>
+              name="tahun_penelitian"
+              value="<?= htmlspecialchars($penelitian['tahun_penelitian']); ?>"
+              required>
           </div>
 
           <!-- Deskripsi -->
@@ -99,9 +99,9 @@ include './app/views/templates/admin/sidebar_admin.php';
           <div class="mb-3">
             <label class="form-label">Link Publikasi</label>
             <input type="url" class="form-control"
-                   name="link_publikasi"
-                   value="<?= htmlspecialchars($penelitian['link_publikasi']); ?>"
-                   placeholder="https://">
+              name="link_publikasi"
+              value="<?= htmlspecialchars($penelitian['link_publikasi']); ?>"
+              placeholder="https://">
             <div class="form-text">
               <i class="bx bx-info-circle"></i> Opsional. Link ke jurnal atau publikasi online.
             </div>
@@ -141,12 +141,12 @@ include './app/views/templates/admin/sidebar_admin.php';
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
     $('.select2').select2({
-        theme: 'bootstrap-5',
-        placeholder: 'Pilih Anggota Tim',
-        allowClear: true,
-        width: '100%'
+      theme: 'bootstrap-5',
+      placeholder: 'Pilih Anggota Tim',
+      allowClear: true,
+      width: '100%'
     });
-});
+  });
 </script>

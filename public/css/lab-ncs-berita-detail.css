@@ -1,26 +1,499 @@
 /* ============================================================================
    LAB NCS BERITA DETAIL PAGE STYLES
    ============================================================================
-   This file contains all CSS for the berita/detail.php (individual news article)
-   Extracted from embedded <style> blocks for better maintainability and caching
+   Modern CNN-style professional news article layout
+   Optimized for readability and visual appeal
    ============================================================================ */
 
 /* ============================================================================
-   LATEST POSTS SIDEBAR WIDGET
+   ARTICLE TITLE STYLING
    ============================================================================ */
 
+.article-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  margin-top: 0;
+  letter-spacing: -0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ============================================================================
+   ARTICLE METADATA SECTION
+   ============================================================================ */
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  padding: 20px 0;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.meta-item i {
+  font-size: 16px;
+  color: #1ea37a;
+}
+
+.meta-item span {
+  color: #404040;
+}
+
+/* ============================================================================
+   FEATURED IMAGE STYLING
+   ============================================================================ */
+
+.article-featured-image {
+  margin-bottom: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.article-featured-image img {
+  width: 100%;
+  height: auto;
+  max-height: 550px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.article-featured-image:hover img {
+  transform: scale(1.02);
+}
+
+/* ============================================================================
+   ARTICLE CONTENT - ENHANCED TYPOGRAPHY
+   ============================================================================ */
+
+.article-content {
+  font-size: 19px;
+  line-height: 1.75;
+  color: #333;
+  font-family: Georgia, "Times New Roman", serif;
+  margin-bottom: 50px;
+}
+
+.article-content p {
+  margin-bottom: 1.5em;
+  text-align: justify;
+}
+
+.article-content p:first-of-type {
+  font-size: 21px;
+  line-height: 1.7;
+  color: #2a2a2a;
+}
+
+/* Headings within article content */
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-top: 1.8em;
+  margin-bottom: 0.8em;
+  line-height: 1.3;
+}
+
+.article-content h2 {
+  font-size: 32px;
+  letter-spacing: -0.3px;
+}
+
+.article-content h3 {
+  font-size: 26px;
+  letter-spacing: -0.2px;
+}
+
+.article-content h4 {
+  font-size: 22px;
+}
+
+/* Links within content */
+.article-content a {
+  color: #1ea37a;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.article-content a:hover {
+  color: #157a59;
+  text-decoration: none;
+}
+
+/* Lists within content */
+.article-content ul,
+.article-content ol {
+  margin-bottom: 1.5em;
+  padding-left: 2em;
+}
+
+.article-content li {
+  margin-bottom: 0.5em;
+}
+
+.article-content ul li {
+  list-style-type: disc;
+}
+
+/* Blockquotes */
+.article-content blockquote {
+  margin: 2em 0;
+  padding: 20px 30px;
+  background: #f8f9fa;
+  border-left: 4px solid #1ea37a;
+  font-style: italic;
+  color: #404040;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.article-content blockquote p {
+  margin-bottom: 0;
+}
+
+/* Images within content */
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2em auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Strong and emphasis */
+.article-content strong {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.article-content em {
+  font-style: italic;
+}
+
+/* Code blocks (if any) */
+.article-content code {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9em;
+  color: #c7254e;
+}
+
+.article-content pre {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 1.5em;
+}
+
+.article-content pre code {
+  background: none;
+  padding: 0;
+  color: #333;
+}
+
+/* ============================================================================
+   SUMMERNOTE EDITOR OUTPUT COMPATIBILITY
+   ============================================================================ */
+
+/* Preserve ALL inline styles from Summernote editor */
+/* Inline styles from Summernote will automatically work due to CSS specificity */
+/* No additional rules needed - this comment documents the behavior */
+
+/* Summernote uses <font> tag (deprecated but still used by editor) */
+.article-content font {
+  display: inline;
+}
+
+/* Summernote text alignment classes */
+.article-content .text-left {
+  text-align: left !important;
+}
+
+.article-content .text-center {
+  text-align: center !important;
+}
+
+.article-content .text-right {
+  text-align: right !important;
+}
+
+.article-content .text-justify {
+  text-align: justify !important;
+}
+
+/* Summernote color and background styling - ensure specificity */
+/* Inline color/background styles will automatically work due to CSS specificity */
+
+/* Summernote font size adjustments */
+.article-content span[style*="font-size"],
+.article-content font[size] {
+  line-height: 1.6 !important; /* Maintain readability */
+}
+
+/* Summernote font family */
+/* Inline font-family styles will automatically work due to CSS specificity */
+
+/* Summernote inserted tables */
+.article-content table {
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  width: auto;
+  max-width: 100%;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.article-content table td,
+.article-content table th {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.article-content table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.article-content table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Summernote list styling - preserve default but enhance */
+.article-content ul ul,
+.article-content ol ol,
+.article-content ul ol,
+.article-content ol ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Ensure Summernote's <p> tags work properly */
+.article-content > p:first-child {
+  margin-top: 0;
+}
+
+.article-content > p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================================
+   ARTICLE ACTIONS (Back Button)
+   ============================================================================ */
+
+.article-actions {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 2px solid #e5e5e5;
+}
+
+.btn-back-to-news {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background: #ffffff;
+  color: #1ea37a;
+  border: 2px solid #1ea37a;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.btn-back-to-news:hover {
+  background: #1ea37a;
+  color: #ffffff;
+  transform: translateX(-4px);
+  box-shadow: 0 4px 15px rgba(30, 163, 122, 0.2);
+}
+
+.btn-back-to-news i {
+  transition: transform 0.3s ease;
+}
+
+.btn-back-to-news:hover i {
+  transform: translateX(-3px);
+}
+
+/* ============================================================================
+   SIDEBAR - LATEST POSTS WIDGET
+   ============================================================================ */
+
+.blog-sidebar {
+  position: sticky;
+  top: 100px;
+}
+
 .latest-post-card a:hover {
-    background-color: #f9f9f9 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  background-color: #f9f9f9 !important;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .latest-post-card a:hover h4 {
-    color: #1ea37a !important;
+  color: #1ea37a !important;
 }
 
 .latest-post-card a:hover img {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
-/* End CSS extracted from berita/detail.php */
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Tablet (iPad) */
+@media (max-width: 991px) {
+  .article-title {
+    font-size: 36px;
+  }
+
+  .article-content {
+    font-size: 18px;
+  }
+
+  .article-content h2 {
+    font-size: 28px;
+  }
+
+  .article-content h3 {
+    font-size: 24px;
+  }
+
+  .blog-sidebar {
+    position: static;
+    margin-top: 50px;
+  }
+}
+
+/* Mobile (Large phones) */
+@media (max-width: 767px) {
+  .article-title {
+    font-size: 30px;
+    letter-spacing: -0.3px;
+  }
+
+  .article-meta {
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .meta-item i {
+    font-size: 14px;
+  }
+
+  .article-featured-image {
+    margin-bottom: 30px;
+    border-radius: 6px;
+  }
+
+  .article-featured-image img {
+    max-height: 400px;
+  }
+
+  .article-content {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .article-content p:first-of-type {
+    font-size: 18px;
+  }
+
+  .article-content h2 {
+    font-size: 26px;
+  }
+
+  .article-content h3 {
+    font-size: 22px;
+  }
+
+  .article-content h4 {
+    font-size: 20px;
+  }
+
+  .article-content blockquote {
+    padding: 15px 20px;
+    margin: 1.5em 0;
+    font-size: 18px;
+  }
+
+  .btn-back-to-news {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .article-title {
+    font-size: 26px;
+  }
+
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .article-content {
+    font-size: 16px;
+  }
+
+  .article-content p:first-of-type {
+    font-size: 17px;
+  }
+
+  .article-featured-image img {
+    max-height: 300px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .article-actions,
+  .blog-sidebar {
+    display: none;
+  }
+
+  .article-title {
+    color: #000;
+  }
+
+  .article-content {
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+}
+
+/* End CSS for berita/detail.php */

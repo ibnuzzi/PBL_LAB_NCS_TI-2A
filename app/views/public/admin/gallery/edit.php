@@ -30,74 +30,69 @@ $id_foto = htmlspecialchars($gallery['id_foto'] ?? 0);
           <div class="alert alert-danger">Data foto tidak ditemukan.</div>
         <?php else: ?>
 
-        <form 
-          action="<?= BASE_URL ?>/admin/gallery/update/<?= $id_foto ?>" 
-          method="POST" 
-          enctype="multipart/form-data"
-        >
+          <form
+            action="<?= BASE_URL ?>/admin/gallery/update/<?= $id_foto ?>"
+            method="POST"
+            enctype="multipart/form-data">
 
-          <!-- JUDUL -->
-          <div class="mb-3">
-            <label for="judul_foto" class="form-label">Judul Foto</label>
-            <input
-              type="text"
-              id="judul_foto"
-              name="judul_foto"
-              class="form-control"
-              value="<?= htmlspecialchars($gallery['judul_foto'] ?? '') ?>"
-              required
-            />
-          </div>
+            <!-- JUDUL -->
+            <div class="mb-3">
+              <label for="judul_foto" class="form-label">Judul Foto</label>
+              <input
+                type="text"
+                id="judul_foto"
+                name="judul_foto"
+                class="form-control"
+                value="<?= htmlspecialchars($gallery['judul_foto'] ?? '') ?>"
+                required />
+            </div>
 
-          <!-- DESKRIPSI -->
-          <div class="mb-3">
-            <label for="deskripsi_foto" class="form-label">Deskripsi</label>
-            <textarea
-              id="deskripsi_foto"
-              name="deskripsi_foto"
-              rows="3"
-              class="form-control"
-            ><?= htmlspecialchars($gallery['deskripsi_foto'] ?? '') ?></textarea>
-          </div>
+            <!-- DESKRIPSI -->
+            <div class="mb-3">
+              <label for="deskripsi_foto" class="form-label">Deskripsi</label>
+              <textarea
+                id="deskripsi_foto"
+                name="deskripsi_foto"
+                rows="3"
+                class="form-control"><?= htmlspecialchars($gallery['deskripsi_foto'] ?? '') ?></textarea>
+            </div>
 
-          <!-- GAMBAR SAAT INI -->
-          <div class="mb-3">
-            <label class="form-label d-block">Gambar Saat Ini</label>
+            <!-- GAMBAR SAAT INI -->
+            <div class="mb-3">
+              <label class="form-label d-block">Gambar Saat Ini</label>
 
-            <?php if (!empty($gallery['nama_file_foto'])): ?>
-              <img
-                src="<?= BASE_URL ?>/public/uploads/gallery/<?= htmlspecialchars($gallery['nama_file_foto']) ?>"
-                class="rounded mb-2"
-                style="height:120px; object-fit:cover; border-radius:6px;"
-              />
-            <?php else: ?>
-              <p class="text-muted small">Belum ada gambar tersimpan.</p>
-            <?php endif; ?>
-          </div>
+              <?php if (!empty($gallery['nama_file_foto'])): ?>
+                <img
+                  src="<?= BASE_URL ?>/public/uploads/gallery/<?= htmlspecialchars($gallery['nama_file_foto']) ?>"
+                  class="rounded mb-2"
+                  style="height:120px; object-fit:cover; border-radius:6px;" />
+              <?php else: ?>
+                <p class="text-muted small">Belum ada gambar tersimpan.</p>
+              <?php endif; ?>
+            </div>
 
-          <!-- UPLOAD FOTO BARU -->
-          <div class="mb-3">
-            <label for="nama_file_foto" class="form-label">Ganti Foto (opsional)</label>
+            <!-- UPLOAD FOTO BARU -->
+            <div class="mb-3">
+              <label for="nama_file_foto" class="form-label">Ganti Foto (opsional)</label>
 
-            <!-- FIX: gunakan name="nama_file_foto" agar match dengan ImageService + Controller -->
-            <input
-              type="file"
-              id="nama_file_foto"
-              name="nama_file_foto"
-              class="form-control"
-            />
+              <!-- CRITICAL FIX: name MUST be "file_foto" to match controller -->
+              <input
+                type="file"
+                id="file_foto"
+                name="file_foto"
+                class="form-control" />
 
-            <small class="text-muted">Format JPG/PNG, maksimal 5MB.</small>
-          </div>
+              <small class="text-muted">Format JPG/PNG, maksimal 5MB.</small>
+            </div>
 
-          <!-- BUTTON -->
-          <button type="submit" class="btn btn-primary">
-            <i class="bx bx-save"></i> Simpan Perubahan
-          </button>
+            <!-- BUTTON -->
+            <button type="submit" class="btn btn-primary">
+              <i class="bx bx-save"></i> Simpan Perubahan
+            </button>
 
-          <button type="reset" class="btn btn-light">Reset</button>
+            <button type="reset" class="btn btn-light">Reset</button>
 
-        </form>
+          </form>
 
         <?php endif; ?>
 

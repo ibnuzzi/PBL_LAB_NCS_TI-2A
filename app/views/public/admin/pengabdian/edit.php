@@ -61,7 +61,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                   $isSelected = in_array($p['id_pengelola'], $selected_anggota) ? 'selected' : '';
                   ?>
                   <option value="<?= $p['id_pengelola'] ?>" <?= $isSelected ?>>
-                    <?= htmlspecialchars($p['nama_pengelola']) ?> (<?= htmlspecialchars($p['jabatan']) ?>)
+                    <?= htmlspecialchars($p['nama_pengelola']) ?><?php if (!empty($p['jabatan'])): ?> (<?= htmlspecialchars($p['jabatan']) ?>)<?php endif; ?>
                   </option>
                 <?php endforeach; ?>
               </select>
@@ -152,12 +152,12 @@ include './app/views/templates/admin/sidebar_admin.php';
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
     $('.select2').select2({
-        theme: 'bootstrap-5',
-        placeholder: 'Pilih Anggota Tim',
-        allowClear: true,
-        width: '100%'
+      theme: 'bootstrap-5',
+      placeholder: 'Pilih Anggota Tim',
+      allowClear: true,
+      width: '100%'
     });
-});
+  });
 </script>

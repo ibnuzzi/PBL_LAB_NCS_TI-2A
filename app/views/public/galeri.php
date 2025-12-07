@@ -4,10 +4,7 @@ include 'app/views/templates/public/header.php';
 include 'app/views/templates/public/navbar.php';
 ?>
 
-<<<<<<< Updated upstream
-=======
 <!-- gallery custom styles (cache-busted) -->
->>>>>>> Stashed changes
 <?php $gc_path = __DIR__ . '/../../..' . '/public/css/gallery-custom.css'; ?>
 <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/gallery-custom.css?v=<?= file_exists($gc_path) ? filemtime($gc_path) : time() ?>">
 
@@ -31,7 +28,6 @@ include 'app/views/templates/public/navbar.php';
             </h6>
             <h3 class="sec-title__title">Dokumentasi Kegiatan Lab NCS</h3>
         </div>
-<<<<<<< Updated upstream
         <p class="agenda-intro-text">Telusuri dokumentasi kegiatan, pelatihan, dan aktivitas seru di Laboratorium Network and Cyber Security.</p>
 
         <div style="max-width:100%; margin:18px 0 22px;">
@@ -61,14 +57,16 @@ include 'app/views/templates/public/navbar.php';
                     $searchableContent = $searchableTitle . ' ' . $searchableDesc;
                     ?>
                     <div class="col-md-6 col-lg-4 grid-item gallery-item" data-search="<?= htmlspecialchars($searchableContent) ?>">
-=======
-        <div class="row gallery-grid gutter-y-30">
-            <?php if (!empty($galleries) && is_array($galleries)): ?>
-                <?php foreach ($galleries as $g): ?>
-                    <div class="col-md-6 col-lg-4 grid-item">
->>>>>>> Stashed changes
                         <div class="gallery-card">
-                            <?php $img = !empty($g['nama_file_foto']) ? BASE_URL . '/public/uploads/gallery/' . $g['nama_file_foto'] : BASE_URL . '/public/assets/images/empty/empty_data.jpg'; ?>
+                            <?php
+                            $img = !empty($g['nama_file_foto']) ? BASE_URL . '/public/uploads/gallery/' . $g['nama_file_foto'] : BASE_URL . '/public/assets/images/empty/empty_data.jpg';
+                            // Add cache busting
+                            if (!empty($g['nama_file_foto'])) {
+                                $imagePath = __DIR__ . '/../../../public/uploads/gallery/' . $g['nama_file_foto'];
+                                $cacheParam = file_exists($imagePath) ? '?v=' . filemtime($imagePath) : '?v=' . time();
+                                $img .= $cacheParam;
+                            }
+                            ?>
 
                             <img src="<?= $img ?>" alt="<?= htmlspecialchars($g['judul_foto'] ?? 'Galeri') ?>" class="gallery-card__image" loading="lazy" decoding="async">
 

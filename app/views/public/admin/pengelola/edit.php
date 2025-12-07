@@ -42,7 +42,7 @@ include './app/views/templates/admin/sidebar_admin.php';
 
           <!-- NID/NIP -->
           <div class="mb-3">
-            <label class="form-label">NID/NIP</label>
+            <label class="form-label">NIDN/NIP</label>
             <input type="text" name="nid_nip" class="form-control" 
                    value="<?= htmlspecialchars($pengelola['nid_nip'] ?? '') ?>" placeholder="Opsional">
           </div>

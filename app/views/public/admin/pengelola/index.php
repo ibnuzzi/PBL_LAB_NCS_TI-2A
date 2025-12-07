@@ -26,7 +26,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               <th>No</th>
               <th>Foto</th>
               <th>Nama Pengelola</th>
-              <th>NID/NIP</th>
+              <th>NIDN/NIP</th>
               <th>Jabatan</th>
               <th>Aksi</th>
             </tr>
@@ -35,68 +35,80 @@ include './app/views/templates/admin/sidebar_admin.php';
           <tbody class="table-border-bottom-0">
 
             <?php
-              $pengelola_list = $pengelola_list ?? [];
-              if (empty($pengelola_list) && isset($pengelolas)) $pengelola_list = $pengelolas;
-              if (empty($pengelola_list) && isset($pengelola))  $pengelola_list = is_array($pengelola) ? [$pengelola] : [];
+            $pengelola_list = $pengelola_list ?? [];
+            if (empty($pengelola_list) && isset($pengelolas)) $pengelola_list = $pengelolas;
+            if (empty($pengelola_list) && isset($pengelola))  $pengelola_list = is_array($pengelola) ? [$pengelola] : [];
 
-              if (!empty($pengelola_list)):
-                $no = 1;
-                foreach ($pengelola_list as $p):
+            if (!empty($pengelola_list)):
+              $no = 1;
+              foreach ($pengelola_list as $p):
 
-                  // Foto Default
-                  $foto = !empty($p['foto_pengelola'])
-                          ? BASE_URL . "/public/uploads/pengelola/" . $p['foto_pengelola']
-                          : BASE_URL . "/public/assets/images/default/user_default.png";
+                // Foto Default
+                $foto = !empty($p['foto_pengelola'])
+                  ? BASE_URL . "/public/uploads/pengelola/" . $p['foto_pengelola']
+                  : BASE_URL . "/public/assets/images/default/user_default.png";
 
-                  // Keminatan string
-                  $keminatan_str = '';
-                  if (!empty($p['keminatan_list'])) {
-                    $keminatan_names = array_map(function($k) { return $k['nama_keminatan']; }, $p['keminatan_list']);
-                    $keminatan_str = implode(', ', $keminatan_names);
-                  }
+                // Keminatan string
+                $keminatan_str = '';
+                if (!empty($p['keminatan_list'])) {
+                  $keminatan_names = array_map(function ($k) {
+                    return $k['nama_keminatan'];
+                  }, $p['keminatan_list']);
+                  $keminatan_str = implode(', ', $keminatan_names);
+                }
             ?>
-              <tr>
-                <td><?= $no++; ?></td>
+                <tr>
+                  <td><?= $no++; ?></td>
 
-                <td>
-                  <img src="<?= $foto ?>" style="height:80px; width:80px; object-fit:cover; border-radius:6px;">
-                </td>
+                  <td>
+                    <?php
+                    // Add cache busting parameter
+                    $foto_with_cache = $foto;
+                    if (!empty($p['foto_pengelola'])) {
+                      $imagePath = __DIR__ . '/../../../../public/uploads/pengelola/' . $p['foto_pengelola'];
+                      $cacheParam = file_exists($imagePath) ? '?v=' . filemtime($imagePath) : '?v=' . time();
+                      $foto_with_cache = $foto . $cacheParam;
+                    }
+                    ?>
+                    <img src="<?= $foto_with_cache ?>" style="height:80px; width:80px; object-fit:cover; border-radius:6px;">
+                  </td>
 
-                <td><?= htmlspecialchars($p['nama_pengelola']); ?></td>
+                  <td><?= htmlspecialchars($p['nama_pengelola']); ?></td>
 
-                <td><?= htmlspecialchars($p['nid_nip'] ?? '-'); ?></td>
+                  <td><?= htmlspecialchars($p['nid_nip'] ?? '-'); ?></td>
 
-                <td><?= htmlspecialchars($p['nama_jabatan'] ?? 'Tidak ada jabatan'); ?></td>
+                  <td><?= htmlspecialchars($p['nama_jabatan'] ?? 'Tidak ada jabatan'); ?></td>
 
-                <td>
-                  <!-- DETAIL -->
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-info me-1 btn-view"
-                    data-nama="<?= htmlspecialchars($p['nama_pengelola']); ?>"
-                    data-nip="<?= htmlspecialchars($p['nid_nip'] ?? '-'); ?>"
-                    data-jabatan="<?= htmlspecialchars($p['nama_jabatan'] ?? 'Tidak ada jabatan'); ?>"
-                    data-keminatan="<?= htmlspecialchars($keminatan_str ?: '-'); ?>"
-                    data-foto="<?= $foto ?>">
-                    <i class="bx bx-show-alt"></i>
-                  </button>
+                  <td>
+                    <!-- DETAIL -->
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-info me-1 btn-view"
+                      data-nama="<?= htmlspecialchars($p['nama_pengelola']); ?>"
+                      data-nip="<?= htmlspecialchars($p['nid_nip'] ?? '-'); ?>"
+                      data-jabatan="<?= htmlspecialchars($p['nama_jabatan'] ?? 'Tidak ada jabatan'); ?>"
+                      data-keminatan="<?= htmlspecialchars($keminatan_str ?: '-'); ?>"
+                      data-foto="<?= $foto ?>">
+                      <i class="bx bx-show-alt"></i>
+                    </button>
 
-                  <!-- EDIT -->
-                  <a href="<?= BASE_URL ?>/admin/pengelola/edit/<?= (int)$p['id_pengelola']; ?>"
-                     class="btn btn-sm btn-outline-primary me-1">
-                    <i class="bx bx-edit-alt"></i>
-                  </a>
+                    <!-- EDIT -->
+                    <a href="<?= BASE_URL ?>/admin/pengelola/edit/<?= (int)$p['id_pengelola']; ?>"
+                      class="btn btn-sm btn-outline-primary me-1">
+                      <i class="bx bx-edit-alt"></i>
+                    </a>
 
-                  <!-- DELETE -->
-                  <a href="<?= BASE_URL ?>/admin/pengelola/delete/<?= (int)$p['id_pengelola']; ?>"
-                     class="btn btn-sm btn-outline-danger btn-delete">
-                    <i class="bx bx-trash"></i>
-                  </a>
-                </td>
+                    <!-- DELETE -->
+                    <a href="<?= BASE_URL ?>/admin/pengelola/delete/<?= (int)$p['id_pengelola']; ?>"
+                      class="btn btn-sm btn-outline-danger btn-delete">
+                      <i class="bx bx-trash"></i>
+                    </a>
+                  </td>
 
-              </tr>
+                </tr>
 
-            <?php endforeach; endif; ?>
+            <?php endforeach;
+            endif; ?>
 
           </tbody>
 
@@ -133,7 +145,7 @@ include './app/views/templates/admin/sidebar_admin.php';
           <h4 id="detailNama" class="fw-bold mb-2"></h4>
 
           <!-- NID/NIP -->
-          <p class="text-muted mb-3"><strong>NID/NIP:</strong> <span id="detailNIP"></span></p>
+          <p class="text-muted mb-3"><strong>NIDN/NIP:</strong> <span id="detailNIP"></span></p>
 
           <!-- Jabatan -->
           <div class="alert alert-info mb-3">
@@ -169,23 +181,23 @@ include './app/views/components/page_scripts.php';
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
 
-  $(".btn-view").on("click", function () {
-    let nama = $(this).data("nama");
-    let nip = $(this).data("nip");
-    let jabatan = $(this).data("jabatan");
-    let keminatan = $(this).data("keminatan");
-    let foto = $(this).data("foto");
+    $(".btn-view").on("click", function() {
+      let nama = $(this).data("nama");
+      let nip = $(this).data("nip");
+      let jabatan = $(this).data("jabatan");
+      let keminatan = $(this).data("keminatan");
+      let foto = $(this).data("foto");
 
-    $("#detailNama").text(nama);
-    $("#detailNIP").text(nip);
-    $("#detailJabatan").text(jabatan);
-    $("#detailKeminatan").text(keminatan);
-    $("#detailFoto").attr("src", foto);
+      $("#detailNama").text(nama);
+      $("#detailNIP").text(nip);
+      $("#detailJabatan").text(jabatan);
+      $("#detailKeminatan").text(keminatan);
+      $("#detailFoto").attr("src", foto);
 
-    new bootstrap.Modal(document.getElementById("modalDetailPengelola")).show();
+      new bootstrap.Modal(document.getElementById("modalDetailPengelola")).show();
+    });
+
   });
-
-});
 </script>

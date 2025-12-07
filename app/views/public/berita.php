@@ -65,6 +65,12 @@ include 'app/views/templates/public/navbar.php';
                                     // Handle gambar default jika kosong
                                     $imgName = !empty($b['gambar_berita']) ? $b['gambar_berita'] : 'default.png';
                                     $img = BASE_URL . '/public/uploads/berita/' . $imgName;
+                                    // Add cache busting
+                                    if (!empty($b['gambar_berita'])) {
+                                        $imagePath = __DIR__ . '/../../../public/uploads/berita/' . $b['gambar_berita'];
+                                        $cacheParam = file_exists($imagePath) ? '?v=' . filemtime($imagePath) : '?v=' . time();
+                                        $img .= $cacheParam;
+                                    }
                                     ?>
                                     <img src="<?= $img ?>" alt="<?= htmlspecialchars($b['judul_berita']) ?>" loading="lazy" style="
                                         width: 100%;

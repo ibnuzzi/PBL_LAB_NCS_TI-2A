@@ -43,7 +43,7 @@ include './app/views/templates/admin/sidebar_admin.php';
           <!-- NID/NIP -->
           <div class="mb-3 row">
             <div class="col-md-6">
-              <label class="form-label">NID/NIP</label>
+              <label class="form-label">NIDN/NIP</label>
               <input type="number" name="nid_nip" class="form-control" placeholder="Opsional">
             </div>
             <div class="col-md-6">
@@ -51,8 +51,9 @@ include './app/views/templates/admin/sidebar_admin.php';
               <select name="id_jabatan" class="form-select">
                 <option value="">-- Pilih Jabatan --</option>
                 <?php if (!empty($jabatan_list)): foreach ($jabatan_list as $j): ?>
-                  <option value="<?= $j['id_jabatan']; ?>"><?= htmlspecialchars($j['nama_jabatan']); ?></option>
-                <?php endforeach; endif; ?>
+                    <option value="<?= $j['id_jabatan']; ?>"><?= htmlspecialchars($j['nama_jabatan']); ?></option>
+                <?php endforeach;
+                endif; ?>
               </select>
             </div>
           </div>
@@ -62,19 +63,20 @@ include './app/views/templates/admin/sidebar_admin.php';
             <small class="text-muted d-block mb-2">Pilih satu atau lebih keminatan</small>
             <div class="row">
               <?php if (!empty($keminatan_list)): foreach ($keminatan_list as $k): ?>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="keminatan[]" 
-                           value="<?= $k['id_keminatan']; ?>" id="keminatan_<?= $k['id_keminatan']; ?>">
-                    <label class="form-check-label" for="keminatan_<?= $k['id_keminatan']; ?>">
-                      <?= htmlspecialchars($k['nama_keminatan']); ?>
-                    </label>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="keminatan[]"
+                        value="<?= $k['id_keminatan']; ?>" id="keminatan_<?= $k['id_keminatan']; ?>">
+                      <label class="form-check-label" for="keminatan_<?= $k['id_keminatan']; ?>">
+                        <?= htmlspecialchars($k['nama_keminatan']); ?>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              <?php endforeach; endif; ?>
+              <?php endforeach;
+              endif; ?>
             </div>
           </div>
-      
+
           <!-- Foto -->
           <div class="mb-3">
             <label class="form-label">Foto Pengelola</label>

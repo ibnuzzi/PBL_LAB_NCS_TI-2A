@@ -27,8 +27,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               id="judul_berita"
               name="judul_berita"
               placeholder="Masukkan judul berita"
-              value="<?php echo htmlspecialchars($berita['judul_berita'] ?? ''); ?>"
-               />
+              value="<?php echo htmlspecialchars($berita['judul_berita'] ?? ''); ?>" />
             <?php if (isset($errors['judul_berita'])): ?>
               <div class="invalid-feedback"><?php echo $errors['judul_berita']; ?></div>
             <?php endif; ?>
@@ -58,8 +57,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               name="isi_berita"
               rows="5"
               class="form-control <?php echo isset($errors['isi_berita']) ? 'is-invalid' : ''; ?>"
-              placeholder="Tulis isi berita di sini..."
-              ><?php echo htmlspecialchars($berita['isi_berita'] ?? ''); ?></textarea>
+              placeholder="Tulis isi berita di sini..."><?php echo $berita['isi_berita'] ?? ''; ?></textarea>
             <?php if (isset($errors['isi_berita'])): ?>
               <div class="invalid-feedback"><?php echo $errors['isi_berita']; ?></div>
             <?php endif; ?>
@@ -79,8 +77,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                 class="form-control <?php echo isset($errors['tanggal_publish']) ? 'is-invalid' : ''; ?>"
                 id="tanggal_publish"
                 name="tanggal_publish"
-                value="<?php echo htmlspecialchars($berita['tanggal_publish'] ?? ''); ?>"
-                 />
+                value="<?php echo htmlspecialchars($berita['tanggal_publish'] ?? ''); ?>" />
               <?php if (isset($errors['tanggal_publish'])): ?>
                 <div class="invalid-feedback"><?php echo $errors['tanggal_publish']; ?></div>
               <?php endif; ?>
@@ -131,21 +128,21 @@ include './app/views/templates/admin/footer_admin.php';
 
 <!-- Initialize Summernote -->
 <script>
-$(document).ready(function() {
-  $('#isi_berita').summernote({
-    height: 300,
-    placeholder: 'Tulis isi berita di sini...',
-    tabsize: 2,
-    toolbar: [
-      ['style', ['style']],
-      ['font', ['bold', 'underline', 'italic', 'clear']],
-      ['fontname', ['fontname']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['table', ['table']],
-      ['insert', ['link', 'picture', 'video']],
-      ['view', ['fullscreen', 'codeview', 'help']]
-    ]
+  $(document).ready(function() {
+    $('#isi_berita').summernote({
+      height: 300,
+      placeholder: 'Tulis isi berita di sini...',
+      tabsize: 2,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'italic', 'clear']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
   });
-});
 </script>

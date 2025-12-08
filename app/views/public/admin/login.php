@@ -58,6 +58,5 @@ include 'app/views/templates/public/navbar.php';
 </section>
 
 <?php
-include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>

@@ -212,8 +212,8 @@ if (!isset($pengelolaList)) {
                     <div class="our-work__item">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Pengajuan Ide <br> dan Proposal Riset</a></h4>
-                            <p class="our-work__item__text">Mahasiswa mengidentifikasi masalah, menyusun latar belakang, dan mengajukan proposal penelitian, termasuk usulan implementasi Riset Keamanan Jaringan.</p>
+                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
+                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
                             </div>
@@ -224,8 +224,8 @@ if (!isset($pengelolaList)) {
                     <div class="our-work__item">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Validasi Dosen dan <br>Pembentukan Tim Bimbingan</a></h4>
-                            <p class="our-work__item__text">Dosen profesional di bidang terkait (Jaringan dan Keamanan) mereview proposal. Setelah disetujui, dosen pembimbing ditetapkan untuk mendukung riset mahasiswa.</p>
+                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
+                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
                             </div>
@@ -236,8 +236,8 @@ if (!isset($pengelolaList)) {
                     <div class="our-work__item">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Pelaksanaan Eksperimen <br> dan Pengujian Lapangan</a></h4>
-                            <p class="our-work__item__text">Mahasiswa menggunakan fasilitas lab untuk menjalankan metodologi riset, melakukan eksperimen, dan mengumpulkan data (misalnya, pengujian skenario Keamanan Jaringan).</p>
+                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
+                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
                             </div>
@@ -248,8 +248,8 @@ if (!isset($pengelolaList)) {
                     <div class="our-work__item our-work__item--two">
                         <div class="our-work__item__step"></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Penyusunan Laporan <br>dan Diseminasi Hasil</a></h4>
-                            <p class="our-work__item__text">Mahasiswa menyelesaikan laporan akhir (Tugas Akhir/Skripsi), mempresentasikan hasil, dan didorong untuk mempublikasikan temuan riset mereka sebagai bentuk kontribusi akademik.</p>
+                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
+                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
                             <div class="our-work__item__shape">
                                 <img src="public/assets/images/shapes/work-teps.png" alt>
                             </div>

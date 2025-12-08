@@ -22,32 +22,32 @@ include 'app/views/templates/public/navbar.php';
                 <div class="product__sidebar product__sidebar-right">
 
                     <div class="product__search wow fadeInUp animated" data-wow-delay="500ms">
-    <form action="<?= BASE_URL ?>/arsip" method="GET" class="product__sidebar__search">
-        
-        <button type="submit" aria-label="search submit">
-            <span><i class="icon-search"></i></span>
-        </button>
-        
-        <input type="text" 
-               name="search" 
-               placeholder="Cari Judul atau Penulis..." 
-               value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-               
-        <?php if (!empty($_GET['kategori'])): ?>
-            <input type="hidden" name="kategori" value="<?= htmlspecialchars($_GET['kategori']) ?>">
-        <?php endif; ?>
-        <?php if (!empty($_GET['tahun'])): ?>
-            <input type="hidden" name="tahun" value="<?= htmlspecialchars($_GET['tahun']) ?>">
-        <?php endif; ?>
+                        <form action="<?= BASE_URL ?>/arsip" method="GET" class="product__sidebar__search">
 
-    </form>
-</div>
+                            <button type="submit" aria-label="search submit">
+                                <span><i class="icon-search"></i></span>
+                            </button>
+
+                            <input type="text"
+                                name="search"
+                                placeholder="Cari Judul atau Penulis..."
+                                value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+
+                            <?php if (!empty($_GET['kategori'])): ?>
+                                <input type="hidden" name="kategori" value="<?= htmlspecialchars($_GET['kategori']) ?>">
+                            <?php endif; ?>
+                            <?php if (!empty($_GET['tahun'])): ?>
+                                <input type="hidden" name="tahun" value="<?= htmlspecialchars($_GET['tahun']) ?>">
+                            <?php endif; ?>
+
+                        </form>
+                    </div>
 
                     <div class="product__categories  wow fadeInUp animated" data-wow-delay="900ms" style="visibility: visible; animation-delay: 900ms; animation-name: fadeInUp;">
                         <h3 class="product__categories__title">Categories</h3>
                         <ul class="list-unstyled service-sidebar__category__list">
-                            <?php 
-                            $kategoriAktif = $data['kategori_aktif'] ?? 'semua'; 
+                            <?php
+                            $kategoriAktif = $data['kategori_aktif'] ?? 'semua';
                             $tahunParam = isset($_GET['tahun']) ? '&tahun=' . urlencode($_GET['tahun']) : '';
                             ?>
                             <li class="<?= $kategoriAktif === 'semua' ? 'active' : '' ?>">
@@ -112,7 +112,7 @@ include 'app/views/templates/public/navbar.php';
                 <div class="service-details__content">
 
                     <h3 class="service-details__title">Daftar Dokumen Publik</h3>
-                    <p class="service-details__text mb-3">Silakan unduh dokumen yang Anda butuhkan. Pastikan Anda login jika dokumen bersifat terbatas.</p>
+                    <p class="service-details__text mb-3">Silahkan melihat artikel dan unduh dokumen yang Anda butuhkan.</p>
 
                     <div class="list-group" style="border: none;">
 

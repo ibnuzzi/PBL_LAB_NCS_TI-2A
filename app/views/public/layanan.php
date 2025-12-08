@@ -105,7 +105,7 @@ include 'app/views/templates/public/navbar.php';
     <div class="container">
         <div class="sec-title text-center" style="margin-bottom: 60px;">
             <h6 class="sec-title__tagline" style="color: #2563EB; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Arsip Konsultasi</h6>
-            <h3 class="sec-title__title" style="font-size: 36px; font-weight: 700; color: #1a3a6b;">Diskusi & Solusi Terbaru</h3>
+            <h3 class="sec-title__title" style="font-size: 36px; font-weight: 700; color: #1a3a6b;">Pertanyaan & Respon Terbaru</h3>
         </div>
 
         <div class="faq-page__accordion laboix-accrodion" data-grp-name="laboix-accrodion">

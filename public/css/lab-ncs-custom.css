@@ -578,7 +578,7 @@ html {
 
 .video-cta__text {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.6;
   margin-bottom: 40px;
   max-width: 650px;
@@ -665,7 +665,7 @@ html {
   padding: 50px 40px;
   border-radius: 15px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  border-top: 6px solid #00c2a8;
+  border-top: 6px solid #2563EB;
   position: relative;
 }
 
@@ -673,7 +673,7 @@ html {
 .login-icon-wrapper {
   width: 110px;
   height: 110px;
-  background: linear-gradient(135deg, #d4f4ee 0%, #bfede0 100%);
+  background: linear-gradient(135deg, #d4f4ee 0%, #DBEAFE 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -683,7 +683,7 @@ html {
 
 .login-icon-wrapper i {
   font-size: 44px;
-  color: #1a7a6b;
+  color: #2563EB;
 }
 
 .login-page__wrap__title {
@@ -753,19 +753,25 @@ html {
   cursor: pointer;
 }
 
+.header-home-text {
+  color: #DBEAFE;
+  font: 16px Lexend, sans-serif;
+  margin: 0px 0px 16px;
+}
+
 .laboix-btn--secondary {
   width: 100%;
   border-radius: 8px;
-  background-color: #0b0d17;
-  border-color: #0b0d17;
+  background-color: #2563EB;
+  border-color: #0F172A;
   height: 55px;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
 .laboix-btn--secondary:hover {
-  background-color: #00c2a8;
-  border-color: #00c2a8;
+  background-color: #DBEAFE;
+  border-color: #b6d6ff;
   color: #fff;
 }
 
@@ -781,7 +787,7 @@ html {
 }
 
 .login-back-link:hover {
-  color: #00c2a8;
+  color: #DBEAFE;
   text-decoration: none;
 }
 

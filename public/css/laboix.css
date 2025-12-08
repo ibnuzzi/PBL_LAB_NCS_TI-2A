@@ -2434,11 +2434,11 @@ h6 {
   position: relative;
 }
 .main-footer--one {
-  background: var(--laboix-base, #021936);
+  background: #395A7F;
 }
 .main-footer__bottom {
   text-align: center;
-  background: #02142C;
+  background: #2c4561;
 }
 .main-footer__bottom__inner {
   padding: 30px 15px;
@@ -5595,7 +5595,7 @@ body.megamenu-popup-active .mobile-nav__content {
 }
 .video-cta__text {
   color: var(--laboix-text-gray, #97A5B7);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 187.5%;
   max-width: 639px;

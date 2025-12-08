@@ -25,9 +25,9 @@ include 'app/views/templates/public/navbar.php';
                     <div class="row">
                         <div class="col-md-12">
                             <div class="main-slider-one__content">
-                                <span class="main-slider-one__tagline">Selamat Datang di Lab NCS JTI Polinema</span>
+                                <span class="header-home-text">Selamat Datang di Lab NCS JTI Polinema</span>
                                 <h2 class="main-slider-one__title">Pusat Riset<br>Jaringan Keamanan & Siber</h2>
-                                <p class="main-slider-one__text">Mengembangkan inovasi dan talenta di bidang Network & Cyber Security untuk menghadapi tantangan digital masa depan.</p>
+                                <p class="header-home-text">Mengembangkan inovasi dan talenta di bidang Network & Cyber Security untuk menghadapi tantangan digital masa depan.</p>
                                 <div class="main-slider-one__link">
                                     <a href="<?= BASE_URL ?>/tentang" class="laboix-btn">Pelajari Lebih Lanjut</a>
                                 </div>
@@ -376,9 +376,9 @@ if (!isset($pengelolaList)) {
             </div>
             <div class="video-cta__content">
                 <h3 class="video-cta__title">Lab NCS Tour</h3>
-                <p class="video-cta__text">Mencetak Inovator Keamanan Jaringan dan Talenta Cybersecurity Masa Depan.</p>
+                <p class="video-cta__text">Mencetak Inovator Bertalenta di Bidang Network & Cybersecurity Masa Depan.</p>
                 <div class="video-cta__link">
-                    <a href="<?= BASE_URL ?>/tentang" class="btn-publikasi btn-publikasi--green">Gabunglah Menjadi Sang Juara <i class="icon-arrow"></i></a>
+                    <a href="<?= BASE_URL ?>/tentang" class="btn-publikasi btn-publikasi--green">Jelajahi Laboratorium Kami <i class="icon-arrow"></i></a>
                 </div>
             </div>
         </div>

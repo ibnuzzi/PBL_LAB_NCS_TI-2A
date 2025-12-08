@@ -11,7 +11,7 @@ if (!isset($agendaList)) {
 ?>
 
 <section class="page-header">
-    <div class="page-header__bg" style="background-image: url(<?= BASE_URL ?>/public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+    <div class="page-header__bg" style="background-image: url(public/assets/images/bg-gedung.jpg);background-position: center 40%;background-size: cover;"></div>
     <div class="container">
         <h2 class="page-header__title">Agenda</h2>
         <ul class="nionx-breadcrumb list-unstyled">

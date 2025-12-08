@@ -23,8 +23,8 @@
   --laboix-text-gray-rgb: 151, 165, 183;
   --laboix-base: #021936;
   --laboix-base-rgb: 2, 25, 54;
-  --laboix-secondary: #0EBD66;
-  --laboix-secondary-rgb: 14, 189, 102;
+  --laboix-secondary: #2563EB;
+  --laboix-secondary-rgb: 37, 99, 235;
   --laboix-gray: #6A6A6A;
   --laboix-gray-rgb: 106, 106, 106;
   --laboix-white: #fff;
@@ -10470,7 +10470,7 @@ body.megamenu-popup-active .mobile-nav__content {
   mask-position: top center;
   -webkit-mask-size: auto;
   mask-size: auto;
-  background: linear-gradient(180deg, #0EBD66 0%, rgba(14, 189, 102, 0) 100%);
+  background: linear-gradient(180deg, #2563eb 0%, rgba(37, 99, 235, 0) 100%);
 }
 @media (max-width: 1400px) {
   .main-slider-one__bg::before {
@@ -11863,7 +11863,7 @@ body.megamenu-popup-active .mobile-nav__content {
   position: absolute;
   top: 0;
   left: -70px;
-  background: var(--laboix-secondary, #0EBD66);
+  background: var(--laboix-secondary, #2563EB);
   animation: topAni 4s ease-in-out infinite;
 }
 .about-two__thumb__item {

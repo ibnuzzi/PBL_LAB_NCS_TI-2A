@@ -7,7 +7,7 @@ include 'app/views/templates/public/navbar.php';
 <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/lab-ncs-berita.css?v=<?= filemtime(__DIR__ . '/../../../public/css/lab-ncs-berita.css') ?>">
 
 <section class="page-header">
-    <div class="page-header__bg" style="background-image: url(public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+    <div class="page-header__bg" style="background-image: url(public/assets/images/bg-gedung.jpg);background-position: center 40%;background-size: cover;"></div>
     <div class="container">
         <h2 class="page-header__title">Berita & Artikel</h2>
         <ul class="nionx-breadcrumb list-unstyled">

@@ -9,7 +9,7 @@ include 'app/views/templates/public/navbar.php';
 <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/gallery-custom.css?v=<?= file_exists($gc_path) ? filemtime($gc_path) : time() ?>">
 
 <section class="page-header">
-    <div class="page-header__bg" style="background-image: url(<?= BASE_URL ?>/public/assets/images/backgrounds/page-header-bg-1-1.jpg);"></div>
+    <div class="page-header__bg" style="background-image: url(public/assets/images/bg-gedung.jpg);background-position: center 40%;background-size: cover;"></div>
     <div class="container">
         <h2 class="page-header__title">Galeri</h2>
         <ul class="nionx-breadcrumb list-unstyled">

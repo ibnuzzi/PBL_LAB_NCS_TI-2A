@@ -79,7 +79,7 @@ include 'app/views/templates/public/navbar.php';
                             position: absolute;
                             top: 15px;
                             right: 15px;
-                            background: rgba(40, 167, 69, 0.95);
+                            background: #2563EB;
                             color: white;
                             padding: 8px 16px;
                             border-radius: 25px;

@@ -14,7 +14,7 @@ class EmailService
     {
         // Load SMTP configuration
         $this->config = require './app/config/email_config.php';
-        
+
         // Initialize PHPMailer
         $this->mailer = new PHPMailer(true);
         $this->setupSMTP();
@@ -30,7 +30,7 @@ class EmailService
             if ($this->config['debug_mode']) {
                 $this->mailer->SMTPDebug = SMTP::DEBUG_OFF; // Disable debug output in production
             }
-            
+
             $this->mailer->isSMTP();
             $this->mailer->Host       = $this->config['smtp_host'];
             $this->mailer->SMTPAuth   = true;
@@ -38,13 +38,12 @@ class EmailService
             $this->mailer->Password   = $this->config['smtp_password'];
             $this->mailer->SMTPSecure = $this->config['smtp_encryption'];
             $this->mailer->Port       = $this->config['smtp_port'];
-            
+
             // Default sender
             $this->mailer->setFrom($this->config['from_email'], $this->config['from_name']);
-            
+
             // Character encoding
             $this->mailer->CharSet = 'UTF-8';
-            
         } catch (Exception $e) {
             error_log("Email configuration error: " . $e->getMessage());
         }
@@ -65,21 +64,20 @@ class EmailService
             // Recipients
             $this->mailer->clearAddresses();
             $this->mailer->addAddress($to, $nama);
-            
+
             // Content
             $this->mailer->isHTML(true);
             $this->mailer->Subject = 'Konsultasi Anda Telah Dijawab - Lab NCS';
             $this->mailer->Body    = $this->getAcceptanceEmailTemplate($nama, $pertanyaan, $jawaban);
             $this->mailer->AltBody = strip_tags($this->getAcceptanceEmailTemplate($nama, $pertanyaan, $jawaban));
-            
+
             // Send email
             $result = $this->mailer->send();
-            
+
             // Clear attachments and addresses for next email
             $this->mailer->clearAttachments();
-            
+
             return $result;
-            
         } catch (Exception $e) {
             error_log("Email sending failed: " . $this->mailer->ErrorInfo);
             return false;
@@ -101,21 +99,20 @@ class EmailService
             // Recipients
             $this->mailer->clearAddresses();
             $this->mailer->addAddress($to, $nama);
-            
+
             // Content
             $this->mailer->isHTML(true);
             $this->mailer->Subject = 'Pemberitahuan Konsultasi - Lab NCS';
             $this->mailer->Body    = $this->getRejectionEmailTemplate($nama, $pertanyaan, $alasan);
             $this->mailer->AltBody = strip_tags($this->getRejectionEmailTemplate($nama, $pertanyaan, $alasan));
-            
+
             // Send email
             $result = $this->mailer->send();
-            
+
             // Clear attachments and addresses for next email
             $this->mailer->clearAttachments();
-            
+
             return $result;
-            
         } catch (Exception $e) {
             error_log("Email sending failed: " . $this->mailer->ErrorInfo);
             return false;

@@ -89,7 +89,7 @@ include 'app/views/templates/public/navbar.php';
                 <aside class="blog-sidebar" style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
                     <h3 style="font-size: 20px; font-weight: 700; color: #081d2f; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; position: relative;">
                         Latest Post
-                        <span style="position: absolute; bottom: -2px; left: 0; width: 50px; height: 2px; background: #1ea37a;"></span>
+                        <span style="position: absolute; bottom: -2px; left: 0; width: 50px; height: 2px; background: #2563EB;"></span>
                     </h3>
 
                     <?php
@@ -126,7 +126,7 @@ include 'app/views/templates/public/navbar.php';
                                             <img src="<?= $postImgUrl ?>" alt="<?= htmlspecialchars($post['judul_berita']) ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" loading="lazy">
                                         </div>
                                         <div style="flex-grow: 1;">
-                                            <div style="font-size: 11px; color: #1ea37a; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;">
+                                            <div style="font-size: 11px; color: #2563EB; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;">
                                                 <?= date('d M Y', strtotime($post['tanggal_publish'])) ?>
                                             </div>
                                             <h4 style="font-size: 14px; font-weight: 600; margin: 0; line-height: 1.4; color: #081d2f; transition: color 0.3s ease;">

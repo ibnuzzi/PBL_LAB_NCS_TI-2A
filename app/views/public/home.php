@@ -26,7 +26,7 @@ include 'app/views/templates/public/navbar.php';
                         <div class="col-md-12">
                             <div class="main-slider-one__content">
                                 <span class="main-slider-one__tagline">Selamat Datang di Lab NCS JTI Polinema</span>
-                                <h2 class="main-slider-one__title">Pusat Riset<br>Keamanan Jaringan & Siber</h2>
+                                <h2 class="main-slider-one__title">Pusat Riset<br>Jaringan Keamanan & Siber</h2>
                                 <p class="main-slider-one__text">Mengembangkan inovasi dan talenta di bidang Network & Cyber Security untuk menghadapi tantangan digital masa depan.</p>
                                 <div class="main-slider-one__link">
                                     <a href="<?= BASE_URL ?>/tentang" class="laboix-btn">Pelajari Lebih Lanjut</a>

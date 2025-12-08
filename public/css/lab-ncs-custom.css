@@ -549,19 +549,19 @@ html {
   justify-content: center;
   width: 100px;
   height: 110px;
-  background-color: #27613fff;
+  background-color: #c3d0ed38;
   color: #fff;
   font-size: 36px;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   transition: transform 0.3s ease, background-color 0.3s ease;
   text-decoration: none;
-  box-shadow: 0 10px 30px rgba(0, 200, 83, 0.3);
+  box-shadow: 0 10px 30px #2563EB;
 }
 
 .video-popup:hover {
   transform: scale(1.1);
-  background-color: #00e676;
-  color: #fff;
+  background-color: #2563EB;
+  color: #DBEAFE;
 }
 
 .video-popup i {
@@ -1351,7 +1351,7 @@ span.error::before {
     width: 45px;
     height: 45px;
     background-color: #E8F5E9; /* Light Green */
-    color: #4CAF50; /* Green */
+    color: #4caf50; /* Green */
     font-weight: 800;
     font-size: 18px;
     border-radius: 50%;
@@ -2096,7 +2096,7 @@ span.error::before {
 
 /* Active State */
 .accrodion.active .accrodion-title__icon {
-    background: #0EBD66 !important;
+    background: #2563EB !important;
 }
 
 .accrodion.active .accrodion-title__icon i {

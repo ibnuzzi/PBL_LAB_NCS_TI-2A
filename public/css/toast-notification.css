@@ -311,7 +311,7 @@
 }
 
 .toast.toast-info .toast-icon {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+    background: linear-gradient(135deg, #4caf50 0%, #bfdbfe 50%, #93c5fd 100%);
     color: #2563eb;
 }
 

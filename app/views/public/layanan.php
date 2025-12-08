@@ -60,7 +60,7 @@ include 'app/views/templates/public/navbar.php';
                     <div class="contact-one__top">
                         <div class="sec-title wow fadeInUp animated" data-wow-duration="700ms">
                             <h6 class="sec-title__tagline">
-                                <i class="icon-chat" style="margin-right: 8px; font-size: 18px; color: #0EBD66;"></i>
+                                <i class="icon-chat" style="margin-right: 8px; font-size: 18px; color: #2563EB;"></i>
                                 Konsultasi Online
                             </h6>
                             <h3 class="sec-title__title">Ajukan Pertanyaan Keamanan</h3>
@@ -96,7 +96,6 @@ include 'app/views/templates/public/navbar.php';
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -105,7 +104,7 @@ include 'app/views/templates/public/navbar.php';
 <section class="blog-one" style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); padding-top: 80px; padding-bottom: 80px;">
     <div class="container">
         <div class="sec-title text-center" style="margin-bottom: 60px;">
-            <h6 class="sec-title__tagline" style="color: #0EBD66; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Arsip Konsultasi</h6>
+            <h6 class="sec-title__tagline" style="color: #2563EB; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Arsip Konsultasi</h6>
             <h3 class="sec-title__title" style="font-size: 36px; font-weight: 700; color: #1a3a6b;">Diskusi & Solusi Terbaru</h3>
         </div>
 
@@ -148,7 +147,7 @@ include 'app/views/templates/public/navbar.php';
                                 <hr style="border: none; border-top: 2px dashed #e9ecef; margin: 0 0 25px 0;">
                                 <div style="display: flex; gap: 20px; align-items: flex-start;">
                                     <div style="flex-shrink: 0;">
-                                        <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);">A</div>
+                                        <div style="width: 55px; height: 55px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; box-shadow: 0 4px 15px #DBEAFE;">A</div>
                                     </div>
                                     <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; flex-grow: 1; border-left: 4px solid #4caf50;">
                                         <p style="color: #495057; line-height: 1.8; margin-bottom: 15px; font-size: 15px;">
@@ -188,7 +187,7 @@ include 'app/views/templates/public/navbar.php';
 
     /* Active state untuk accordion - NO TRANSFORM */
     .accrodion.active .accrodion-title__icon {
-        background: #0EBD66 !important;
+        background: #2563EB !important;
     }
 
     .accrodion.active .accrodion-title__icon i {

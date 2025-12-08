@@ -47,7 +47,7 @@
 
 .meta-item i {
   font-size: 16px;
-  color: #1ea37a;
+  color: #2563EB;
 }
 
 .meta-item span {
@@ -318,8 +318,8 @@
   gap: 10px;
   padding: 12px 28px;
   background: #ffffff;
-  color: #1ea37a;
-  border: 2px solid #1ea37a;
+  color: #94A3B8;
+  border: 2px solid #2563EB;
   border-radius: 6px;
   font-size: 15px;
   font-weight: 600;
@@ -330,10 +330,10 @@
 }
 
 .btn-back-to-news:hover {
-  background: #1ea37a;
+  background: #2563EB;
   color: #ffffff;
   transform: translateX(-4px);
-  box-shadow: 0 4px 15px rgba(30, 163, 122, 0.2);
+  box-shadow: 0 4px 15px #2563EB;
 }
 
 .btn-back-to-news i {
@@ -360,7 +360,7 @@
 }
 
 .latest-post-card a:hover h4 {
-  color: #1ea37a !important;
+  color: #2563EB !important;
 }
 
 .latest-post-card a:hover img {

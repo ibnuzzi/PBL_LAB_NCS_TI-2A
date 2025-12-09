@@ -800,6 +800,27 @@ html {
 }
 
 /* ==========================================================================
+   MODAL SIDEBAR FIX - Prevent sidebar from being stuck when modal is open
+   ========================================================================== */
+
+/* Allow sidebar to remain scrollable when modal is open */
+.modal-open .layout-menu {
+  overflow-y: auto !important;
+  max-height: 100vh !important;
+}
+
+/* Ensure body overflow is handled properly */
+.modal-open {
+  overflow: hidden;
+  padding-right: 0 !important;
+}
+
+/* Fix scrollbar padding issues */
+.modal-open .layout-page {
+  padding-right: 0 !important;
+}
+
+/* ==========================================================================
    FORM VALIDATION ERROR MESSAGES
    ========================================================================== */
 

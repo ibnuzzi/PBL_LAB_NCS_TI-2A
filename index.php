@@ -166,6 +166,11 @@ Route::add('POST', '/admin/minat_ilmu/store', 'AdminKeminatanController', 'store
 Route::add('POST', '/admin/minat_ilmu/update', 'AdminKeminatanController', 'update');
 Route::add('GET',  '/admin/minat_ilmu/delete/{id}', 'AdminKeminatanController', 'delete');
 
+// SPK (Sistem Pendukung Keputusan)
+Route::add('GET',  '/admin/performa', 'AdminPerformaController', 'index');
+Route::add('GET',  '/admin/rekomtim', 'AdminRekomTimController', 'index');
+Route::add('POST', '/admin/rekomtim/recommend', 'AdminRekomTimController', 'recommend');
+
 // PROFILE & PASSWORD
 Route::add('GET',  '/admin/profile', 'AdminProfileController', 'index');
 Route::add('POST', '/admin/profile/update', 'AdminProfileController', 'update');

@@ -19,6 +19,8 @@ $isManajemenAdmin = stripos($currentPath, '/admin/manajemen-admin') !== false;
 $isDokumenKategori = stripos($currentPath, '/admin/dokumen_kategori') !== false;
 $isJabatan = stripos($currentPath, '/admin/jabatan') !== false;
 $isMinatIlmu = stripos($currentPath, '/admin/minat_ilmu') !== false;
+$isPerforma = stripos($currentPath, '/admin/performa') !== false;
+$isRekomTim = stripos($currentPath, '/admin/rekomtim') !== false;
 ?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
   <div class="app-brand demo">
@@ -142,6 +144,22 @@ $isMinatIlmu = stripos($currentPath, '/admin/minat_ilmu') !== false;
           </a>
         </li>
       </ul>
+    </li>
+    <!-- SPK (Sistem Pendukung Keputusan) -->
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">PENILAIAN & REKOMENDASI</span>
+    </li>
+    <li class="menu-item <?php echo $isPerforma ? 'active' : ''; ?>">
+      <a href="<?php echo BASE_URL; ?>/admin/performa" class="menu-link">
+        <i class="menu-icon bx bx-trophy"></i>
+        <div>Kinerja Peneliti</div>
+      </a>
+    </li>
+    <li class="menu-item <?php echo $isRekomTim ? 'active' : ''; ?>">
+      <a href="<?php echo BASE_URL; ?>/admin/rekomtim" class="menu-link">
+        <i class="menu-icon bx bx-group"></i>
+        <div>Rekomendasi Tim</div>
+      </a>
     </li>
     <!-- Sistem -->
     <li class="menu-header small text-uppercase">

@@ -18,7 +18,7 @@ include './app/views/templates/admin/sidebar_admin.php';
         <div class="card">
             <h5 class="card-header">Daftar Kategori Arsip</h5>
             <div class="table-responsive text-nowrap">
-                <table class="table table-hover">
+                <table id="table-kategori" class="table table-hover table-striped align-middle">
                     <thead class="table-light">
                         <tr>
                             <th style="width: 70px;">No</th>
@@ -99,8 +99,9 @@ include './app/views/templates/admin/sidebar_admin.php';
     </div>
 </div>
 
-<?php 
-include './app/views/templates/admin/footer_admin.php'; 
+<?php
+include './app/views/templates/admin/footer_admin.php';
+$table_name = 'kategori';
 include './app/views/components/page_scripts.php';
 ?>
 

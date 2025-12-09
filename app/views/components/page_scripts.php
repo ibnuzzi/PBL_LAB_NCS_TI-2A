@@ -32,24 +32,27 @@ $entity_name = $table_name;
       '</div>';
 
     $('#<?php echo $table_id; ?>').DataTable({
-      "pagingType": "simple_numbers",
+      "responsive": true,
+      "pageLength": 10,
+      "ordering": true,
+      "pagingType": "full_numbers",
       "language": {
-        "lengthMenu": "Tampilkan _MENU_ entri per halaman",
-        "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
-        "infoFiltered": "(difilter dari _MAX_ total entri)",
         "search": "Cari:",
-        "infoEmpty": "",
-        "emptyTable": noDataHtml,
+        "lengthMenu": "Tampilkan _MENU_ data per halaman",
+        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+        "infoEmpty": "Tidak ada data",
+        "infoFiltered": "(difilter dari _MAX_ total data)",
         "zeroRecords": noDataHtml,
+        "emptyTable": noDataHtml,
         "paginate": {
-          "next": "<i class='bx bx-chevron-right'></i>",
-          "previous": "<i class='bx bx-chevron-left'></i>"
-        }
-      },
-      "columnDefs": [{
-        "orderable": false,
-        "targets": "_all"
-      }]
+          "first": "<<",
+          "last": ">>",
+          "next": "Selanjutnya",
+          "previous": "Sebelumnya"
+        },
+        "loadingRecords": "Memuat data...",
+        "processing": "Memproses..."
+      }
     });
   });
 </script>

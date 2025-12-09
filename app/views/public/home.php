@@ -11,11 +11,16 @@ include 'app/views/templates/public/navbar.php';
 		"margin": 0,
 		"loop": true,
 		"smartSpeed": 700,
-		"nav": true,
+		"nav": false,
 		"navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-arrow\"></span>"],
 		"dots": false,
 		"autoplay": true,
-        "autoplayTimeout": 5000
+        "autoplayTimeout": 5000,
+		"mouseDrag": false,
+		"touchDrag": false,
+		"pullDrag": false,
+		"freeDrag": false,
+		"autoplayHoverPause": false
 		}'>
 
         <div class="item">
@@ -28,6 +33,46 @@ include 'app/views/templates/public/navbar.php';
                                 <span class="header-home-text">Selamat Datang di Lab NCS JTI Polinema</span>
                                 <h2 class="main-slider-one__title">Pusat Riset<br>Jaringan Keamanan & Siber</h2>
                                 <p class="header-home-text">Mengembangkan inovasi dan talenta di bidang Network & Cyber Security untuk menghadapi tantangan digital masa depan.</p>
+                                <div class="main-slider-one__link">
+                                    <a href="<?= BASE_URL ?>/tentang" class="laboix-btn">Pelajari Lebih Lanjut</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="main-slider-one__item">
+                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/backgrounds/slider-1-1.jpg);"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-slider-one__content">
+                                <span class="header-home-text">Fokus Pada Keunggulan</span>
+                                <h2 class="main-slider-one__title">Network Security Systems, <br>Data and Infrastructure</h2>
+                                <p class="header-home-text">Membangun infrastruktur jaringan, data, dan infrastruktur yang handal dan aman untuk mendukung transformasi digital.</p>
+                                <div class="main-slider-one__link">
+                                    <a href="<?= BASE_URL ?>/tentang" class="laboix-btn">Pelajari Lebih Lanjut</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="main-slider-one__item">
+                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/backgrounds/slider-1-1.jpg);"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-slider-one__content">
+                                <span class="header-home-text">Keamanan Siber Terdepan</span>
+                                <h2 class="main-slider-one__title">Cyber Defense<br>& Offensive Security</h2>
+                                <p class="header-home-text">Melatih profesional keamanan siber yang kompeten dalam melindungi aset digital.</p>
                                 <div class="main-slider-one__link">
                                     <a href="<?= BASE_URL ?>/tentang" class="laboix-btn">Pelajari Lebih Lanjut</a>
                                 </div>

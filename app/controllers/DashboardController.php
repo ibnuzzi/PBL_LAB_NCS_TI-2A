@@ -27,6 +27,7 @@ class DashboardController extends Controller {
         $pengabdianModel = $this->model('Pengabdian');
         $penelitianModel = $this->model('Penelitian');
         $konsultasiModel = $this->model('Konsultasi');
+        $pengelolaModel = $this->model('Pengelola');
         
         // Get statistics
         // Berita: countBerita()
@@ -38,6 +39,7 @@ class DashboardController extends Controller {
         $totalPengabdian = count($pengabdianModel->getAll());
         $totalPenelitian = count($penelitianModel->getAll());
         $totalPertanyaan = count($konsultasiModel->getAll());
+        $totalAnggota = count($pengelolaModel->getAll());
         
         // Get recent data
         // Berita: getBeritaTerbaru(3)
@@ -57,6 +59,7 @@ class DashboardController extends Controller {
             'totalPengabdian' => $totalPengabdian,
             'totalPenelitian' => $totalPenelitian,
             'totalPertanyaan' => $totalPertanyaan,
+            'totalAnggota' => $totalAnggota,
             'recentBerita' => $recentBerita,
             'recentAgenda' => $recentAgenda,
             'recentPertanyaan' => $recentPertanyaan

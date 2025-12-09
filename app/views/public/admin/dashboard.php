@@ -9,6 +9,7 @@ $totalAgenda = $totalAgenda ?? 0;
 $totalPengabdian = $totalPengabdian ?? 0;
 $totalPenelitian = $totalPenelitian ?? 0;
 $totalPertanyaan = $totalPertanyaan ?? 0;
+$totalAnggota = $totalAnggota ?? 0;
 $recentBerita = $recentBerita ?? [];
 $recentAgenda = $recentAgenda ?? [];
 $recentPertanyaan = $recentPertanyaan ?? [];
@@ -30,19 +31,19 @@ $recentPertanyaan = $recentPertanyaan ?? [];
       </div>
 
       <!-- STATISTICS CARDS -->
-      <div class="row g-3 mb-4">
+      <div class="d-flex gap-3 mb-4">
         <!-- Total Berita -->
-        <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: #667eea;">
-            <div class="card-body text-white">
-              <div class="d-flex justify-content-between align-items-center">
+        <div style="flex: 1 1 0; min-width: 0;">
+          <div class="card border-0 shadow-sm" style="background: #667eea; aspect-ratio: 1 / 1; height: 100%;">
+            <div class="card-body text-white d-flex flex-column justify-content-between h-100">
+              <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p class="mb-1 opacity-75">Total Berita</p>
+                  <p class="mb-1 opacity-75 small">Total Berita</p>
                   <h2 class="fw-bold mb-0" style="color: white;"><?= $totalBerita ?></h2>
                 </div>
-                <i class="bx bx-news" style="font-size: 48px; opacity: 0.9;"></i>
+                <i class="bx bx-news" style="font-size: 40px; opacity: 0.9;"></i>
               </div>
-              <div class="mt-3 d-flex align-items-center">
+              <div class="d-flex align-items-center">
                 <i class="bx bx-trending-up me-1"></i>
                 <small>Publikasi aktif</small>
               </div>
@@ -51,17 +52,17 @@ $recentPertanyaan = $recentPertanyaan ?? [];
         </div>
 
         <!-- Total Agenda -->
-        <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: #f5576c;">
-            <div class="card-body text-white">
-              <div class="d-flex justify-content-between align-items-center">
+        <div style="flex: 1 1 0; min-width: 0;">
+          <div class="card border-0 shadow-sm" style="background: #f5576c; aspect-ratio: 1 / 1; height: 100%;">
+            <div class="card-body text-white d-flex flex-column justify-content-between h-100">
+              <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p class="mb-1 opacity-75">Total Agenda</p>
+                  <p class="mb-1 opacity-75 small">Total Agenda</p>
                   <h2 class="fw-bold mb-0" style="color: white;"><?= $totalAgenda ?></h2>
                 </div>
-                <i class="bx bx-calendar-event" style="font-size: 48px; opacity: 0.9;"></i>
+                <i class="bx bx-calendar-event" style="font-size: 40px; opacity: 0.9;"></i>
               </div>
-              <div class="mt-3 d-flex align-items-center">
+              <div class="d-flex align-items-center">
                 <i class="bx bx-time me-1"></i>
                 <small>Kegiatan terjadwal</small>
               </div>
@@ -70,17 +71,17 @@ $recentPertanyaan = $recentPertanyaan ?? [];
         </div>
 
         <!-- Total Pengabdian -->
-        <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: #4facfe;">
-            <div class="card-body text-white">
-              <div class="d-flex justify-content-between align-items-center">
+        <div style="flex: 1 1 0; min-width: 0;">
+          <div class="card border-0 shadow-sm" style="background: #4facfe; aspect-ratio: 1 / 1; height: 100%;">
+            <div class="card-body text-white d-flex flex-column justify-content-between h-100">
+              <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p class="mb-1 opacity-75">Total Pengabdian</p>
+                  <p class="mb-1 opacity-75 small">Total Pengabdian</p>
                   <h2 class="fw-bold mb-0" style="color: white;"><?= $totalPengabdian ?></h2>
                 </div>
-                <i class="bx bx-donate-heart" style="font-size: 48px; opacity: 0.9;"></i>
+                <i class="bx bx-donate-heart" style="font-size: 40px; opacity: 0.9;"></i>
               </div>
-              <div class="mt-3 d-flex align-items-center">
+              <div class="d-flex align-items-center">
                 <i class="bx bx-group me-1"></i>
                 <small>Kegiatan pengabdian</small>
               </div>
@@ -89,19 +90,38 @@ $recentPertanyaan = $recentPertanyaan ?? [];
         </div>
 
         <!-- Total Penelitian -->
-        <div class="col-xl-3 col-md-6">
-          <div class="card border-0 shadow-sm h-100" style="background: #fa709a;">
-            <div class="card-body text-white">
-              <div class="d-flex justify-content-between align-items-center">
+        <div style="flex: 1 1 0; min-width: 0;">
+          <div class="card border-0 shadow-sm" style="background: #fa709a; aspect-ratio: 1 / 1; height: 100%;">
+            <div class="card-body text-white d-flex flex-column justify-content-between h-100">
+              <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p class="mb-1 opacity-75">Total Penelitian</p>
+                  <p class="mb-1 opacity-75 small">Total Penelitian</p>
                   <h2 class="fw-bold mb-0" style="color: white;"><?= $totalPenelitian ?></h2>
                 </div>
-                <i class="bx bx-book-open" style="font-size: 48px; opacity: 0.9;"></i>
+                <i class="bx bx-book-open" style="font-size: 40px; opacity: 0.9;"></i>
               </div>
-              <div class="mt-3 d-flex align-items-center">
+              <div class="d-flex align-items-center">
                 <i class="bx bx-search-alt me-1"></i>
                 <small>Riset & publikasi</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Anggota Lab -->
+        <div style="flex: 1 1 0; min-width: 0;">
+          <div class="card border-0 shadow-sm" style="background: #43e97b; aspect-ratio: 1 / 1; height: 100%;">
+            <div class="card-body text-white d-flex flex-column justify-content-between h-100">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <p class="mb-1 opacity-75 small">Total Anggota Lab</p>
+                  <h2 class="fw-bold mb-0" style="color: white;"><?= $totalAnggota ?></h2>
+                </div>
+                <i class="bx bx-group" style="font-size: 40px; opacity: 0.9;"></i>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="bx bx-user-check me-1"></i>
+                <small>Pengelola laboratorium</small>
               </div>
             </div>
           </div>

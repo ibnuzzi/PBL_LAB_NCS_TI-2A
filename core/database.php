@@ -1,7 +1,8 @@
 <?php
 // File: /app/core/Database.php
 
-class Database {
+class Database
+{
     // Properti untuk menyimpan koneksi
     private $driver = DB_DRIVER;
     private $host = DB_HOST;
@@ -10,11 +11,17 @@ class Database {
     private $db_user = DB_USER;
     private $db_pass = DB_PASS;
 
+    // Properti untuk PDO dan statement
+    private $dbh; // Database handle (instance PDO)
+    private $stmt; // Statement (prepared statement)
+    private $error; // Error message
+
     // Instance (untuk pola Singleton)
     private static $instance = null;
 
     // Constructor (dibuat private untuk Singleton)
-    private function __construct() {
+    private function __construct()
+    {
         // --- INI BAGIAN YANG BERUBAH ---
         // Membuat Data Source Name (DSN) untuk PostgreSQL
         $dsn = $this->driver . ':host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->db_name;
@@ -39,7 +46,8 @@ class Database {
     }
 
     // Pola Singleton untuk memastikan hanya ada satu koneksi
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance == null) {
             self::$instance = new Database();
         }
@@ -47,12 +55,14 @@ class Database {
     }
 
     // Fungsi untuk menyiapkan query SQL
-    public function query($sql) {
+    public function query($sql)
+    {
         $this->stmt = $this->dbh->prepare($sql);
     }
 
     // Fungsi untuk binding parameter (misal: :id)
-    public function bind($param, $value, $type = null) {
+    public function bind($param, $value, $type = null)
+    {
         if (is_null($type)) {
             switch (true) {
                 case is_int($value):
@@ -72,7 +82,8 @@ class Database {
     }
 
     // Fungsi untuk eksekusi statement
-    public function execute() {
+    public function execute()
+    {
         try {
             return $this->stmt->execute();
         } catch (PDOException $e) {
@@ -82,24 +93,28 @@ class Database {
     }
 
     // Fungsi untuk mendapatkan semua hasil (SELECT *)
-    public function resultSet() {
+    public function resultSet()
+    {
         $this->execute();
         return $this->stmt->fetchAll();
     }
 
     // Fungsi untuk mendapatkan satu hasil (SELECT ... WHERE id=:id)
-    public function single() {
+    public function single()
+    {
         $this->execute();
         return $this->stmt->fetch();
     }
 
     // Fungsi untuk menghitung jumlah baris (row count)
-    public function rowCount() {
+    public function rowCount()
+    {
         return $this->stmt->rowCount();
     }
 
     // Fungsi untuk mendapatkan ID terakhir yang di-insert
-    public function lastInsertId() {
+    public function lastInsertId()
+    {
         // Catatan: PostgreSQL mungkin perlu parameter 'name' (nama sequence)
         // tapi untuk kasus auto-increment 'id' (SERIAL/BIGSERIAL), ini biasanya berfungsi.
         return $this->dbh->lastInsertId();

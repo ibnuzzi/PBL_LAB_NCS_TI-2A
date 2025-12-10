@@ -25,7 +25,7 @@ include 'app/views/templates/public/navbar.php';
 
         <div class="item">
             <div class="main-slider-one__item">
-                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/backgrounds/slider-1-1.jpg);"></div>
+                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/bg-gedung.jpg);"></div>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -45,7 +45,7 @@ include 'app/views/templates/public/navbar.php';
 
         <div class="item">
             <div class="main-slider-one__item">
-                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/backgrounds/slider-1-1.jpg);"></div>
+                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/bg-gedung.jpg);"></div>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -65,7 +65,7 @@ include 'app/views/templates/public/navbar.php';
 
         <div class="item">
             <div class="main-slider-one__item">
-                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/backgrounds/slider-1-1.jpg);"></div>
+                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/gallery/galerilab-1.jpg)"></div>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">

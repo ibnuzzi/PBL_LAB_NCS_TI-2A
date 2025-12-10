@@ -35,7 +35,7 @@ $entity_name = $table_name;
       "responsive": true,
       "pageLength": 10,
       "ordering": true,
-      "pagingType": "full_numbers",
+      "pagingType": "simple_numbers",
       "language": {
         "search": "Cari:",
         "lengthMenu": "Tampilkan _MENU_ data per halaman",
@@ -45,10 +45,8 @@ $entity_name = $table_name;
         "zeroRecords": noDataHtml,
         "emptyTable": noDataHtml,
         "paginate": {
-          "first": "<<",
-          "last": ">>",
-          "next": "Selanjutnya",
-          "previous": "Sebelumnya"
+          "next": ">",
+          "previous": "<"
         },
         "loadingRecords": "Memuat data...",
         "processing": "Memproses..."

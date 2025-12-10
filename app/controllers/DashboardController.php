@@ -1,12 +1,14 @@
 <?php
 // File: /app/controllers/DashboardController.php
 
-class DashboardController extends Controller {
+class DashboardController extends Controller
+{
 
     /**
      * Constructor ini berfungsi sebagai "MIDDLEWARE"
      */
-    public function __construct() {
+    public function __construct()
+    {
         // Cek apakah session 'admin_logged_in' TIDAK ada
         if (!isset($_SESSION['admin_logged_in'])) {
             // Jika tidak ada (belum login), tendang ke halaman login
@@ -20,7 +22,8 @@ class DashboardController extends Controller {
     /**
      * Menampilkan halaman dashboard dengan data statistik
      */
-    public function index() {
+    public function index()
+    {
         // Load models
         $beritaModel = $this->model('Berita');
         $agendaModel = $this->model('Agenda');
@@ -28,7 +31,8 @@ class DashboardController extends Controller {
         $penelitianModel = $this->model('Penelitian');
         $konsultasiModel = $this->model('Konsultasi');
         $pengelolaModel = $this->model('Pengelola');
-        
+        $teamModel = $this->model('TeamRecommendation');
+
         // Get statistics
         // Berita: countBerita()
         // Agenda: getAllAgenda()
@@ -40,19 +44,23 @@ class DashboardController extends Controller {
         $totalPenelitian = count($penelitianModel->getAll());
         $totalPertanyaan = count($konsultasiModel->getAll());
         $totalAnggota = count($pengelolaModel->getAll());
-        
+
         // Get recent data
         // Berita: getBeritaTerbaru(3)
         $recentBerita = $beritaModel->getBeritaTerbaru(3);
-        
+
         // Agenda: getAllAgenda() then slice
         $allAgenda = $agendaModel->getAllAgenda();
-        $recentAgenda = array_slice($allAgenda, 0, 5);
-        
+        $recentAgenda = array_slice($allAgenda, 0, 7);
+
         // Konsultasi: getAll() then slice
         $allKonsultasi = $konsultasiModel->getAll();
-        $recentPertanyaan = array_slice($allKonsultasi, 0, 5);
-        
+        $recentPertanyaan = array_slice($allKonsultasi, 0, 6);
+
+        // Get chart data
+        $workloadDistribution = $teamModel->getWorkloadDistribution();
+        $topKeminatan = $teamModel->getTopKeminatan(5);
+
         $data = [
             'totalBerita' => $totalBerita,
             'totalAgenda' => $totalAgenda,
@@ -62,11 +70,11 @@ class DashboardController extends Controller {
             'totalAnggota' => $totalAnggota,
             'recentBerita' => $recentBerita,
             'recentAgenda' => $recentAgenda,
-            'recentPertanyaan' => $recentPertanyaan
+            'recentPertanyaan' => $recentPertanyaan,
+            'workloadDistribution' => $workloadDistribution,
+            'topKeminatan' => $topKeminatan
         ];
-        
-        $this->view('public/admin/dashboard', $data); 
-    }
 
+        $this->view('public/admin/dashboard', $data);
+    }
 }
-?>

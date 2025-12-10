@@ -265,17 +265,15 @@ document.addEventListener("DOMContentLoaded", function () {
       "responsive": true,
       "pageLength": 10,
       "ordering": false,
-      "pagingType": "full_numbers",
+      "pagingType": "simple_numbers",
       "language": {
         "search": "Cari:",
         "lengthMenu": "Tampilkan _MENU_ data per halaman",
         "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
         "paginate": {
-          "first": "<<",
-          "last": ">>",
-          "previous": "Sebelumnya",
-          "next": "Selanjutnya"
-        }
+          "next": ">",
+          "previous": "<"
+        },
       }
     });
   }

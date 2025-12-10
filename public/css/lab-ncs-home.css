@@ -82,9 +82,42 @@
   box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
 }
 
-/* Ensure background overlay is consistent */
+/* Ensure background overlay is consistent - reduced opacity for better image visibility */
 .main-slider-one__bg::before {
-  background: rgba(10, 25, 47, 0.85) !important;
+  background: rgba(10, 25, 47, 0.70) !important;
+}
+
+/* Make background image more visible and cover full width */
+.main-slider-one__bg {
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block !important;
+}
+
+/* Override the mask to show more of the image */
+.main-slider-one__bg::after {
+  width: 65% !important;
+  background: linear-gradient(90deg, rgba(2, 25, 54, 0.95) 0%, rgba(2, 25, 54, 0.8) 70%, rgba(2, 25, 54, 0) 100%) !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+}
+
+/* Show background on mobile devices */
+@media (max-width: 991px) {
+  .main-slider-one__bg {
+    display: block !important;
+  }
+  
+  .main-slider-one__bg::before {
+    width: 100% !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+    background: rgba(10, 25, 47, 0.75) !important;
+  }
+  
+  .main-slider-one__bg::after {
+    display: none !important;
+  }
 }
 
 

@@ -32,7 +32,7 @@ class TeamRecommendation
                 FROM tbl_pengelola p
                 LEFT JOIN tbl_jabatan j ON p.id_jabatan = j.id_jabatan
                 ORDER BY p.nama_pengelola ASC";
-        
+
         $this->db->query($sql);
         $pengelola_list = $this->db->resultSet();
 
@@ -44,16 +44,16 @@ class TeamRecommendation
 
         foreach ($pengelola_list as $pengelola) {
             $id = $pengelola['id_pengelola'];
-            
+
             // Get pengelola's keminatan
             $pengelola_keminatan = $this->getPengelolaKeminatan($id);
-            
+
             // Calculate match score
             $match_score = $this->calculateMatchScore($pengelola_keminatan, $keminatan_ids);
-            
+
             // Get workload (current year)
             $workload = $this->getWorkload($id);
-            
+
             // Apply workload modifier
             $final_score = $match_score;
             if ($workload > 5) {
@@ -79,7 +79,7 @@ class TeamRecommendation
         }
 
         // Sort by final score descending
-        usort($candidates, function($a, $b) {
+        usort($candidates, function ($a, $b) {
             return $b['final_score'] <=> $a['final_score'];
         });
 
@@ -100,7 +100,7 @@ class TeamRecommendation
         $sql = "SELECT id_keminatan 
                 FROM tbl_pengelola_keminatan 
                 WHERE id_pengelola = :id";
-        
+
         $this->db->query($sql);
         $this->db->bind(':id', $id_pengelola);
         $results = $this->db->resultSet();
@@ -149,7 +149,7 @@ class TeamRecommendation
                  FROM tbl_penelitian_anggota pa
                  JOIN tbl_penelitian p ON pa.id_penelitian = p.id_penelitian
                  WHERE pa.id_pengelola = :id AND p.tahun_penelitian = :tahun";
-        
+
         $this->db->query($sql1);
         $this->db->bind(':id', $id_pengelola);
         $this->db->bind(':tahun', $current_year);
@@ -160,7 +160,7 @@ class TeamRecommendation
                  FROM tbl_pengabdian_anggota pa
                  JOIN tbl_pengabdian p ON pa.id_pengabdian = p.id_pengabdian
                  WHERE pa.id_pengelola = :id AND p.tahun_kegiatan = :tahun";
-        
+
         $this->db->query($sql2);
         $this->db->bind(':id', $id_pengelola);
         $this->db->bind(':tahun', $current_year);
@@ -185,7 +185,7 @@ class TeamRecommendation
                 ORDER BY nama_keminatan ASC";
 
         $this->db->query($sql);
-        
+
         // Bind each ID
         foreach ($keminatan_ids as $index => $id) {
             $this->db->bind($index + 1, $id);
@@ -205,8 +205,66 @@ class TeamRecommendation
         $sql = "SELECT id_keminatan, nama_keminatan, deskripsi 
                 FROM tbl_keminatan 
                 ORDER BY nama_keminatan ASC";
-        
+
         $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
+    /**
+     * Get workload distribution for dashboard chart
+     * Returns count of researchers by workload category
+     */
+    public function getWorkloadDistribution()
+    {
+        $current_year = date('Y');
+
+        // Get all pengelola with their workloads
+        $sql = "SELECT p.id_pengelola, p.nama_pengelola
+                FROM tbl_pengelola p
+                ORDER BY p.nama_pengelola ASC";
+
+        $this->db->query($sql);
+        $pengelola_list = $this->db->resultSet();
+
+        $distribution = [
+            'ringan' => 0,  // 0-3 proyek
+            'sedang' => 0,  // 4-5 proyek
+            'tinggi' => 0   // >5 proyek
+        ];
+
+        foreach ($pengelola_list as $pengelola) {
+            $workload = $this->getWorkload($pengelola['id_pengelola']);
+
+            if ($workload <= 3) {
+                $distribution['ringan']++;
+            } elseif ($workload <= 5) {
+                $distribution['sedang']++;
+            } else {
+                $distribution['tinggi']++;
+            }
+        }
+
+        return $distribution;
+    }
+
+    /**
+     * Get top 5 most popular keminatan
+     * Returns keminatan ranked by number of researchers
+     */
+    public function getTopKeminatan($limit = 5)
+    {
+        $sql = "SELECT 
+                    k.id_keminatan,
+                    k.nama_keminatan,
+                    COUNT(pk.id_pengelola) as jumlah_peneliti
+                FROM tbl_keminatan k
+                LEFT JOIN tbl_pengelola_keminatan pk ON k.id_keminatan = pk.id_keminatan
+                GROUP BY k.id_keminatan, k.nama_keminatan
+                ORDER BY jumlah_peneliti DESC, k.nama_keminatan ASC
+                LIMIT :limit";
+
+        $this->db->query($sql);
+        $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
     }
 }

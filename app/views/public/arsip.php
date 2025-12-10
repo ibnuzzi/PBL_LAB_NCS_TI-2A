@@ -29,6 +29,7 @@ include 'app/views/templates/public/navbar.php';
                             </button>
 
                             <input type="text"
+                                id="arsip-search-input"
                                 name="search"
                                 placeholder="Cari Judul atau Penulis..."
                                 value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
@@ -129,11 +130,14 @@ include 'app/views/templates/public/navbar.php';
                         // Loop melalui data arsip dari PostgreSQL view
                         if (!empty($data['arsip_list'])):
                             foreach ($data['arsip_list'] as $arsip):
-                                // Dapatkan kategori
                                 $kategoriArsip = $arsip['kategori'] ?? 'default';
                                 $iconData = isset($categoryIconMapping[$kategoriArsip]) ? $categoryIconMapping[$kategoriArsip] : $categoryIconMapping['default'];
+
+                                // Data search untuk fitur pencarian JS
+                                $searchableContent = strtolower(($arsip['judul'] ?? '') . ' ' . ($arsip['deskripsi'] ?? '') . ' ' . ($arsip['penulis_atau_tim'] ?? ''));
                         ?>
-                                <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm"
+                                <div class="list-group-item list-group-item-action d-flex align-items-center p-4 mb-3 shadow-sm arsip-item"
+                                    data-search="<?= htmlspecialchars($searchableContent) ?>"
                                     style="border: none; border-radius: 10px; background: #fff; transition: transform 0.2s;">
 
                                     <div class="flex-shrink-0 me-4" style="margin-right: 20px;">
@@ -150,7 +154,7 @@ include 'app/views/templates/public/navbar.php';
                                             <?= htmlspecialchars(substr($arsip['deskripsi'] ?? '', 0, 100)) ?><?= strlen($arsip['deskripsi'] ?? '') > 100 ? '...' : '' ?>
                                         </p>
                                         <small class="text-muted">
-                                            <i class="fa fa-calendar-alt"></i> <?= date('d M Y', strtotime($arsip['created_at'] ?? date('Y-m-d'))) ?> &nbsp;|&nbsp;
+                                            <i class="fa fa-calendar-alt"></i> <?= htmlspecialchars($arsip['tahunl'] ?? '-') ?> &nbsp;|&nbsp;
                                             <i class="fa fa-tag"></i> <?= htmlspecialchars($kategoriArsip) ?>
                                             <?php
                                             // Hanya tampilkan penulis_atau_tim jika BUKAN dari arsip_umum
@@ -211,6 +215,16 @@ include 'app/views/templates/public/navbar.php';
                         <?php endif; ?>
 
                     </div>
+
+                    <div class="col-12 mt-4 search-no-results" style="display:none; text-align:center;">
+                        <div class="alert alert-warning">
+                            <i class="fa fa-search me-2"></i> Tidak ada dokumen yang cocok dengan kata kunci pencarian Anda.
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 arsip-pagination-wrapper" style="display:flex; justify-content:center;">
+                        <ul id="arsip-pagination-container" class="pagination"></ul>
+                    </div>
                 </div>
             </div>
 
@@ -222,3 +236,185 @@ include 'app/views/templates/public/navbar.php';
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';
 ?>
+
+<!-- Custom CSS for Arsip Pagination Visibility -->
+<style>
+    #arsip-pagination-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    #arsip-pagination-container li {
+        list-style: none;
+    }
+
+    #arsip-pagination-container li a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        background-color: #f0f4f8;
+        color: #6b7280;
+        border: none;
+        border-radius: 50%;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    #arsip-pagination-container li.active a {
+        background-color: #2563eb;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    #arsip-pagination-container li.disabled a {
+        color: #d1d5db;
+        pointer-events: none;
+        background-color: #f9fafb;
+        box-shadow: none;
+    }
+
+    #arsip-pagination-container li a:hover:not(.active) {
+        background-color: #e5e7eb;
+        color: #374151;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    /* CRITICAL: Hide all items by default, show only .arsip-visible */
+    .arsip-item {
+        display: none !important;
+    }
+
+    .arsip-item.arsip-visible {
+        display: flex !important;
+    }
+</style>
+
+<!-- ARSIP PAGE PAGINATION SCRIPT -->
+<script>
+    jQuery(document).ready(function($) {
+        console.log("Arsip Pagination Local Script Running...");
+
+        const itemsPerPage = 5;
+        const $listItems = $('.arsip-item');
+        const $paginationContainer = $('#arsip-pagination-container');
+        const $wrapper = $('.arsip-pagination-wrapper');
+        const $noResults = $('.search-no-results');
+        const totalItems = $listItems.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        let currentPage = 1;
+
+        console.log("Total Items:", totalItems);
+        console.log("Total Pages:", totalPages);
+
+        if (totalItems === 0) return;
+
+        // 1. Function to Show Specific Page
+        function showArsipPage(page) {
+            currentPage = page;
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+
+            // Remove visible class from all items
+            $listItems.removeClass('arsip-visible');
+
+            // Add visible class to the slice
+            $listItems.slice(start, end).addClass('arsip-visible');
+
+            renderArsipPagination();
+        }
+
+        // 2. Render Pagination Buttons
+        function renderArsipPagination() {
+            $paginationContainer.empty();
+
+            if (totalPages <= 1) {
+                $wrapper.hide();
+                return;
+            } else {
+                $wrapper.css('display', 'flex');
+            }
+
+            // Button HTML Builder
+            let html = '';
+
+            // Prev
+            const prevDisabled = currentPage === 1 ? 'disabled' : '';
+            html += `<li class="${prevDisabled}"><a href="#" data-page="${currentPage - 1}">&laquo;</a></li>`;
+
+            // Page Numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const active = i === currentPage ? 'active' : '';
+                html += `<li class="${active}"><a href="#" data-page="${i}">${i}</a></li>`;
+            }
+
+            // Next
+            const nextDisabled = currentPage === totalPages ? 'disabled' : '';
+            html += `<li class="${nextDisabled}"><a href="#" data-page="${currentPage + 1}">&raquo;</a></li>`;
+
+            $paginationContainer.html(html);
+        }
+
+        // 3. Event Listener
+        $paginationContainer.off('click').on('click', 'a', function(e) {
+            e.preventDefault();
+            const page = $(this).data('page');
+            if (page >= 1 && page <= totalPages) {
+                $('html, body').animate({
+                    scrollTop: $('.service-details').offset().top - 80
+                }, 400);
+                showArsipPage(page);
+            }
+        });
+
+        // 4. Search Handler
+        $('#arsip-search-input').off('keyup').on('keyup', function() {
+            const query = $(this).val().toLowerCase().trim();
+
+            if (query === '') {
+                // Reset to pagination mode
+                $wrapper.show();
+                $noResults.hide();
+                showArsipPage(1);
+                return;
+            }
+
+            // Search Mode
+            $wrapper.hide();
+            let count = 0;
+
+            // Remove all visible classes first
+            $listItems.removeClass('arsip-visible');
+
+            $listItems.each(function() {
+                const text = $(this).data('search') || $(this).text().toLowerCase();
+                if (text.includes(query)) {
+                    $(this).addClass('arsip-visible');
+                    count++;
+                }
+            });
+
+            if (count === 0) {
+                $noResults.show();
+            } else {
+                $noResults.hide();
+            }
+        });
+
+        // Initial Run
+        // setTimeout to ensure no other scripts override us
+        setTimeout(function() {
+            showArsipPage(1);
+        }, 100);
+    });
+</script>

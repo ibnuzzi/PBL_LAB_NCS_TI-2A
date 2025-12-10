@@ -14,8 +14,8 @@ include 'app/views/templates/public/navbar.php';
                 <div class="login-card">
 
                     <div class="text-center mb-4">
-                        <div class="login-icon-wrapper">
-                            <i class="fa fa-lock"></i>
+                        <div class="login-logo-wrapper">
+                            <img src="<?php echo BASE_URL; ?>/public/assets/images/ClearLogoJTI.png" alt="Lab NCS JTI" class="login-logo-img">
                         </div>
                     </div>
 
@@ -46,12 +46,6 @@ include 'app/views/templates/public/navbar.php';
 
                     </form>
                 </div>
-                <div class="text-center mt-4">
-                    <a href="<?php echo BASE_URL; ?>/" class="login-back-link">
-                        <i class="fa fa-arrow-left me-1"></i> Kembali ke Beranda
-                    </a>
-                </div>
-
             </div>
         </div>
     </div>

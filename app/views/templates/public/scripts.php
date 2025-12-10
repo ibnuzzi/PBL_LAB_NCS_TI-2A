@@ -236,6 +236,9 @@
                     perPage: 6 // Galeri biasanya butuh lebih banyak item
                 });
 
+                // 4. Setup untuk Halaman ARSIP (Removed to avoid conflict with local script)
+
+
             });
         })(jQuery);
 

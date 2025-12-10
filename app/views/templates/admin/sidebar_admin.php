@@ -22,11 +22,52 @@ $isMinatIlmu = stripos($currentPath, '/admin/minat_ilmu') !== false;
 $isPerforma = stripos($currentPath, '/admin/performa') !== false;
 $isRekomTim = stripos($currentPath, '/admin/rekomtim') !== false;
 ?>
+
+<!-- Sidebar Dark Theme Override -->
+<style>
+  .layout-menu.bg-menu-theme {
+    background-color: #0F172A !important;
+  }
+
+  .bg-menu-theme .menu-link,
+  .bg-menu-theme .menu-horizontal-prev,
+  .bg-menu-theme .menu-horizontal-next {
+    color: #94a3b8 !important;
+  }
+
+  .bg-menu-theme .menu-link:hover,
+  .bg-menu-theme .menu-link:focus {
+    color: #ffffff !important;
+  }
+
+  .bg-menu-theme .menu-item.active>.menu-link {
+    color: #ffffff !important;
+    background-color: rgba(99, 102, 241, 0.16) !important;
+  }
+
+  .bg-menu-theme .menu-header {
+    color: #64748b !important;
+  }
+
+  .bg-menu-theme .app-brand-text {
+    color: #ffffff !important;
+    text-transform: uppercase !important;
+  }
+
+  .bg-menu-theme .sidebar-brand-icon {
+    color: #6366f1 !important;
+  }
+
+  .bg-menu-theme .menu-inner-shadow {
+    background: linear-gradient(#0F172A 41%, rgba(15, 23, 42, 0.11) 95%, rgba(15, 23, 42, 0)) !important;
+  }
+</style>
+
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
   <div class="app-brand demo">
     <a href="<?php echo BASE_URL; ?>/admin/dashboard" class="app-brand-link">
-      <i class="bx bx-shield-quarter bx-md sidebar-brand-icon"></i>
-      <span class="app-brand-text demo menu-text fw-bolder ms-2">Lab NCS</span>
+      <img src="<?php echo BASE_URL; ?>/public/assets/images/LogoJTI.png" alt="Lab NCS" class="sidebar-brand-logo" style="width: 40px; height: auto;">
+      <span class="app-brand-text demo menu-text fw-bolder ms-2">LAB NCS</span>
     </a>
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
       <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -237,24 +278,24 @@ $isRekomTim = stripos($currentPath, '/admin/rekomtim') !== false;
               <div class="dropdown-divider my-1"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="<?= BASE_URL ?>/admin/profile"> 
+              <a class="dropdown-item" href="<?= BASE_URL ?>/admin/profile">
                 <i class="icon-base bx bx-user icon-md me-3"></i>
-                <span>My Profile</span> 
+                <span>My Profile</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="<?= BASE_URL ?>/admin/change-password"> 
+              <a class="dropdown-item" href="<?= BASE_URL ?>/admin/change-password">
                 <i class="icon-base bx bx-key icon-md me-3"></i>
-                <span>Ganti Password</span> 
+                <span>Ganti Password</span>
               </a>
             </li>
             <li>
               <div class="dropdown-divider my-1"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="<?= BASE_URL ?>/logout"> 
+              <a class="dropdown-item" href="<?= BASE_URL ?>/logout">
                 <i class="icon-base bx bx-power-off icon-md me-3"></i>
-                <span>Log Out</span> 
+                <span>Log Out</span>
               </a>
             </li>
           </ul>

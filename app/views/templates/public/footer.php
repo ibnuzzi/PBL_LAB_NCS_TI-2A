@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-xl-4">
                     <div class="footer-widget footer-widget--info">
                         <a href="<?= BASE_URL ?>" class="footer-widget__logo">
-                            <img src="<?= BASE_URL ?>/public/assets/images/ClearLogoJTI.png" width="50%" alt="Logo Lab NCS">
+                            <img src="<?= BASE_URL ?>/public/assets/images/LogoJTI.png" width="30%" alt="Logo Lab NCS">
                         </a>
                         <p class="footer-widget__text">Laboratorium Network and Cyber Crime (NCS) JTI Polinema, berfokus pada riset dan pengembangan keamanan jaringan serta forensik digital.</p>
 

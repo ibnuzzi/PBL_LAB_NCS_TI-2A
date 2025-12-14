@@ -462,7 +462,7 @@ if (!isset($pengelolaList)) {
                     <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
                         <div class="case-studies__list__item__content">
                             <div class="case-studies__list__item__thumb">
-                                <img src="public/assets/images/resources/case-stady-1-2.png" alt="pengabdian">
+                                <img src="public/assets/images/resources/case-stady-1.png" alt="pengabdian">
                             </div>
                             <div class="case-studies__list__item__hover">
                                 <h4 class="case-studies__list__item__title">

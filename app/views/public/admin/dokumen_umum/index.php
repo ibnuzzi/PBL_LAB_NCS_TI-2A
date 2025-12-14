@@ -35,63 +35,64 @@ include './app/views/templates/admin/sidebar_admin.php';
           <tbody class="table-border-bottom-0">
 
             <?php
-              // Normalisasi variabel seperti galeri & berita
-              $dokumen_list = $dokumen_list ?? [];
-              if (empty($dokumen_list) && isset($dokumens)) $dokumen_list = $dokumens;
-              if (empty($dokumen_list) && isset($dokumen)) $dokumen_list = is_array($dokumen) ? [$dokumen] : [];
+            // Normalisasi variabel seperti galeri & berita
+            $dokumen_list = $dokumen_list ?? [];
+            if (empty($dokumen_list) && isset($dokumens)) $dokumen_list = $dokumens;
+            if (empty($dokumen_list) && isset($dokumen)) $dokumen_list = is_array($dokumen) ? [$dokumen] : [];
 
-              if (!empty($dokumen_list)):
+            if (!empty($dokumen_list)):
 
-                $no = 1;
-                foreach ($dokumen_list as $d):
+              $no = 1;
+              foreach ($dokumen_list as $d):
 
-                  $created = $d['created_at'] ?? '';
-                  $createdFormatted = $created ? date('Y-m-d H:i', strtotime($created)) : '-';
+                $created = $d['created_at'] ?? '';
+                $createdFormatted = $created ? date('Y-m-d H:i', strtotime($created)) : '-';
             ?>
 
-              <tr>
-                <td><?= $no++; ?></td>
+                <tr>
+                  <td><?= $no++; ?></td>
 
-                <td style="max-width:380px;">
-                  <?= htmlspecialchars($d['nama_dokumen'] ?? '-'); ?>
-                </td>
+                  <td style="max-width:280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= htmlspecialchars($d['nama_dokumen'] ?? '-'); ?>">
+                    <?= htmlspecialchars($d['nama_dokumen'] ?? '-'); ?>
+                  </td>
 
-                <td style="max-width:380px;">
-                  <?= htmlspecialchars($d['nama_kategori'] ?? '-'); ?>
-                </td>
+                  <td style="max-width:380px;">
+                    <?= htmlspecialchars($d['nama_kategori'] ?? '-'); ?>
+                  </td>
 
-                <td><?= htmlspecialchars($createdFormatted); ?></td>
+                  <td><?= htmlspecialchars($createdFormatted); ?></td>
 
-                <td>
+                  <td>
 
-                  <!-- VIEW -->
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-info me-1 btn-view-dokumen"
-                    data-judul="<?= htmlspecialchars($d['nama_dokumen'] ?? ''); ?>"
-                    data-kategori="<?= htmlspecialchars($d['nama_kategori'] ?? '-'); ?>"
-                    data-deskripsi="<?= htmlspecialchars($d['deskripsi_dokumen'] ?? '-'); ?>"
-                    data-file="<?= BASE_URL . '/public/uploads/dokumen_umum/' . htmlspecialchars($d['nama_file_dokumen'] ?? ''); ?>"
-                    data-tanggal="<?= htmlspecialchars($createdFormatted); ?>">
-                    <i class="bx bx-show-alt"></i>
-                  </button>
+                    <!-- VIEW -->
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-info me-1 btn-view-dokumen"
+                      data-judul="<?= htmlspecialchars($d['nama_dokumen'] ?? ''); ?>"
+                      data-kategori="<?= htmlspecialchars($d['nama_kategori'] ?? '-'); ?>"
+                      data-deskripsi="<?= htmlspecialchars($d['deskripsi_dokumen'] ?? '-'); ?>"
+                      data-file="<?= BASE_URL . '/public/uploads/dokumen_umum/' . htmlspecialchars($d['nama_file_dokumen'] ?? ''); ?>"
+                      data-tanggal="<?= htmlspecialchars($createdFormatted); ?>">
+                      <i class="bx bx-show-alt"></i>
+                    </button>
 
-                  <!-- EDIT -->
-                  <a href="<?= BASE_URL ?>/admin/dokumen_umum/edit/<?= (int)($d['id_dokumen'] ?? 0); ?>"
-                     class="btn btn-sm btn-outline-primary me-1">
-                    <i class="bx bx-edit-alt"></i>
-                  </a>
+                    <!-- EDIT -->
+                    <a href="<?= BASE_URL ?>/admin/dokumen_umum/edit/<?= (int)($d['id_dokumen'] ?? 0); ?>"
+                      class="btn btn-sm btn-outline-primary me-1">
+                      <i class="bx bx-edit-alt"></i>
+                    </a>
 
-                  <!-- DELETE -->
-                  <a href="<?= BASE_URL ?>/admin/dokumen_umum/delete/<?= (int)($d['id_dokumen'] ?? 0); ?>"
-                     class="btn btn-sm btn-outline-danger btn-delete">
-                    <i class="bx bx-trash"></i>
-                  </a>
+                    <!-- DELETE -->
+                    <a href="<?= BASE_URL ?>/admin/dokumen_umum/delete/<?= (int)($d['id_dokumen'] ?? 0); ?>"
+                      class="btn btn-sm btn-outline-danger btn-delete">
+                      <i class="bx bx-trash"></i>
+                    </a>
 
-                </td>
-              </tr>
+                  </td>
+                </tr>
 
-            <?php endforeach; endif; ?>
+            <?php endforeach;
+            endif; ?>
 
           </tbody>
         </table>
@@ -192,37 +193,37 @@ include './app/views/components/page_scripts.php';
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
 
-  $(".btn-view-dokumen").on("click", function () {
+    $(".btn-view-dokumen").on("click", function() {
 
-    let judul = $(this).data("judul");
-    let kategori = $(this).data("kategori");
-    let deskripsi = $(this).data("deskripsi");
-    let tanggal = $(this).data("tanggal");
-    let file = $(this).data("file");
+      let judul = $(this).data("judul");
+      let kategori = $(this).data("kategori");
+      let deskripsi = $(this).data("deskripsi");
+      let tanggal = $(this).data("tanggal");
+      let file = $(this).data("file");
 
-    // Set judul
-    $("#modalDetailJudul").text(judul);
+      // Set judul
+      $("#modalDetailJudul").text(judul);
 
-    // Set tanggal
-    $("#modalDetailTanggal").html(`<strong>${tanggal}</strong>`);
+      // Set tanggal
+      $("#modalDetailTanggal").html(`<strong>${tanggal}</strong>`);
 
-    // Set kategori
-    $("#modalDetailKategori").text(kategori);
+      // Set kategori
+      $("#modalDetailKategori").text(kategori);
 
-    // Set deskripsi
-    if (deskripsi && deskripsi.trim() !== "" && deskripsi !== "-") {
+      // Set deskripsi
+      if (deskripsi && deskripsi.trim() !== "" && deskripsi !== "-") {
         $("#modalDetailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
-    } else {
+      } else {
         $("#modalDetailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
-    }
+      }
 
-    // Set file link
-    $("#modalDetailFile").attr("href", file);
+      // Set file link
+      $("#modalDetailFile").attr("href", file);
 
-    new bootstrap.Modal(document.getElementById("modalDetailDokumen")).show();
+      new bootstrap.Modal(document.getElementById("modalDetailDokumen")).show();
+    });
+
   });
-
-});
 </script>

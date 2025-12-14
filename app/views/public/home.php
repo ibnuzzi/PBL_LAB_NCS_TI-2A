@@ -424,7 +424,7 @@ if (!isset($pengelolaList)) {
                                     ?>
                                     <a href="<?= htmlspecialchars($link) ?>" target="<?= $target ?>"><?= htmlspecialchars($penelitian['judul_penelitian']) ?></a>
                                 </h4>
-                                <p class="case-studies__list__item__text"><?= DateHelper::toIndonesianDate($penelitian['created_at'], 'long') ?></p>
+                                <p class="case-studies__list__item__text"><?= htmlspecialchars($penelitian['tahun_penelitian']) ?> - <?= htmlspecialchars($penelitian['first_author'] ?? 'Tim Lab NCS') ?></p>
                             </div>
                         </div>
                     </li>
@@ -612,6 +612,20 @@ if (!isset($pengelolaList)) {
                                 <h3 class="blog-card__title blog-card-title-custom">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>"><?= htmlspecialchars($news['judul_berita']) ?></a>
                                 </h3>
+                                <?php if (!empty($news['isi_berita'])): ?>
+                                    <p class="blog-card__desc blog-card__desc--home" style="
+                                        color: #333;
+                                        font-size: 0.9rem;
+                                        line-height: 1.6;
+                                        display: -webkit-box;
+                                        -webkit-line-clamp: 2;
+                                        -webkit-box-orient: vertical;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        margin-bottom: 15px;
+                                        transition: color 0.3s ease;
+                                    "><?= htmlspecialchars(strip_tags(substr($news['isi_berita'], 0, 150))) ?>...</p>
+                                <?php endif; ?>
                                 <div class="blog-card__content__btn blog-card-btn-wrapper">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $news['slug_berita'] ?>" class="blog-card__content__btn__link">
                                         Baca Selengkapnya<i class="icon-arrow"></i>

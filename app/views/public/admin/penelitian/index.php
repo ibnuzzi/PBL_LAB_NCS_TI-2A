@@ -46,67 +46,67 @@ include './app/views/templates/admin/sidebar_admin.php';
               foreach ($penelitian_list as $p):
             ?>
 
-              <tr>
-                <td><?= $no++; ?></td>
+                <tr>
+                  <td><?= $no++; ?></td>
 
-                <td style="max-width:390px;">
-                  <?= htmlspecialchars($p['judul_penelitian']); ?>
-                </td>
+                  <td style="max-width:280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= htmlspecialchars($p['judul_penelitian']); ?>">
+                    <?= htmlspecialchars($p['judul_penelitian']); ?>
+                  </td>
 
-                <td>
-                  <?php if (!empty($p['first_author'])): ?>
-                    <?= htmlspecialchars($p['first_author']); ?>
-                  <?php else: ?>
-                    <span class="text-muted">-</span>
-                  <?php endif; ?>
-                </td>
+                  <td>
+                    <?php if (!empty($p['first_author'])): ?>
+                      <?= htmlspecialchars($p['first_author']); ?>
+                    <?php else: ?>
+                      <span class="text-muted">-</span>
+                    <?php endif; ?>
+                  </td>
 
-                <td><?= htmlspecialchars($p['tahun_penelitian']); ?></td>
+                  <td><?= htmlspecialchars($p['tahun_penelitian']); ?></td>
 
-                <td>
-                  <?php 
-                  if (!empty($p['created_at'])) {
-                    $date = new DateTime($p['created_at']);
-                    echo $date->format('d M Y');
-                  } else {
-                    echo '<span class="text-muted">-</span>';
-                  }
-                  ?>
-                </td>
+                  <td>
+                    <?php
+                    if (!empty($p['created_at'])) {
+                      $date = new DateTime($p['created_at']);
+                      echo $date->format('d M Y');
+                    } else {
+                      echo '<span class="text-muted">-</span>';
+                    }
+                    ?>
+                  </td>
 
-                <td>
+                  <td>
 
-                  <!-- BUTTON VIEW -->
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-info me-1 btn-view-penelitian"
-                    data-judul="<?= htmlspecialchars($p['judul_penelitian']); ?>"
-                    data-tahun="<?= htmlspecialchars($p['tahun_penelitian']); ?>"
-                    data-deskripsi="<?= htmlspecialchars($p['deskripsi_singkat'] ?? ''); ?>"
-                    data-peneliti="<?= htmlspecialchars($p['peneliti'] ?? 'Belum ada data'); ?>"
-                    data-anggota-luar="<?= htmlspecialchars($p['anggota_luar'] ?? ''); ?>"
-                    data-link="<?= htmlspecialchars($p['link_publikasi'] ?? ''); ?>"
-                    data-file="<?= htmlspecialchars($p['file_dokumen_pdf'] ?? ''); ?>"
-                  >
-                    <i class="bx bx-show-alt"></i>
-                  </button>
+                    <!-- BUTTON VIEW -->
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-info me-1 btn-view-penelitian"
+                      data-judul="<?= htmlspecialchars($p['judul_penelitian']); ?>"
+                      data-tahun="<?= htmlspecialchars($p['tahun_penelitian']); ?>"
+                      data-deskripsi="<?= htmlspecialchars($p['deskripsi_singkat'] ?? ''); ?>"
+                      data-peneliti="<?= htmlspecialchars($p['peneliti'] ?? 'Belum ada data'); ?>"
+                      data-anggota-luar="<?= htmlspecialchars($p['anggota_luar'] ?? ''); ?>"
+                      data-link="<?= htmlspecialchars($p['link_publikasi'] ?? ''); ?>"
+                      data-file="<?= htmlspecialchars($p['file_dokumen_pdf'] ?? ''); ?>">
+                      <i class="bx bx-show-alt"></i>
+                    </button>
 
-                  <!-- BUTTON EDIT -->
-                  <a href="<?= BASE_URL ?>/admin/penelitian/edit/<?= (int)$p['id_penelitian']; ?>"
-                     class="btn btn-sm btn-outline-primary me-1">
-                    <i class="bx bx-edit-alt"></i>
-                  </a>
+                    <!-- BUTTON EDIT -->
+                    <a href="<?= BASE_URL ?>/admin/penelitian/edit/<?= (int)$p['id_penelitian']; ?>"
+                      class="btn btn-sm btn-outline-primary me-1">
+                      <i class="bx bx-edit-alt"></i>
+                    </a>
 
-                  <!-- BUTTON DELETE -->
-                  <a href="<?= BASE_URL ?>/admin/penelitian/delete/<?= (int)$p['id_penelitian']; ?>"
-                     class="btn btn-sm btn-outline-danger btn-delete">
-                    <i class="bx bx-trash"></i>
-                  </a>
+                    <!-- BUTTON DELETE -->
+                    <a href="<?= BASE_URL ?>/admin/penelitian/delete/<?= (int)$p['id_penelitian']; ?>"
+                      class="btn btn-sm btn-outline-danger btn-delete">
+                      <i class="bx bx-trash"></i>
+                    </a>
 
-                </td>
-              </tr>
+                  </td>
+                </tr>
 
-            <?php endforeach; endif; ?>
+            <?php endforeach;
+            endif; ?>
 
           </tbody>
         </table>
@@ -191,7 +191,7 @@ include './app/views/components/page_scripts.php';
             <i class="bx bx-file-blank"></i> DESKRIPSI SINGKAT
           </label>
           <div class="bg-light p-3 rounded" id="modalDeskripsiPenelitian">
-            
+
           </div>
         </div>
 
@@ -229,76 +229,76 @@ include './app/views/components/page_scripts.php';
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
 
-  $(".btn-view-penelitian").on("click", function () {
+    $(".btn-view-penelitian").on("click", function() {
 
-    let judul = $(this).data("judul");
-    let tahun = $(this).data("tahun");
-    let deskripsi = $(this).data("deskripsi");
-    let peneliti = $(this).data("peneliti");
-    let anggotaLuar = $(this).data("anggota-luar");
-    let link = $(this).data("link");
-    let file = $(this).data("file");
+      let judul = $(this).data("judul");
+      let tahun = $(this).data("tahun");
+      let deskripsi = $(this).data("deskripsi");
+      let peneliti = $(this).data("peneliti");
+      let anggotaLuar = $(this).data("anggota-luar");
+      let link = $(this).data("link");
+      let file = $(this).data("file");
 
-    // Set judul di header
-    $("#modalJudulPenelitian").text(judul);
-    
-    // Set tahun
-    $("#modalTahunPenelitian").html(`<strong>${tahun}</strong>`);
+      // Set judul di header
+      $("#modalJudulPenelitian").text(judul);
 
-    // Set tim peneliti
-    if (peneliti && peneliti.trim() !== "" && peneliti !== "Belum ada data") {
+      // Set tahun
+      $("#modalTahunPenelitian").html(`<strong>${tahun}</strong>`);
+
+      // Set tim peneliti
+      if (peneliti && peneliti.trim() !== "" && peneliti !== "Belum ada data") {
         $("#modalPenelitiInfo").removeClass("alert-warning").addClass("alert-primary");
         $("#modalTimPeneliti").text(peneliti);
-    } else {
+      } else {
         $("#modalPenelitiInfo").removeClass("alert-primary").addClass("alert-warning");
         $("#modalTimPeneliti").text("Belum ada data tim peneliti");
-    }
+      }
 
-    // Set anggota luar
-    if (anggotaLuar && anggotaLuar.trim() !== "") {
+      // Set anggota luar
+      if (anggotaLuar && anggotaLuar.trim() !== "") {
         $("#wrapperAnggotaLuar").show();
         $("#modalAnggotaLuar").text(anggotaLuar);
-    } else {
+      } else {
         $("#wrapperAnggotaLuar").hide();
-    }
+      }
 
-    // Set deskripsi
-    if (deskripsi && deskripsi.trim() !== "") {
+      // Set deskripsi
+      if (deskripsi && deskripsi.trim() !== "") {
         $("#modalDeskripsiPenelitian").html(`<p class="mb-0">${deskripsi}</p>`);
-    } else {
+      } else {
         $("#modalDeskripsiPenelitian").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
-    }
+      }
 
-    // Link Publikasi
-    if (link && link.trim() !== "") {
+      // Link Publikasi
+      if (link && link.trim() !== "") {
         $("#modalLinkPenelitian").html(`
           <a href="${link}" target="_blank" class="btn btn-primary btn-sm w-100">
             <i class="bx bx-link-external"></i> Buka Link
           </a>
         `);
-    } else {
+      } else {
         $("#modalLinkPenelitian").html(`
           <div class="text-muted small">Tidak tersedia</div>
         `);
-    }
+      }
 
-    // File Dokumen PDF
-    if (file && file.trim() !== "") {
+      // File Dokumen PDF
+      if (file && file.trim() !== "") {
         $("#modalFilePenelitian").html(`
           <a href="<?= BASE_URL ?>/public/uploads/penelitian/${file}" target="_blank" class="btn btn-primary btn-sm w-100">
             <i class="bx bx-download"></i> Unduh PDF
           </a>
         `);
-    } else {
+      } else {
         $("#modalFilePenelitian").html(`
           <div class="text-muted small">Tidak tersedia</div>
         `);
-    }
+      }
 
-    new bootstrap.Modal(document.getElementById("modalDetailPenelitian")).show();
+      new bootstrap.Modal(document.getElementById("modalDetailPenelitian")).show();
+    });
+
   });
-
-});
 </script>

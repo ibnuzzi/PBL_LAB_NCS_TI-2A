@@ -49,7 +49,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                 <tr>
                   <td><?= $counter++; ?></td>
 
-                  <td style="max-width:380px;">
+                  <td style="max-width:280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= htmlspecialchars($p['judul_kegiatan']); ?>">
                     <?= htmlspecialchars($p['judul_kegiatan']); ?>
                   </td>
 
@@ -64,7 +64,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                   <td><?= htmlspecialchars($p['tahun_kegiatan']); ?></td>
 
                   <td>
-                    <?php 
+                    <?php
                     if (!empty($p['created_at'])) {
                       $date = new DateTime($p['created_at']);
                       echo $date->format('d M Y');
@@ -228,43 +228,43 @@ include './app/views/components/page_scripts.php';
 
       // Set judul
       $("#modalDetailJudul").text(judul);
-      
+
       // Set tahun
       $("#modalDetailTahun").html(`<strong>${tahun}</strong>`);
 
       // Set tim pengabdi
       if (tim && tim.trim() !== "" && tim !== "-") {
-          $("#modalDetailTim").text(tim);
-          $("#modalPengabdiInfo").removeClass("alert-warning").addClass("alert-primary");
+        $("#modalDetailTim").text(tim);
+        $("#modalPengabdiInfo").removeClass("alert-warning").addClass("alert-primary");
       } else {
-          $("#modalPengabdiInfo").removeClass("alert-primary").addClass("alert-warning");
-          $("#modalDetailTim").text("Belum ada data tim pengabdi");
+        $("#modalPengabdiInfo").removeClass("alert-primary").addClass("alert-warning");
+        $("#modalDetailTim").text("Belum ada data tim pengabdi");
       }
 
       // Set anggota luar
       if (anggotaLuar && anggotaLuar.trim() !== "") {
-          $("#wrapperAnggotaLuar").show();
-          $("#modalAnggotaLuar").text(anggotaLuar);
+        $("#wrapperAnggotaLuar").show();
+        $("#modalAnggotaLuar").text(anggotaLuar);
       } else {
-          $("#wrapperAnggotaLuar").hide();
+        $("#wrapperAnggotaLuar").hide();
       }
 
       // Set deskripsi
       if (deskripsi && deskripsi.trim() !== "") {
-          $("#modalDetailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
+        $("#modalDetailDeskripsi").html(`<p class="mb-0">${deskripsi}</p>`);
       } else {
-          $("#modalDetailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
+        $("#modalDetailDeskripsi").html(`<p class="text-muted mb-0"><em>Tidak ada deskripsi</em></p>`);
       }
 
       // Set file
       if (file && file.trim() !== "") {
-          $("#modalDetailFileContainer").html(`
+        $("#modalDetailFileContainer").html(`
             <a href="<?= BASE_URL ?>/public/uploads/pengabdian/${file}" target="_blank" class="btn btn-primary btn-sm w-100">
               <i class="bx bx-download"></i> Unduh Dokumen PDF
             </a>
           `);
       } else {
-          $("#modalDetailFileContainer").html(`
+        $("#modalDetailFileContainer").html(`
             <div class="text-muted small">Tidak tersedia</div>
           `);
       }

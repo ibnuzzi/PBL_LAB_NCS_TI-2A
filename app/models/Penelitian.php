@@ -53,82 +53,46 @@ class Penelitian
 
     public function insert($data)
     {
-        // 1. INSERT UTAMA
-        $query = "INSERT INTO {$this->table} 
-                    (judul_penelitian, tahun_penelitian, deskripsi_singkat, link_publikasi, file_dokumen_pdf, anggota_luar, created_at) 
-                  VALUES 
-                    (:judul, :tahun, :deskripsi, :link, :file_pdf, :anggota_luar, NOW())";
+        // Convert peneliti array to PostgreSQL array format
+        $penelitiArray = !empty($data['peneliti']) ? '{' . implode(',', array_map('intval', $data['peneliti'])) . '}' : NULL;
 
-        $this->db->query($query);
+        // Call stored procedure with individual parameters
+        $sql = "SELECT sp_insert_penelitian(:judul, :tahun, :deskripsi, :link, :file, :anggota_luar, :peneliti::INTEGER[]) AS id_penelitian";
+
+        $this->db->query($sql);
         $this->db->bind(':judul', $data['judul_penelitian']);
-        $this->db->bind(':tahun', $data['tahun_penelitian']);
+        $this->db->bind(':tahun', (int)$data['tahun_penelitian']);
         $this->db->bind(':deskripsi', $data['deskripsi_singkat']);
         $this->db->bind(':link', $data['link_publikasi']);
-        $this->db->bind(':file_pdf', $data['file_dokumen_pdf']);
-        $this->db->bind(':anggota_luar', $data['anggota_luar']);
+        $this->db->bind(':file', $data['file_dokumen_pdf']);
+        $this->db->bind(':anggota_luar', $data['anggota_luar'] ?? null);
+        $this->db->bind(':peneliti', $penelitiArray);
 
-        if ($this->db->execute()) {
-
-            // 2. AMBIL ID BARU
-            $id_penelitian = $this->db->lastInsertId();
-
-            // 3. INSERT KE TABEL ANGGOTA
-            if (!empty($data['peneliti']) && is_array($data['peneliti'])) {
-                foreach ($data['peneliti'] as $id_pengelola) {
-                    $q_anggota = "INSERT INTO {$this->table_anggota} (id_penelitian, id_pengelola) VALUES (:id_pen, :id_org)";
-                    $this->db->query($q_anggota);
-                    $this->db->bind(':id_pen', $id_penelitian);
-                    $this->db->bind(':id_org', $id_pengelola);
-                    $this->db->execute();
-                }
-            }
-            return true;
-        }
-        return false;
+        $result = $this->db->single();
+        return $result ? true : false;
     }
 
     // Update an existing penelitian record
     public function update($id, $data)
     {
-        // 1. UPDATE DATA UTAMA
-        $this->db->query("
-            UPDATE tbl_penelitian SET
-                judul_penelitian = :judul_penelitian,
-                tahun_penelitian = :tahun_penelitian,
-                deskripsi_singkat = :deskripsi_singkat,
-                link_publikasi = :link_publikasi,
-                file_dokumen_pdf = :file_pdf,
-                anggota_luar = :anggota_luar,
-                updated_at = NOW()
-            WHERE id_penelitian = :id
-        ");
-        $this->db->bind(':judul_penelitian', $data['judul_penelitian']);
-        $this->db->bind(':tahun_penelitian', $data['tahun_penelitian']);
-        $this->db->bind(':deskripsi_singkat', $data['deskripsi_singkat']);
-        $this->db->bind(':link_publikasi', $data['link_publikasi']);
-        $this->db->bind(':file_pdf', $data['file_dokumen_pdf']);
-        $this->db->bind(':anggota_luar', $data['anggota_luar']);
+        // Convert peneliti array to PostgreSQL array format
+        $penelitiArray = !empty($data['peneliti']) ? '{' . implode(',', array_map('intval', $data['peneliti'])) . '}' : NULL;
+
+        // Call stored procedure with individual parameters
+        $sql = "SELECT sp_update_penelitian(:id, :judul, :tahun, :deskripsi, :link, :file, :anggota_luar, :peneliti::INTEGER[]) AS success";
+
+        $this->db->query($sql);
         $this->db->bind(':id', $id);
+        $this->db->bind(':judul', $data['judul_penelitian']);
+        $this->db->bind(':tahun', (int)$data['tahun_penelitian']);
+        $this->db->bind(':deskripsi', $data['deskripsi_singkat']);
+        $this->db->bind(':link', $data['link_publikasi']);
+        $this->db->bind(':file', $data['file_dokumen_pdf']);
+        $this->db->bind(':anggota_luar', $data['anggota_luar'] ?? null);
+        $this->db->bind(':peneliti', $penelitiArray);
 
-        if ($this->db->execute()) {
-            // 2. HAPUS ANGGOTA LAMA
-            $this->db->query("DELETE FROM {$this->table_anggota} WHERE id_penelitian = :id_penelitian");
-            $this->db->bind(':id_penelitian', $id);
-            $this->db->execute();
-
-            // 3. INSERT ANGGOTA BARU
-            if (!empty($data['peneliti']) && is_array($data['peneliti'])) {
-                foreach ($data['peneliti'] as $id_pengelola) {
-                    $q_anggota = "INSERT INTO {$this->table_anggota} (id_penelitian, id_pengelola) VALUES (:id_pen, :id_org)";
-                    $this->db->query($q_anggota);
-                    $this->db->bind(':id_pen', $id);
-                    $this->db->bind(':id_org', $id_pengelola);
-                    $this->db->execute();
-                }
-            }
-            return true;
-        }
-        return false;
+        $result = $this->db->single();
+        return $result ? true : false;
     }
 
 
@@ -153,5 +117,13 @@ class Penelitian
         $this->db->query("DELETE FROM tbl_penelitian WHERE id_penelitian = :id");
         $this->db->bind(':id', $id);
         return $this->db->execute();
+    }
+
+    // Get total count of penelitian
+    public function getTotalCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM {$this->table}");
+        $result = $this->db->single();
+        return $result ? (int)$result['total'] : 0;
     }
 }

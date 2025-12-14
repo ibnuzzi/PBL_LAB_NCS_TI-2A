@@ -154,7 +154,7 @@ include 'app/views/templates/public/navbar.php';
                                             <?= htmlspecialchars(substr($arsip['deskripsi'] ?? '', 0, 100)) ?><?= strlen($arsip['deskripsi'] ?? '') > 100 ? '...' : '' ?>
                                         </p>
                                         <small class="text-muted">
-                                            <i class="fa fa-calendar-alt"></i> <?= htmlspecialchars($arsip['tahunl'] ?? '-') ?> &nbsp;|&nbsp;
+                                            <i class="fa fa-calendar-alt"></i> <?= htmlspecialchars($arsip['tahun'] ?? '-') ?> &nbsp;|&nbsp;
                                             <i class="fa fa-tag"></i> <?= htmlspecialchars($kategoriArsip) ?>
                                             <?php
                                             // Hanya tampilkan penulis_atau_tim jika BUKAN dari arsip_umum

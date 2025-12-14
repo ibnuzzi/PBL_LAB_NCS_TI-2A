@@ -51,7 +51,7 @@ include 'app/views/templates/public/navbar.php';
                         height: 250px;
                         overflow: hidden;
                         position: relative;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        background: linear-gradient(135deg, #1a3a6b 0%, #2563eb 100%);
                     ">
                                 <?php if (!empty($fasilitas['foto_sarana'])): ?>
                                     <img src="<?= BASE_URL ?>/public/uploads/sarana/<?= htmlspecialchars($fasilitas['foto_sarana']) ?>"
@@ -136,13 +136,13 @@ include 'app/views/templates/public/navbar.php';
                 <!-- No Data Message -->
                 <div class="col-12">
                     <div class="alert" style="
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    background: linear-gradient(135deg, #1a3a6b 0%, #2563eb 100%);
                     color: white;
                     border: none;
                     border-radius: 15px;
                     padding: 40px;
                     text-align: center;
-                    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+                    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
                 ">
                         <i class="fa fa-info-circle" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.9;"></i>
                         <h4 style="margin-bottom: 10px; font-weight: 600;">Tidak Ada Data Fasilitas</h4>
@@ -156,72 +156,59 @@ include 'app/views/templates/public/navbar.php';
         <?php if (!empty($data['fasilitasList']) && $data['totalPages'] > 1): ?>
             <div class="row mt-5">
                 <div class="col-12">
-                    <nav aria-label="Pagination Navigation">
-                        <ul class="pagination justify-content-center" style="gap: 10px; flex-wrap: wrap;">
-                            <!-- Previous Button -->
-                            <?php if ($data['currentPage'] > 1): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $data['currentPage'] - 1 ?>" style="
-                                border: none;
-                                border-radius: 10px;
-                                padding: 12px 20px;
-                                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                                color: white;
-                                font-weight: 600;
-                                transition: all 0.3s ease;
-                                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-                            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(102, 126, 234, 0.4)'"
-                                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.3)'">
-                                        <i class="fa fa-chevron-left"></i> Sebelumnya
-                                    </a>
-                                </li>
-                            <?php endif; ?>
+                    <ul class="post-pagination list-unstyled d-flex justify-content-center align-items-center">
+                        <!-- Previous Arrow -->
+                        <?php if ($data['currentPage'] > 1): ?>
+                            <li>
+                                <a href="?page=<?= $data['currentPage'] - 1 ?>" class="pagination-link" style="
+                                    width: 40px; height: 40px; border-radius: 50%; 
+                                    display: flex; align-items: center; justify-content: center;
+                                    border: 1px solid #e0e0e0; background: #fff; color: #666;
+                                    text-decoration: none; transition: all 0.3s ease;
+                                " onmouseover="this.style.borderColor='#2563eb'; this.style.color='#2563eb'"
+                                    onmouseout="this.style.borderColor='#e0e0e0'; this.style.color='#666'">«</a>
+                            </li>
+                        <?php else: ?>
+                            <li>
+                                <span style="width: 40px; height: 40px; border-radius: 50%; 
+                                    display: flex; align-items: center; justify-content: center;
+                                    border: 1px solid #e0e0e0; background: #f5f5f5; color: #ccc;">«</span>
+                            </li>
+                        <?php endif; ?>
 
-                            <!-- Page Numbers -->
-                            <?php
-                            $startPage = max(1, $data['currentPage'] - 2);
-                            $endPage = min($data['totalPages'], $data['currentPage'] + 2);
+                        <!-- Page Numbers -->
+                        <?php for ($i = 1; $i <= $data['totalPages']; $i++): ?>
+                            <li>
+                                <a href="?page=<?= $i ?>" style="
+                                    width: 40px; height: 40px; border-radius: 50%; 
+                                    display: flex; align-items: center; justify-content: center;
+                                    text-decoration: none; font-weight: 500; transition: all 0.3s ease;
+                                    <?= $i == $data['currentPage']
+                                        ? 'background: #2563eb; color: #fff; border: none;'
+                                        : 'background: #fff; color: #333; border: 1px solid #e0e0e0;' ?>
+                                " <?= $i != $data['currentPage'] ? 'onmouseover="this.style.borderColor=\'#2563eb\'; this.style.color=\'#2563eb\'" onmouseout="this.style.borderColor=\'#e0e0e0\'; this.style.color=\'#333\'"' : '' ?>><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
 
-                            for ($i = $startPage; $i <= $endPage; $i++):
-                            ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $i ?>" style="
-                                border: 2px solid #667eea;
-                                border-radius: 10px;
-                                padding: 12px 18px;
-                                background: <?= $i == $data['currentPage'] ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white' ?>;
-                                color: <?= $i == $data['currentPage'] ? 'white' : '#667eea' ?>;
-                                font-weight: 600;
-                                transition: all 0.3s ease;
-                                min-width: 50px;
-                                text-align: center;
-                                box-shadow: <?= $i == $data['currentPage'] ? '0 4px 12px rgba(102, 126, 234, 0.3)' : 'none' ?>;
-                            " <?= $i != $data['currentPage'] ? "onmouseover=\"this.style.background='#667eea'; this.style.color='white'\" onmouseout=\"this.style.background='white'; this.style.color='#667eea'\"" : '' ?>>
-                                        <?= $i ?>
-                                    </a>
-                                </li>
-                            <?php endfor; ?>
-
-                            <!-- Next Button -->
-                            <?php if ($data['currentPage'] < $data['totalPages']): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $data['currentPage'] + 1 ?>" style="
-                                border: none;
-                                border-radius: 10px;
-                                padding: 12px 20px;
-                                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                                color: white;
-                                font-weight: 600;
-                                transition: all 0.3s ease;
-                                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-                            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(102, 126, 234, 0.4)'"
-                                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.3)'">
-                                        Selanjutnya <i class="fa fa-chevron-right"></i>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                        </ul>
-                    </nav>
+                        <!-- Next Arrow -->
+                        <?php if ($data['currentPage'] < $data['totalPages']): ?>
+                            <li>
+                                <a href="?page=<?= $data['currentPage'] + 1 ?>" class="pagination-link" style="
+                                    width: 40px; height: 40px; border-radius: 50%; 
+                                    display: flex; align-items: center; justify-content: center;
+                                    border: 1px solid #e0e0e0; background: #fff; color: #666;
+                                    text-decoration: none; transition: all 0.3s ease;
+                                " onmouseover="this.style.borderColor='#2563eb'; this.style.color='#2563eb'"
+                                    onmouseout="this.style.borderColor='#e0e0e0'; this.style.color='#666'">»</a>
+                            </li>
+                        <?php else: ?>
+                            <li>
+                                <span style="width: 40px; height: 40px; border-radius: 50%; 
+                                    display: flex; align-items: center; justify-content: center;
+                                    border: 1px solid #e0e0e0; background: #f5f5f5; color: #ccc;">»</span>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
                 </div>
             </div>
         <?php endif; ?>

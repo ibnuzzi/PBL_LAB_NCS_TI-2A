@@ -58,7 +58,7 @@ if (!isset($pengelolaList)) {
                             <h3 class="sec-title__title">PROFIL LABORATORIUM</h3>
                         </div>
                         <p class="about-two__top__text">Unit penunjang akademik di Jurusan Teknologi Informasi yang difokuskan pada pengembangan kompetensi di bidang jaringan komputer dan keamanan siber. Laboratorium ini mendukung kegiatan praktikum, penelitian, dan pengembangan yang berkaitan dengan administrasi jaringan, pengamanan infrastruktur, pemantauan lalu lintas data, hingga penerapan teknologi keamanan informasi dalam melindungi aset digital organisasi.</p>
-                        Selain menjadi sarana pembelajaran mahasiswa, Laboratorium Jaringan & Keamanan Siber juga berperan sebagai wadah penelitian dan inovasi bagi dosen maupun mahasiswa dalam mengkaji solusi di bidang keamanan jaringan, pengujian sistem, serta perlindungan data dan infrastruktur digital. Peran laboratorium ini diharapkan mampu memperkuat kualitas pembelajaran, memperdalam riset di bidang jaringan komputer dan keamanan informasi, serta mendukung terciptanya lulusan yang kompeten di bidang administrasi jaringan dan keamanan siber.</p>
+                        <p class="about-two__top__text">Selain menjadi sarana pembelajaran mahasiswa, Laboratorium Jaringan & Keamanan Siber juga berperan sebagai wadah penelitian dan inovasi bagi dosen maupun mahasiswa dalam mengkaji solusi di bidang keamanan jaringan, pengujian sistem, serta perlindungan data dan infrastruktur digital. Peran laboratorium ini diharapkan mampu memperkuat kualitas pembelajaran, memperdalam riset di bidang jaringan komputer dan keamanan informasi, serta mendukung terciptanya lulusan yang kompeten di bidang administrasi jaringan dan keamanan siber.</p>
                     </div>
 
                     <div class="about-two__feature wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
@@ -160,12 +160,7 @@ if (!isset($pengelolaList)) {
     </div>
 </section>
 
-<?php
-// Ensure pengelola data is available
-if (!isset($pengelolaList)) {
-    $pengelolaList = [];
-}
-?>
+
 
 <!-- Tim Kami section start -->
 <section class="team-one team-one--home struktur-section section-scroll-offset" id="struktur">
@@ -201,22 +196,48 @@ if (!isset($pengelolaList)) {
                                 $photoPath = BASE_URL . '/public/assets/images/team/default-avatar.jpg';
                             }
                         }
+
+                        // Determine badge color based on jabatan
+                        $badgeClass = 'badge-researcher';
+                        $jabatan = strtolower($member['nama_jabatan'] ?? '');
+                        if (strpos($jabatan, 'kepala') !== false) {
+                            $badgeClass = 'badge-head';
+                        } elseif (strpos($jabatan, 'teknisi') !== false) {
+                            $badgeClass = 'badge-technician';
+                        }
                         ?>
-                        <!-- Team Member -->
+                        <!-- Team Member Card - Enhanced -->
                         <div class="team-slide">
-                            <div class="team-card">
+                            <div class="team-card team-card--enhanced">
                                 <div class="team-card__inner">
                                     <div class="team-card__image">
                                         <img src="<?= $photoPath ?>" alt="<?= htmlspecialchars($member['nama_pengelola'] ?? 'Team Member') ?>" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/public/assets/images/team/default-avatar.jpg';">
+                                        <!-- Overlay on hover -->
+                                        <div class="team-card__overlay">
+                                            <div class="team-card__social">
+                                                <a href="<?= !empty($member['linkedin_url']) ? htmlspecialchars($member['linkedin_url']) : 'https://linkedin.com' ?>" target="_blank" title="LinkedIn" class="team-card__social-link">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                                <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>" title="Profile" class="team-card__social-link">
+                                                    <i class="fas fa-user"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- Badge -->
+                                        <span class="team-card__badge <?= $badgeClass ?>">
+                                            <?= htmlspecialchars($member['nama_jabatan'] ?? 'Staff') ?>
+                                        </span>
                                     </div>
                                     <div class="team-card__content">
                                         <div class="team-card__content__inner">
-                                            <div class="team-card__content__item">
-                                                <h3 class="team-card__content__title">
-                                                    <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>"><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
-                                                </h3>
-                                                <h6 class="team-card__content__designation"><?= htmlspecialchars($member['nama_jabatan'] ?? 'Staff') ?></h6>
-                                            </div>
+                                            <h3 class="team-card__content__title">
+                                                <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>">
+                                                    <?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?>
+                                                </a>
+                                            </h3>
+                                            <?php if (!empty($member['keminatan_list'])): ?>
+                                                <p class="team-card__keminatan"><?= htmlspecialchars($member['keminatan_list']) ?></p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -250,56 +271,126 @@ if (!isset($pengelolaList)) {
                 <p class="team-empty-state-text">Data tim pengelola belum tersedia.</p>
             </div>
         <?php endif; ?>
-    </div>
 </section>
 <!-- Tim Kami section End -->
 <!-- CSS and JavaScript moved to: lab-ncs-home.css and lab-ncs-home-carousel.js -->
 
-<!-- Jam Operasional Lab Section -->
-<section class="jam-operasional-section">
+<!-- Galeri Lab Section -->
+<section class="gallery-section section-scroll-offset" id="galeri" style="padding: 100px 0; background: #f8fafc;">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
-                    <h6 class="sec-title__tagline"><i class="icon-clock1 jam-operasional-icon-small"></i>JAM OPERASIONAL</h6>
-                    <h3 class="sec-title__title">Waktu Operasional Laboratorium</h3>
+                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/science.png" alt="Galeri" class="sec-title__img">Galeri Laboratorium</h6>
+                    <h3 class="sec-title__title">Fasilitas & Kegiatan Lab NCS</h3>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center row--mt-40">
-            <div class="col-lg-8">
-                <div class="jam-operasional-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms">
-                    <div class="schedule-container">
-                        <!-- Hari Kerja -->
-                        <div class="schedule-item--weekday">
-                            <div class="schedule-icon">
-                                <i class="icon-clock1 jam-operasional-icon-large"></i>
-                            </div>
-                            <div class="schedule-content">
-                                <h5 class="schedule-day">Senin - Jumat</h5>
-                                <p class="schedule-time">08.00 - 16.00 WIB</p>
-                            </div>
-                        </div>
-
-                        <!-- Akhir Pekan -->
-                        <div class="schedule-item--weekend">
-                            <div class="schedule-icon">
-                                <i class="icon-clock1 jam-operasional-icon-large"></i>
-                            </div>
-                            <div class="schedule-content">
-                                <h5 class="schedule-day">Sabtu - Minggu</h5>
-                                <p class="schedule-time">Tutup</p>
-                            </div>
-                        </div>
+        <div class="row g-4 mt-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="100ms" style="border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <img src="public/assets/images/gallery/galerilab-1.jpg" alt="Ruangan Lab NCS" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.4s ease;">
+                    <div style="padding: 20px; background: #fff;">
+                        <h5 style="color: #1e3a5f; font-weight: 600; margin-bottom: 8px;">Ruangan Laboratorium</h5>
+                        <p style="color: #64748b; font-size: 14px; margin: 0;">Area kerja dan praktikum mahasiswa</p>
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="200ms" style="border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <img src="public/assets/images/gallery/galerilab-2.jpg" alt="Peralatan Lab" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.4s ease;" onerror="this.src='public/assets/images/blog/blog-1-1.png'">
+                    <div style="padding: 20px; background: #fff;">
+                        <h5 style="color: #1e3a5f; font-weight: 600; margin-bottom: 8px;">Peralatan Jaringan</h5>
+                        <p style="color: #64748b; font-size: 14px; margin: 0;">Router, switch, dan firewall untuk praktik</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms" style="border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <img src="public/assets/images/gallery/galerilab-3.jpg" alt="Server Room" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.4s ease;" onerror="this.src='public/assets/images/blog/blog-1-2.png'">
+                    <div style="padding: 20px; background: #fff;">
+                        <h5 style="color: #1e3a5f; font-weight: 600; margin-bottom: 8px;">Server & Workstation</h5>
+                        <p style="color: #64748b; font-size: 14px; margin: 0;">Infrastruktur komputasi untuk riset</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Info Tambahan -->
-                    <div class="schedule-info">
-                        <div class="schedule-info__inner">
-                            <i class="fas fa-info-circle schedule-info__icon"></i>
-                            <p class="schedule-info__text">
-                                Untuk keperluan khusus di luar jam operasional, silakan hubungi kami terlebih dahulu melalui email atau telepon yang tertera pada kontak dibawah.
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="<?= BASE_URL ?>/galeri" class="btn-publikasi">Lihat Semua Galeri <i class="icon-arrow"></i></a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.08);
+        }
+    </style>
+</section>
+
+<!-- Lokasi & Jam Operasional Section -->
+<section class="contact-map-section section-scroll-offset" id="lokasi" style="padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sec-title text-center wow fadeInUp" data-wow-duration='1500ms'>
+                    <h6 class="sec-title__tagline"><i class="fas fa-map-marker-alt" style="margin-right: 8px; color: #2563eb;"></i>Lokasi & Jam Operasional</h6>
+                    <h3 class="sec-title__title">Kunjungi Laboratorium NCS</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-card-wrapper" style="margin-top: 50px;">
+            <!-- Card Header -->
+            <div class="map-card-header">
+                <div class="map-card-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="map-card-info">
+                    <h3 class="map-card-title">Lab Network & Cyber Security</h3>
+                    <p class="map-card-subtitle">Kunjungi Lab NCS untuk konsultasi langsung dengan tim kami</p>
+                </div>
+            </div>
+
+            <!-- Map Body -->
+            <div class="map-card-body">
+                <div class="google-map google-map__contact">
+                    <iframe
+                        title="Lokasi Politeknik Negeri Malang - Lab NCS"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d987.8349414618897!2d112.61420193680518!3d-7.943949139693553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7882839b88a2a7%3A0xb7ebae5a9e8f8e70!2sGedung%20Teknik%20Sipil%2C%20Teknik%20Informatika%20%26...!5e0!3m2!1sid!2sid!4v1702656000000!5m2!1sid!2sid"
+                        class="map__google-map"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+
+                    <!-- Overlay Info -->
+                    <div class="map-overlay-info">
+                        <p class="map-address-text">
+                            <i class="fas fa-map-marked-alt" style="color: #1a3a6b; margin-right: 8px;"></i>
+                            <strong>Lab Network & Cyber Security</strong><br>
+                            Gedung JTI, Politeknik Negeri Malang<br>
+                            Jl. Soekarno Hatta No.9, Mojolangu<br>
+                            Kec. Lowokwaru, Jawa Timur 65141
+                        </p>
+
+                        <!-- Jam Operasional dalam Overlay -->
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #e0e0e0;">
+                            <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #1a3a6b;">
+                                <i class="fas fa-clock" style="margin-right: 8px; color: #2563eb;"></i>Jam Operasional
+                            </p>
+                            <p style="margin: 0; font-size: 13px; color: #666;">
+                                <span style="display: inline-block; width: 100px;">Senin - Jumat</span>
+                                <span style="color: #10b981; font-weight: 600;">08.00 - 16.00 WIB</span><br>
+                                <span style="display: inline-block; width: 100px;">Sabtu - Minggu</span>
+                                <span style="color: #ef4444; font-weight: 600;">Tutup</span>
                             </p>
                         </div>
                     </div>

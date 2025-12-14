@@ -15,4 +15,9 @@
     display: none !important;
 }
 
+/* Description color change on card hover */
+.blog-card:hover .blog-card__desc {
+    color: #fff !important;
+}
+
 /* End CSS extracted from berita.php */

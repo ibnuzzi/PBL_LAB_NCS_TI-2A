@@ -1,0 +1,64 @@
+<?php
+include 'app/views/templates/public/header.php';
+include 'app/views/templates/public/navbar.php';
+?>
+
+<section class="login-page">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-lg-5 col-md-8 wow fadeInUp animated" data-wow-delay="300ms">
+
+                <div class="login-card">
+
+                    <div class="text-center mb-4">
+                        <div class="login-logo-wrapper">
+                            <img src="<?php echo BASE_URL; ?>/public/assets/images/ClearLogoJTI.png" alt="Lab NCS JTI" class="login-logo-img">
+                        </div>
+                    </div>
+
+                    <h3 class="login-page__wrap__title">Lupa Password</h3>
+                    <p class="text-center text-muted mb-4">Masukkan email Anda untuk mereset password</p>
+
+                    <?php if (!empty($error)): ?>
+                        <div class="login-error-alert">
+                            <i class="fa fa-exclamation-circle me-2 login-error-icon"></i>
+                            <div><?php echo $error; ?></div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($success)): ?>
+                        <div class="login-success-alert">
+                            <i class="fa fa-check-circle me-2 login-success-icon"></i>
+                            <div><?php echo $success; ?></div>
+                        </div>
+                    <?php endif; ?>
+
+                    <form class="login-page__form" method="POST" action="<?php echo BASE_URL; ?>/forgot-password">
+
+                        <div class="login-page__form-input-box mb-4">
+                            <input type="email" name="email" placeholder="Email Address" required>
+                        </div>
+
+                        <div class="login-page__form-btn-box">
+                            <button type="submit" class="laboix-btn laboix-btn--secondary">
+                                <span><i class="fa fa-paper-plane me-2"></i>KIRIM LINK RESET</span>
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="<?php echo BASE_URL; ?>/login" class="back-to-login-link">
+                                <i class="fa fa-arrow-left me-2"></i>Kembali ke Login
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+include 'app/views/templates/public/scripts.php';
+?>

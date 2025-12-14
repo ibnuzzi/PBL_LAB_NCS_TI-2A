@@ -12,6 +12,7 @@ class TeamRecommendation
 
     /**
      * Find candidates based on keminatan using Profile Matching
+     * Uses stored procedure: sp_find_team_candidates
      * 
      * @param array $keminatan_ids Array of required keminatan IDs
      * @return array Ranked list of candidates with match scores
@@ -22,74 +23,16 @@ class TeamRecommendation
             return [];
         }
 
-        // Get all pengelola
-        $sql = "SELECT 
-                    p.id_pengelola,
-                    p.nama_pengelola,
-                    p.nid_nip,
-                    p.foto_pengelola,
-                    j.nama_jabatan
-                FROM tbl_pengelola p
-                LEFT JOIN tbl_jabatan j ON p.id_jabatan = j.id_jabatan
-                ORDER BY p.nama_pengelola ASC";
+        // Convert PHP array to PostgreSQL array format
+        $pgArray = '{' . implode(',', array_map('intval', $keminatan_ids)) . '}';
+
+        // Call stored procedure
+        $sql = "SELECT * FROM sp_find_team_candidates(:keminatan_ids::INTEGER[])";
 
         $this->db->query($sql);
-        $pengelola_list = $this->db->resultSet();
+        $this->db->bind(':keminatan_ids', $pgArray);
 
-        if (empty($pengelola_list)) {
-            return [];
-        }
-
-        $candidates = [];
-
-        foreach ($pengelola_list as $pengelola) {
-            $id = $pengelola['id_pengelola'];
-
-            // Get pengelola's keminatan
-            $pengelola_keminatan = $this->getPengelolaKeminatan($id);
-
-            // Calculate match score
-            $match_score = $this->calculateMatchScore($pengelola_keminatan, $keminatan_ids);
-
-            // Get workload (current year)
-            $workload = $this->getWorkload($id);
-
-            // Apply workload modifier
-            $final_score = $match_score;
-            if ($workload > 5) {
-                $final_score -= 20; // Penalty for high workload
-            }
-
-            // Get keminatan names as string
-            $keminatan_names = $this->getKeminatanNames($pengelola_keminatan);
-
-            $candidates[] = [
-                'id_pengelola' => $id,
-                'nama_pengelola' => $pengelola['nama_pengelola'],
-                'nid_nip' => $pengelola['nid_nip'],
-                'foto_pengelola' => $pengelola['foto_pengelola'],
-                'nama_jabatan' => $pengelola['nama_jabatan'] ?? '-',
-                'keminatan' => $keminatan_names,
-                'keminatan_count' => count($pengelola_keminatan),
-                'match_count' => $this->countMatches($pengelola_keminatan, $keminatan_ids),
-                'workload' => $workload,
-                'match_score' => $match_score,
-                'final_score' => max(0, $final_score) // Ensure non-negative
-            ];
-        }
-
-        // Sort by final score descending
-        usort($candidates, function ($a, $b) {
-            return $b['final_score'] <=> $a['final_score'];
-        });
-
-        // Add ranking
-        $rank = 1;
-        foreach ($candidates as &$candidate) {
-            $candidate['rank'] = $rank++;
-        }
-
-        return $candidates;
+        return $this->db->resultSet();
     }
 
     /**

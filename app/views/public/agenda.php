@@ -105,8 +105,18 @@ if (!isset($agendaList)) {
                         ?>
 
                         <article class="agenda-item fade-in-up" tabindex="0" data-search="<?= htmlspecialchars($searchableContent) ?>">
-                            <div class="agenda-item__thumbnail">
+                            <div class="agenda-item__thumbnail" style="position: relative;">
                                 <img src="<?= $thumb ?>" alt="<?= htmlspecialchars($item['nama_agenda']) ?>" loading="lazy" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/public/assets/images/empty/empty_data.jpg';" />
+                                <!-- Location Badge -->
+                                <?php if (!empty($item['lokasi'])): ?>
+                                    <div style="position: absolute; bottom: 15px; left: 15px; background: rgba(0,0,0,0.7); color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; backdrop-filter: blur(4px);">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <?= htmlspecialchars($item['lokasi']) ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="agenda-item__content">
@@ -122,14 +132,19 @@ if (!isset($agendaList)) {
                                     <p class="agenda-item__excerpt"><?= htmlspecialchars(mb_strimwidth($excerpt, 0, 280, '...')) ?></p>
                                 <?php endif; ?>
 
-                                <div class="agenda-item__meta">
-                                    <svg class="agenda-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <div class="agenda-item__meta" style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.85rem; color: #666;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
                                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                         <line x1="16" y1="2" x2="16" y2="6"></line>
                                         <line x1="8" y1="2" x2="8" y2="6"></line>
                                         <line x1="3" y1="10" x2="21" y2="10"></line>
                                     </svg>
-                                    <span><?= $dateRange ?></span>
+                                    <span>
+                                        <?php if ($startTs): ?>
+                                            <?= date('d M Y', $startTs) ?>
+                                            <?php if ($endTs && $endTs != $startTs): ?> — <?= date('d M Y', $endTs) ?><?php endif; ?>
+                                            <?php endif; ?>
+                                    </span>
                                 </div>
                             </div>
                         </article>

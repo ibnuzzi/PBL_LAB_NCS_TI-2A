@@ -7,9 +7,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        // Load pengelola (team members) data for homepage
+        // Load pengelola (team members) data with expertise for homepage
         $pengelolaModel = $this->model('Pengelola');
-        $pengelolaList = $pengelolaModel->getAll();
+        $pengelolaList = $pengelolaModel->getAllWithKeminatan();
 
         // Load latest news
         $beritaModel = $this->model('Berita');
@@ -19,11 +19,24 @@ class HomeController extends Controller
         $penelitianModel = $this->model('Penelitian');
         $latestPenelitian = $penelitianModel->getLatest(3);
 
+        // Load latest pengabdian (from Pengabdian model)
+        $pengabdianModel = $this->model('Pengabdian');
+        $latestPengabdian = $pengabdianModel->getLatest(3);
+
+        // Get statistics for counter section
+        $totalPenelitian = $penelitianModel->getTotalCount();
+        $totalPengabdian = $pengabdianModel->getTotalCount();
+        $totalPengelola = count($pengelolaList);
+
         $data = [
             'judul_halaman' => 'Beranda - Lab NCS',
             'pengelolaList' => $pengelolaList,
             'latestNews' => $latestNews,
-            'latestPenelitian' => $latestPenelitian
+            'latestPenelitian' => $latestPenelitian,
+            'latestPengabdian' => $latestPengabdian,
+            'totalPenelitian' => $totalPenelitian,
+            'totalPengabdian' => $totalPengabdian,
+            'totalPengelola' => $totalPengelola
         ];
 
         $this->view('public/home', $data);
@@ -37,7 +50,18 @@ class HomeController extends Controller
     public function layanan()
     {
         $konsultasiModel = $this->model('Konsultasi');
-        $data['daftar_konsultasi'] = $konsultasiModel->getAllDijawab();
+
+        // Pagination settings
+        $itemsPerPage = 5;
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = max(1, $currentPage);
+
+        $offset = ($currentPage - 1) * $itemsPerPage;
+
+        $data['daftar_konsultasi'] = $konsultasiModel->getPaginatedDijawab($itemsPerPage, $offset);
+        $data['totalItems'] = $konsultasiModel->countDijawab();
+        $data['totalPages'] = ceil($data['totalItems'] / $itemsPerPage);
+        $data['currentPage'] = $currentPage;
         $data['judul_halaman'] = 'Layanan Konsultasi - Lab NCS';
 
         $this->view('public/layanan', $data);
@@ -152,9 +176,9 @@ class HomeController extends Controller
 
     public function tentang()
     {
-        // Load pengelola (team members) data
+        // Load pengelola (team members) data with their expertise
         $pengelolaModel = $this->model('Pengelola');
-        $pengelolaList = $pengelolaModel->getAll();
+        $pengelolaList = $pengelolaModel->getAllWithKeminatan();
 
         $data = [
             'judul_halaman' => 'Tentang Kami - Lab NCS',
@@ -173,7 +197,7 @@ class HomeController extends Controller
 
         $pengelolaModel = $this->model('Pengelola');
         $keminatanModel = $this->model('Keminatan');
-        
+
         $pengelola = $pengelolaModel->getById($id);
 
         if (!$pengelola) {
@@ -186,7 +210,7 @@ class HomeController extends Controller
 
         // Get keminatan list for this pengelola
         $keminatanList = $keminatanModel->getByPengelolaId($id);
-        
+
         // Add keminatan_list to pengelola array for easier access in view
         $pengelola['keminatan_list'] = $keminatanList;
 
@@ -275,7 +299,7 @@ class HomeController extends Controller
         $fasilitasModel = $this->model('Sarana');
 
         // Pagination settings
-        $itemsPerPage = 9; // 3 rows x 3 columns
+        $itemsPerPage = 6; // 2 rows x 3 columns
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $currentPage = max(1, $currentPage); // Ensure page is at least 1
 

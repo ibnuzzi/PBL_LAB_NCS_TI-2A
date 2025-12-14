@@ -11,7 +11,7 @@
     <title><?= htmlspecialchars($data['judul_halaman'] ?? 'Admin') ?> | Lab NCS</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/public/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/public/assets/images/ClearLogoJTI.png"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

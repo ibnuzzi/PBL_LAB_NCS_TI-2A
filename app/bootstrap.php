@@ -1,6 +1,9 @@
 <?php
 // File: /app/bootstrap.php
 
+// Set timezone to Asia/Jakarta (WIB)
+date_default_timezone_set('Asia/Jakarta');
+
 // 0. Load Composer autoload (for PHPMailer and other dependencies)
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -15,8 +18,6 @@ require_once 'core/database.php';
 require_once 'app/helpers/DateHelper.php';
 
 // INI YANG MEMPERBAIKI ERROR ANDA SEKARANG:
-require_once 'core/app.php'; 
+require_once 'core/app.php';
 
 require_once 'app/config/routes.php';
-
-?>

@@ -66,7 +66,7 @@ $isRekomTim = stripos($currentPath, '/admin/rekomtim') !== false;
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
   <div class="app-brand demo">
     <a href="<?php echo BASE_URL; ?>/admin/dashboard" class="app-brand-link">
-      <img src="<?php echo BASE_URL; ?>/public/assets/images/LogoJTI.png" alt="Lab NCS" class="sidebar-brand-logo" style="width: 40px; height: auto;">
+      <img src="<?php echo BASE_URL; ?>/public/assets/images/LogoJTI.png" alt="Lab NCS" class="sidebar-brand-logo" style="width: 30px; height: auto;">
       <span class="app-brand-text demo menu-text fw-bolder ms-2">LAB NCS</span>
     </a>
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">

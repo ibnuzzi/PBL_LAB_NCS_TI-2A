@@ -1,6 +1,7 @@
 <?php
 
-class AdminPengelolaController extends Controller {
+class AdminPengelolaController extends Controller
+{
 
     public function __construct()
     {
@@ -67,6 +68,7 @@ class AdminPengelolaController extends Controller {
         $id_jabatan = (int)($_POST['id_jabatan'] ?? 0);
         $id_admin  = $_SESSION['admin_id'] ?? 1;
         $keminatan_ids = $_POST['keminatan'] ?? [];
+        $linkedin_url = trim($_POST['linkedin_url'] ?? '');
 
         if (empty($nama)) {
             $_SESSION['error_message'] = 'Nama pengelola wajib diisi.';
@@ -105,6 +107,10 @@ class AdminPengelolaController extends Controller {
             $id_pengelola = $model->getLastInsertId();
             if (!empty($keminatan_ids)) {
                 $model->assignKeminatan($id_pengelola, $keminatan_ids);
+            }
+            // Update LinkedIn URL
+            if (!empty($linkedin_url)) {
+                $model->updateLinkedIn($id_pengelola, $linkedin_url);
             }
         }
 
@@ -174,6 +180,7 @@ class AdminPengelolaController extends Controller {
         $nid_nip   = trim($_POST['nid_nip'] ?? '');
         $id_jabatan = (int)($_POST['id_jabatan'] ?? 0);
         $keminatan_ids = $_POST['keminatan'] ?? [];
+        $linkedin_url = trim($_POST['linkedin_url'] ?? '');
 
         include './app/services/ImageService.php';
 
@@ -209,6 +216,8 @@ class AdminPengelolaController extends Controller {
         if ($ok) {
             // Update keminatan
             $model->assignKeminatan($id, $keminatan_ids);
+            // Update LinkedIn URL
+            $model->updateLinkedIn($id, $linkedin_url);
         }
 
         $_SESSION[$ok ? 'success_message' : 'error_message'] =
@@ -252,4 +261,3 @@ class AdminPengelolaController extends Controller {
         exit;
     }
 }
-?>

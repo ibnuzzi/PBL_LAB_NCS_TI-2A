@@ -77,6 +77,16 @@ include './app/views/templates/admin/sidebar_admin.php';
             </div>
           </div>
 
+          <!-- LinkedIn URL -->
+          <div class="mb-3">
+            <label class="form-label">LinkedIn URL</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bx bxl-linkedin"></i></span>
+              <input type="url" name="linkedin_url" class="form-control" placeholder="https://linkedin.com/in/username">
+            </div>
+            <small class="text-muted">Masukkan URL profil LinkedIn (opsional)</small>
+          </div>
+
           <!-- Foto -->
           <div class="mb-3">
             <label class="form-label">Foto Pengelola</label>

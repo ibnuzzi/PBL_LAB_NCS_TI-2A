@@ -171,6 +171,65 @@ include 'app/views/templates/public/navbar.php';
                 </div>
             <?php endforeach; ?>
         </div>
+
+        <!-- Pagination -->
+        <?php if (isset($data['totalPages']) && $data['totalPages'] > 1): ?>
+            <div class="text-center">
+                <ul class="post-pagination list-unstyled d-flex justify-content-center align-items-center">
+                    <!-- Previous Arrow -->
+                    <?php if ($data['currentPage'] > 1): ?>
+                        <li>
+                            <a href="?page=<?= $data['currentPage'] - 1 ?>" style="
+                            width: 40px; height: 40px; border-radius: 50%; 
+                            display: flex; align-items: center; justify-content: center;
+                            border: 1px solid #e0e0e0; background: #fff; color: #666;
+                            text-decoration: none; transition: all 0.3s ease;
+                        " onmouseover="this.style.borderColor='#2563eb'; this.style.color='#2563eb'"
+                                onmouseout="this.style.borderColor='#e0e0e0'; this.style.color='#666'">«</a>
+                        </li>
+                    <?php else: ?>
+                        <li>
+                            <span style="width: 40px; height: 40px; border-radius: 50%; 
+                            display: flex; align-items: center; justify-content: center;
+                            border: 1px solid #e0e0e0; background: #f5f5f5; color: #ccc;">«</span>
+                        </li>
+                    <?php endif; ?>
+
+                    <!-- Page Numbers -->
+                    <?php for ($i = 1; $i <= $data['totalPages']; $i++): ?>
+                        <li>
+                            <a href="?page=<?= $i ?>" style="
+                            width: 40px; height: 40px; border-radius: 50%; 
+                            display: flex; align-items: center; justify-content: center;
+                            text-decoration: none; font-weight: 500; transition: all 0.3s ease;
+                            <?= $i == $data['currentPage']
+                                ? 'background: #2563eb; color: #fff; border: none;'
+                                : 'background: #fff; color: #333; border: 1px solid #e0e0e0;' ?>
+                        " <?= $i != $data['currentPage'] ? 'onmouseover="this.style.borderColor=\'#2563eb\'; this.style.color=\'#2563eb\'" onmouseout="this.style.borderColor=\'#e0e0e0\'; this.style.color=\'#333\'"' : '' ?>><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <!-- Next Arrow -->
+                    <?php if ($data['currentPage'] < $data['totalPages']): ?>
+                        <li>
+                            <a href="?page=<?= $data['currentPage'] + 1 ?>" style="
+                            width: 40px; height: 40px; border-radius: 50%; 
+                            display: flex; align-items: center; justify-content: center;
+                            border: 1px solid #e0e0e0; background: #fff; color: #666;
+                            text-decoration: none; transition: all 0.3s ease;
+                        " onmouseover="this.style.borderColor='#2563eb'; this.style.color='#2563eb'"
+                                onmouseout="this.style.borderColor='#e0e0e0'; this.style.color='#666'">»</a>
+                        </li>
+                    <?php else: ?>
+                        <li>
+                            <span style="width: 40px; height: 40px; border-radius: 50%; 
+                            display: flex; align-items: center; justify-content: center;
+                            border: 1px solid #e0e0e0; background: #f5f5f5; color: #ccc;">»</span>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -224,49 +283,6 @@ include 'app/views/templates/public/navbar.php';
         }
     }
 </style>
-
-<!-- Maps Section -->
-<section class="contact-map-section">
-    <div class="container">
-        <div class="map-card-wrapper">
-            <!-- Card Header -->
-            <div class="map-card-header">
-                <div class="map-card-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="map-card-info">
-                    <h3 class="map-card-title">Lokasi Konsultasi Offline</h3>
-                    <p class="map-card-subtitle">Kunjungi Lab NCS untuk konsultasi langsung dengan tim kami</p>
-                </div>
-            </div>
-
-            <!-- Map Body -->
-            <div class="map-card-body">
-                <div class="google-map google-map__contact">
-                    <iframe
-                        title="Lokasi Politeknik Negeri Malang - Lab NCS"
-                        src="https://maps.google.com/maps?q=-7.943892710794645,112.61450188551729&hl=id&z=19&output=embed"
-                        class="map__google-map"
-                        allowfullscreen=""
-                        loading="lazy">
-                    </iframe>
-
-                    <!-- Overlay Info -->
-                    <div class="map-overlay-info">
-                        <p class="map-address-text">
-                            <i class="fas fa-map-marked-alt" style="color: #1a3a6b; margin-right: 8px;"></i>
-                            <strong>Lab Network & Cyber Security</strong><br>
-                            Gedung JTI, Politeknik Negeri Malang<br>
-                            Jl. Soekarno Hatta No.9, Mojolangu<br>
-                            Kec. Lowokwaru, Jawa Timur 65141
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <?php
 include 'app/views/templates/public/footer.php';
 include 'app/views/templates/public/scripts.php';

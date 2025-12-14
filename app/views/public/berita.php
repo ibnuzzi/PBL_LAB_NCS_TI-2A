@@ -98,12 +98,26 @@ include 'app/views/templates/public/navbar.php';
                                     -webkit-box-orient: vertical;
                                     overflow: hidden;
                                     text-overflow: ellipsis;
-                                    min-height: 60px;
+                                    min-height: 50px;
                                     line-height: 1.4;
-                                    margin-bottom: 20px;
+                                    margin-bottom: 5px;
                                 ">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $b['slug_berita'] ?>"><?= htmlspecialchars($b['judul_berita']) ?></a>
                                 </h3>
+                                <?php if (!empty($b['isi_berita'])): ?>
+                                    <p class="blog-card__desc" style="
+                                    color: #333;
+                                    font-size: 0.9rem;
+                                    line-height: 1.6;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    margin-bottom: 15px;
+                                    transition: color 0.3s ease;
+                                "><?= htmlspecialchars(strip_tags(substr($b['isi_berita'], 0, 150))) ?>...</p>
+                                <?php endif; ?>
                                 <div class="blog-card__content__btn" style="margin-top: auto;">
                                     <a href="<?= BASE_URL ?>/berita/detail/<?= $b['slug_berita'] ?>" class="blog-card__content__btn__link">
                                         Baca Selengkapnya<i class="icon-arrow"></i>

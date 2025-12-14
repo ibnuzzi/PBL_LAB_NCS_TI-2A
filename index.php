@@ -71,6 +71,12 @@ Route::add('GET', '/login', 'AuthController', 'index');
 Route::add('POST', '/login', 'AuthController', 'processLogin');
 Route::add('GET', '/logout', 'AuthController', 'logout');
 
+// Rute Lupa Password
+Route::add('GET', '/forgot-password', 'AuthController', 'forgotPassword');
+Route::add('POST', '/forgot-password', 'AuthController', 'processForgotPassword');
+Route::add('GET', '/reset-password', 'AuthController', 'resetPassword');
+Route::add('POST', '/reset-password', 'AuthController', 'processResetPassword');
+
 // Rute yang Dilindungi (Anda perlu menambahkannya)
 Route::add('GET', '/admin/dashboard', 'DashboardController', 'index');
 Route::add('GET', '/admin/berita', 'AdminBeritaController', 'index');

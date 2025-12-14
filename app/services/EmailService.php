@@ -240,4 +240,104 @@ class EmailService
 </html>
         ';
     }
+
+    /**
+     * Send password reset email to admin
+     * 
+     * @param string $to Admin's email address
+     * @param string $nama Admin's name
+     * @param string $resetUrl Password reset URL
+     * @return bool True if email sent successfully
+     */
+    public function sendPasswordResetEmail($to, $nama, $resetUrl)
+    {
+        try {
+            // Recipients
+            $this->mailer->clearAddresses();
+            $this->mailer->addAddress($to, $nama);
+
+            // Content
+            $this->mailer->isHTML(true);
+            $this->mailer->Subject = 'Reset Password - Lab NCS Admin';
+            $this->mailer->Body    = $this->getPasswordResetEmailTemplate($nama, $resetUrl);
+            $this->mailer->AltBody = "Halo {$nama}, Klik link berikut untuk reset password Anda: {$resetUrl} (Link berlaku 1 jam)";
+
+            // Send email
+            $result = $this->mailer->send();
+
+            // Clear attachments and addresses for next email
+            $this->mailer->clearAttachments();
+
+            return $result;
+        } catch (Exception $e) {
+            error_log("Password reset email failed: " . $this->mailer->ErrorInfo);
+            return false;
+        }
+    }
+
+    /**
+     * Get HTML template for password reset email
+     */
+    private function getPasswordResetEmailTemplate($nama, $resetUrl)
+    {
+        return '
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .content { background-color: #ffffff; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .button { display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white !important; padding: 15px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; margin: 20px 0; }
+        .button:hover { opacity: 0.9; }
+        .warning-box { background-color: #fef3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #777; }
+        .link-text { word-break: break-all; background-color: #f1f3f4; padding: 10px; border-radius: 5px; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Reset Password</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;">Lab NCS - Politeknik Negeri Malang</p>
+        </div>
+        
+        <div class="content">
+            <p>Halo <strong>' . htmlspecialchars($nama) . '</strong>,</p>
+            
+            <p>Kami menerima permintaan untuk mereset password akun admin Anda. Klik tombol di bawah ini untuk membuat password baru:</p>
+            
+            <div style="text-align: center;">
+                <a href="' . htmlspecialchars($resetUrl) . '" class="button">Reset Password Saya</a>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Penting:</strong>
+                <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                    <li>Link ini hanya berlaku selama <strong>1 jam</strong></li>
+                    <li>Jika Anda tidak meminta reset password, abaikan email ini</li>
+                    <li>Jangan bagikan link ini kepada siapapun</li>
+                </ul>
+            </div>
+            
+            <p>Jika tombol di atas tidak berfungsi, salin dan tempel link berikut ke browser Anda:</p>
+            <p class="link-text">' . htmlspecialchars($resetUrl) . '</p>
+            
+            <p>Salam,<br>
+            <strong>Tim Lab NCS</strong><br>
+            Politeknik Negeri Malang</p>
+        </div>
+        
+        <div class="footer">
+            <p>Email ini dikirim secara otomatis. Mohon tidak membalas email ini.</p>
+            <p>Lab Network and Cyber Security - Gedung JTI, Politeknik Negeri Malang</p>
+        </div>
+    </div>
+</body>
+</html>
+        ';
+    }
 }

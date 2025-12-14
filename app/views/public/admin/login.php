@@ -28,6 +28,13 @@ include 'app/views/templates/public/navbar.php';
                         </div>
                     <?php endif; ?>
 
+                    <?php if (!empty($success)): ?>
+                        <div class="login-success-alert">
+                            <i class="fa fa-check-circle me-2 login-success-icon"></i>
+                            <div><?php echo $success; ?></div>
+                        </div>
+                    <?php endif; ?>
+
                     <form class="login-page__form" method="POST" action="<?php echo BASE_URL; ?>/login">
 
                         <div class="login-page__form-input-box mb-3">
@@ -42,6 +49,12 @@ include 'app/views/templates/public/navbar.php';
                             <button type="submit" class="laboix-btn laboix-btn--secondary">
                                 <span>LOGIN</span>
                             </button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="<?php echo BASE_URL; ?>/forgot-password" class="forgot-password-link" style="color: #1d4ed8;">
+                                <i class="fa fa-key me-2"></i>Lupa Password?
+                            </a>
                         </div>
 
                     </form>

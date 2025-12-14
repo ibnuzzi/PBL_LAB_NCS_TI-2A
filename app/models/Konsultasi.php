@@ -29,12 +29,12 @@ class Konsultasi
     {
         // Insert with explicit 'menunggu' status for approval workflow
         // Column 'tanggal_tanya' will use CURRENT_TIMESTAMP (Default DB)
-        
+
         $sql = "INSERT INTO {$this->table} (nama_penanya, email_penanya, pertanyaan, status_jawaban) 
                 VALUES (:nama_penanya, :email_penanya, :pertanyaan, 'menunggu')";
 
         $this->db->query($sql);
-        
+
         $this->db->bind(':nama_penanya',  $data['nama_penanya']);
         $this->db->bind(':email_penanya', $data['email_penanya']);
         $this->db->bind(':pertanyaan',    $data['pertanyaan']);
@@ -53,7 +53,7 @@ class Konsultasi
                 WHERE id_konsultasi = :id";
 
         $this->db->query($sql);
-        
+
         $this->db->bind(':jawaban',           $data['jawaban']);
         $this->db->bind(':id_admin_penjawab', $data['id_admin_penjawab'], PDO::PARAM_INT);
         $this->db->bind(':status_jawaban',    $data['status_jawaban']);
@@ -82,6 +82,27 @@ class Konsultasi
     }
 
     /**
+     * Mengambil konsultasi dijawab dengan pagination
+     */
+    public function getPaginatedDijawab($limit, $offset)
+    {
+        $this->db->query("SELECT * FROM {$this->table} WHERE status_jawaban = 'diterima' ORDER BY tanggal_jawab DESC LIMIT :limit OFFSET :offset");
+        $this->db->bind(':limit', $limit, PDO::PARAM_INT);
+        $this->db->bind(':offset', $offset, PDO::PARAM_INT);
+        return $this->db->resultSet();
+    }
+
+    /**
+     * Menghitung total konsultasi yang sudah dijawab
+     */
+    public function countDijawab()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM {$this->table} WHERE status_jawaban = 'diterima'");
+        $result = $this->db->single();
+        return $result['total'] ?? 0;
+    }
+
+    /**
      * Accept consultation and provide answer
      * 
      * @param int $id Consultation ID
@@ -99,7 +120,7 @@ class Konsultasi
                 WHERE id_konsultasi = :id";
 
         $this->db->query($sql);
-        
+
         $this->db->bind(':jawaban',           $jawaban);
         $this->db->bind(':id_admin_penjawab', $id_admin_penjawab, PDO::PARAM_INT);
         $this->db->bind(':id',                $id, PDO::PARAM_INT);
@@ -125,7 +146,7 @@ class Konsultasi
                 WHERE id_konsultasi = :id";
 
         $this->db->query($sql);
-        
+
         $this->db->bind(':alasan_tolak',      $alasan_tolak);
         $this->db->bind(':id_admin_penjawab', $id_admin_penjawab, PDO::PARAM_INT);
         $this->db->bind(':id',                $id, PDO::PARAM_INT);

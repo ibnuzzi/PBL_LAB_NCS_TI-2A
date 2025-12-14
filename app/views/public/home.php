@@ -188,22 +188,48 @@ if (!isset($pengelolaList)) {
                                 $photoPath = BASE_URL . '/public/assets/images/team/default-avatar.jpg';
                             }
                         }
+
+                        // Determine badge color based on jabatan
+                        $badgeClass = 'badge-researcher';
+                        $jabatan = strtolower($member['nama_jabatan'] ?? '');
+                        if (strpos($jabatan, 'kepala') !== false) {
+                            $badgeClass = 'badge-head';
+                        } elseif (strpos($jabatan, 'teknisi') !== false) {
+                            $badgeClass = 'badge-technician';
+                        }
                         ?>
-                        <!-- Team Member -->
+                        <!-- Team Member Card - Enhanced -->
                         <div class="team-slide">
-                            <div class="team-card">
+                            <div class="team-card team-card--enhanced">
                                 <div class="team-card__inner">
                                     <div class="team-card__image">
                                         <img src="<?= $photoPath ?>" alt="<?= htmlspecialchars($member['nama_pengelola'] ?? 'Team Member') ?>" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/public/assets/images/team/default-avatar.jpg';">
+                                        <!-- Overlay on hover -->
+                                        <div class="team-card__overlay">
+                                            <div class="team-card__social">
+                                                <a href="<?= !empty($member['linkedin_url']) ? htmlspecialchars($member['linkedin_url']) : 'https://linkedin.com' ?>" target="_blank" title="LinkedIn" class="team-card__social-link">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                                <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>" title="Profile" class="team-card__social-link">
+                                                    <i class="fas fa-user"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- Badge -->
+                                        <span class="team-card__badge <?= $badgeClass ?>">
+                                            <?= htmlspecialchars($member['nama_jabatan'] ?? 'Staff') ?>
+                                        </span>
                                     </div>
                                     <div class="team-card__content">
                                         <div class="team-card__content__inner">
-                                            <div class="team-card__content__item">
-                                                <h3 class="team-card__content__title">
-                                                    <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>"><?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?></a>
-                                                </h3>
-                                                <h6 class="team-card__content__designation"><?= htmlspecialchars($member['nama_jabatan'] ?? 'Staff') ?></h6>
-                                            </div>
+                                            <h3 class="team-card__content__title">
+                                                <a href="<?= BASE_URL ?>/pengelola/<?= $member['id_pengelola'] ?>">
+                                                    <?= htmlspecialchars($member['nama_pengelola'] ?? 'Unknown') ?>
+                                                </a>
+                                            </h3>
+                                            <?php if (!empty($member['keminatan_list'])): ?>
+                                                <p class="team-card__keminatan"><?= htmlspecialchars($member['keminatan_list']) ?></p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -242,62 +268,78 @@ if (!isset($pengelolaList)) {
 <!-- Tim Kami section End -->
 <!-- CSS and JavaScript moved to: lab-ncs-home.css and lab-ncs-home-carousel.js -->
 
-<!-- Roadmap section start -->
+<!-- Manfaat Bergabung section start -->
 <section class="our-work">
+    <style>
+        /* Hide default step counter and show icon instead */
+        .our-work__item__step--icon::before {
+            display: none !important;
+        }
+
+        .our-work__item__step--icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .our-work__item__step--icon i {
+            font-size: 1.5rem;
+            color: #2563eb;
+            transition: color 0.3s ease;
+        }
+
+        /* When hovered, change icon color to white */
+        .our-work__item:hover .our-work__item__step--icon i {
+            color: #fff;
+        }
+
+        /* Hide green arrow */
+        .our-work__item__shape {
+            display: none !important;
+        }
+    </style>
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="sec-title text-center wow fadeInUp" data-wow-duration='700ms'>
-                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/determined.png" alt="Roadmap Penelitian" class="sec-title__img">Roadmap Penelitian</h6>
-                    <h3 class="sec-title__title">Alur Riset Mahasiswa di Lab NCS: <br> Empat Tahap Utama</h3>
+                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/determined.png" alt="Manfaat Bergabung" class="sec-title__img">Manfaat Bergabung</h6>
+                    <h3 class="sec-title__title">Mengapa Bergabung dengan Lab NCS? <br> Empat Keuntungan Utama</h3>
                 </div>
             </div>
             <div class="row gutter-y-30">
                 <div class="col-lg-3 col-md-6">
                     <div class="our-work__item">
-                        <div class="our-work__item__step"></div>
+                        <div class="our-work__item__step our-work__item__step--icon"><i class="fas fa-flask"></i></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
-                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
-                            <div class="our-work__item__shape">
-                                <img src="public/assets/images/shapes/work-teps.png" alt>
-                            </div>
+                            <h4 class="our-work__item__title"><a>Pengalaman <br> Riset Nyata</a></h4>
+                            <p class="our-work__item__text">Terlibat langsung dalam penelitian aktual bersama dosen dan praktisi. Mengerjakan proyek riil di bidang network security dan cyber defense.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="our-work__item">
-                        <div class="our-work__item__step"></div>
+                        <div class="our-work__item__step our-work__item__step--icon"><i class="fas fa-users"></i></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
-                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
-                            <div class="our-work__item__shape">
-                                <img src="public/assets/images/shapes/work-teps.png" alt>
-                            </div>
+                            <h4 class="our-work__item__title"><a>Networking <br> Profesional</a></h4>
+                            <p class="our-work__item__text">Membangun koneksi dengan praktisi keamanan siber, akademisi, dan sesama mahasiswa dalam proyek dan event nasional.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="our-work__item">
-                        <div class="our-work__item__step"></div>
+                        <div class="our-work__item__step our-work__item__step--icon"><i class="fas fa-lightbulb"></i></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
-                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
-                            <div class="our-work__item__shape">
-                                <img src="public/assets/images/shapes/work-teps.png" alt>
-                            </div>
+                            <h4 class="our-work__item__title"><a>Pengembangan <br> Skill</a></h4>
+                            <p class="our-work__item__text">Meningkatkan kemampuan teknis (penetration testing, network analysis) dan soft skill melalui mentoring intensif.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="our-work__item our-work__item--two">
-                        <div class="our-work__item__step"></div>
+                        <div class="our-work__item__step our-work__item__step--icon"><i class="fas fa-file-alt"></i></div>
                         <div class="our-work__item__content">
-                            <h4 class="our-work__item__title"><a>Lorem ipsum dolor sit amet <br> consectetur adipiscing elit.</a></h4>
-                            <p class="our-work__item__text">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
-                            <div class="our-work__item__shape">
-                                <img src="public/assets/images/shapes/work-teps.png" alt>
-                            </div>
+                            <h4 class="our-work__item__title"><a>Publikasi <br> Ilmiah</a></h4>
+                            <p class="our-work__item__text">Kesempatan menjadi co-author di jurnal nasional terakreditasi maupun konferensi internasional.</p>
                         </div>
                     </div>
                 </div>
@@ -305,7 +347,55 @@ if (!isset($pengelolaList)) {
         </div>
     </div>
 </section>
-<!-- Roadmap section End -->
+<!-- Manfaat Bergabung section End -->
+
+<!-- Statistics Counter section start -->
+<section class="funfact-one" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); padding: 80px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center mb-5">
+                <h6 class="sec-title__tagline" style="color: #fff;"><img src="public/assets/images/shapes/science.png" alt="Statistik" class="sec-title__img">Lab NCS dalam Angka</h6>
+                <h3 class="sec-title__title" style="color: #fff;">Pencapaian Kami</h3>
+            </div>
+        </div>
+        <div class="row gutter-y-20 justify-content-center">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="funfact-one__item text-center wow fadeInUp" data-wow-duration="700ms" data-wow-delay="100ms">
+                    <div class="funfact-one__icon" style="font-size: 3rem; color: #60a5fa; margin-bottom: 15px;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h2 class="funfact-one__count" style="color: #fff; font-size: 3rem; font-weight: 700;">
+                        <?= $totalPenelitian ?? 0 ?>+
+                    </h2>
+                    <p class="funfact-one__text" style="color: #94a3b8; font-size: 1.1rem; font-weight: 500;">Penelitian</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="funfact-one__item text-center wow fadeInUp" data-wow-duration="700ms" data-wow-delay="200ms">
+                    <div class="funfact-one__icon" style="font-size: 3rem; color: #60a5fa; margin-bottom: 15px;">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h2 class="funfact-one__count" style="color: #fff; font-size: 3rem; font-weight: 700;">
+                        <?= $totalPengabdian ?? 0 ?>+
+                    </h2>
+                    <p class="funfact-one__text" style="color: #94a3b8; font-size: 1.1rem; font-weight: 500;">Pengabdian</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="funfact-one__item text-center wow fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms">
+                    <div class="funfact-one__icon" style="font-size: 3rem; color: #60a5fa; margin-bottom: 15px;">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h2 class="funfact-one__count" style="color: #fff; font-size: 3rem; font-weight: 700;">
+                        <?= $totalPengelola ?? 0 ?>+
+                    </h2>
+                    <p class="funfact-one__text" style="color: #94a3b8; font-size: 1.1rem; font-weight: 500;">Tim Pengelola</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Statistics Counter section End -->
 
 <!-- Penelitian section start -->
 <section class="case-studies">
@@ -354,6 +444,50 @@ if (!isset($pengelolaList)) {
     </div>
 </section>
 <!-- Penelitian section End - CSS moved to lab-ncs-home.css -->
+
+<!-- Pengabdian section start -->
+<section class="case-studies" style="background: #f8fafc; padding: 100px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sec-title text-center wow fadeInUp" data-wow-duration='700ms'>
+                    <h6 class="sec-title__tagline"><img src="public/assets/images/shapes/science.png" alt="Pengabdian" class="sec-title__img">Pengabdian Masyarakat</h6>
+                    <h3 class="sec-title__title">Kontribusi Kami untuk Masyarakat</h3>
+                </div>
+            </div>
+        </div>
+        <ul class="case-studies__list list-unstyled">
+            <?php if (!empty($latestPengabdian)): ?>
+                <?php foreach ($latestPengabdian as $pengabdian): ?>
+                    <li class="case-studies__list__item wow fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
+                        <div class="case-studies__list__item__content">
+                            <div class="case-studies__list__item__thumb">
+                                <img src="public/assets/images/resources/case-stady-1-2.png" alt="pengabdian">
+                            </div>
+                            <div class="case-studies__list__item__hover">
+                                <h4 class="case-studies__list__item__title">
+                                    <a href="<?= BASE_URL ?>/arsip?kategori=Pengabdian"><?= htmlspecialchars($pengabdian['judul_kegiatan']) ?></a>
+                                </h4>
+                                <p class="case-studies__list__item__text"><?= htmlspecialchars($pengabdian['tahun_kegiatan']) ?> - <?= htmlspecialchars($pengabdian['first_author'] ?? 'Tim Lab NCS') ?></p>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <li class="col-12 text-center">
+                    <p>Belum ada data pengabdian.</p>
+                </li>
+            <?php endif; ?>
+        </ul>
+
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <a href="<?= BASE_URL; ?>/arsip?kategori=Pengabdian" class="btn-publikasi">Lihat Selengkapnya <i class="icon-arrow"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Pengabdian section End -->
 
 <!-- Fasilitas section start -->
 <section class="service-page service-page--one">

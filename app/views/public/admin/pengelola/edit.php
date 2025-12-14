@@ -37,14 +37,14 @@ include './app/views/templates/admin/sidebar_admin.php';
           <div class="mb-3">
             <label class="form-label">Nama Pengelola <span class="text-danger">*</span></label>
             <input type="text" name="nama_pengelola" class="form-control"
-                   value="<?= htmlspecialchars($pengelola['nama_pengelola']) ?>" required>
+              value="<?= htmlspecialchars($pengelola['nama_pengelola']) ?>" required>
           </div>
 
           <!-- NID/NIP -->
           <div class="mb-3">
             <label class="form-label">NIDN/NIP</label>
-            <input type="text" name="nid_nip" class="form-control" 
-                   value="<?= htmlspecialchars($pengelola['nid_nip'] ?? '') ?>" placeholder="Opsional">
+            <input type="text" name="nid_nip" class="form-control"
+              value="<?= htmlspecialchars($pengelola['nid_nip'] ?? '') ?>" placeholder="Opsional">
           </div>
 
           <!-- Jabatan -->
@@ -53,11 +53,12 @@ include './app/views/templates/admin/sidebar_admin.php';
             <select name="id_jabatan" class="form-select">
               <option value="">-- Pilih Jabatan --</option>
               <?php if (!empty($jabatan_list)): foreach ($jabatan_list as $j): ?>
-                <option value="<?= $j['id_jabatan']; ?>" 
-                        <?= ($pengelola['id_jabatan'] == $j['id_jabatan']) ? 'selected' : ''; ?>>
-                  <?= htmlspecialchars($j['nama_jabatan']); ?>
-                </option>
-              <?php endforeach; endif; ?>
+                  <option value="<?= $j['id_jabatan']; ?>"
+                    <?= ($pengelola['id_jabatan'] == $j['id_jabatan']) ? 'selected' : ''; ?>>
+                    <?= htmlspecialchars($j['nama_jabatan']); ?>
+                  </option>
+              <?php endforeach;
+              endif; ?>
             </select>
           </div>
 
@@ -67,18 +68,31 @@ include './app/views/templates/admin/sidebar_admin.php';
             <small class="text-muted d-block mb-2">Pilih satu atau lebih keminatan</small>
             <div class="row">
               <?php if (!empty($keminatan_list)): foreach ($keminatan_list as $k): ?>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="keminatan[]" 
-                           value="<?= $k['id_keminatan']; ?>" id="keminatan_<?= $k['id_keminatan']; ?>"
-                           <?= in_array($k['id_keminatan'], $selected_keminatan ?? []) ? 'checked' : ''; ?>>
-                    <label class="form-check-label" for="keminatan_<?= $k['id_keminatan']; ?>">
-                      <?= htmlspecialchars($k['nama_keminatan']); ?>
-                    </label>
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="keminatan[]"
+                        value="<?= $k['id_keminatan']; ?>" id="keminatan_<?= $k['id_keminatan']; ?>"
+                        <?= in_array($k['id_keminatan'], $selected_keminatan ?? []) ? 'checked' : ''; ?>>
+                      <label class="form-check-label" for="keminatan_<?= $k['id_keminatan']; ?>">
+                        <?= htmlspecialchars($k['nama_keminatan']); ?>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              <?php endforeach; endif; ?>
+              <?php endforeach;
+              endif; ?>
             </div>
+          </div>
+
+          <!-- LinkedIn URL -->
+          <div class="mb-3">
+            <label class="form-label">LinkedIn URL</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bx bxl-linkedin"></i></span>
+              <input type="url" name="linkedin_url" class="form-control"
+                value="<?= htmlspecialchars($pengelola['linkedin_url'] ?? '') ?>"
+                placeholder="https://linkedin.com/in/username">
+            </div>
+            <small class="text-muted">Masukkan URL profil LinkedIn (opsional)</small>
           </div>
 
           <!-- Foto Lama -->
@@ -87,7 +101,7 @@ include './app/views/templates/admin/sidebar_admin.php';
             <br>
             <?php if (!empty($pengelola['foto_pengelola'])): ?>
               <img src="<?= BASE_URL ?>/public/uploads/pengelola/<?= htmlspecialchars($pengelola['foto_pengelola']) ?>"
-                   style="height:120px;border-radius:8px;">
+                style="height:120px;border-radius:8px;">
             <?php else: ?>
               <div class="text-muted fst-italic">Tidak ada foto</div>
             <?php endif; ?>

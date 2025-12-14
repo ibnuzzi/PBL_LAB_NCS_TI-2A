@@ -31,10 +31,10 @@ if (!isset($pengelolaList)) {
                 <div class="about-two__left wow fadeInLeft" data-wow-duration="700ms" data-wow-delay="500ms">
                     <div class="about-two__thumb">
                         <div class="about-two__thumb__item">
-                            <img src="public/assets/images/about/about-2-1.png" alt="Lab NCS">
+                            <img src="public/assets/images/about/about-2-1.png?v=<?= time() ?>" alt="Lab NCS" style="max-width: 550px; width: 100%; height: auto; object-fit: contain;">
                         </div>
-                        <div class="about-two__thumb__item about-two__thumb__item--two">
-                            <img src="public/assets/images/about/about-s-2-1.png" alt="laboix">
+                        <div class="about-two__thumb__item about-two__thumb__item--two" style="margin-top: -50px;">
+                            <img src="public/assets/images/about/about-s-2-1.png?v=<?= time() ?>" alt="laboix" style="max-width: 350px; width: 100%; height: auto; object-fit: contain;">
                             <div class="about-two__items">
                                 <div class="about-two__box">
                                     <div class="about-two__box__icon">

@@ -45,7 +45,7 @@ include 'app/views/templates/public/navbar.php';
 
         <div class="item">
             <div class="main-slider-one__item">
-                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/bg-gedung.jpg);"></div>
+                <div class="main-slider-one__bg" style="background-image: url(public/assets/images/gallery/galerilab-3.jpg);"></div>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -491,7 +491,7 @@ if (!isset($pengelolaList)) {
 
 <!-- Fasilitas section start -->
 <section class="service-page service-page--one">
-    <div class="service-page__bg" style="background-image: url(public/assets/images/shapes/service-shape-1-1.png);"></div>
+    <div class="service-page__bg" style="background-image: url(public/assets/images/shapes/ncs-pattern-bg.png);"></div>
     <div class="container">
         <div class="row">
             <div class="col-12">

@@ -1,8 +1,9 @@
 <?php
 // File: /app/core/Route.php
 
-class Route {
-    
+class Route
+{
+
     // Properti untuk menyimpan semua rute yang terdaftar
     private static $routes = [];
 
@@ -13,7 +14,8 @@ class Route {
      * @param string $controller (Nama class Controller, misal: BeritaController)
      * @param string $action (Nama method, misal: detail)
      */
-    public static function add($method, $path, $controller, $action) {
+    public static function add($method, $path, $controller, $action)
+    {
         self::$routes[] = [
             'method' => $method,
             'path' => $path,
@@ -27,9 +29,10 @@ class Route {
      * @param string $requestPath (URL bersih dari index.php, misal: /berita/detail/5)
      * @param string $requestMethod (Metode HTTP, misal: GET)
      */
-    public static function dispatch($requestPath, $requestMethod) {
+    public static function dispatch($requestPath, $requestMethod)
+    {
         foreach (self::$routes as $route) {
-            
+
             // Cocokkan metode (GET/POST)
             if ($route['method'] !== $requestMethod) {
                 continue;
@@ -40,11 +43,11 @@ class Route {
 
             // Coba cocokkan URL browser dengan pola regex
             if (preg_match($pattern, $requestPath, $matches)) {
-                
+
                 // Ambil nama controller dan action
                 $controllerName = $route['controller'];
                 $actionName = $route['action'];
-                
+
                 // Ambil parameter dari URL (misal: '5' dari /berita/detail/5)
                 $params = self::getParams($matches);
 
@@ -54,16 +57,16 @@ class Route {
 
                 // 2. Cek apakah file controller-nya ada
                 if (file_exists($controllerFile)) {
-                    
+
                     // 3. Load file controller tersebut
                     require_once $controllerFile;
 
                     // 4. Buat instance controller (new HomeController())
                     $controllerInstance = new $controllerName();
-                    
+
                     // 5. Panggil method-nya dengan parameter
                     call_user_func_array([$controllerInstance, $actionName], $params);
-                    
+
                     return; // Berhenti mencari rute lain
                 }
                 // ===========================================
@@ -76,7 +79,8 @@ class Route {
 
     // --- FUNGSI HELPER (BANTUAN) ---
 
-    private static function buildRegexPattern($path) {
+    private static function buildRegexPattern($path)
+    {
         // Ganti {id} menjadi pola regex yang bisa menangkap parameter
         $pattern = preg_replace('/\/\{([^\/]+)\}/', '/(?<$1>[^\/]+)', $path);
         // Pastikan cocok dari awal sampai akhir
@@ -84,7 +88,8 @@ class Route {
         return $pattern;
     }
 
-    private static function getParams($matches) {
+    private static function getParams($matches)
+    {
         // Ambil parameter bernama (bukan angka) dari hasil regex
         $params = [];
         foreach ($matches as $key => $value) {
@@ -95,9 +100,22 @@ class Route {
         return $params;
     }
 
-    private static function handleNotFound() {
+    private static function handleNotFound()
+    {
         http_response_code(404);
-        echo "404 Not Found: Halaman tidak ditemukan.";
+
+        // Check if it's an admin route
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        $isAdminRoute = strpos($requestUri, '/admin') !== false ||
+            strpos($requestUri, '/dashboard') !== false ||
+            strpos($requestUri, '/login') !== false;
+
+        if ($isAdminRoute && file_exists('app/views/errors/404-admin.php')) {
+            include 'app/views/errors/404-admin.php';
+        } elseif (file_exists('app/views/errors/404.php')) {
+            include 'app/views/errors/404.php';
+        } else {
+            echo "404 Not Found: Halaman tidak ditemukan.";
+        }
     }
 }
-?>

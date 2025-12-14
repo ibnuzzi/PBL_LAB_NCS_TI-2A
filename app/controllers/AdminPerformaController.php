@@ -26,7 +26,7 @@ class AdminPerformaController extends Controller
         // Get filter year from GET parameter (optional)
         $tahun = isset($_GET['tahun']) ? (int)$_GET['tahun'] : null;
 
-        // Calculate ranking
+        // Calculate ranking (single merged ranking for all lab members)
         $ranking = $performanceModel->calculateRanking($tahun);
 
         // Get available years for filter dropdown

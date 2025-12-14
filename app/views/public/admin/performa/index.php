@@ -16,7 +16,7 @@ include './app/views/templates/admin/sidebar_admin.php';
     <!-- Filter Section -->
     <div class="card mb-4">
       <div class="card-body">
-        <form method="GET" action="<?= BASE_URL ?>/admin/performa" class="row align-items-end" id="filterForm">
+        <form method="GET" action="<?= BASE_URL ?>/admin/performa" class="row align-items-end">
           <div class="col-md-4">
             <label for="filterTahun" class="form-label">Filter Berdasarkan Tahun</label>
             <select class="form-select" id="filterTahun" name="tahun">
@@ -40,25 +40,14 @@ include './app/views/templates/admin/sidebar_admin.php';
       </div>
     </div>
 
-    <script>
-      // Fix: Redirect to base URL when "Semua Tahun" is selected
-      document.getElementById('filterForm').addEventListener('submit', function(e) {
-        var tahunSelect = document.getElementById('filterTahun');
-        if (tahunSelect.value === '') {
-          e.preventDefault();
-          window.location.href = '<?= BASE_URL ?>/admin/performa';
-        }
-      });
-    </script>
-
     <!-- Info Card -->
     <div class="alert alert-info mb-4">
       <div class="d-flex align-items-center">
         <i class="bx bx-info-circle bx-md me-3"></i>
         <div>
           <strong>Sistem Penilaian Kinerja Peneliti</strong><br>
-          <small>Menggunakan metode SAW (Simple Additive Weighting) dengan kriteria:
-            <strong>Penelitian (50%)</strong> dan <strong>Pengabdian (50%)</strong>
+          <small>Menggunakan Skala 100 dengan target ideal 10 penelitian + 10 pengabdian = 100.
+            Bonus +5 poin jika total proyek > 15. Outstanding Performance jika total > 15 proyek.
           </small>
         </div>
       </div>
@@ -70,27 +59,29 @@ include './app/views/templates/admin/sidebar_admin.php';
         <h5 class="mb-0">
           <i class="bx bx-trophy text-warning me-2"></i> Peringkat Kinerja Peneliti
         </h5>
+        <?php if (!empty($ranking)): ?>
+          <span class="badge bg-primary"><?= count($ranking) ?> Orang</span>
+        <?php endif; ?>
       </div>
 
       <div class="table-responsive text-nowrap p-3">
-        <table id="table-performa" class="table table-striped table-hover align-middle">
+        <table class="table table-striped table-hover align-middle">
           <thead class="table-primary">
             <tr>
               <th class="text-center" style="width: 60px;">Rank</th>
               <th>Nama Peneliti</th>
-              <th>Jabatan</th>
-              <th class="text-center">Penelitian</th>
-              <th class="text-center">Pengabdian</th>
-              <th class="text-center">Total Skor</th>
-              <th class="text-center">Aksi</th>
+              <th style="width: 200px;">Jabatan</th>
+              <th class="text-center" style="width: 110px;">Penelitian</th>
+              <th class="text-center" style="width: 110px;">Pengabdian</th>
+              <th class="text-center" style="width: 100px;">Skor Final</th>
+              <th class="text-center" style="width: 70px;">Aksi</th>
             </tr>
           </thead>
 
-          <tbody class="table-border-bottom-0">
+          <tbody>
             <?php if (!empty($ranking)): ?>
               <?php foreach ($ranking as $item): ?>
                 <?php
-                // Badge color based on rank
                 $badgeClass = 'bg-secondary';
                 if ($item['rank'] == 1) $badgeClass = 'bg-warning';
                 elseif ($item['rank'] == 2) $badgeClass = 'bg-secondary';
@@ -99,11 +90,8 @@ include './app/views/templates/admin/sidebar_admin.php';
                 ?>
                 <tr>
                   <td class="text-center">
-                    <span class="badge <?= $badgeClass ?> badge-lg">
-                      <?= $item['rank'] ?>
-                    </span>
+                    <span class="badge <?= $badgeClass ?> badge-lg"><?= $item['rank'] ?></span>
                   </td>
-
                   <td>
                     <div class="d-flex align-items-center">
                       <?php if (!empty($item['foto_pengelola'])): ?>
@@ -111,9 +99,7 @@ include './app/views/templates/admin/sidebar_admin.php';
                           alt="Foto" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
                       <?php else: ?>
                         <div class="avatar avatar-sm me-2">
-                          <span class="avatar-initial rounded-circle bg-label-primary">
-                            <i class="bx bx-user"></i>
-                          </span>
+                          <span class="avatar-initial rounded-circle bg-label-primary"><i class="bx bx-user"></i></span>
                         </div>
                       <?php endif; ?>
                       <div>
@@ -122,30 +108,32 @@ include './app/views/templates/admin/sidebar_admin.php';
                       </div>
                     </div>
                   </td>
-
-                  <td><?= htmlspecialchars($item['nama_jabatan']) ?></td>
-
-                  <td class="text-center">
-                    <span class="badge bg-label-primary"><?= $item['c1_penelitian'] ?></span>
+                  <td style="width: 200px;"><?= htmlspecialchars($item['nama_jabatan']) ?>
+                    <?php if (!empty($item['is_outstanding']) && $item['is_outstanding']): ?>
+                      <br><span class="badge bg-warning" style="font-size: 0.7rem;" title="Outstanding Performance (>15 proyek)">
+                        <i class="bx bx-star"></i> Outstanding
+                      </span>
+                    <?php endif; ?>
                   </td>
-
-                  <td class="text-center">
-                    <span class="badge bg-label-success"><?= $item['c2_pengabdian'] ?></span>
+                  <td class="text-center" style="width: 110px;">
+                    <span class="badge bg-label-primary"><?= $item['c1_penelitian'] ?> proyek</span>
                   </td>
-
-                  <td class="text-center">
-                    <strong class="text-primary"><?= number_format($item['total_score'], 2) ?></strong>
+                  <td class="text-center" style="width: 110px;">
+                    <span class="badge bg-label-success"><?= $item['c2_pengabdian'] ?> proyek</span>
                   </td>
-
+                  <td class="text-center" style="width: 100px;">
+                    <strong class="text-primary" style="font-size: 1.05em;"><?= number_format($item['total_score'], 1) ?>/100</strong>
+                  </td>
                   <td class="text-center">
-                    <button type="button"
-                      class="btn btn-sm btn-outline-info btn-view-detail"
-                      data-nama="<?= htmlspecialchars($item['nama_pengelola']) ?>"
+                    <button type="button" class="btn btn-sm btn-outline-info btn-view-detail"
                       data-jabatan="<?= htmlspecialchars($item['nama_jabatan']) ?>"
+                      data-nama="<?= htmlspecialchars($item['nama_pengelola']) ?>"
                       data-penelitian="<?= $item['c1_penelitian'] ?>"
                       data-pengabdian="<?= $item['c2_pengabdian'] ?>"
-                      data-n-c1="<?= number_format($item['n_c1'], 4) ?>"
-                      data-n-c2="<?= number_format($item['n_c2'], 4) ?>"
+                      data-poin-penelitian="<?= $item['poin_penelitian'] ?>"
+                      data-poin-pengabdian="<?= $item['poin_pengabdian'] ?>"
+                      data-bonus="<?= number_format($item['bonus_produktivitas'], 1) ?>"
+                      data-total-poin="<?= number_format($item['total_poin'], 1) ?>"
                       data-score="<?= number_format($item['total_score'], 4) ?>">
                       <i class="bx bx-show-alt"></i>
                     </button>
@@ -154,7 +142,7 @@ include './app/views/templates/admin/sidebar_admin.php';
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="6" class="text-center py-5">
+                <td colspan="7" class="text-center py-5">
                   <i class="bx bx-data bx-lg text-muted"></i><br>
                   <span class="text-muted">Belum ada data untuk ditampilkan</span>
                 </td>
@@ -184,7 +172,7 @@ include './app/views/templates/admin/footer_admin.php';
       <div class="modal-header bg-primary text-white">
         <div>
           <h5 class="modal-title mb-0" style="color: white;">Detail Penilaian</h5>
-          <small class="opacity-75">Perhitungan Skor SAW</small>
+          <small class="opacity-75">Perhitungan Point System</small>
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
@@ -206,13 +194,13 @@ include './app/views/templates/admin/footer_admin.php';
         <div class="mb-3">
           <label class="form-label fw-bold text-muted small mb-2">DATA AKTUAL</label>
           <div class="row g-2">
-            <div class="col-4">
+            <div class="col-6">
               <div class="card bg-label-primary text-center p-2">
                 <small>Penelitian</small>
                 <h4 class="mb-0" id="modalPenelitian"></h4>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-6">
               <div class="card bg-label-success text-center p-2">
                 <small>Pengabdian</small>
                 <h4 class="mb-0" id="modalPengabdian"></h4>
@@ -223,20 +211,26 @@ include './app/views/templates/admin/footer_admin.php';
 
         <hr class="my-3">
 
-        <!-- Normalized Values -->
+        <!-- Point Breakdown -->
         <div class="mb-3">
-          <label class="form-label fw-bold text-muted small mb-2">NILAI NORMALISASI</label>
+          <label class="form-label fw-bold text-muted small mb-2">PERHITUNGAN SKOR</label>
           <ul class="list-unstyled">
             <li class="mb-2">
               <div class="d-flex justify-content-between">
-                <span>C1 (Penelitian):</span>
-                <strong id="modalNC1"></strong>
+                <span><i class="bx bx-test-tube text-primary me-1"></i> Penelitian:</span>
+                <strong id="modalPoinPenelitian"></strong>
               </div>
             </li>
             <li class="mb-2">
               <div class="d-flex justify-content-between">
-                <span>C2 (Pengabdian):</span>
-                <strong id="modalNC2"></strong>
+                <span><i class="bx bx-group text-success me-1"></i> Pengabdian:</span>
+                <strong id="modalPoinPengabdian"></strong>
+              </div>
+            </li>
+            <li class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span><i class="bx bx-award text-warning me-1"></i> Bonus Produktivitas:</span>
+                <strong id="modalBonus"></strong>
               </div>
             </li>
           </ul>
@@ -247,11 +241,16 @@ include './app/views/templates/admin/footer_admin.php';
         <!-- Final Score -->
         <div class="alert alert-primary mb-0">
           <div class="d-flex justify-content-between align-items-center">
-            <strong><i class="bx bx-trophy"></i> TOTAL SKOR AKHIR:</strong>
-            <h4 class="mb-0 text-primary" id="modalScore"></h4>
+            <div>
+              <strong><i class="bx bx-trophy"></i> SKOR FINAL:</strong><br>
+              <small class="text-muted">Skala 100</small>
+            </div>
+            <div class="text-end">
+              <h2 class="mb-0 text-primary" id="modalTotalPoin"></h2>
+            </div>
           </div>
           <small class="text-muted d-block mt-2">
-            Formula: (C1 × 0.50) + (C2 × 0.50)
+            <strong>Cara Hitung:</strong> Setiap 1 proyek penelitian = 5 poin, setiap 1 proyek pengabdian = 5 poin. Bonus +5 jika total proyek >15.
           </small>
         </div>
 
@@ -295,17 +294,20 @@ include './app/views/templates/admin/footer_admin.php';
       let jabatan = $(this).data("jabatan");
       let penelitian = $(this).data("penelitian");
       let pengabdian = $(this).data("pengabdian");
-      let nC1 = $(this).data("n-c1");
-      let nC2 = $(this).data("n-c2");
+      let poinPenelitian = $(this).data("poin-penelitian");
+      let poinPengabdian = $(this).data("poin-pengabdian");
+      let bonus = $(this).data("bonus");
+      let totalPoin = $(this).data("total-poin");
       let score = $(this).data("score");
 
       $("#modalNama").text(nama);
       $("#modalJabatan").text(jabatan);
       $("#modalPenelitian").text(penelitian);
       $("#modalPengabdian").text(pengabdian);
-      $("#modalNC1").text(nC1);
-      $("#modalNC2").text(nC2);
-      $("#modalScore").text(score);
+      $("#modalPoinPenelitian").text(poinPenelitian + " poin");
+      $("#modalPoinPengabdian").text(poinPengabdian + " poin");
+      $("#modalBonus").text(bonus + " poin");
+      $("#modalTotalPoin").text(totalPoin + "/100");
 
       new bootstrap.Modal(document.getElementById("modalDetailPerforma")).show();
     });

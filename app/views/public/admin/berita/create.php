@@ -95,54 +95,38 @@ include './app/views/templates/admin/sidebar_admin.php';
         </form>
       </div>
     </div>
+
+    <div class="content-backdrop fade"></div>
   </div>
+  <!-- /CONTENT -->
+  <?php
+  // Footer (includes scripts)
+  include './app/views/templates/admin/footer_admin.php';
+  ?>
 
-  <!-- FOOTER -->
-  <footer class="content-footer footer bg-footer-theme">
-    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-      <div class="mb-2 mb-md-0">
-        ©
-        <script>
-          document.write(new Date().getFullYear());
-        </script>
-        , dibuat dengan ❤️ oleh
-        <a href="#" class="footer-link fw-bolder">Lab NCS</a>
-      </div>
-    </div>
-  </footer>
-  <!-- /FOOTER -->
+  <!-- Summernote Lite CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
-  <div class="content-backdrop fade"></div>
-</div>
-<!-- /CONTENT -->
-<?php
-// Footer (includes scripts)
-include './app/views/templates/admin/footer_admin.php';
-?>
+  <!-- Summernote Lite JS -->
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<!-- Summernote Lite CSS -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-
-<!-- Summernote Lite JS -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-<!-- Initialize Summernote -->
-<script>
-  $(document).ready(function() {
-    $('#isi_berita').summernote({
-      height: 300,
-      placeholder: 'Tulis isi berita di sini...',
-      tabsize: 2,
-      toolbar: [
-        ['style', ['style']],
-        ['font', ['bold', 'underline', 'italic', 'clear']],
-        ['fontname', ['fontname']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
-        ['insert', ['link', 'picture', 'video']],
-        ['view', ['fullscreen', 'codeview', 'help']]
-      ]
+  <!-- Initialize Summernote -->
+  <script>
+    $(document).ready(function() {
+      $('#isi_berita').summernote({
+        height: 300,
+        placeholder: 'Tulis isi berita di sini...',
+        tabsize: 2,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'italic', 'clear']],
+          ['fontname', ['fontname']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
     });
-  });
-</script>
+  </script>

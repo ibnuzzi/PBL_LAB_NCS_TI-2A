@@ -88,7 +88,7 @@ include 'app/views/templates/public/navbar.php';
                 <!-- Latest Post Widget -->
                 <aside class="blog-sidebar" style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
                     <h3 style="font-size: 20px; font-weight: 700; color: #081d2f; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; position: relative;">
-                        Latest Post
+                        Berita Terbaru
                         <span style="position: absolute; bottom: -2px; left: 0; width: 50px; height: 2px; background: #2563EB;"></span>
                     </h3>
 

@@ -50,7 +50,7 @@ include './app/views/templates/admin/sidebar_admin.php';
 
             </select>
             <div class="form-text">
-              Jika kategori belum ada, silakan buat di menu <a href="<?= BASE_URL ?>/admin/kategori_arsip">Kategori Dokumen</a>.
+              Jika kategori belum ada, silakan buat di menu <a href="<?= BASE_URL ?>/admin/dokumen_kategori">Tambah Kategori</a>.
             </div>
           </div>
 

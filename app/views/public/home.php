@@ -510,7 +510,7 @@ if (!isset($pengelolaList)) {
                         </div>
                         <div class="service-card__thumb">
                             <div class="service-card__thumb__item">
-                                <img src="public/assets/images/service/service-1-1.png" alt="Workstation">
+                                <img src="public/assets/images/service/workstation-ncs.png" alt="Workstation">
                             </div>
                         </div>
                     </div>
@@ -524,7 +524,7 @@ if (!isset($pengelolaList)) {
                         </div>
                         <div class="service-card__thumb">
                             <div class="service-card__thumb__item">
-                                <img src="public/assets/images/service/service-1-2.png" alt="Perangkat Lunak">
+                                <img src="public/assets/images/service/software-ncs.png" alt="Perangkat Lunak">
                             </div>
                         </div>
                     </div>

@@ -16,14 +16,14 @@ include './app/views/templates/admin/sidebar_admin.php';
     <!-- Filter Section -->
     <div class="card mb-4">
       <div class="card-body">
-        <form method="GET" action="<?= BASE_URL ?>/admin/performa" class="row align-items-end">
+        <form method="GET" action="<?= BASE_URL ?>/admin/performa" class="row align-items-end" id="filterForm">
           <div class="col-md-4">
             <label for="filterTahun" class="form-label">Filter Berdasarkan Tahun</label>
             <select class="form-select" id="filterTahun" name="tahun">
               <option value="">Semua Tahun</option>
               <?php if (!empty($years)): ?>
                 <?php foreach ($years as $year): ?>
-                  <option value="<?= htmlspecialchars($year['tahun']) ?>" 
+                  <option value="<?= htmlspecialchars($year['tahun']) ?>"
                     <?= ($selected_year == $year['tahun']) ? 'selected' : '' ?>>
                     <?= htmlspecialchars($year['tahun']) ?>
                   </option>
@@ -40,13 +40,24 @@ include './app/views/templates/admin/sidebar_admin.php';
       </div>
     </div>
 
+    <script>
+      // Fix: Redirect to base URL when "Semua Tahun" is selected
+      document.getElementById('filterForm').addEventListener('submit', function(e) {
+        var tahunSelect = document.getElementById('filterTahun');
+        if (tahunSelect.value === '') {
+          e.preventDefault();
+          window.location.href = '<?= BASE_URL ?>/admin/performa';
+        }
+      });
+    </script>
+
     <!-- Info Card -->
     <div class="alert alert-info mb-4">
       <div class="d-flex align-items-center">
         <i class="bx bx-info-circle bx-md me-3"></i>
         <div>
           <strong>Sistem Penilaian Kinerja Peneliti</strong><br>
-          <small>Menggunakan metode SAW (Simple Additive Weighting) dengan kriteria: 
+          <small>Menggunakan metode SAW (Simple Additive Weighting) dengan kriteria:
             <strong>Penelitian (50%)</strong> dan <strong>Pengabdian (50%)</strong>
           </small>
         </div>
@@ -92,12 +103,12 @@ include './app/views/templates/admin/sidebar_admin.php';
                       <?= $item['rank'] ?>
                     </span>
                   </td>
-                  
+
                   <td>
                     <div class="d-flex align-items-center">
                       <?php if (!empty($item['foto_pengelola'])): ?>
-                        <img src="<?= BASE_URL ?>/public/uploads/pengelola/<?= htmlspecialchars($item['foto_pengelola']) ?>" 
-                             alt="Foto" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
+                        <img src="<?= BASE_URL ?>/public/uploads/pengelola/<?= htmlspecialchars($item['foto_pengelola']) ?>"
+                          alt="Foto" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
                       <?php else: ?>
                         <div class="avatar avatar-sm me-2">
                           <span class="avatar-initial rounded-circle bg-label-primary">
@@ -127,15 +138,15 @@ include './app/views/templates/admin/sidebar_admin.php';
                   </td>
 
                   <td class="text-center">
-                    <button type="button" 
-                            class="btn btn-sm btn-outline-info btn-view-detail"
-                            data-nama="<?= htmlspecialchars($item['nama_pengelola']) ?>"
-                            data-jabatan="<?= htmlspecialchars($item['nama_jabatan']) ?>"
-                            data-penelitian="<?= $item['c1_penelitian'] ?>"
-                            data-pengabdian="<?= $item['c2_pengabdian'] ?>"
-                            data-n-c1="<?= number_format($item['n_c1'], 4) ?>"
-                            data-n-c2="<?= number_format($item['n_c2'], 4) ?>"
-                            data-score="<?= number_format($item['total_score'], 4) ?>">
+                    <button type="button"
+                      class="btn btn-sm btn-outline-info btn-view-detail"
+                      data-nama="<?= htmlspecialchars($item['nama_pengelola']) ?>"
+                      data-jabatan="<?= htmlspecialchars($item['nama_jabatan']) ?>"
+                      data-penelitian="<?= $item['c1_penelitian'] ?>"
+                      data-pengabdian="<?= $item['c2_pengabdian'] ?>"
+                      data-n-c1="<?= number_format($item['n_c1'], 4) ?>"
+                      data-n-c2="<?= number_format($item['n_c2'], 4) ?>"
+                      data-score="<?= number_format($item['total_score'], 4) ?>">
                       <i class="bx bx-show-alt"></i>
                     </button>
                   </td>
@@ -169,7 +180,7 @@ include './app/views/templates/admin/footer_admin.php';
 <div class="modal fade" id="modalDetailPerforma" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      
+
       <div class="modal-header bg-primary text-white">
         <div>
           <h5 class="modal-title mb-0" style="color: white;">Detail Penilaian</h5>
@@ -179,7 +190,7 @@ include './app/views/templates/admin/footer_admin.php';
       </div>
 
       <div class="modal-body">
-        
+
         <!-- Nama & Jabatan -->
         <div class="mb-3">
           <label class="form-label fw-bold text-muted small mb-1">
@@ -257,47 +268,47 @@ include './app/views/templates/admin/footer_admin.php';
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  
-  // Initialize DataTable
-  if (typeof $.fn.DataTable !== 'undefined') {
-    $('#table-performa').DataTable({
-      "responsive": true,
-      "pageLength": 10,
-      "ordering": false,
-      "pagingType": "simple_numbers",
-      "language": {
-        "search": "Cari:",
-        "lengthMenu": "Tampilkan _MENU_ data per halaman",
-        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-        "paginate": {
-          "next": ">",
-          "previous": "<"
-        },
-      }
+  document.addEventListener("DOMContentLoaded", function() {
+
+    // Initialize DataTable
+    if (typeof $.fn.DataTable !== 'undefined') {
+      $('#table-performa').DataTable({
+        "responsive": true,
+        "pageLength": 10,
+        "ordering": false,
+        "pagingType": "simple_numbers",
+        "language": {
+          "search": "Cari:",
+          "lengthMenu": "Tampilkan _MENU_ data per halaman",
+          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          "paginate": {
+            "next": ">",
+            "previous": "<"
+          },
+        }
+      });
+    }
+
+    // Detail modal handler
+    $(".btn-view-detail").on("click", function() {
+      let nama = $(this).data("nama");
+      let jabatan = $(this).data("jabatan");
+      let penelitian = $(this).data("penelitian");
+      let pengabdian = $(this).data("pengabdian");
+      let nC1 = $(this).data("n-c1");
+      let nC2 = $(this).data("n-c2");
+      let score = $(this).data("score");
+
+      $("#modalNama").text(nama);
+      $("#modalJabatan").text(jabatan);
+      $("#modalPenelitian").text(penelitian);
+      $("#modalPengabdian").text(pengabdian);
+      $("#modalNC1").text(nC1);
+      $("#modalNC2").text(nC2);
+      $("#modalScore").text(score);
+
+      new bootstrap.Modal(document.getElementById("modalDetailPerforma")).show();
     });
-  }
 
-  // Detail modal handler
-  $(".btn-view-detail").on("click", function () {
-    let nama = $(this).data("nama");
-    let jabatan = $(this).data("jabatan");
-    let penelitian = $(this).data("penelitian");
-    let pengabdian = $(this).data("pengabdian");
-    let nC1 = $(this).data("n-c1");
-    let nC2 = $(this).data("n-c2");
-    let score = $(this).data("score");
-
-    $("#modalNama").text(nama);
-    $("#modalJabatan").text(jabatan);
-    $("#modalPenelitian").text(penelitian);
-    $("#modalPengabdian").text(pengabdian);
-    $("#modalNC1").text(nC1);
-    $("#modalNC2").text(nC2);
-    $("#modalScore").text(score);
-
-    new bootstrap.Modal(document.getElementById("modalDetailPerforma")).show();
   });
-
-});
 </script>

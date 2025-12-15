@@ -193,7 +193,29 @@ include 'app/views/templates/public/navbar.php';
 
                                     <div class="ms-3" style="margin-left: 15px; display: flex; flex-direction: column; gap: 5px;">
                                         <?php if (!empty($arsip['nama_file'])): ?>
-                                            <a href="<?= htmlspecialchars($arsip['nama_file']) ?>" class="btn btn-outline-primary btn-sm" download>
+                                            <?php
+                                            $namaFile = $arsip['nama_file'];
+                                            
+                                            // Check if nama_file already contains folder structure (e.g., "penelitian/file.pdf")
+                                            if (strpos($namaFile, '/') !== false || strpos($namaFile, '\\') !== false) {
+                                                // nama_file sudah lengkap dengan folder, gunakan as-is
+                                                $downloadPath = BASE_URL . '/public/uploads/' . $namaFile;
+                                            } else {
+                                                // nama_file hanya nama file, tambahkan folder berdasarkan sumber_tabel
+                                                $uploadFolder = '';
+                                                if (isset($arsip['sumber_tabel'])) {
+                                                    if ($arsip['sumber_tabel'] === 'penelitian') {
+                                                        $uploadFolder = 'penelitian';
+                                                    } elseif ($arsip['sumber_tabel'] === 'pengabdian') {
+                                                        $uploadFolder = 'pengabdian';
+                                                    } elseif ($arsip['sumber_tabel'] === 'arsip_umum') {
+                                                        $uploadFolder = 'dokumen';
+                                                    }
+                                                }
+                                                $downloadPath = BASE_URL . '/public/uploads/' . $uploadFolder . '/' . $namaFile;
+                                            }
+                                            ?>
+                                            <a href="<?= htmlspecialchars($downloadPath) ?>" class="btn btn-outline-primary btn-sm" download>
                                                 <i class="fa fa-download"></i> Unduh
                                             </a>
                                         <?php endif; ?>

@@ -376,7 +376,7 @@ if (!isset($pengelolaList)) {
                         <p class="map-address-text">
                             <i class="fas fa-map-marked-alt" style="color: #1a3a6b; margin-right: 8px;"></i>
                             <strong>Lab Network & Cyber Security</strong><br>
-                            Gedung JTI, Politeknik Negeri Malang<br>
+                            Gedung JTI Lantai 8, Politeknik Negeri Malang<br>
                             Jl. Soekarno Hatta No.9, Mojolangu<br>
                             Kec. Lowokwaru, Jawa Timur 65141
                         </p>
